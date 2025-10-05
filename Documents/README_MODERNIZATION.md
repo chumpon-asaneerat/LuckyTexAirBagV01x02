@@ -56,14 +56,21 @@ This is a **large-scale modernization project** for the LuckyTex AirBag Manufact
 
 **To understand what the application does:**
 
-3. **MODERNIZATION_WORKFLOW.md** (detailed workflows)
+3. **MODERNIZATION_WORKFLOW.md** (business workflows)
    - Production flow for all 21 modules
-   - Business logic descriptions
-   - PLC integration patterns
+   - Business logic sequence diagrams
+   - PLC integration patterns (sequence diagrams)
    - Traceability chain
    - Cross-module dependencies
 
-4. **MODERNIZATION_ANALYSIS.md** (pattern analysis)
+4. **MODERNIZATION_UI_NAVIGATION.md** (screen flows)
+   - UI navigation diagrams for all 21 modules
+   - Screen-to-screen flows (22 diagrams)
+   - User interaction sequences
+   - Common UI patterns with flows
+   - Cross-module navigation
+
+5. **MODERNIZATION_ANALYSIS.md** (pattern analysis)
    - Codebase inventory
    - Common UI patterns (7 patterns identified)
    - Data access patterns
@@ -74,7 +81,7 @@ This is a **large-scale modernization project** for the LuckyTex AirBag Manufact
 
 **For implementation strategy:**
 
-5. **MODERNIZATION_REFACTORING.md** (8-phase strategy)
+6. **MODERNIZATION_REFACTORING.md** (8-phase strategy)
    - Phase 1: Foundation Setup (Week 1-2)
    - Phase 2: Data Access Layer (Week 3-6)
    - Phase 3: Service Layer (Week 7-12)
@@ -82,7 +89,7 @@ This is a **large-scale modernization project** for the LuckyTex AirBag Manufact
    - Phase 5-8: PLC/Reports/Testing/Deployment
    - Module refactoring order (low to high risk)
 
-6. **DOTNET_FRAMEWORK_4.7.2_NOTES.md** (compatibility reference)
+7. **DOTNET_FRAMEWORK_4.7.2_NOTES.md** (compatibility reference)
    - What IS available (C# 7.3, async/await, LINQ, etc.)
    - What is NOT available (Span<T>, System.Text.Json, etc.)
    - Recommended libraries with versions
@@ -92,7 +99,7 @@ This is a **large-scale modernization project** for the LuckyTex AirBag Manufact
 
 **For session continuity:**
 
-7. **MODERNIZATION_SESSION_TRACKER.md** (progress tracking)
+8. **MODERNIZATION_SESSION_TRACKER.md** (progress tracking)
    - Overall progress table (21 modules × 8 phases)
    - Module-by-module checklist (180+ pages)
    - Session log for continuity

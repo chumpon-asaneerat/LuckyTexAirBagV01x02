@@ -36,18 +36,44 @@ graph TD
 
 ### Yarn Receiving Workflow
 
-**UI Flow**:
-1. User scans yarn lot barcode
-2. System displays supplier PO details
-3. User enters actual quantity received
-4. User confirms receipt
+**Business Logic Sequence**:
 
-**Business Logic**:
-- Validate barcode format
-- Check PO exists and is open
-- Compare received qty vs PO qty
-- Generate internal lot number
-- Update inventory
+```mermaid
+sequenceDiagram
+    participant UI as User Interface
+    participant BL as Business Logic
+    participant DB as Database
+    participant Printer as Label Printer
+
+    UI->>BL: Scan yarn lot barcode
+    BL->>BL: Validate barcode format
+    BL->>DB: sp_LuckyTex_Yarn_GetByBarcode
+
+    alt PO exists and is open
+        DB-->>BL: PO details (supplier, yarn type, qty)
+        BL-->>UI: Display PO information
+
+        UI->>BL: Enter actual quantity received
+        BL->>BL: Compare received qty vs PO qty
+
+        alt Quantity variance acceptable
+            UI->>BL: Confirm receipt
+            BL->>BL: Generate internal lot number
+            BL->>DB: sp_LuckyTex_Yarn_Receive
+            BL->>DB: sp_LuckyTex_Inventory_Update
+            DB-->>BL: Receipt confirmed
+            BL->>Printer: Print barcode label
+            Printer-->>BL: Label printed
+            BL-->>UI: Receipt complete
+        else Quantity variance too large
+            BL-->>UI: Warning: Quantity mismatch
+            UI->>BL: User override or reject
+        end
+    else PO not found or closed
+        DB-->>BL: No data / PO closed
+        BL-->>UI: Error: Invalid PO
+    end
+```
 
 **Database Operations**:
 - `sp_LuckyTex_Yarn_GetByBarcode` - Lookup yarn lot
@@ -94,19 +120,57 @@ graph TD
 
 ### Creel Loading Details
 
-**UI Flow**:
-1. Enter creel position (1-800)
-2. Scan yarn lot barcode
-3. System validates compatibility
-4. Display yarn details (type, color, supplier)
-5. Repeat for all positions
+**Business Logic Sequence**:
 
-**Business Logic**:
-- Validate yarn type matches beam specification
-- Check yarn lot has sufficient quantity
-- Ensure no duplicate positions
-- Verify color consistency (if required)
-- Calculate total yarn requirement
+```mermaid
+sequenceDiagram
+    participant Operator
+    participant UI as Creel Loading UI
+    participant BL as Business Logic
+    participant DB as Database
+
+    Operator->>UI: Open Creel Loading (beam ID)
+    UI->>BL: Get beam specification
+    BL->>DB: sp_LuckyTex_Warping_GetBeamSpec
+    DB-->>BL: Beam spec (yarn type, total positions: 800)
+    BL-->>UI: Display specification
+
+    loop For each position (1-800)
+        Operator->>UI: Enter position number
+        Operator->>UI: Scan yarn lot barcode
+
+        UI->>BL: Validate yarn for creel
+        BL->>DB: sp_LuckyTex_Warping_ValidateYarn(beamId, barcode, position)
+
+        alt Yarn valid (type matches, sufficient qty, no duplicate position)
+            DB-->>BL: Yarn details + validation OK
+            BL-->>UI: Display yarn info (type, color, supplier, qty available)
+
+            Operator->>UI: Confirm load position
+            UI->>BL: Load creel position
+            BL->>DB: sp_LuckyTex_Warping_LoadCreel(beamId, position, barcode)
+            BL->>DB: sp_LuckyTex_Inventory_Reserve(lotNumber, required qty)
+            DB-->>BL: Position loaded
+            BL-->>UI: Position marked as loaded (green)
+            UI->>UI: Move to next position
+        else Invalid yarn type
+            DB-->>BL: Error: Yarn type mismatch
+            BL-->>UI: Error: Wrong yarn type for this beam
+        else Insufficient quantity
+            DB-->>BL: Error: Insufficient quantity
+            BL-->>UI: Error: Not enough yarn in lot
+        else Duplicate position
+            DB-->>BL: Error: Position already loaded
+            BL-->>UI: Error: Position already used
+        end
+    end
+
+    UI->>BL: Check all positions loaded
+    BL->>BL: Verify 800/800 positions complete
+    BL->>DB: sp_LuckyTex_Warping_UpdateBeamStatus(READY_FOR_PRODUCTION)
+    DB-->>BL: Beam status updated
+    BL-->>UI: Creel loading complete
+```
 
 **Database Operations**:
 - `sp_LuckyTex_Warping_GetBeamSpec` - Get beam specifications
@@ -323,30 +387,86 @@ graph TD
 
 ### Quality Inspection Workflow
 
-**UI Flow**:
-1. Scan fabric roll barcode
-2. Display roll details (length, source beam, etc.)
-3. Inspector reviews fabric on inspection table
-4. Record defects:
-   - Position (meter mark)
-   - Defect type (hole, stain, weave error, etc.)
-   - Severity (minor, major, critical)
-5. Calculate total penalty points
-6. Determine grade:
-   - Grade A: 0-10 points
-   - Grade B: 11-20 points
-   - Grade C: 21+ points
-   - Reject: Critical defects present
-7. Update roll status
+**Business Logic Sequence**:
 
-**Business Logic**:
+```mermaid
+sequenceDiagram
+    participant Inspector
+    participant UI as Inspection UI
+    participant BL as Business Logic
+    participant DB as Database
+    participant Printer
+
+    Inspector->>UI: Scan fabric roll barcode
+    UI->>BL: Get roll for inspection
+    BL->>DB: sp_LuckyTex_Inspection_GetRoll
+
+    alt Roll ready for inspection
+        DB-->>BL: Roll details (length, beam, loom, date)
+        BL->>DB: sp_LuckyTex_Inspection_GetStandard
+        DB-->>BL: Quality standards & defect types
+        BL-->>UI: Display roll info + defect entry form
+
+        loop For each defect found
+            Inspector->>UI: Enter defect (position, type, severity)
+            UI->>BL: Validate defect
+            BL->>BL: Calculate defect points<br/>(Minor=1, Major=3, Critical=10)
+            BL-->>UI: Add to defect list
+            UI->>UI: Update total points display
+        end
+
+        Inspector->>UI: Click Calculate Grade
+        UI->>BL: Calculate final grade
+        BL->>BL: Sum all defect points
+        BL->>BL: Check for critical defects
+
+        alt Has critical defects
+            BL-->>UI: Grade = REJECT
+            UI->>UI: Display as rejected (red)
+            Inspector->>UI: Select action (Rework/Scrap)
+            UI->>BL: Update roll status
+            BL->>DB: sp_LuckyTex_Inspection_RecordDefects
+            BL->>DB: sp_LuckyTex_Inspection_UpdateRollStatus(REJECT)
+            DB-->>BL: Status updated
+            BL-->>UI: Roll marked for rework/scrap
+        else Points 0-10
+            BL-->>UI: Grade = A
+            Inspector->>UI: Approve roll
+            UI->>BL: Approve with Grade A
+            BL->>DB: sp_LuckyTex_Inspection_RecordDefects
+            BL->>DB: sp_LuckyTex_Inspection_CalculateGrade
+            BL->>DB: sp_LuckyTex_Inspection_UpdateRollStatus(APPROVED)
+            BL->>DB: sp_LuckyTex_Inventory_UpdateGrade(A)
+            DB-->>BL: Approved
+            BL->>Printer: Print inspection certificate
+            Printer-->>BL: Certificate printed
+            BL-->>UI: Inspection complete
+        else Points 11-20
+            BL-->>UI: Grade = B
+            Note over BL,Printer: Similar approval process
+        else Points 21+
+            BL-->>UI: Grade = C
+            Note over BL,Printer: Similar approval process
+        end
+
+        UI->>UI: Reset form for next roll
+    else Roll not found or already inspected
+        DB-->>BL: Error / Already inspected
+        BL-->>UI: Show error message
+    end
+```
+
+**Grading Formula**:
 - Defect points = Severity × Frequency
 - Critical defects = automatic rejection
-- Generate inspection certificate
-- Rejected rolls routed to rewinding or scrap
+- Grade A: 0-10 points
+- Grade B: 11-20 points
+- Grade C: 21+ points
+- Reject: Critical defects present
 
 **Database Operations**:
 - `sp_LuckyTex_Inspection_GetRoll` - Get roll details
+- `sp_LuckyTex_Inspection_GetStandard` - Get quality standards
 - `sp_LuckyTex_Inspection_RecordDefect` - Insert defect record
 - `sp_LuckyTex_Inspection_CalculateGrade` - Calculate final grade
 - `sp_LuckyTex_Inspection_UpdateRollStatus` - Update to Approved/Rejected
