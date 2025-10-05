@@ -439,29 +439,88 @@ graph TD
 
 ### Coating/Heat-Setting Workflow
 
-**UI Flow**:
-1. Scan fabric roll barcode
-2. Select process type (coating/heat-setting/both)
-3. Select machine
-4. Enter process parameters:
-   - Temperature
-   - Speed
-   - Coating thickness (if coating)
-5. Start process
-6. Monitor real-time parameters via PLC
-7. Complete and generate finished roll
+**Business Logic Sequence**:
 
-**Business Logic**:
-- Validate roll has passed inspection (if required)
+```mermaid
+sequenceDiagram
+    participant Operator
+    participant UI as Finishing UI
+    participant BL as Business Logic
+    participant PLC as Finishing PLC
+    participant DB as Database
+    participant Printer
+
+    Operator->>UI: Scan grey fabric roll barcode
+    UI->>BL: Get roll for finishing
+    BL->>DB: sp_LuckyTex_Finishing_ValidateRoll
+
+    alt Roll approved for finishing
+        DB-->>BL: Roll details + inspection grade
+        BL-->>UI: Display roll information
+
+        Operator->>UI: Select process type (Coating/Heat-Setting/Both)
+        Operator->>UI: Select machine
+        Operator->>UI: Enter process parameters:<br/>- Temperature: 180°C<br/>- Speed: 30 m/min<br/>- Coating thickness: 0.5mm (if coating)
+
+        UI->>BL: Validate parameters
+        BL->>DB: sp_LuckyTex_Finishing_GetSpecification(rollType)
+        DB-->>BL: Valid parameter ranges
+        BL->>BL: Check parameters within spec
+
+        alt Parameters valid
+            Operator->>UI: Click Start Process
+            UI->>BL: Start finishing process
+            BL->>DB: sp_LuckyTex_Finishing_StartProcess
+            DB-->>BL: Process record created
+            BL->>PLC: Send start command + parameters
+            PLC-->>BL: Process started
+
+            loop Every 30 seconds (real-time monitoring)
+                BL->>PLC: Read actual parameters
+                PLC-->>BL: Temperature, speed, thickness
+                BL->>BL: Check temperature tolerance (±2°C)
+
+                alt Within tolerance
+                    BL->>DB: sp_LuckyTex_Finishing_UpdateParameters(log actual values)
+                    BL-->>UI: Update display (green)
+                else Out of tolerance
+                    BL-->>UI: Alert: Parameter deviation (yellow/red)
+                    BL->>DB: sp_LuckyTex_Finishing_RecordDeviation
+                end
+            end
+
+            Operator->>UI: Click Complete Process
+            UI->>BL: Complete finishing
+            BL->>PLC: Send stop command
+            PLC-->>BL: Process stopped
+            BL->>BL: Generate new barcode for finished roll
+            BL->>DB: sp_LuckyTex_Finishing_Complete(generate finished roll)
+            DB-->>BL: Finished roll created
+            BL->>Printer: Print finished roll label
+            Printer-->>BL: Label printed
+            BL-->>UI: Process complete
+        else Parameters invalid
+            BL-->>UI: Error: Parameters out of specification
+        end
+    else Roll not ready
+        DB-->>BL: Error: Roll not inspected or rejected
+        BL-->>UI: Show error message
+    end
+```
+
+**Process Control**:
+- Validate roll has passed inspection (Grade A/B/C)
 - Process parameters must be within specification
 - PLC monitors temperature ±2°C tolerance
-- Record actual vs target parameters
+- Record actual vs target parameters every 30 seconds
 - Generate new barcode for finished roll
 
 **Database Operations**:
 - `sp_LuckyTex_Finishing_ValidateRoll` - Check roll status
+- `sp_LuckyTex_Finishing_GetSpecification` - Get parameter ranges
 - `sp_LuckyTex_Finishing_StartProcess` - Insert process record
 - `sp_LuckyTex_Finishing_UpdateParameters` - Log parameters (every 30 sec)
+- `sp_LuckyTex_Finishing_RecordDeviation` - Log parameter deviations
 - `sp_LuckyTex_Finishing_Complete` - Generate finished roll
 
 ---
@@ -560,21 +619,75 @@ sequenceDiagram
 
 ### Cutting Workflow
 
-**UI Flow**:
-1. Scan approved fabric roll
-2. Enter customer order number
-3. Display cutting plan (lengths and quantities)
-4. Operator cuts fabric per plan
-5. Generate cut piece barcodes
-6. Print labels for each cut piece
+**Business Logic Sequence**:
 
-**Business Logic**:
-- Validate roll is Grade A or B
-- Cutting plan optimizes material usage
-- Each cut piece linked to parent roll (traceability)
+```mermaid
+sequenceDiagram
+    participant Operator
+    participant UI as Cut & Print UI
+    participant BL as Business Logic
+    participant DB as Database
+    participant Printer
+
+    Operator->>UI: Scan fabric roll barcode
+    UI->>BL: Get roll for cutting
+    BL->>DB: sp_LuckyTex_Cut_GetRoll
+
+    alt Roll approved (Grade A or B)
+        DB-->>BL: Roll details (length, grade, status)
+        BL-->>UI: Display roll information
+
+        Operator->>UI: Enter customer order number
+        UI->>BL: Get cutting plan
+        BL->>DB: sp_LuckyTex_Cut_GetCuttingPlan(orderNumber)
+        DB-->>BL: Cutting plan (piece lengths, quantities)
+        BL->>BL: Optimize cutting layout
+        BL->>BL: Calculate total length needed
+        BL->>BL: Verify roll has sufficient length
+
+        alt Sufficient length
+            BL-->>UI: Display cutting plan
+
+            loop For each cut piece in plan
+                Note over Operator: Manual cutting operation
+
+                Operator->>UI: Click Generate Piece
+                UI->>BL: Create cut piece record
+                BL->>DB: sp_LuckyTex_Cut_GeneratePieces(rollId, pieceLength)
+                DB-->>BL: Cut piece barcode generated
+                BL->>Printer: Print piece label with:<br/>- Piece barcode<br/>- Order number<br/>- Length<br/>- Parent roll (traceability)
+                Printer-->>BL: Label printed
+                BL-->>UI: Piece created
+            end
+
+            UI->>BL: Update roll balance
+            BL->>DB: sp_LuckyTex_Cut_UpdateRollBalance(rollId, used length)
+
+            alt Roll fully consumed
+                BL->>DB: Update roll status to CONSUMED
+            else Roll partially used
+                BL->>DB: Update roll status to PARTIAL, remaining length
+            end
+
+            DB-->>BL: Roll updated
+            BL-->>UI: Cutting complete
+        else Insufficient length
+            BL-->>UI: Error: Roll too short for order
+        end
+    else Roll not approved
+        DB-->>BL: Error: Roll grade C or rejected
+        BL-->>UI: Show error: Cannot use this roll
+    end
+```
+
+**Cutting Optimization**:
+- Validate roll is Grade A or B only
+- Cutting plan optimizes material usage (minimize waste)
+- Each cut piece linked to parent roll (full traceability)
 - Update roll status to "Partially Used" or "Consumed"
 
 **Database Operations**:
+- `sp_LuckyTex_Cut_GetRoll` - Get roll details and grade
 - `sp_LuckyTex_Cut_GetCuttingPlan` - Get order cutting requirements
 - `sp_LuckyTex_Cut_GeneratePieces` - Create cut piece records
 - `sp_LuckyTex_Cut_UpdateRollBalance` - Update remaining length
@@ -585,28 +698,88 @@ sequenceDiagram
 
 ### Packing Workflow
 
-**UI Flow**:
-1. Scan customer order number
-2. Display required cut pieces
-3. Scan each cut piece barcode to confirm
-4. System validates against order
-5. Enter packing details:
-   - Box number
-   - Quantity per box
-6. Generate packing list
-7. Print shipping label
+**Business Logic Sequence**:
 
-**Business Logic**:
-- All pieces must match order specifications
-- Verify total quantity matches order
-- Generate packing list with full traceability
+```mermaid
+sequenceDiagram
+    participant Operator
+    participant UI as Packing UI
+    participant BL as Business Logic
+    participant DB as Database
+    participant Printer
+
+    Operator->>UI: Scan customer order barcode
+    UI->>BL: Get order details
+    BL->>DB: sp_LuckyTex_Packing_GetOrder
+
+    alt Order exists and ready to pack
+        DB-->>BL: Order details + required cut pieces list
+        BL-->>UI: Display order info + piece list
+
+        Operator->>UI: Enter box number
+        UI->>UI: Clear scanned pieces list
+
+        loop For each required piece
+            Operator->>UI: Scan cut piece barcode
+            UI->>BL: Validate piece for order
+            BL->>DB: sp_LuckyTex_Packing_ValidatePiece(orderNumber, pieceBarcode)
+
+            alt Piece belongs to this order
+                DB-->>BL: Piece details + validation OK
+                BL-->>UI: Mark piece as scanned (green check)
+                UI->>UI: Add to scanned list
+                UI->>UI: Update packed count
+            else Piece not for this order
+                DB-->>BL: Error: Piece not in order
+                BL-->>UI: Show error: Wrong piece
+                UI->>UI: Play error sound
+            else Piece already packed
+                DB-->>BL: Error: Piece already used
+                BL-->>UI: Show error: Duplicate scan
+            end
+        end
+
+        UI->>BL: Check all pieces scanned
+        BL->>BL: Verify scanned count = required count
+
+        alt All pieces confirmed
+            Operator->>UI: Enter packing details (box weight, dimensions)
+            Operator->>UI: Click Complete Packing
+
+            UI->>BL: Complete packing operation
+            BL->>DB: sp_LuckyTex_Packing_Complete(orderNumber, boxNumber, pieceList)
+            BL->>DB: sp_LuckyTex_Packing_GenerateDocument(create packing list with traceability)
+            BL->>DB: Update order status to PACKED
+            DB-->>BL: Packing complete
+
+            BL->>Printer: Print packing list with:<br/>- Order number<br/>- All piece barcodes<br/>- Full traceability chain<br/>- Box details
+            BL->>Printer: Print shipping label
+            Printer-->>BL: Documents printed
+
+            BL-->>UI: Packing complete
+            UI->>UI: Display success, reset for next box/order
+        else Missing pieces
+            BL-->>UI: Error: {count} pieces still needed
+            UI->>UI: Highlight missing pieces in red
+        end
+    else Order not found
+        DB-->>BL: Error: Invalid order number
+        BL-->>UI: Show error message
+    end
+```
+
+**Packing Validation**:
+- All cut pieces must match order specifications
+- Each piece validated against order
+- Verify total quantity matches order requirement
+- Generate packing list with full traceability (yarn → beam → roll → piece)
 - Update order status to "Packed"
 
 **Database Operations**:
-- `sp_LuckyTex_Packing_GetOrder` - Get order details
+- `sp_LuckyTex_Packing_GetOrder` - Get order details and required pieces
 - `sp_LuckyTex_Packing_ValidatePiece` - Check piece belongs to order
 - `sp_LuckyTex_Packing_Complete` - Create shipment record
-- `sp_LuckyTex_Packing_GenerateDocument` - Generate packing list
+- `sp_LuckyTex_Packing_GenerateDocument` - Generate packing list with traceability
 
 ---
 
