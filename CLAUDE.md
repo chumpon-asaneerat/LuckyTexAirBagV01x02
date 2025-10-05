@@ -163,9 +163,11 @@ All modernization documentation is in the `Documents/` folder:
 - **QUICK START**: `Documents/MODERNIZATION_QUICKSTART.md` - 10-minute orientation
 - **ANALYSIS**: `Documents/MODERNIZATION_ANALYSIS.md` - Codebase inventory and patterns
 - **WORKFLOWS**: `Documents/MODERNIZATION_WORKFLOW.md` - Business logic for all 21 modules
+- **UI NAVIGATION**: `Documents/MODERNIZATION_UI_NAVIGATION.md` - Screen flows and UI interactions
 - **REFACTORING GUIDE**: `Documents/MODERNIZATION_REFACTORING.md` - 8-phase implementation strategy
 - **SESSION TRACKER**: `Documents/MODERNIZATION_SESSION_TRACKER.md` - Progress tracking
 - **.NET FRAMEWORK NOTES**: `Documents/DOTNET_FRAMEWORK_4.7.2_NOTES.md` - Compatibility reference
+- **PROCESS DOCS**: `Documents/Processes/` - Detailed process-by-process implementation guides (generated on-demand)
 
 ---
 
@@ -258,6 +260,200 @@ For multi-session work (especially modernization):
 5. **Update "NEXT SESSION TASKS"** before ending
 
 This ensures seamless continuation across context resets.
+
+---
+
+## Process Documentation Generation Protocol
+
+**[!] CRITICAL**: When generating process implementation documents, follow this STRICT protocol:
+
+### Required Workflow
+
+**STEP 1: Create Task Tracking File**
+- Create `Documents/Processes/.PROCESS_GENERATION_TRACKER.md` (hidden file with dot prefix)
+- List all processes to generate
+- Mark each as [ ] Pending, [~] In Progress, or [x] Complete
+- Include task numbers and descriptions
+
+**STEP 2: Before Each Task**
+- Read the tracker file
+- Summarize what you will generate (which documents, what content)
+- **WAIT for user confirmation** before proceeding
+- Do NOT generate any documents without explicit user approval
+
+**STEP 3: Generate Documents**
+- Only after user confirms, generate the documents
+- Follow the process document template strictly
+- Include all required sections
+
+**STEP 4: Mark Task Complete**
+- Update tracker file: change [ ] to [x]
+- Update task status and timestamp
+- Note any issues or deviations
+
+**STEP 5: Cleanup When Finished**
+- When ALL tasks marked [x] Complete
+- Confirm with user that all tasks done
+- Delete `.PROCESS_GENERATION_TRACKER.md`
+- Update `MODERNIZATION_SESSION_TRACKER.md` with completion
+
+### Process Document Structure (MANDATORY)
+
+Each process document MUST contain these sections in this order:
+
+1. **Process Overview**
+   - Process name and ID
+   - Purpose and scope
+   - Module(s) involved
+
+2. **UI Files Inventory**
+   - Complete list of XAML files (with full paths)
+   - Each file with description
+   - Code-behind files (.xaml.cs)
+   - Related service files
+
+3. **UI Layout Descriptions**
+   - Screen layout descriptions (no mockups, describe controls)
+   - Control names and purposes
+   - Data binding points
+
+4. **Component Architecture Diagram**
+   - Mermaid diagram showing: UI → Code-Behind → Service → Repository → Database
+   - Include all participants
+
+5. **Workflow Diagram**
+   - Mermaid graph (TD or LR) showing high-level process flow
+
+6. **Business Logic Sequence Diagram**
+   - Mermaid sequenceDiagram with all interactions
+   - Include: Operator, UI, Business Logic, Database, PLC (if applicable), Printer (if applicable)
+   - Show all decision points (alt/else)
+   - Show loops where applicable
+
+7. **Data Flow**
+   - Input data and sources
+   - Output data and destinations
+   - Data transformations
+
+8. **Database Operations**
+   - All stored procedures used
+   - Table operations (INSERT/UPDATE/DELETE)
+   - Transaction boundaries
+
+9. **Implementation Checklist**
+   - Repository tasks
+   - Service tasks
+   - UI refactoring tasks
+   - Testing tasks
+
+### Document Naming Convention
+
+```
+Documents/Processes/
+├── .PROCESS_GENERATION_TRACKER.md (hidden, deleted when complete)
+├── 01_Warehouse/
+│   ├── PROCESS_YARN_RECEIVING.md
+│   ├── PROCESS_YARN_ISSUING.md
+│   └── PROCESS_YARN_TRANSFER.md
+├── 02_Warping/
+│   ├── PROCESS_CREEL_LOADING.md
+│   └── PROCESS_WARPING_PRODUCTION.md
+└── [Module Number]_[Module Name]/
+    └── PROCESS_[PROCESS_NAME].md
+```
+
+### Tracker File Format (MANDATORY)
+
+```markdown
+# Process Documentation Generation Tracker
+
+**Created**: [Date]
+**Status**: [In Progress / Complete]
+
+## Task List
+
+- [ ] Task 1: Generate 01_Warehouse processes (3 documents)
+- [ ] Task 2: Generate 02_Warping processes (2 documents)
+- [ ] Task 3: Generate 03_Beaming processes (1 document)
+...
+
+## Current Task
+
+**Task Number**:
+**Description**:
+**Documents to Generate**:
+**Status**: Awaiting user confirmation
+
+## Completed Tasks
+
+### Task 1: [Description]
+- **Completed**: [Date/Time]
+- **Files Generated**:
+  - Documents/Processes/01_Warehouse/PROCESS_YARN_RECEIVING.md
+  - Documents/Processes/01_Warehouse/PROCESS_YARN_ISSUING.md
+- **Notes**:
+
+## Next Task
+
+[Description of next task]
+```
+
+### Strict Rules
+
+1. **NEVER generate documents without user confirmation**
+2. **ALWAYS create tracker file first**
+3. **ALWAYS update tracker after each task**
+4. **ALWAYS summarize before executing**
+5. **ALWAYS delete tracker when 100% complete**
+6. **NEVER skip any required sections in process documents**
+7. **ALWAYS use Mermaid diagrams (no ASCII art)**
+8. **ALWAYS include sequence diagrams for business logic**
+
+### Example Interaction
+
+**Correct Workflow**:
+```
+Claude: I've created .PROCESS_GENERATION_TRACKER.md with 15 tasks.
+
+Task 1 Ready:
+- Generate 01_Warehouse processes
+- Will create 3 documents:
+  1. PROCESS_YARN_RECEIVING.md
+  2. PROCESS_YARN_ISSUING.md
+  3. PROCESS_YARN_TRANSFER.md
+- Each will include: Overview, UI Files, Diagrams (Component, Workflow, Sequence), Data Flow, DB Ops, Checklist
+
+Proceed with Task 1? (yes/no)
+
+[WAIT FOR USER RESPONSE]
+
+User: yes
+
+Claude: [Generates 3 documents]
+Claude: Task 1 complete. Marked [x] in tracker.
+Claude:
+Task 2 Ready:
+- Generate 02_Warping processes
+...
+```
+
+**Incorrect Workflow** (DO NOT DO THIS):
+```
+Claude: I'll generate all process documents now...
+[Generates 15 documents without asking]
+```
+
+### Auto-Continuation in New Sessions
+
+When starting a new session and `.PROCESS_GENERATION_TRACKER.md` exists:
+
+1. Read the tracker file
+2. Identify incomplete tasks
+3. Present summary: "Found incomplete process generation. Task X of Y complete. Next task: [description]. Continue? (yes/no)"
+4. Wait for user confirmation
+5. Continue with standard workflow
+
+This ensures you NEVER have to repeat these instructions.
 
 ---
 
