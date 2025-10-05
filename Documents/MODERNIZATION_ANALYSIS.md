@@ -157,37 +157,11 @@
 #### Singleton Service Pattern
 **Usage**: All 21 data services
 
-```csharp
-public class WarehouseDataService
-{
-    private static WarehouseDataService _instance;
-    private static readonly object _lock = new object();
-
-    public static WarehouseDataService Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                lock (_lock)
-                {
-                    if (_instance == null)
-                    {
-                        _instance = new WarehouseDataService();
-                    }
-                }
-            }
-            return _instance;
-        }
-    }
-
-    // All methods use Oracle stored procedures
-    public DataTable GetYarnLots(string filter)
-    {
-        // Oracle command execution
-    }
-}
-```
+**Pattern Description**:
+- Each data service implements double-checked locking singleton pattern
+- Static Instance property provides global access point
+- All methods execute Oracle stored procedures
+- Returns DataTable (not strongly typed entities)
 
 **Issues**:
 - Not testable (cannot mock)
@@ -269,31 +243,19 @@ public class WarehouseDataService
 ### Area 1: Barcode Generation/Scanning Logic
 **Duplication**: 60% across 45 pages
 
-**Common Code**:
-```csharp
-private void txtBarcode_KeyDown(object sender, KeyEventArgs e)
-{
-    if (e.Key == Key.Enter)
-    {
-        string barcode = txtBarcode.Text.Trim();
-        if (string.IsNullOrEmpty(barcode)) return;
+**Common Pattern**:
+- TextBox KeyDown event handler
+- Check for Enter key press
+- Trim and validate barcode input
+- Call service GetByBarcode method
+- Display results or error message
+- Clear textbox and refocus
 
-        // Lookup barcode - THIS LOGIC DUPLICATED 45+ times
-        DataTable dt = [ServiceName].Instance.GetByBarcode(barcode);
-        if (dt.Rows.Count > 0)
-        {
-            // Display data - SIMILAR PATTERN
-        }
-        else
-        {
-            MessageBox.Show("Barcode not found");
-        }
-
-        txtBarcode.Clear();
-        txtBarcode.Focus();
-    }
-}
-```
+**Duplicated Logic**:
+- Same event handler code in 45+ pages
+- Same validation logic
+- Same error handling pattern
+- Same UI update pattern
 
 **Refactoring Opportunity**: Create `BarcodeService` base class
 
@@ -303,28 +265,20 @@ private void txtBarcode_KeyDown(object sender, KeyEventArgs e)
 **Duplication**: 70% across 85 pages
 
 **Common Pattern**:
-```csharp
-// Add button
-private void btnAdd_Click(object sender, RoutedEventArgs e)
-{
-    // Validation - DUPLICATED
-    if (string.IsNullOrEmpty(txtField.Text))
-    {
-        MessageBox.Show("Please enter...");
-        return;
-    }
+- Add button click handler with validation
+- Edit button click handler with selection check
+- Delete button click handler with confirmation dialog
+- Refresh button click handler
+- DataGrid selection changed event
+- LoadData method to refresh grid
+- MessageBox for success/error messages
 
-    // Insert - DUPLICATED PATTERN
-    bool success = [Service].Instance.Insert(...);
-    if (success)
-    {
-        MessageBox.Show("Added successfully");
-        LoadData(); // DUPLICATED
-    }
-}
-
-// Edit, Delete buttons follow same pattern
-```
+**Duplicated Logic**:
+- Same button event handlers in 85+ pages
+- Same validation pattern (if-else checks)
+- Same MessageBox.Show calls
+- Same LoadData refresh pattern
+- Same null checking for SelectedItem
 
 **Refactoring Opportunity**: Create `CrudPageBase<T>` base class
 
@@ -348,23 +302,20 @@ private void btnAdd_Click(object sender, RoutedEventArgs e)
 ### Area 4: Report Parameter Handling
 **Duplication**: 60% across 40 pages
 
-**Common Code**:
-```csharp
-private void btnGenerateReport_Click(object sender, RoutedEventArgs e)
-{
-    // Parameter collection - DUPLICATED
-    DateTime fromDate = dpFromDate.SelectedDate ?? DateTime.Now;
-    DateTime toDate = dpToDate.SelectedDate ?? DateTime.Now;
+**Common Pattern**:
+- Generate button click handler
+- Parameter collection from date pickers and combo boxes
+- Validation of date ranges
+- Call to service GetReportData method
+- Report viewer data source binding
+- Report refresh/display
 
-    // Data retrieval - DUPLICATED PATTERN
-    DataTable dt = [Service].Instance.GetReportData(fromDate, toDate, ...);
-
-    // Report binding - DUPLICATED
-    reportViewer.LocalReport.DataSources.Clear();
-    reportViewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", dt));
-    reportViewer.LocalReport.Refresh();
-}
-```
+**Duplicated Logic**:
+- Same parameter collection code in 40+ pages
+- Same date range validation
+- Same ReportViewer setup (clear + add data source)
+- Same error handling for report generation
+- Same export functionality (PDF/Excel buttons)
 
 **Refactoring Opportunity**: Create `ReportPageBase` class
 
@@ -374,32 +325,21 @@ private void btnGenerateReport_Click(object sender, RoutedEventArgs e)
 **Duplication**: 65% across 12 pages
 
 **Common Pattern**:
-```csharp
-// Timer-based polling - DUPLICATED
-DispatcherTimer timer = new DispatcherTimer();
-timer.Interval = TimeSpan.FromSeconds(5);
-timer.Tick += (s, e) =>
-{
-    // Read PLC data - DUPLICATED PATTERN
-    try
-    {
-        var data = modbusClient.ReadHoldingRegisters(...);
-        // Update UI - DUPLICATED
-        Dispatcher.Invoke(() =>
-        {
-            lblStatus.Content = ...;
-        });
-    }
-    catch (Exception ex)
-    {
-        // Error handling - DUPLICATED
-        Dispatcher.Invoke(() =>
-        {
-            lblStatus.Content = "Communication Error";
-        });
-    }
-};
-```
+- DispatcherTimer setup for polling (2-5 second intervals)
+- Timer Tick event handler
+- ModbusClient or SerialPort read operations
+- Try-catch error handling for communication errors
+- Dispatcher.Invoke for UI thread updates
+- Status label updates
+- Alarm handling logic
+
+**Duplicated Logic**:
+- Same timer initialization in 12+ pages
+- Same polling interval configuration
+- Same Modbus/Serial read pattern
+- Same error handling and retry logic
+- Same UI update via Dispatcher
+- Same communication error display
 
 **Refactoring Opportunity**: Create `PLCMonitorPageBase` class
 
@@ -408,23 +348,20 @@ timer.Tick += (s, e) =>
 ### Area 6: Material Traceability Logic
 **Duplication**: 70% across 15 pages
 
-**Common Recursive Pattern**:
-```csharp
-private void LoadTraceability(string barcode, bool forward)
-{
-    // Recursive call to stored procedure - DUPLICATED PATTERN
-    DataTable dt = [Service].Instance.GetTraceability(barcode, forward);
+**Common Pattern**:
+- LoadTraceability method with barcode and direction (forward/backward)
+- Call to stored procedure GetTraceability
+- TreeView or hierarchical grid population
+- Recursive node building from DataTable rows
+- Export to Excel functionality
+- Print traceability report option
 
-    // Build tree structure - DUPLICATED
-    TreeView tree = new TreeView();
-    foreach (DataRow row in dt.Rows)
-    {
-        TreeViewItem item = new TreeViewItem();
-        item.Header = row["Description"].ToString();
-        // Recursive node building - DUPLICATED
-    }
-}
-```
+**Duplicated Logic**:
+- Same recursive tree building in 15+ pages
+- Same DataRow to TreeViewItem conversion
+- Same forward/backward traceability query pattern
+- Same export functionality
+- Same hierarchical display logic
 
 **Refactoring Opportunity**: Create `TraceabilityService` class
 

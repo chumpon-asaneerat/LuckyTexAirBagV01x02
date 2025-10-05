@@ -476,5 +476,5 @@ This indicates the user is satisfied with the documentation and ready to either:
 The comprehensive documentation ensures they can pick up exactly where they left off in any future session..
 Please continue the conversation from where we left it off without asking the user any further questions. Continue with the last task that you were asked to work on.
 
-- ** Some documents generated but session reach limit so now all documents generated so give me suggession?
+- ** Some documents generated but session reach limit so now all documents generated so give me suggession what to do in to recover it or we need to create new one is better?
  
