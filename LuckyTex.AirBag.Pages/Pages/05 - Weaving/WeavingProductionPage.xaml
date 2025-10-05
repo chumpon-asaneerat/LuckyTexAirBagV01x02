@@ -1,0 +1,325 @@
+﻿<UserControl x:Class="LuckyTex.Pages.WeavingProductionPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="845" d:DesignWidth="1200" Loaded="UserControl_Loaded">
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/GroupBoxStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/RadioButtonStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/CheckedBoxStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="CenterCellStyle" TargetType="DataGridCell">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="RightCellStyle" TargetType="DataGridCell">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Right"
+                                      VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <DockPanel LastChildFill="True">
+        <!-- Caption Bar -->
+        <Border DockPanel.Dock="Top" CornerRadius="3" Margin="3, 3, 3, 0"
+                Background="CornflowerBlue"
+                Height="40">
+            <TextBlock Text="Weaving Production"
+                       Foreground="White"
+                       FontSize="30" 
+                       FontWeight="Bold"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"/>
+        </Border>
+        <!-- Button Command Bars -->
+        <DockPanel DockPanel.Dock="Bottom" LastChildFill="True" 
+                   Background="#F0F0F0"
+                   Margin="5, 0">
+            <!-- Back -->
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <Button x:Name="cmdBack"
+                        Content="Back"
+                        Margin="2" 
+                        Width="150"
+                        FontSize="30" 
+                        FontWeight="Bold"
+                        Style="{StaticResource MenuButtonStyle}" 
+                        Click="cmdBack_Click" />
+            </StackPanel>
+            <Grid/>
+        </DockPanel>
+        <!-- Content -->
+        <Border CornerRadius="3" Margin="3" 
+                BorderThickness="2" BorderBrush="Black">
+            <ScrollViewer HorizontalContentAlignment="Center"
+                          VerticalContentAlignment="Center"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto">
+            <Grid HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                        <RowDefinition Height="5" />
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="300" />
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="300*" />
+                        <RowDefinition Height="45" />
+                    </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="170" />
+                        <ColumnDefinition Width="190" />
+                        <ColumnDefinition Width="170" />
+                        <ColumnDefinition Width="230" />
+                        <ColumnDefinition Width="140" />
+                        <ColumnDefinition Width="190" />
+                        <ColumnDefinition Width="70*" />
+                        <ColumnDefinition Width="5" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Loom No" 
+                                Margin="3,8,3,0" 
+                                FontSize="24" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top" 
+                                Grid.Column="1" 
+                                Grid.Row="1"  />
+                    <TextBox Name="txtLoomNo" 
+                             Margin="3"
+                             FontSize="20" 
+                             FontWeight="Bold"
+                             CharacterCasing="Upper"
+                             HorizontalContentAlignment="Center" 
+                             VerticalAlignment="Center" 
+                             VerticalContentAlignment="Center" 
+                             Grid.Column="2" Grid.Row="1" KeyDown="txtLoomNo_KeyDown" />
+
+                    <TextBlock Text="Beamer Roll" 
+                                Margin="3,8,3,0" 
+                                FontSize="24" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top" 
+                                Grid.Column="3" 
+                                Grid.Row="1"  />
+                    <TextBox Name="txtBEAMLOT" 
+                             Margin="3"
+                             FontSize="20" 
+                             FontWeight="Bold"
+                             CharacterCasing="Upper"
+                             HorizontalContentAlignment="Center" 
+                             VerticalAlignment="Center" 
+                             VerticalContentAlignment="Center" 
+                             Grid.Column="4" Grid.Row="1" KeyDown="txtBEAMLOT_KeyDown" />
+
+                    <TextBlock Text="Operator" 
+                                Margin="3,8,3,0" 
+                                FontSize="24" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top" 
+                                Grid.Column="5" 
+                                Grid.Row="1"  />
+                    <TextBox x:Name="txtOperator"  
+                                             Margin="3,6,3,0"
+                                             IsReadOnly="True"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" 
+                                             VerticalAlignment="Top"
+                                             Grid.Column="6" 
+                                             Grid.Row="1" >
+                    </TextBox>
+
+                    <TextBlock Text="Item Weaving" 
+                                Margin="3,8,3,0" 
+                                FontSize="24" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top" 
+                                Grid.Column="1" 
+                                Grid.Row="2"  />
+                    <ComboBox Name="cbItemCode" 
+                              Margin="3,3,3,0"
+                               DisplayMemberPath="ITM_WEAVING" 
+                               SelectedValuePath="ITM_WEAVING"
+                               FontSize="20"      
+                               FontWeight="Bold" 
+                               ItemsSource="{Binding GetItemCodeData, Mode=OneWay}"
+                              Grid.Column="2" Grid.Row="2" Height="40" VerticalAlignment="Top" />
+
+                    <TextBlock Text="Setting Date" 
+                                Margin="3,8,3,0" 
+                                FontSize="24" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top" 
+                                Grid.Column="3" 
+                                Grid.Row="2"  />
+                    <DatePicker Name="dteSettingDate" 
+                                 Margin="3"
+                                 FontSize="24" 
+                                 FontWeight="Bold" 
+                                 Foreground="Black" 
+                               
+                                 VerticalAlignment="Center" 
+                                 Grid.Column="4" 
+                                 Grid.Row="2" />
+
+                    <Button Name="cmdSearch" 
+                            Content="Search"
+                            Margin="5,3,0,0" 
+                            FontSize="22"
+                            FontWeight="Bold"
+                            Height="40" Width="107" HorizontalAlignment="Left"  VerticalAlignment="Top" Style="{StaticResource MenuButtonStyle}" Grid.Row="3" Grid.Column="4" Click="cmdSearch_Click">
+                    </Button>
+                    <Button Name="cmdClear" 
+                            Content="Clear"
+                            Margin="0,3,5,0" 
+                            FontSize="22"
+                            FontWeight="Bold"
+                            Height="40" Width="107" HorizontalAlignment="Right"  VerticalAlignment="Top" Style="{StaticResource MenuButtonStyle}" Grid.Row="3" Grid.Column="4" Click="cmdClear_Click">
+                    </Button>
+                    <DataGrid 
+                             x:Name="gridWeaving" 
+                                Margin="3,3,3,3"
+                                ItemsSource="{Binding}"
+                                SelectionMode="Single"
+                                AlternatingRowBackground="AntiqueWhite"
+                                AutoGenerateColumns="False"
+                                CanUserAddRows="False"
+                                CanUserDeleteRows="False"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                HorizontalGridLinesBrush="Silver" 
+                                VerticalGridLinesBrush="Silver"
+                                Grid.Row="4" Grid.ColumnSpan="7" Grid.Column="1" 
+                                HorizontalContentAlignment="Left" 
+                                ScrollViewer.CanContentScroll="True" 
+                                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                ScrollViewer.HorizontalScrollBarVisibility="Auto" SelectedCellsChanged="gridWeaving_SelectedCellsChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding MC}" Header="Loom No" IsReadOnly="True" Width="100" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding BEAMERNO}" Header="Beamer Lot" IsReadOnly="True" Width="150" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding BEAMLOT}" Header="Beamer Roll" IsReadOnly="True" Width="150" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Width="160" Header="Beamer Length" 
+                                    Binding="{Binding BEAMLENGTH, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding ITM_WEAVING}" Header="Item Weaving" IsReadOnly="True" Width="150" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Width="170" Header="Start Date" 
+                                    Binding="{Binding STARTDATE, StringFormat=\{0:dd/MM/yyyy HH:mm\}}" 
+                                    IsReadOnly="True" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Width="170" Header="Finish Date" 
+                                    Binding="{Binding FINISHDATE, StringFormat=\{0:dd/MM/yyyy HH:mm\}}" 
+                                    IsReadOnly="True" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding SETTINGBY}" Header="Setting By" IsReadOnly="True" Width="120" CellStyle="{StaticResource CenterCellStyle}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <TextBlock Text="Weaving History" 
+                                Margin="3,8,3,0" 
+                                FontSize="24" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top" 
+                                Grid.Column="1" Grid.ColumnSpan="2"
+                                Grid.Row="5"  />            
+                    <Button Name="cmdWeavingHistory" 
+                            Content="Weaving History"
+                            Margin="0,3,5,0" 
+                            FontSize="22"
+                            FontWeight="Bold"
+                            Height="40" Width="190" HorizontalAlignment="Right"  VerticalAlignment="Top" Style="{StaticResource MenuButtonStyle}" Grid.Row="5" Grid.Column="7" Click="cmdWeavingHistory_Click">
+                    </Button>
+                    <Button Content="Send D365" FontSize="22" FontWeight="Bold" Grid.Column="2" Grid.Row="5" Height="40" HorizontalAlignment="Left" Margin="35,3,0,0" Name="cmdSendD365" Style="{StaticResource MenuButtonStyle}" VerticalAlignment="Top" Width="130" Click="cmdSendD365_Click" />
+
+                    <DataGrid 
+                             x:Name="gridWeavingListByBeamRoll" 
+                                Margin="3,3,3,3"
+                                ItemsSource="{Binding}"
+                                SelectionMode="Single"
+                                AlternatingRowBackground="AntiqueWhite"
+                                AutoGenerateColumns="False"
+                                CanUserAddRows="False"
+                                CanUserDeleteRows="False"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                HorizontalGridLinesBrush="Silver" 
+                                VerticalGridLinesBrush="Silver"
+                                Grid.Row="6" Grid.ColumnSpan="7" Grid.Column="1" 
+                                HorizontalContentAlignment="Left" 
+                                ScrollViewer.CanContentScroll="True" 
+                                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                ScrollViewer.HorizontalScrollBarVisibility="Auto" SelectedCellsChanged="gridWeavingListByBeamRoll_SelectedCellsChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding DOFFNO}" Header="Doff No" IsReadOnly="True" Width="100" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding WEAVINGLOT}" Header="Weaving Lot" IsReadOnly="True" Width="150" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding ITM_WEAVING}" Header="Item Weaving" IsReadOnly="True" Width="150" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Width="170" Header="Start Date" 
+                                    Binding="{Binding STARTDATE, StringFormat=\{0:dd/MM/yyyy HH:mm\}}" 
+                                    IsReadOnly="True" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Width="170" Header="Weaving Date" 
+                                    Binding="{Binding WEAVINGDATE, StringFormat=\{0:dd/MM/yyyy HH:mm\}}" 
+                                    IsReadOnly="True" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Width="120" Header="Length" 
+                                    Binding="{Binding LENGTH, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding SHIFT}" Header="Shift" IsReadOnly="True" Width="100" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding DOFFBY}" Header="Doff By" IsReadOnly="True" Width="100" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Width="120" Header="Waste" 
+                                    Binding="{Binding WASTE, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+
+                            <DataGridTextColumn Binding="{Binding DeleteHistory}" Header="Delete" IsReadOnly="True" Width="100" CellStyle="{StaticResource CenterCellStyle}"/>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Name="cmdWeavingRecord" 
+                            Content="Weaving Record"
+                            Margin="0,3,5,0" 
+                            FontSize="22"
+                            FontWeight="Bold"
+                            Height="40" Width="180" HorizontalAlignment="Right"  VerticalAlignment="Top" Style="{StaticResource MenuButtonStyle}" Grid.Row="7" Grid.Column="7" Click="cmdWeavingRecord_Click">
+                    </Button>
+                </Grid>
+            </ScrollViewer>
+        </Border>
+    </DockPanel>
+</UserControl>

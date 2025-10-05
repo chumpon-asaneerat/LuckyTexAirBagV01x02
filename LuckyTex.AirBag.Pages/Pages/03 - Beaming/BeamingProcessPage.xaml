@@ -1,0 +1,1067 @@
+﻿<UserControl x:Class="LuckyTex.Pages.BeamingProcessPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="845" 
+             d:DesignWidth="1200"
+             Loaded="UserControl_Loaded" 
+             Unloaded="UserControl_Unloaded">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/GroupBoxStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/RadioButtonStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/CheckedBoxStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="CenterCellStyle" TargetType="DataGridCell">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="RightCellStyle" TargetType="DataGridCell">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Right"
+                                      VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel LastChildFill="True">
+        <!-- Caption Bar -->
+        <Border DockPanel.Dock="Top" CornerRadius="3" Margin="3, 3, 3, 0"
+                Background="CornflowerBlue"
+                Height="40">
+            <TextBlock Text="Beaming Process"
+                       Foreground="White"
+                       FontSize="30" 
+                       FontWeight="Bold"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"/>
+        </Border>
+        <!-- Button Command Bars -->
+        <DockPanel DockPanel.Dock="Bottom" LastChildFill="True" 
+                   Background="#F0F0F0"
+                   Margin="5, 0">
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <!-- Back -->
+                <Button x:Name="cmdBack"
+                        Content="Back"
+                        Margin="2" 
+                        Width="150"
+                        FontSize="30" 
+                        FontWeight="Bold"
+                        Style="{StaticResource MenuButtonStyle}" 
+                        Click="cmdBack_Click" />
+            </StackPanel>
+            <Grid/>
+        </DockPanel>
+        <!-- Content -->
+        <Border CornerRadius="3" Margin="3" 
+                BorderThickness="2" BorderBrush="Black">
+            <ScrollViewer HorizontalContentAlignment="Center"
+                          VerticalContentAlignment="Center"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto">
+                <Grid HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="1180*" />
+                        <ColumnDefinition Width="5" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="90" />
+                        <RowDefinition Height="90" />
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="343*" />
+                        <RowDefinition Height="45" />
+                    </Grid.RowDefinitions>
+                    <Grid Margin="3,0,3,0"
+                        Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="190" />
+                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="190" />
+                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="190" />
+                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="592*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox CharacterCasing="Upper" 
+                             FontSize="20" 
+                             FontWeight="Bold" IsReadOnly="True" 
+                             Margin="3,6,0,0" 
+                             Name="txtMCName" 
+                             TextAlignment="Center" 
+                             VerticalAlignment="Top" Width="146" HorizontalAlignment="Left" />
+                        <TextBlock 
+                                Text="Beamer Lot" 
+                                Margin="3,9,9,0" 
+                             Grid.Column="1"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtBeamerNo"  
+                                    Margin="3,6,0,0" 
+                                    Grid.Column="2"
+                                    IsReadOnly="True"
+                                    CharacterCasing="Upper"
+                                    FontSize="20"
+                                    FontWeight="Bold"
+                                    TextAlignment="Center" VerticalAlignment="Top">
+                        </TextBox>
+                        <TextBlock 
+                                Text="Item Prepare" 
+                                Margin="3,9,9,0" 
+                             Grid.Column="3"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtITM_PREPARE"  
+                                    Margin="3,6,0,0" 
+                                    Grid.Column="4"
+                                    IsReadOnly="True"
+                                    CharacterCasing="Upper"
+                                    FontSize="20"
+                                    FontWeight="Bold"
+                                    TextAlignment="Center" VerticalAlignment="Top">
+                        </TextBox>
+                        <TextBlock 
+                                Text="Length" 
+                                Margin="3,9,9,0" 
+                             Grid.Column="5"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtLength"  
+                                    Margin="3,6,0,0" 
+                                    Grid.Column="6"
+                                    IsReadOnly="True"
+                                    CharacterCasing="Upper"
+                                    FontSize="20"
+                                    FontWeight="Bold"
+                                    TextAlignment="Center" VerticalAlignment="Top">
+                        </TextBox>
+                        <TextBlock 
+                                Text="Operator" 
+                                Margin="3,9,9,0" 
+                                Grid.Column="7"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtOperator"  
+                                  Margin="3,6,3,0" 
+                                  IsReadOnly="True"
+                                  Grid.Column="8"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top">
+                        </TextBox>
+                    </Grid>
+                    <Grid Margin="3,0,3,0"
+                          Grid.Row="1" 
+                        Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="190" />
+                            <ColumnDefinition Width="220" />
+                            <ColumnDefinition Width="190" />
+                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="190" />
+                            <ColumnDefinition Width="312*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock 
+                                Text="M/C Speed" 
+                                Margin="3,9,9,0" 
+                                Grid.Column="1"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtMCSPEED"  
+                                  Margin="3,6,0,0" 
+                                  Grid.Column="2"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top">
+                        </TextBox>
+                        <TextBlock 
+                                Text="Tension Beam Stand" 
+                                Margin="3,9,9,0" 
+                                Grid.Column="3"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtTensionBeamStand"  
+                                  Margin="3,6,0,0" 
+                                  Grid.Column="4"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" >
+                        </TextBox>
+                        <TextBlock 
+                                Text="Winding" 
+                                Margin="3,9,9,0" 
+                             Grid.Column="5"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtTensionWinding"  
+                                    Margin="3,6,0,0" 
+                                    Grid.Column="6"
+                                    IsReadOnly="True"
+                                    CharacterCasing="Upper"
+                                    FontSize="20"
+                                    FontWeight="Bold"
+                                    TextAlignment="Center" VerticalAlignment="Top">
+                        </TextBox>
+                    </Grid>
+                    <Grid Margin="3,0,3,0"
+                          Grid.Row="2" 
+                        Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="190" />
+                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="190" />
+                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="190" />
+                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="252*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock 
+                                Text="Beam No" 
+                                Margin="3,9,9,0" 
+                             Grid.Column="1"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtBeamNo"  
+                                  Margin="3,6,0,0" 
+                                  Grid.Column="2"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top" MaxLength="3" KeyDown="txtBeamNo_KeyDown" PreviewKeyDown="Common_PreviewKeyDown">
+                        </TextBox>
+                        <TextBlock 
+                                Text="Hardness" 
+                                Margin="3,9,9,0" 
+                                Grid.Column="3"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtHardness"  
+                                  Margin="3,6,0,0" 
+                                  IsReadOnly="True"
+                                  Grid.Column="4"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top">
+                        </TextBox>
+                        <TextBlock 
+                                Text="Reed No" 
+                                Margin="3,9,9,0" 
+                                Grid.Column="5"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtReedNo"  
+                                  Margin="3,6,0,0" 
+                                  IsReadOnly="True"
+                                  Grid.Column="6"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top">
+                        </TextBox>
+                        
+                    </Grid>
+                    <Grid Margin="3,0,3,0"
+                          Grid.Row="3" 
+                        Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="587" />
+                            <ColumnDefinition Width="587*" />
+                        </Grid.ColumnDefinitions>
+                        <Button Name="cmdStart" 
+                            Content="Start"
+                            Margin="0,9,9,0" 
+                            FontSize="20" 
+                            FontWeight="Bold" 
+                            HorizontalAlignment="Right" 
+                            VerticalAlignment="Top"
+                            Width="110" Style="{StaticResource MenuButtonStyle}" Click="cmdStart_Click">
+                        </Button>
+                        <Button Name="cmdDoffing" 
+                            Content="Doffing"
+                            Margin="9,9,0,0" 
+                            Grid.Column="1"    
+                            FontSize="20" 
+                            FontWeight="Bold" 
+                            HorizontalAlignment="Left" 
+                            VerticalAlignment="Top"
+                            Width="110" Style="{StaticResource MenuButtonStyle}" Click="cmdDoffing_Click">
+                        </Button>
+                    </Grid>
+                    <Grid Margin="3,0,3,0"
+                          Grid.Row="4" 
+                        Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="190" />
+                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="190" />
+                            <ColumnDefinition Width="250" />
+                            <ColumnDefinition Width="190" />
+                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="180" />
+                            <ColumnDefinition Width="582*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock 
+                                Text="Beamer Roll" 
+                                Margin="3,9,9,0" 
+                             Grid.Column="1"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtBeamLot" 
+                                 IsReadOnly="True"
+                                  Margin="3,6,0,0" 
+                                  Grid.Column="2"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top" KeyDown="txtBeamLot_KeyDown">
+                        </TextBox>
+                        <TextBlock 
+                                Text="M/C Speed" 
+                                Margin="3,9,9,0" 
+                                Grid.Column="3"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtSPEED"  
+                                  Margin="3,6,0,0" 
+                                  Grid.Column="4"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtSPEED_KeyDown">
+                        </TextBox>
+                        <TextBlock 
+                                Text="Tension Beam Stand (IT)" 
+                                Margin="3,9,9,0" 
+                                Grid.Column="5"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtSTANDTENSION"  
+                                  Margin="3,6,0,0" 
+                                  Grid.Column="6"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtSTANDTENSION_KeyDown">
+                        </TextBox>
+                        <TextBlock 
+                                Text="Winding" 
+                                Margin="3,9,9,0" 
+                             Grid.Column="7"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtWINDTENSION"  
+                                  Margin="3,6,0,0" 
+                                  Grid.Column="8"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtWINDTENSION_KeyDown">
+                        </TextBox>
+                    </Grid>
+                    <Grid Margin="3,0,3,0"
+                          Grid.Row="5" 
+                        Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="45" />
+                            <RowDefinition Height="45" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100*" />
+                            <ColumnDefinition Width="902*" />
+                        </Grid.ColumnDefinitions>              
+                        
+                        <TextBlock 
+                                Text="Hardness" 
+                                Margin="3,9,0,0" 
+                             Grid.Column="1"
+                            Grid.Row="1"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Top"/>
+                        <TextBlock 
+                                Text="L" 
+                                Margin="0,9,0,0" 
+                             Grid.Column="2"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtHARDNESS_L"  
+                                  Margin="3,6,0,0" 
+                                  Grid.Column="2"
+                                  Grid.Row="1"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtHARDNESS_L_KeyDown">
+                        </TextBox>
+                        <TextBlock 
+                                Text="M" 
+                                Margin="0,9,0,0" 
+                             Grid.Column="3"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtHARDNESS_M"  
+                                  Margin="3,6,0,0" 
+                                  Grid.Column="3"
+                                  Grid.Row="1"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtHARDNESS_M_KeyDown">
+                        </TextBox>
+                        <TextBlock 
+                                Text="R" 
+                                Margin="0,9,0,0" 
+                             Grid.Column="4"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtHARDNESS_R"  
+                                  Margin="3,6,0,0" 
+                                  Grid.Column="4"
+                                  Grid.Row="1"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtHARDNESS_R_KeyDown">
+                        </TextBox>
+                        <TextBlock 
+                                Text="Beam Width" 
+                                Margin="3,9,0,0" 
+                             Grid.Column="7"
+                            Grid.Row="1"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Top"/>
+                        <TextBlock 
+                                Text="Inside" 
+                                Margin="0,9,0,0" 
+                             Grid.Column="8"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtINSIDE"  
+                                  Margin="3,6,0,0" 
+                                  Grid.Column="8"
+                                 Grid.Row="1"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtINSIDE_KeyDown">
+                        </TextBox>
+                        <TextBlock 
+                                Text="OutSide" 
+                                Margin="0,9,0,0" 
+                             Grid.Column="9"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtOUTSIDE"  
+                                  Margin="3,6,0,0" 
+                                  Grid.Column="9"
+                                 Grid.Row="1"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtOUTSIDE_KeyDown">
+                        </TextBox>
+                        <TextBlock 
+                                Text="Full Beam" 
+                                Margin="0,9,0,0" 
+                             Grid.Column="10"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtFULL"  
+                                  Margin="3,6,0,0" 
+                                  Grid.Column="10"
+                                 Grid.Row="1"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtFULL_KeyDown">
+                        </TextBox>
+                    </Grid>
+                    <Grid Margin="3,0,3,0"
+                          Grid.Row="6" 
+                        Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="45" />
+                            <RowDefinition Height="45" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="762*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock 
+                                Text="Stand Tension" 
+                                Margin="3,9,0,0" 
+                             Grid.Column="1"
+                            Grid.Row="1"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Top"/>
+                        <TextBlock 
+                                Text="1" 
+                                Margin="0,9,0,0" 
+                             Grid.Column="2"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtTENSION_ST1"  
+                                  Margin="3,6,0,0" 
+                                  Grid.Column="2"
+                                  Grid.Row="1"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtTENSION_ST1_KeyDown">
+                        </TextBox>
+                        <TextBlock 
+                                Text="2" 
+                                Margin="0,9,0,0" 
+                             Grid.Column="3"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtTENSION_ST2"  
+                                  Margin="3,6,0,0" 
+                                  Grid.Column="3"
+                                  Grid.Row="1"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtTENSION_ST2_KeyDown">
+                        </TextBox>
+                        <TextBlock 
+                                Text="3" 
+                                Margin="0,9,0,0" 
+                             Grid.Column="4"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtTENSION_ST3"  
+                                  Margin="3,6,0,0" 
+                                  Grid.Column="4"
+                                  Grid.Row="1"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtTENSION_ST3_KeyDown">
+                        </TextBox>
+                        <TextBlock 
+                                Text="4" 
+                                Margin="0,9,0,0" 
+                             Grid.Column="5"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtTENSION_ST4"  
+                                  Margin="3,6,0,0" 
+                                  Grid.Column="5"
+                                  Grid.Row="1"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtTENSION_ST4_KeyDown">
+                        </TextBox>
+                        <TextBlock 
+                                Text="5" 
+                                Margin="0,9,0,0" 
+                             Grid.Column="6"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtTENSION_ST5"  
+                                  Margin="3,6,0,0" 
+                                  Grid.Column="6"
+                                  Grid.Row="1"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtTENSION_ST5_KeyDown">
+                        </TextBox>
+                        <TextBlock 
+                                Text="6" 
+                                Margin="0,9,0,0" 
+                             Grid.Column="7"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtTENSION_ST6"  
+                                  Margin="3,6,0,0" 
+                                  Grid.Column="7"
+                                  Grid.Row="1"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtTENSION_ST6_KeyDown">
+                        </TextBox>
+                        <TextBlock 
+                                Text="7" 
+                                Margin="0,9,0,0" 
+                             Grid.Column="8"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtTENSION_ST7"  
+                                  Margin="3,6,0,0" 
+                                  Grid.Column="8"
+                                  Grid.Row="1"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtTENSION_ST7_KeyDown">
+                        </TextBox>
+                        <TextBlock 
+                                Text="8" 
+                                Margin="0,9,0,0" 
+                             Grid.Column="9"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtTENSION_ST8"  
+                                  Margin="3,6,0,0" 
+                                  Grid.Column="9"
+                                  Grid.Row="1"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtTENSION_ST8_KeyDown">
+                        </TextBox>
+                        <TextBlock 
+                                Text="9" 
+                                Margin="0,9,0,0" 
+                             Grid.Column="10"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtTENSION_ST9"  
+                                  Margin="3,6,0,0" 
+                                  Grid.Column="10"
+                                  Grid.Row="1"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtTENSION_ST9_KeyDown">
+                        </TextBox>
+                        <TextBlock 
+                                Text="10" 
+                                Margin="0,9,0,0" 
+                             Grid.Column="11"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtTENSION_ST10"  
+                                  Margin="3,6,0,0" 
+                                  Grid.Column="11"
+                                  Grid.Row="1"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtTENSION_ST10_KeyDown">
+                        </TextBox>
+                    </Grid>
+                    <Grid Margin="3,0,3,0"
+                          Grid.Row="7" 
+                        Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="190" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="190" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="190" />
+                            <ColumnDefinition Width="132" />
+                            <ColumnDefinition Width="1490*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button Name="cmdSpecific" 
+                            Content="Specific M/C Stop Reason "
+                            Margin="0,9,24,0" 
+                            FontSize="20" 
+                            FontWeight="Bold" 
+                            HorizontalAlignment="Right" 
+                            VerticalAlignment="Top"
+                            Style="{StaticResource MenuButtonStyle}" Grid.ColumnSpan="2" Click="cmdSpecific_Click">
+                        </Button>
+
+                        
+                        <TextBlock 
+                                Text="Start Date" 
+                                Margin="3,9,9,0" 
+                             Grid.Column="2"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtSTARTDATE"  
+                                  Margin="3,6,0,0" 
+                                 IsReadOnly="True"
+                                  Grid.Column="3"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top">
+                        </TextBox>
+                        <TextBlock 
+                                Text="Length" 
+                                Margin="3,9,9,0" 
+                             Grid.Column="4"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtLENGTH"  
+                                  Margin="3,6,0,0" 
+                                  Grid.Column="5"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtLENGTH_KeyDown">
+                        </TextBox>
+                        <TextBlock 
+                                Text="Total Beam" 
+                                Margin="3,9,9,0" 
+                             Grid.Column="6"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtTOTALBEAM"  
+                                 IsReadOnly="True"
+                                  Margin="3,6,0,0" 
+                                  Grid.Column="7"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtLENGTH_KeyDown">
+                        </TextBox>
+                        <CheckBox Name="chkManual" 
+                                  Content="Manual" 
+                                  Margin="10,10,0,0"
+                                  IsChecked="False"
+                                  FontSize="22" 
+                                  FontWeight="Bold" VerticalAlignment="Top" 
+                                  Grid.Column="8"
+                                  Style="{StaticResource imageCheckedBoxOKStyle}" HorizontalAlignment="Left" Checked="chkManual_Checked" Unchecked="chkManual_Unchecked" />
+                    </Grid>
+
+                    <DataGrid 
+                             x:Name="gridBeamer" 
+                                Margin="3,3,3,3"
+                                ItemsSource="{Binding}"
+                                SelectionMode="Single"
+                                AlternatingRowBackground="AntiqueWhite"
+                                AutoGenerateColumns="False"
+                                CanUserAddRows="False"
+                                CanUserDeleteRows="False"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                HorizontalGridLinesBrush="Silver" 
+                                VerticalGridLinesBrush="Silver"
+                                Grid.Row="8" Grid.Column="1" HorizontalContentAlignment="Left" 
+                                ScrollViewer.CanContentScroll="True" 
+                                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                ScrollViewer.HorizontalScrollBarVisibility="Auto" SelectedCellsChanged="gridBeamer_SelectedCellsChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding BEAMLOT}" Header="Beamer Roll" IsReadOnly="True" Width="150" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding BEAMNO}" Header="Beam No" IsReadOnly="True" Width="150" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Width="175" Header="Start Date" 
+                                    Binding="{Binding STARTDATE, StringFormat=\{0:dd/MM/yyyy HH:mm\}}" 
+                                    IsReadOnly="True" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Width="175" Header="End Date" 
+                                    Binding="{Binding ENDDATE, StringFormat=\{0:dd/MM/yyyy HH:mm\}}" 
+                                    IsReadOnly="True" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Width="120" Header="Length" 
+                                    Binding="{Binding LENGTH, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                            <DataGridTextColumn Width="120" Header="Hardness L" 
+                                    Binding="{Binding HARDNESS_L, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                            <DataGridTextColumn Width="120" Header="Hardness M" 
+                                    Binding="{Binding HARDNESS_N, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                            <DataGridTextColumn Width="120" Header="Hardness R" 
+                                    Binding="{Binding HARDNESS_R, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                            <DataGridTextColumn Width="120" Header="Tension" 
+                                    Binding="{Binding BEAMSTANDTENSION, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                            <DataGridTextColumn Width="120" Header="Winding" 
+                                    Binding="{Binding WINDINGTENSION, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                            <DataGridTextColumn Width="120" Header="Inside" 
+                                    Binding="{Binding INSIDE_WIDTH, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                            <DataGridTextColumn Width="120" Header="OutSide" 
+                                    Binding="{Binding OUTSIDE_WIDTH, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                            <DataGridTextColumn Width="120" Header="Full Beam" 
+                                    Binding="{Binding FULL_WIDTH, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                            <DataGridTextColumn Width="80" Header="1" 
+                                    Binding="{Binding TENSION_ST1, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                            <DataGridTextColumn Width="80" Header="2" 
+                                    Binding="{Binding TENSION_ST2, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                            <DataGridTextColumn Width="80" Header="3" 
+                                    Binding="{Binding TENSION_ST3, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                            <DataGridTextColumn Width="80" Header="4" 
+                                    Binding="{Binding TENSION_ST4, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                            <DataGridTextColumn Width="80" Header="5" 
+                                    Binding="{Binding TENSION_ST5, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                            <DataGridTextColumn Width="80" Header="6" 
+                                    Binding="{Binding TENSION_ST6, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                            <DataGridTextColumn Width="80" Header="7" 
+                                    Binding="{Binding TENSION_ST7, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                            <DataGridTextColumn Width="80" Header="8" 
+                                    Binding="{Binding TENSION_ST8, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                            <DataGridTextColumn Width="80" Header="9" 
+                                    Binding="{Binding TENSION_ST9, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                            <DataGridTextColumn Width="80" Header="10" 
+                                    Binding="{Binding TENSION_ST10, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                            <DataGridTextColumn Width="130" Header="Doff By" 
+                                    Binding="{Binding DOFFBY}" 
+                                    IsReadOnly="True" CellStyle="{StaticResource RightCellStyle}"/>
+                            <DataGridTemplateColumn Header="STOP Reason" Width="140">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Name="STOPReason" CommandParameter="{Binding Path=STOPReason}" Click="STOPReason_Click">Click</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Remark" Width="140">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Name="Remark" CommandParameter="{Binding Path=Remark}" Click="Remark_Click">Click</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    
+                    <Grid Margin="3,0,3,0"
+                          Grid.Row="9" 
+                        Grid.Column="1">
+                        <Button Name="cmdFinish" 
+                            Content="Finish"
+                            Margin="3,9,0,0" 
+                            FontSize="20" 
+                            FontWeight="Bold" 
+                            HorizontalAlignment="Left" 
+                            VerticalAlignment="Top"
+                            Width="110" Style="{StaticResource MenuButtonStyle}" Click="cmdFinish_Click">
+                        </Button>
+                        <Button Name="cmdEditBeamNo" 
+                            Content="Edit Beam No"
+                            Margin="119,9,0,0" 
+                            FontSize="20" 
+                            FontWeight="Bold" 
+                            HorizontalAlignment="Left" 
+                            VerticalAlignment="Top"
+                            Width="152" Style="{StaticResource MenuButtonStyle}" Click="cmdEditBeamNo_Click">
+                        </Button>
+                        <Button Name="cmdPrint" 
+                            Content="Print"
+                            Margin="277,9,0,0" 
+                            FontSize="20" 
+                            FontWeight="Bold" 
+                            HorizontalAlignment="Left" 
+                            VerticalAlignment="Top"
+                            Width="110" Style="{StaticResource MenuButtonStyle}" Click="cmdPrint_Click">
+                        </Button>
+                        <Button Name="cmdEdit" 
+                            Content="Edit"
+                            Margin="393,9,0,0" 
+                            FontSize="20" 
+                            FontWeight="Bold" 
+                            HorizontalAlignment="Left" 
+                            VerticalAlignment="Top"
+                            Width="110" Style="{StaticResource MenuButtonStyle}" Click="cmdEdit_Click">
+                        </Button>
+                    </Grid>
+                    
+                </Grid>
+            </ScrollViewer>
+        </Border>
+    </DockPanel>
+</UserControl>

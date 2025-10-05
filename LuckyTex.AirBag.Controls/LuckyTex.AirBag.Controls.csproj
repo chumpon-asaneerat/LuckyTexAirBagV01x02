@@ -1,0 +1,312 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A48DE6DA-9EE3-45D0-9833-A59BA43BE50D}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LuckyTex</RootNamespace>
+    <AssemblyName>LuckyTex.AirBag.Controls</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Executables\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <PlatformTarget>x86</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>softbase.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="NLib, Version=4.0.4.1, Culture=neutral, PublicKeyToken=6b9d63d2a8a62ab5, processorArchitecture=x86">
+      <HintPath>..\References\NLib.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controls\WaterMarkAdornor.cs" />
+    <Compile Include="Extensions\CommonWindows.cs" />
+    <Compile Include="Extensions\ControlExtensionMethods.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Windows\ConfirmMessageWindow.xaml.cs">
+      <DependentUpon>ConfirmMessageWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ClearPalletWindow.xaml.cs">
+      <DependentUpon>ClearPalletWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\BeamingSpecificMCStopWindow.xaml.cs">
+      <DependentUpon>BeamingSpecificMCStopWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\BeamingMCSTOPReasonWindow.xaml.cs">
+      <DependentUpon>BeamingMCSTOPReasonWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ClearCutWindow.xaml.cs">
+      <DependentUpon>ClearCutWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MessageYesNoWindow.xaml.cs">
+      <DependentUpon>MessageYesNoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\LogInSelectPositionWindow.xaml.cs">
+      <DependentUpon>LogInSelectPositionWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DeleteWeavingLotWindow.xaml.cs">
+      <DependentUpon>DeleteWeavingLotWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MCSTOPReasonWindow.xaml.cs">
+      <DependentUpon>MCSTOPReasonWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\SpecificMCStopWindow.xaml.cs">
+      <DependentUpon>SpecificMCStopWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MessageOKCancelWindow.xaml.cs">
+      <DependentUpon>MessageOKCancelWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\OldLogInSelectPositionWindow.xaml.cs">
+      <DependentUpon>OldLogInSelectPositionWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ViewDefectWindow.xaml.cs">
+      <DependentUpon>ViewDefectWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Demo\CauseOfBeamerStopPageWindow.xaml.cs">
+      <DependentUpon>CauseOfBeamerStopPageWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Demo\CauseOfWarperStopPageWindow.xaml.cs">
+      <DependentUpon>CauseOfWarperStopPageWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ConfirmGradeWindow.xaml.cs">
+      <DependentUpon>ConfirmGradeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DefectListWindow.xaml.cs">
+      <DependentUpon>DefectListWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\InspectionRecordWindow.xaml.cs">
+      <DependentUpon>InspectionRecordWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ChangeGradeWindow.xaml.cs">
+      <DependentUpon>ChangeGradeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\LogInWindow.xaml.cs">
+      <DependentUpon>LogInWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MessageWindow.xaml.cs">
+      <DependentUpon>MessageWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Demo\ReceiveDetailWindow.xaml.cs">
+      <DependentUpon>ReceiveDetailWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\RemarkWindow.xaml.cs">
+      <DependentUpon>RemarkWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Demo\StartNewInsLotWindow.xaml.cs">
+      <DependentUpon>StartNewInsLotWindow.xaml</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+    <None Include="softbase.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\checked.png" />
+    <Resource Include="Images\ngchecked.png" />
+    <Resource Include="Images\orbchecked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Styles\ButtonStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Styles\CheckedBoxStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Styles\GroupBoxStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Styles\RadioButtonStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Styles\TextBoxStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Page Include="Windows\ConfirmMessageWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\ClearPalletWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\BeamingSpecificMCStopWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\BeamingMCSTOPReasonWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\ClearCutWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\MessageYesNoWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\LogInSelectPositionWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\DeleteWeavingLotWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\MCSTOPReasonWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\SpecificMCStopWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\MessageOKCancelWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\OldLogInSelectPositionWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\ViewDefectWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\Demo\CauseOfBeamerStopPageWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\Demo\CauseOfWarperStopPageWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\ConfirmGradeWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\DefectListWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\InspectionRecordWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\ChangeGradeWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\LogInWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\MessageWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\Demo\ReceiveDetailWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\RemarkWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\Demo\StartNewInsLotWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LuckyTex.AirBag.Core\LuckyTex.AirBag.Core.csproj">
+      <Project>{BFB13DCE-F58C-4DCA-97BE-717B311FD5BE}</Project>
+      <Name>LuckyTex.AirBag.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,111 @@
+﻿<UserControl x:Class="LuckyTex.Pages.LABMenuPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="845" d:DesignWidth="1200">
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/GroupBoxStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/RadioButtonStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/CheckedBoxStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="CenterCellStyle" TargetType="DataGridCell">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="RightCellStyle" TargetType="DataGridCell">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Right"
+                                      VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <DockPanel LastChildFill="True">
+        <Border DockPanel.Dock="Top" CornerRadius="3" Margin="3, 3, 3, 0"
+                Background="CornflowerBlue"
+                Height="60">
+            <TextBlock Text="LAB"
+                       Foreground="White"
+                       FontFamily="Times New Roman" FontSize="40" FontStretch="Normal" FontWeight="ExtraBold"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"/>
+        </Border>
+        <DockPanel DockPanel.Dock="Bottom" LastChildFill="True" Background="#F0F0F0">
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <Button x:Name="cmdBack"
+                        Content="Back"
+                        Margin="2" 
+                        Width="150"
+                        FontSize="30" 
+                        FontWeight="Bold"
+                        Style="{StaticResource MenuButtonStyle}" 
+                        Click="cmdBack_Click" />
+            </StackPanel>
+            <Grid/>
+        </DockPanel>
+        <UniformGrid Columns="3" Rows="8" Margin="10">
+            <Grid />
+            <Grid />
+            <Grid />
+            <Grid />
+            <Grid />
+            <Grid />
+            <Grid />
+            <Button x:Name="cmdGreige"
+                    Margin="5, 10" 
+                    Style="{StaticResource MenuButtonStyle}" Click="cmdGreige_Click">
+                <TextBlock Text="Greige" 
+                           FontFamily="Times New Roman" FontSize="40" FontStretch="Normal" FontWeight="ExtraBold"
+                           TextWrapping="Wrap"/>
+            </Button>
+            <Grid />
+            <Grid />
+            <Button x:Name="cmdMasspro"
+                    Margin="5, 10" 
+                    Style="{StaticResource MenuButtonStyle}" Click="cmdMasspro_Click">
+                <TextBlock Text="Mass pro" 
+                           FontFamily="Times New Roman" FontSize="40" FontStretch="Normal" FontWeight="ExtraBold"
+                           TextWrapping="Wrap"/>
+            </Button>
+            <Grid />
+            <Grid />
+            <Button x:Name="cmdManualLaboratory"
+                    Margin="5, 10" 
+                    Style="{StaticResource MenuButtonStyle}" Click="cmdManualLaboratory_Click">
+                <TextBlock Text="Manual" 
+                           FontFamily="Times New Roman" FontSize="40" FontStretch="Normal" FontWeight="ExtraBold"
+                           TextWrapping="Wrap"/>
+            </Button>
+            <Grid />
+            <Grid />
+            <Grid />
+            <Grid />
+            <Grid />
+            <Grid />
+            <Grid />
+        </UniformGrid>
+    </DockPanel>
+</UserControl>

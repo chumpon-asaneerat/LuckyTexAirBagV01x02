@@ -1,0 +1,174 @@
+﻿<UserControl x:Class="LuckyTex.Pages.EditIssueRawMaterialPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="845" d:DesignWidth="1200" Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/GroupBoxStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/RadioButtonStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/CheckedBoxStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="CenterCellStyle" TargetType="DataGridCell">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="RightCellStyle" TargetType="DataGridCell">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Right"
+                                      VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="styleCalendar" TargetType="{x:Type Calendar}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Calendar}">
+                            <!-- Wrapping in ViewBox will enlarge calendar of that size.-->
+                            <Viewbox Height="400"
+                         Width="400">
+                                <CalendarItem x:Name="PART_CalendarItem"
+                                  Background="{TemplateBinding Background}"
+                                  BorderBrush="{TemplateBinding BorderBrush}"
+                                  BorderThickness="{TemplateBinding BorderThickness}"/>
+                            </Viewbox>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel LastChildFill="True">
+        <!-- Caption Bar -->
+        <Border DockPanel.Dock="Top" CornerRadius="3" Margin="3, 3, 3, 0"
+                Background="CornflowerBlue"
+                Height="40">
+            <TextBlock Text="G3 - Edit Issue Raw Material"
+                       Foreground="White"
+                       FontSize="30" 
+                       FontWeight="Bold"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"/>
+        </Border>
+        <!-- Button Command Bars -->
+        <DockPanel DockPanel.Dock="Bottom" LastChildFill="True" 
+                   Background="#F0F0F0"
+                   Margin="5, 0">
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <!-- Back -->
+                <Button x:Name="cmdBack"
+                        Content="Back"
+                        Margin="2" 
+                        Width="150"
+                        FontSize="30" 
+                        FontWeight="Bold"
+                        Style="{StaticResource MenuButtonStyle}" 
+                        Click="cmdBack_Click" />
+            </StackPanel>
+            <Grid/>
+        </DockPanel>
+        <!-- Content -->
+        <Border CornerRadius="3" Margin="3" 
+                BorderThickness="2" BorderBrush="Black">
+                <Grid Name="grid1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="300*" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="300*" />
+                    <RowDefinition Height="50" />
+                </Grid.RowDefinitions>
+                <TextBlock FontSize="24" FontWeight="Bold" HorizontalAlignment="Left" Margin="6,12,0,6" Text="Operator : " TextAlignment="Right" VerticalAlignment="Center" Grid.Row="4" Width="135" />
+                <TextBox CharacterCasing="Upper" FontSize="24" FontWeight="Bold" HorizontalAlignment="Left" IsEnabled="False" Margin="147,11,0,5" Name="txtOperator" TextAlignment="Center" VerticalAlignment="Center" Grid.Row="4" Width="141" />
+                <TextBlock FontSize="24" FontWeight="Bold" HorizontalAlignment="Left" Margin="10,10,0,0" Text="Request No" VerticalAlignment="Top" />
+                <TextBox CharacterCasing="Upper" FontSize="24" FontWeight="Bold" HorizontalAlignment="Left" Margin="147,10,0,0" Name="txtRequestNo" TextAlignment="Center" VerticalAlignment="Top" Width="164" KeyDown="txtRequestNo_KeyDown" />
+                <Button Content="Print Report" FontSize="22" FontWeight="Bold" Height="40" HorizontalAlignment="Left" Margin="319,6,0,0" Name="cmdPrint" Style="{StaticResource MenuButtonStyle}" VerticalAlignment="Top" Width="150" Click="cmdPrint_Click" />
+                <Button Content="Cancel Request" FontSize="22" FontWeight="Bold" Height="40" HorizontalAlignment="Left" Margin="475,6,0,0" Name="cmdCancelRequest" Style="{StaticResource MenuButtonStyle}" VerticalAlignment="Top" Width="175" Click="cmdCancelRequest_Click" />
+                <Button Content="Delete Pallet" FontSize="22" FontWeight="Bold" Height="40" HorizontalAlignment="Left" Margin="656,6,0,0" Name="cmdDeletePallet" Style="{StaticResource MenuButtonStyle}" VerticalAlignment="Top" Width="150" Click="cmdDeletePallet_Click" />
+                <DataGrid Name="gridPalletDetail" 
+                          Margin="3"
+                          AlternatingRowBackground="AntiqueWhite" 
+                          AutoGenerateColumns="False" 
+                          CanUserAddRows="False" 
+                          CanUserDeleteRows="False" 
+                          FontSize="20" 
+                          FontWeight="Bold" 
+                          HorizontalGridLinesBrush="Silver" 
+                          ItemsSource="{Binding}" 
+                          ScrollViewer.HorizontalScrollBarVisibility="Auto" 
+                          ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                          SelectionMode="Single" 
+                          VerticalGridLinesBrush="Silver" 
+                          Grid.Row="1" SelectedCellsChanged="gridPalletDetail_SelectedCellsChanged">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding PALLETNO}" Header="Pallet No" IsReadOnly="True" Width="150" />
+                        <DataGridTextColumn Binding="{Binding TRACENO}" Header="Trace No" IsReadOnly="True" Width="150" />
+                        <DataGridTextColumn Binding="{Binding LOTNO}" Header="Lot No" IsReadOnly="True" Width="120" />
+                        <DataGridTextColumn Binding="{Binding ITM_YARN}" Header="Item Type" IsReadOnly="True" Width="200" />
+                        <DataGridTextColumn Binding="{Binding YARNTYPE}" Header="Yarn Type" IsReadOnly="True" Width="110" />
+                        <DataGridTextColumn Binding="{Binding WEIGHT, Mode=OneWay, StringFormat=\{0:#\,##0.##\}}" CellStyle="{StaticResource RightCellStyle}" Header="Weight" IsReadOnly="True" Width="100" />
+                        <DataGridTextColumn Binding="{Binding CH, Mode=OneWay, StringFormat=\{0:#\,##0.##\}}" CellStyle="{StaticResource RightCellStyle}" Header="CH" IsReadOnly="True" Width="100" />
+                        <DataGridTextColumn Binding="{Binding PALLETTYPE}" Header="Pallet Type" IsReadOnly="True" Width="120" />
+                        <DataGridTextColumn Binding="{Binding ENTRYDATE, StringFormat=\{0:dd/MM/yyyy\}}" Header="Receive Date" IsReadOnly="True" Width="175" />
+                    </DataGrid.Columns>
+                </DataGrid>            
+                <TextBlock FontSize="24" FontWeight="Bold" HorizontalAlignment="Left" Margin="10,9,0,0" Text="Item Yarn" VerticalAlignment="Top" Grid.Row="2" />
+                <TextBox CharacterCasing="Upper" FontSize="24" FontWeight="Bold" HorizontalAlignment="Left" Margin="124,9,0,0" Name="txtItemYarn" TextAlignment="Center" VerticalAlignment="Top" Width="164" Grid.Row="2" IsEnabled="False"/>
+                <TextBlock FontSize="24" FontWeight="Bold" HorizontalAlignment="Left" Margin="296,9,0,0" Text="Pallet No" VerticalAlignment="Top" Grid.Row="2" />
+                <TextBox CharacterCasing="Upper" FontSize="24" FontWeight="Bold" HorizontalAlignment="Left" Margin="407,9,0,0" Name="txtPalletNo" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Width="164" KeyDown="txtPalletNo_KeyDown" />
+                <TextBlock FontSize="24" FontWeight="Bold" HorizontalAlignment="Left" Margin="577,9,0,0" Text="Issue Date" VerticalAlignment="Top" Grid.Row="2" />
+                <DatePicker CalendarStyle="{StaticResource styleCalendar}" FontSize="24" FontWeight="Bold" Foreground="Black" Margin="699,7,0,0" Name="dteIssueDate" VerticalAlignment="Top" Grid.Row="2" HorizontalAlignment="Left" Width="177" />
+                <TextBlock FontSize="24" FontWeight="Bold" HorizontalAlignment="Left" Margin="884,9,0,0" Text="Issue To" VerticalAlignment="Top" Grid.Row="2" />
+                <ComboBox FontSize="22" FontWeight="Bold" ItemsSource="{Binding LabResult, Mode=OneWay}" Margin="981,7,0,0" Name="cbIssueTo" TextSearch.TextPath="" Grid.Row="2" HorizontalAlignment="Left" Width="153" Height="39" VerticalAlignment="Top" />
+                <Button Content="Add" FontSize="22" FontWeight="Bold" Height="40" HorizontalAlignment="Left" Margin="1140,7,0,0" Name="cmdAdd" Style="{StaticResource MenuButtonStyle}" VerticalAlignment="Top" Width="75" Grid.Row="2" Click="cmdAdd_Click" />
+                <DataGrid Name="gridEditPalletDetail" Margin="3" 
+                          AlternatingRowBackground="AntiqueWhite" 
+                          AutoGenerateColumns="False" 
+                          CanUserAddRows="False" 
+                          CanUserDeleteRows="False" 
+                          FontSize="20" 
+                          FontWeight="Bold" 
+                          HorizontalGridLinesBrush="Silver" 
+                          ItemsSource="{Binding}" 
+                          ScrollViewer.HorizontalScrollBarVisibility="Auto" 
+                          ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                          SelectionMode="Single" 
+                          VerticalGridLinesBrush="Silver" 
+                          Grid.Row="3" LoadingRow="gridEditPalletDetail_LoadingRow">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding PALLETNO}" Header="Pallet No" IsReadOnly="True" Width="150" />
+                        <DataGridTextColumn Binding="{Binding TRACENO}" Header="Trace No" IsReadOnly="True" Width="150" />
+                        <DataGridTextColumn Binding="{Binding LOTNO}" Header="Lot No" IsReadOnly="True" Width="120" />
+                        <DataGridTextColumn Binding="{Binding ITM_YARN}" Header="Item Type" IsReadOnly="True" Width="200" />
+                        <DataGridTextColumn Binding="{Binding YARNTYPE}" Header="Yarn Type" IsReadOnly="True" Width="110" />
+                        <DataGridTextColumn Binding="{Binding WEIGHTQTY, Mode=OneWay, StringFormat=\{0:#\,##0.##\}}" CellStyle="{StaticResource RightCellStyle}" Header="Weight" IsReadOnly="True" Width="100" />
+                        <DataGridTextColumn Binding="{Binding CONECH, Mode=OneWay, StringFormat=\{0:#\,##0.##\}}" CellStyle="{StaticResource RightCellStyle}" Header="CH" IsReadOnly="True" Width="100" />
+                        <DataGridTextColumn Binding="{Binding PALLETTYPE}" Header="Pallet Type" IsReadOnly="True" Width="120" />
+                        <DataGridTextColumn Binding="{Binding ENTRYDATE, StringFormat=\{0:dd/MM/yyyy\}}" Header="Receive Date" IsReadOnly="True" Width="175" />
+                    </DataGrid.Columns>
+                </DataGrid>
+               
+            </Grid>
+        </Border>
+    </DockPanel>
+</UserControl>

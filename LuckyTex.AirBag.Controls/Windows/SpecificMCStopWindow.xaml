@@ -1,0 +1,228 @@
+﻿<Window x:Class="LuckyTex.Windows.SpecificMCStopWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Specific M/C Stop" 
+        Height="530" 
+        Width="590" 
+        ShowInTaskbar="False"
+        Topmost="True"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize" 
+        Loaded="Window_Loaded">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/GroupBoxStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/RadioButtonStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/CheckedBoxStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="CenterCellStyle" TargetType="DataGridCell">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="RightCellStyle" TargetType="DataGridCell">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Right"
+                                      VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    
+    <DockPanel LastChildFill="True">
+        <!-- Caption Bar -->
+        <Border DockPanel.Dock="Top" CornerRadius="3" Margin="3, 3, 3, 0"
+                Background="CornflowerBlue"
+                Height="40">
+            <TextBlock Text="Specification type of PM"
+                       Foreground="White"
+                       FontSize="30" 
+                       FontWeight="Bold"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"/>
+        </Border>
+        <!-- Button Command Bars -->
+        <Border DockPanel.Dock="Bottom" 
+                CornerRadius="3" Margin="3, 3, 3, 0"
+                Height="200">
+                <DataGrid 
+                             x:Name="gridWarp" 
+                                Margin="3,3,0,3"
+                                ItemsSource="{Binding}"
+                                SelectionMode="Single"
+                                AlternatingRowBackground="AntiqueWhite"
+                                AutoGenerateColumns="False"
+                                CanUserAddRows="False"
+                                CanUserDeleteRows="False"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                HorizontalGridLinesBrush="Silver" 
+                                VerticalGridLinesBrush="Silver"
+                                HorizontalContentAlignment="Left" 
+                                ScrollViewer.CanContentScroll="True" 
+                                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                    <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding REASON}" Header="Stop Reason" IsReadOnly="True" Width="150" CellStyle="{StaticResource CenterCellStyle}"/>
+
+                        <DataGridTextColumn Width="120" Header="Length" 
+                                    Binding="{Binding LENGTH, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+
+                        <DataGridTextColumn Width="130" Header="Add By" 
+                                    Binding="{Binding OPERATOR}" 
+                                    IsReadOnly="True" CellStyle="{StaticResource RightCellStyle}"/>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+        </Border>
+        <Border DockPanel.Dock="Bottom" 
+                Background="#F0F0F0">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <Button x:Name="cmdSave" 
+                        Content="Save"
+                        FontSize="22" 
+                        FontWeight="Bold"
+                        Margin="5" 
+                        Height="40"
+                        Width="100"
+                        Style="{StaticResource MenuButtonStyle}" Click="cmdSave_Click">
+                </Button>
+                <Button x:Name="cmdClose" 
+                        Content="Close"
+                        FontSize="22" 
+                        FontWeight="Bold"
+                        Margin="5" 
+                        Height="40"
+                        Width="100"
+                        Style="{StaticResource MenuButtonStyle}" Click="cmdClose_Click">
+                </Button>
+            </StackPanel>
+        </Border>
+        <!-- Content -->
+        <Border CornerRadius="3" Margin="3" 
+                BorderThickness="2" BorderBrush="Black">
+                <Grid HorizontalAlignment="Stretch" 
+                      VerticalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="180" />
+                    <ColumnDefinition Width="180" />
+                    <ColumnDefinition Width="180" />
+                    <ColumnDefinition Width="5" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3" />
+                    <RowDefinition Height="45" />
+                    <RowDefinition Height="45" />
+                    <RowDefinition Height="45" />
+                    <RowDefinition Height="45" />
+                    <RowDefinition Height="3*" />
+                </Grid.RowDefinitions>
+                <TextBlock 
+                    Text="Warper Lot" 
+                    Margin="3,9,9,0" 
+                    Grid.Column="2"
+                    Grid.Row="1"
+                    FontSize="20" 
+                    FontWeight="Bold" 
+                    TextAlignment="Center" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Top"/>
+                <TextBox x:Name="txtWarperLot" 
+                    IsReadOnly="True"
+                    Margin="3,6,0,0" 
+                    Grid.Column="3"
+                    Grid.Row="1"
+                    CharacterCasing="Upper"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    TextAlignment="Center" VerticalAlignment="Top">
+                </TextBox>
+                <ComboBox Name="cbReason" 
+                              Margin="3,6,0,0" 
+                              TextSearch.TextPath=""
+                               FontSize="24"      
+                               FontWeight="Bold" 
+                               ItemsSource="{Binding Reason , Mode=OneWay}"
+                              Grid.Column="1" Grid.Row="2"  VerticalAlignment="Top" />
+                <TextBlock 
+                    Text="Length" 
+                    Margin="3,9,9,0" 
+                    Grid.Column="2"
+                    Grid.Row="2"
+                    FontSize="20" 
+                    FontWeight="Bold" 
+                    TextAlignment="Center" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Top"/>
+                <TextBox x:Name="txtLength" 
+                    Margin="3,6,0,0" 
+                    Grid.Column="3"
+                    Grid.Row="2"
+                    CharacterCasing="Upper"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    TextAlignment="Right" VerticalAlignment="Top" PreviewKeyDown="txtLength_PreviewKeyDown">
+                </TextBox>
+                <TextBlock 
+                    Text="Other" 
+                    Margin="3,9,9,0" 
+                    Grid.Column="1"
+                    Grid.Row="3"
+                    FontSize="20" 
+                    FontWeight="Bold" 
+                    TextAlignment="Center" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Top"/>
+                <TextBox x:Name="txtOther" 
+                    Margin="3,6,0,0" 
+                    Grid.Column="2"
+                    Grid.Row="3"
+                    CharacterCasing="Upper"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    TextAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2" PreviewKeyDown="txtOther_PreviewKeyDown">
+                </TextBox>
+                <TextBlock Text="Operator" 
+                           Margin="3,9,9,0" 
+                    Grid.Column="1"
+                    Grid.Row="4"
+                    FontSize="20" 
+                    FontWeight="Bold" 
+                    TextAlignment="Center" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Top"/>
+                <TextBox x:Name="txtOperator" 
+                    Margin="3,6,0,0" 
+                    Grid.Column="2"
+                    Grid.Row="4"
+                    CharacterCasing="Upper"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="txtOperator_PreviewKeyDown">
+                </TextBox>
+            </Grid>
+        </Border>
+    </DockPanel>
+</Window>

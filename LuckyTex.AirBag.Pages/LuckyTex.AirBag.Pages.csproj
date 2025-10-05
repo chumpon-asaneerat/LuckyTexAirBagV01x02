@@ -1,0 +1,1825 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FB191912-1638-4080-9021-39AB4E4980F0}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LuckyTex</RootNamespace>
+    <AssemblyName>LuckyTex.AirBag.Pages</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Executables\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>softbase.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BarcodeLib">
+      <HintPath>..\References\BarcodeLib.dll</HintPath>
+    </Reference>
+    <Reference Include="DataMatrix.Net2D">
+      <HintPath>..\References\DataMatrix.Net2D.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\References\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLib, Version=4.0.4.1, Culture=neutral, PublicKeyToken=6b9d63d2a8a62ab5, processorArchitecture=x86">
+      <HintPath>..\References\NLib.dll</HintPath>
+    </Reference>
+    <Reference Include="NLib.Modbus">
+      <HintPath>..\References\NLib.Modbus.dll</HintPath>
+    </Reference>
+    <Reference Include="NLib.Reports">
+      <HintPath>..\References\NLib.Reports.dll</HintPath>
+    </Reference>
+    <Reference Include="NModbus4">
+      <HintPath>..\References\NModbus4.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ClassData\BeamingClassData.cs" />
+    <Compile Include="ClassData\LabClassData.cs" />
+    <Compile Include="ClassData\DrawingClassData.cs" />
+    <Compile Include="ClassData\QualityAssuranceClassData.cs" />
+    <Compile Include="ClassData\G3ClassData.cs" />
+    <Compile Include="ClassData\SMTPSendMail\SMTPSendMail.cs" />
+    <Compile Include="ClassData\WarpingClassData.cs" />
+    <Compile Include="ClassData\WeavingClassData.cs" />
+    <Compile Include="ClassData\PackingClassData.cs" />
+    <Compile Include="ClassData\CUT_GETSLIPClassData.cs" />
+    <Compile Include="ClassData\FinishingClassData.cs" />
+    <Compile Include="ClassData\Print\ConmonReportService.cs" />
+    <Compile Include="ClassData\Print\MathEXClass.cs" />
+    <Compile Include="ClassData\Print\RepMasterForm.xaml.cs">
+      <DependentUpon>RepMasterForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ClassData\Print\Report.xaml.cs">
+      <DependentUpon>Report.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ClassData\Print\StickerPrintService.cs" />
+    <Compile Include="ClassData\tInspectionClassData.cs" />
+    <Compile Include="Controls\08 - Inspection\InspectionLongDefectEntry.xaml.cs">
+      <DependentUpon>InspectionLongDefectEntry.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\08 - Inspection\InspectionShortDefectEntry.xaml.cs">
+      <DependentUpon>InspectionShortDefectEntry.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\00 - Common\MainMenuPage.xaml.cs">
+      <DependentUpon>MainMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\02 - Warping\WarpingListPage.xaml.cs">
+      <DependentUpon>WarpingListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\03 - Beaming\BeamingListPage.xaml.cs">
+      <DependentUpon>BeamingListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\04 - Drawing\DrawingRecordPage.xaml.cs">
+      <DependentUpon>DrawingRecordPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\05 - Weaving\ShipmentReportPage.xaml.cs">
+      <DependentUpon>ShipmentReportPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Coating 1 Scouring\Coating1ScouringFinishingPage.xaml.cs">
+      <DependentUpon>Coating1ScouringFinishingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Coating 1 Scouring\Coating1ScouringPreparingPage.xaml.cs">
+      <DependentUpon>Coating1ScouringPreparingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Coating1 Coat\Coating12StepFinishingPage.xaml.cs">
+      <DependentUpon>Coating12StepFinishingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Coating1 Coat\Coating12StepPreparingPage.xaml.cs">
+      <DependentUpon>Coating12StepPreparingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Coating1 Dryer\Coating1DryerFinishingPage.xaml.cs">
+      <DependentUpon>Coating1DryerFinishingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Coating1 Dryer\Coating1DryerPreparingPage.xaml.cs">
+      <DependentUpon>Coating1DryerPreparingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Coating1\Coating1FinishingPage.xaml.cs">
+      <DependentUpon>Coating1FinishingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Coating1\Coating1PreparingPage.xaml.cs">
+      <DependentUpon>Coating1PreparingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Coating2\Coating2FinishingPage.xaml.cs">
+      <DependentUpon>Coating2FinishingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Coating2\Coating2PreparingPage.xaml.cs">
+      <DependentUpon>Coating2PreparingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Coating3 Scouring\Coating3ScouringFinishingPage.xaml.cs">
+      <DependentUpon>Coating3ScouringFinishingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Coating3 Scouring\Coating3ScouringPreparingPage.xaml.cs">
+      <DependentUpon>Coating3ScouringPreparingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Coating3 Scouring\Coating3ScouringProcessingPage.xaml.cs">
+      <DependentUpon>Coating3ScouringProcessingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Coating3\Coating3FinishingPage.xaml.cs">
+      <DependentUpon>Coating3FinishingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Coating3\Coating3PreparingPage.xaml.cs">
+      <DependentUpon>Coating3PreparingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Old Coating1 Scouring\Coating1ScouringProcessingPage.xaml.cs">
+      <DependentUpon>Coating1ScouringProcessingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Old Coating1 Scouring\OldCoating1ScouringFinishingPage.xaml.cs">
+      <DependentUpon>OldCoating1ScouringFinishingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Old Coating1 Scouring\OldCoating1ScouringPreparingPage.xaml.cs">
+      <DependentUpon>OldCoating1ScouringPreparingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Old Coating3 Scouring\OldCoating3ScouringFinishingPage.xaml.cs">
+      <DependentUpon>OldCoating3ScouringFinishingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Old Coating3 Scouring\OldCoating3ScouringPreparingPage.xaml.cs">
+      <DependentUpon>OldCoating3ScouringPreparingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Old Scouring2 Scouring Dry\Scouring2ScouringDryProcessingPage.xaml.cs">
+      <DependentUpon>Scouring2ScouringDryProcessingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Old Scouring2 Scouring Dry\OldScouring2ScouringDryFinishingPage.xaml.cs">
+      <DependentUpon>OldScouring2ScouringDryFinishingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Old Scouring2 Scouring Dry\OldScouring2ScouringDryPreparingPage.xaml.cs">
+      <DependentUpon>OldScouring2ScouringDryPreparingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\OldCoating3\Coating3ProcessingPage.xaml.cs">
+      <DependentUpon>Coating3ProcessingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\OldCoating3\OldCoating3FinishingPage.xaml.cs">
+      <DependentUpon>OldCoating3FinishingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\OldCoating3\OldCoating3PreparingPage.xaml.cs">
+      <DependentUpon>OldCoating3PreparingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\OldScouring Coat1\OldScouringCoat1FinishingPage.xaml.cs">
+      <DependentUpon>OldScouringCoat1FinishingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\OldScouring Coat1\OldScouringCoat1PreparingPage.xaml.cs">
+      <DependentUpon>OldScouringCoat1PreparingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\OldScouring Coat1\ScouringCoat1ProcessingPage.xaml.cs">
+      <DependentUpon>ScouringCoat1ProcessingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\OldScouring Coat2 10\OldScouringCoat210FinishingPage.xaml.cs">
+      <DependentUpon>OldScouringCoat210FinishingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\OldScouring Coat2 10\OldScouringCoat210PreparingPage.xaml.cs">
+      <DependentUpon>OldScouringCoat210PreparingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\OldScouring Coat2 10\ScouringCoat210ProcessingPage.xaml.cs">
+      <DependentUpon>ScouringCoat210ProcessingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\OldScouring Coat2\OldScouringCoat2FinishingPage.xaml.cs">
+      <DependentUpon>OldScouringCoat2FinishingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\OldScouring Coat2\OldScouringCoat2PreparingPage.xaml.cs">
+      <DependentUpon>OldScouringCoat2PreparingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\OldScouring Coat2\ScouringCoat2ProcessingPage.xaml.cs">
+      <DependentUpon>ScouringCoat2ProcessingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Scouring Coat1\ScouringCoat1FinishingPage.xaml.cs">
+      <DependentUpon>ScouringCoat1FinishingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Scouring Coat1\ScouringCoat1PreparingPage.xaml.cs">
+      <DependentUpon>ScouringCoat1PreparingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Scouring Coat2 10\ScouringCoat210FinishingPage.xaml.cs">
+      <DependentUpon>ScouringCoat210FinishingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Scouring Coat2 10\ScouringCoat210PreparingPage.xaml.cs">
+      <DependentUpon>ScouringCoat210PreparingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Scouring Coat2\ScouringCoat2FinishingPage.xaml.cs">
+      <DependentUpon>ScouringCoat2FinishingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Scouring Coat2\ScouringCoat2PreparingPage.xaml.cs">
+      <DependentUpon>ScouringCoat2PreparingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Scouring1\Scouring1FinishingPage.xaml.cs">
+      <DependentUpon>Scouring1FinishingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Scouring1\Scouring1PreparingPage.xaml.cs">
+      <DependentUpon>Scouring1PreparingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Scouring2 Scouring Dry\Scouring2ScouringDryFinishingPage.xaml.cs">
+      <DependentUpon>Scouring2ScouringDryFinishingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Scouring2 Scouring Dry\Scouring2ScouringDryPreparingPage.xaml.cs">
+      <DependentUpon>Scouring2ScouringDryPreparingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Scouring2\Scouring2PreparingPage.xaml.cs">
+      <DependentUpon>Scouring2PreparingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Scouring2\Scouring2FinishingPage.xaml.cs">
+      <DependentUpon>Scouring2FinishingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\OldScouring2\OldScouring2PreparingPage.xaml.cs">
+      <DependentUpon>OldScouring2PreparingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\ScouringDryer\ScouringDryerFinishingPage.xaml.cs">
+      <DependentUpon>ScouringDryerFinishingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\ScouringDryer\ScouringDryerPreparingPage.xaml.cs">
+      <DependentUpon>ScouringDryerPreparingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\12 - G3\CheckStockYarnPage.xaml.cs">
+      <DependentUpon>CheckStockYarnPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\02 - Warping\WarpingRecordPage.xaml.cs">
+      <DependentUpon>WarpingRecordPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\02 - Warping\RemainYarnPage.xaml.cs">
+      <DependentUpon>RemainYarnPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\02 - Warping\WarpingProcessPage.xaml.cs">
+      <DependentUpon>WarpingProcessPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\02 - Warping\WarperMCStatusPage.xaml.cs">
+      <DependentUpon>WarperMCStatusPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\02 - Warping\WarpingSettingPage.xaml.cs">
+      <DependentUpon>WarpingSettingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\02 - Warping\WarpingMCMenu.xaml.cs">
+      <DependentUpon>WarpingMCMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\02 - Warping\WarpingReceiveYarnPage.xaml.cs">
+      <DependentUpon>WarpingReceiveYarnPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\03 - Beaming\BeamingMCMenu.xaml.cs">
+      <DependentUpon>BeamingMCMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\03 - Beaming\BeamingSetupPage.xaml.cs">
+      <DependentUpon>BeamingSetupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\03 - Beaming\BeamingProcessPage.xaml.cs">
+      <DependentUpon>BeamingProcessPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\03 - Beaming\BeamingRecordPage.xaml.cs">
+      <DependentUpon>BeamingRecordPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\04 - Drawing\DrawingFinishPage.xaml.cs">
+      <DependentUpon>DrawingFinishPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\04 - Drawing\DrawingStartPage.xaml.cs">
+      <DependentUpon>DrawingStartPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\05 - Weaving\WeavingProductionPage.xaml.cs">
+      <DependentUpon>WeavingProductionPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\05 - Weaving\WeavingDoffingPage.xaml.cs">
+      <DependentUpon>WeavingDoffingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\05 - Weaving\WeavingProcessPage.xaml.cs">
+      <DependentUpon>WeavingProcessPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\OldCoating1 Coat\OldCoating12StepFinishingPage.xaml.cs">
+      <DependentUpon>OldCoating12StepFinishingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\OldCoating1 Coat\OldCoating12StepPreparingPage.xaml.cs">
+      <DependentUpon>OldCoating12StepPreparingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\OldCoating1 Coat\Coating12StepProcessingPage.xaml.cs">
+      <DependentUpon>Coating12StepProcessingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Old Coating1 Dryer\OldCoating1DryerFinishingPage.xaml.cs">
+      <DependentUpon>OldCoating1DryerFinishingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Old Coating1 Dryer\OldCoating1DryerPreparingPage.xaml.cs">
+      <DependentUpon>OldCoating1DryerPreparingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Old Coating1 Dryer\Coating1DryerProcessingPage.xaml.cs">
+      <DependentUpon>Coating1DryerProcessingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Menu\FinishingMCMenu.xaml.cs">
+      <DependentUpon>FinishingMCMenu.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Menu\FinishingSearchPage.xaml.cs">
+      <DependentUpon>FinishingSearchPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Menu\FinishingTestPage.xaml.cs">
+      <DependentUpon>FinishingTestPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Menu\FinishRecordPage.xaml.cs">
+      <DependentUpon>FinishRecordPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\10 - ProcessControl\SendAS400Page.xaml.cs">
+      <DependentUpon>SendAS400Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\11 - Cut &amp; Print\CutPrintListPage.xaml.cs">
+      <DependentUpon>CutPrintListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\12 - G3\EditIssueRawMaterialPage.xaml.cs">
+      <DependentUpon>EditIssueRawMaterialPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\12 - G3\ReceiveReturnMaterialPage.xaml.cs">
+      <DependentUpon>ReceiveReturnMaterialPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\12 - G3\IssueRawMaterialPage.xaml.cs">
+      <DependentUpon>IssueRawMaterialPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\13 - Packing\AutolivLabelPage.xaml.cs">
+      <DependentUpon>AutolivLabelPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\13 - Packing\RePrintLabelPage.xaml.cs">
+      <DependentUpon>RePrintLabelPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\13 - Packing\PalletEditPage.xaml.cs">
+      <DependentUpon>PalletEditPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\14 - LAB\WeavingHistoryPage.xaml.cs">
+      <DependentUpon>WeavingHistoryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\14 - LAB\LabFinishRecordPage.xaml.cs">
+      <DependentUpon>LabFinishRecordPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\14 - LAB\GreigeSamplingStatusPage.xaml.cs">
+      <DependentUpon>GreigeSamplingStatusPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\14 - LAB\GreigeReceiveSamplingPage.xaml.cs">
+      <DependentUpon>GreigeReceiveSamplingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\14 - LAB\GreigeMenuPage.xaml.cs">
+      <DependentUpon>GreigeMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\14 - LAB\MassProPage.xaml.cs">
+      <DependentUpon>MassProPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\14 - LAB\GreigePage.xaml.cs">
+      <DependentUpon>GreigePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\14 - LAB\ReceiveSamplingPage.xaml.cs">
+      <DependentUpon>ReceiveSamplingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\14 - LAB\MassProMenuPage.xaml.cs">
+      <DependentUpon>MassProMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\14 - LAB\LABMenuPage.xaml.cs">
+      <DependentUpon>LABMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\14 - LAB\SamplingStatusPage.xaml.cs">
+      <DependentUpon>SamplingStatusPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\16 - Defect\DefectCodePage.xaml.cs">
+      <DependentUpon>DefectCodePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\17 - ItemCode\ItemCodePage.xaml.cs">
+      <DependentUpon>ItemCodePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\18 - ProcessCondition\BeamingPage.xaml.cs">
+      <DependentUpon>BeamingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\18 - ProcessCondition\WarpingConditionPage.xaml.cs">
+      <DependentUpon>WarpingConditionPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\18 - ProcessCondition\FinishingCoatingPage.xaml.cs">
+      <DependentUpon>FinishingCoatingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\18 - ProcessCondition\DrawingPage.xaml.cs">
+      <DependentUpon>DrawingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\18 - ProcessCondition\FinishingDryerPage.xaml.cs">
+      <DependentUpon>FinishingDryerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\18 - ProcessCondition\ProcessConditionMenu.xaml.cs">
+      <DependentUpon>ProcessConditionMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\18 - ProcessCondition\FinishingScouringPage.xaml.cs">
+      <DependentUpon>FinishingScouringPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\19 - 100MRecord\HundredMRecordPage.xaml.cs">
+      <DependentUpon>HundredMRecordPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\20 - QualityAssurance\CheckingAirbagReportPage.xaml.cs">
+      <DependentUpon>CheckingAirbagReportPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\20 - QualityAssurance\CheckingReportDataPage.xaml.cs">
+      <DependentUpon>CheckingReportDataPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\20 - QualityAssurance\ManagementPage.xaml.cs">
+      <DependentUpon>ManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\20 - QualityAssurance\QualityAssuranceMenuPage.xaml.cs">
+      <DependentUpon>QualityAssuranceMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\21 - AS400PCKPRFTP\AS400PCKPRFTPPage.xaml.cs">
+      <DependentUpon>AS400PCKPRFTPPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\21 - AS400PCKPRFTP\PackingListScanBarcodePage.xaml.cs">
+      <DependentUpon>PackingListScanBarcodePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\21 - AS400PCKPRFTP\PackingListScanBarcodeToyotaPage.xaml.cs">
+      <DependentUpon>PackingListScanBarcodeToyotaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\21 - AS400PCKPRFTP\ManualPackingListPage.xaml.cs">
+      <DependentUpon>ManualPackingListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\21 - AS400PCKPRFTP\PackingListMainMenuPage.xaml.cs">
+      <DependentUpon>PackingListMainMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\02 - Warping\WarperMCEditWindow.xaml.cs">
+      <DependentUpon>WarperMCEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\02 - Warping\WarpingEditWindow.xaml.cs">
+      <DependentUpon>WarpingEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\03 - Beaming\EditBeamNoWindow.xaml.cs">
+      <DependentUpon>EditBeamNoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\03 - Beaming\BeamerMCEditWindow.xaml.cs">
+      <DependentUpon>BeamerMCEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\03 - Beaming\BeamingEditWindow.xaml.cs">
+      <DependentUpon>BeamingEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\05 - Weaving\EditWeavingLotWindow.xaml.cs">
+      <DependentUpon>EditWeavingLotWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\05 - Weaving\WeavingSpecificMCStopWindow.xaml.cs">
+      <DependentUpon>WeavingSpecificMCStopWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\05 - Weaving\WeavingSamplingWindow.xaml.cs">
+      <DependentUpon>WeavingSamplingWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\05 - Weaving\WeavingWeftYarnWindow.xaml.cs">
+      <DependentUpon>WeavingWeftYarnWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\06 - Finishing\FinishingEditLengthWindow.xaml.cs">
+      <DependentUpon>FinishingEditLengthWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\06 - Finishing\SamplingCoatingWindow.xaml.cs">
+      <DependentUpon>SamplingCoatingWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\10 - ProcessControl\ManualInspectionPage.xaml.cs">
+      <DependentUpon>ManualInspectionPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\12 - G3\AS400Page.xaml.cs">
+      <DependentUpon>AS400Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\12 - G3\ImportExcelPage.xaml.cs">
+      <DependentUpon>ImportExcelPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\01 - Warehouse\DeliverYarnDetailPage.xaml.cs">
+      <DependentUpon>DeliverYarnDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\12 - G3\G3MenuPage.xaml.cs">
+      <DependentUpon>G3MenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\12 - G3\ReceiveFabricPage.xaml.cs">
+      <DependentUpon>ReceiveFabricPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\12 - G3\ReceiveSiliconePage.xaml.cs">
+      <DependentUpon>ReceiveSiliconePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\01 - Warehouse\ReceiveYARNDetailPage.xaml.cs">
+      <DependentUpon>ReceiveYARNDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\12 - G3\ReceiveYARNPage.xaml.cs">
+      <DependentUpon>ReceiveYARNPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\01 - Warehouse\WarehouseMenuPage.xaml.cs">
+      <DependentUpon>WarehouseMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\02 - Warping\Old\CreateNewWarpingLotPage.xaml.cs">
+      <DependentUpon>CreateNewWarpingLotPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\02 - Warping\Old\WarpingConditioningPage.xaml.cs">
+      <DependentUpon>WarpingConditioningPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\02 - Warping\WarpingMenuPage.xaml.cs">
+      <DependentUpon>WarpingMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\02 - Warping\WarpingProcessMenuPage.xaml.cs">
+      <DependentUpon>WarpingProcessMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\02 - Warping\Old\OldWarpingProcessPage.xaml.cs">
+      <DependentUpon>OldWarpingProcessPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\02 - Warping\Old\OldWarpingReceiveYarnPage.xaml.cs">
+      <DependentUpon>OldWarpingReceiveYarnPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\02 - Warping\Old\OldWarpingRequestYarnPage.xaml.cs">
+      <DependentUpon>OldWarpingRequestYarnPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\02 - Warping\Old\OldWarpingReturnYarnPage.xaml.cs">
+      <DependentUpon>OldWarpingReturnYarnPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\02 - Warping\Old\WarpingSearchPage.xaml.cs">
+      <DependentUpon>WarpingSearchPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\02 - Warping\Old\OldWarpingSettingPage.xaml.cs">
+      <DependentUpon>OldWarpingSettingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\03 - Beaming\BeamingMenuPage.xaml.cs">
+      <DependentUpon>BeamingMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\03 - Beaming\Old\BeamingProcessDetailPage.xaml.cs">
+      <DependentUpon>BeamingProcessDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\03 - Beaming\Old\BeamingSearchPage.xaml.cs">
+      <DependentUpon>BeamingSearchPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\03 - Beaming\Old\BeamingSettingPage.xaml.cs">
+      <DependentUpon>BeamingSettingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\04 - Drawing\DrawingMenuPage.xaml.cs">
+      <DependentUpon>DrawingMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\04 - Drawing\Old\DrawingProcessPage.xaml.cs">
+      <DependentUpon>DrawingProcessPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\04 - Drawing\Old\DrawingSettingPage.xaml.cs">
+      <DependentUpon>DrawingSettingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\05 - Weaving\WeavingPage.xaml.cs">
+      <DependentUpon>WeavingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\05 - Weaving\WeavingMenuPage.xaml.cs">
+      <DependentUpon>WeavingMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\05 - Weaving\WeavingSettingPage.xaml.cs">
+      <DependentUpon>WeavingSettingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\05 - Weaving\Old\OldWeavingProcessPage.xaml.cs">
+      <DependentUpon>OldWeavingProcessPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\OldCoating1\OldCoating1PreparingPage.xaml.cs">
+      <DependentUpon>OldCoating1PreparingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\OldCoating1\OldCoating1FinishingPage.xaml.cs">
+      <DependentUpon>OldCoating1FinishingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\OldCoating1\Coating1ProcessingPage.xaml.cs">
+      <DependentUpon>Coating1ProcessingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\OldCoating2\OldCoating2FinishingPage.xaml.cs">
+      <DependentUpon>OldCoating2FinishingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\OldCoating2\OldCoating2PreparingPage.xaml.cs">
+      <DependentUpon>OldCoating2PreparingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\OldCoating2\Coating2ProcessingPage.xaml.cs">
+      <DependentUpon>Coating2ProcessingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\OldScouring1\OldScouring1FinishingPage.xaml.cs">
+      <DependentUpon>OldScouring1FinishingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\OldScouring1\Scouring1ProcessingPage.xaml.cs">
+      <DependentUpon>Scouring1ProcessingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\OldScouring1\OldScouring1PreparingPage.xaml.cs">
+      <DependentUpon>OldScouring1PreparingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\OldScouring2\OldScouring2FinishingPage.xaml.cs">
+      <DependentUpon>OldScouring2FinishingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\OldScouring2\Scouring2ProcessingPage.xaml.cs">
+      <DependentUpon>Scouring2ProcessingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Old ScouringDryer\OldScouringDryerFinishingPage.xaml.cs">
+      <DependentUpon>OldScouringDryerFinishingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Old ScouringDryer\ScouringDryerProcessingPage.xaml.cs">
+      <DependentUpon>ScouringDryerProcessingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 - Finishing\Old ScouringDryer\OldScouringDryerPreparingPage.xaml.cs">
+      <DependentUpon>OldScouringDryerPreparingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\08 - Inspection\SearchInspectionDataPage.xaml.cs">
+      <DependentUpon>SearchInspectionDataPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\08 - Inspection\InspectionMCMenu.xaml.cs">
+      <DependentUpon>InspectionMCMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\08 - Inspection\InspectionModulePage.xaml.cs">
+      <DependentUpon>InspectionModulePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\08 - Inspection\WeightMeasurementPage.xaml.cs">
+      <DependentUpon>WeightMeasurementPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pages\09 - Operator\OperatorPage.xaml.cs">
+      <DependentUpon>OperatorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\10 - ProcessControl\ProcessControlMenu.xaml.cs">
+      <DependentUpon>ProcessControlMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\10 - ProcessControl\ProcessControlPage.xaml.cs">
+      <DependentUpon>ProcessControlPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\11 - Cut &amp; Print\CutPrintMCMenu.xaml.cs">
+      <DependentUpon>CutPrintMCMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\11 - Cut &amp; Print\CutPrintPage.xaml.cs">
+      <DependentUpon>CutPrintPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\13 - Packing\PalletListPage.xaml.cs">
+      <DependentUpon>PalletListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\13 - Packing\PalletSetupPage.xaml.cs">
+      <DependentUpon>PalletSetupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\13 - Packing\PackingMCMenu.xaml.cs">
+      <DependentUpon>PackingMCMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\13 - Packing\PackingLabelPage.xaml.cs">
+      <DependentUpon>PackingLabelPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\14 - LAB\LABPage.xaml.cs">
+      <DependentUpon>LABPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\15 - CustomerAndLoadingType\CustomerLoadingPage.xaml.cs">
+      <DependentUpon>CustomerLoadingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Services\PageManager.cs" />
+    <Compile Include="Windows\06 - Finishing\SamplingWindow.xaml.cs">
+      <DependentUpon>SamplingWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Windows\08 - Inspection\ConfirmstartLengthWindow.xaml.cs">
+      <DependentUpon>ConfirmstartLengthWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\08 - Inspection\ShiftRemarkWindow.xaml.cs">
+      <DependentUpon>ShiftRemarkWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\08 - Inspection\WeightMeasurementWindow.xaml.cs">
+      <DependentUpon>WeightMeasurementWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\08 - Inspection\InspectionTestEntryWindow.xaml.cs">
+      <DependentUpon>InspectionTestEntryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\08 - Inspection\InspectionLotSelectionWindow.xaml.cs">
+      <DependentUpon>InspectionLotSelectionWindow.xaml</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepFM-QC-26-05_CM01.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\Copy of RepPalletList.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepFM-QC-26-05_CM010506.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepFM-QC-26-05_CM0105.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\Copy of RepG3_GoLabel.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepFM-QC-26-05.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepFM-QC-49-00.rdlc" />
+    <EmbeddedResource Include="Report\RepFM-QC-49-00_Old.rdlc" />
+    <EmbeddedResource Include="Report\RepPackingLabel2DBig.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepPackingLabel2D_Old.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepPackingLabel2D.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepSample4L50B25R.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepSample4755ATW.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepSample4746P25R.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepPackingLabel2.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepScouringCoat1.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepBeamingList.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepWarpingList.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepCUT_SERACHLIST.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepCoating3Scouring2.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepScouring2ScouringDry.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepCoating1Scouring.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepScouringCoat2.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepScouringCoat210.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepWEAV_SHIPMENTREPORT.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepDRAW_DAILYREPORT.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepDRAW_TRANSFERSLIP.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepCoating3Scouring.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepCheckingAirbag.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepCUT_GETSLIP2.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepCUT_GETSLIP_N2.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepCUT_GETSLIP_N.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepInspectionRemark.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepCoating3.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepIssueRawMaterial.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepG3_GoLabel.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepWeavingRecord.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepWeavingHistory.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepPalletList.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepFinishRecord.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepCoating12Step.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepCoating1Dryer.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepBeamingRecord.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepWarpingRecord.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepWeavingSampling.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepEMQC1906.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepFMQC1806.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepSampling.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepBeamTransferSlip.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepTransferSlip.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepGreyRollDaily.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepPackingLabel.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepCUT_GETSLIP.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepBarcodePart.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepCoating2.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepCoating1.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepScouring2.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepScouringDryer.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepInspection.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepScouring1.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\RepWeaving.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\DataControl.ClassData.CUT_GETSLIPClassData+ListCUT_GETSLIP.datasource" />
+    <None Include="Properties\DataSources\DataControl.ClassData.CUT_GETSLIPClassData.datasource" />
+    <None Include="Properties\DataSources\DataControl.ClassData.FinishingClassData+ListBarcodePart.datasource" />
+    <None Include="Properties\DataSources\DataControl.ClassData.FinishingClassData+ListCoating.datasource" />
+    <None Include="Properties\DataSources\DataControl.ClassData.FinishingClassData+ListCoatingCondition.datasource" />
+    <None Include="Properties\DataSources\DataControl.ClassData.FinishingClassData+ListDryer.datasource" />
+    <None Include="Properties\DataSources\DataControl.ClassData.FinishingClassData+ListDryerCondition.datasource" />
+    <None Include="Properties\DataSources\DataControl.ClassData.FinishingClassData+ListFINISHRECORD.datasource" />
+    <None Include="Properties\DataSources\DataControl.ClassData.FinishingClassData+ListSampling.datasource" />
+    <None Include="Properties\DataSources\DataControl.ClassData.FinishingClassData+ListScouring.datasource" />
+    <None Include="Properties\DataSources\DataControl.ClassData.FinishingClassData+ListScouringCondition.datasource" />
+    <None Include="Properties\DataSources\DataControl.ClassData.LabClassData+ListLAB_SEARCHLABENTRYPRODUCTION.datasource" />
+    <None Include="Properties\DataSources\DataControl.ClassData.PackingClassData+ListPack_PalletSheet.datasource" />
+    <None Include="Properties\DataSources\DataControl.ClassData.tInspectionClassData+ListInsdefectList.datasource" />
+    <None Include="Properties\DataSources\DataControl.ClassData.tInspectionClassData+ListInspection.datasource" />
+    <None Include="Properties\DataSources\DataControl.ClassData.tInspectionClassData+ListInstestreCordList.datasource" />
+    <None Include="Properties\DataSources\DataControl.ClassData.tInspectionClassData.datasource" />
+    <None Include="Properties\DataSources\DataControl.ClassData.WarpingClassData+ListWarpingRecordHead.datasource" />
+    <None Include="Properties\DataSources\DataControl.ClassData.WeavingClassData+ListWeavingSampling.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+    <None Include="softbase.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LuckyTex.AirBag.Controls\LuckyTex.AirBag.Controls.csproj">
+      <Project>{A48DE6DA-9EE3-45D0-9833-A59BA43BE50D}</Project>
+      <Name>LuckyTex.AirBag.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LuckyTex.AirBag.Core\LuckyTex.AirBag.Core.csproj">
+      <Project>{BFB13DCE-F58C-4DCA-97BE-717B311FD5BE}</Project>
+      <Name>LuckyTex.AirBag.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="ClassData\Print\RepMasterForm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ClassData\Print\Report.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\08 - Inspection\InspectionLongDefectEntry.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\08 - Inspection\InspectionShortDefectEntry.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\00 - Common\MainMenuPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\02 - Warping\WarpingListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\03 - Beaming\BeamingListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\04 - Drawing\DrawingRecordPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\05 - Weaving\ShipmentReportPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Coating 1 Scouring\Coating1ScouringFinishingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Coating 1 Scouring\Coating1ScouringPreparingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Coating1 Coat\Coating12StepFinishingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Coating1 Coat\Coating12StepPreparingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Coating1 Dryer\Coating1DryerFinishingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Coating1 Dryer\Coating1DryerPreparingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Coating1\Coating1FinishingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Coating1\Coating1PreparingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Coating2\Coating2FinishingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Coating2\Coating2PreparingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Coating3 Scouring\Coating3ScouringFinishingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Coating3 Scouring\Coating3ScouringPreparingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Coating3 Scouring\Coating3ScouringProcessingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Coating3\Coating3FinishingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Coating3\Coating3PreparingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Old Coating1 Scouring\Coating1ScouringProcessingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Old Coating1 Scouring\OldCoating1ScouringFinishingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Old Coating1 Scouring\OldCoating1ScouringPreparingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Old Coating3 Scouring\OldCoating3ScouringFinishingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Old Coating3 Scouring\OldCoating3ScouringPreparingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Old Scouring2 Scouring Dry\Scouring2ScouringDryProcessingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Old Scouring2 Scouring Dry\OldScouring2ScouringDryFinishingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Old Scouring2 Scouring Dry\OldScouring2ScouringDryPreparingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\OldCoating3\Coating3ProcessingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\OldCoating3\OldCoating3FinishingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\OldCoating3\OldCoating3PreparingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\OldScouring Coat1\OldScouringCoat1FinishingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\OldScouring Coat1\OldScouringCoat1PreparingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\OldScouring Coat1\ScouringCoat1ProcessingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\OldScouring Coat2 10\OldScouringCoat210FinishingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\OldScouring Coat2 10\OldScouringCoat210PreparingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\OldScouring Coat2 10\ScouringCoat210ProcessingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\OldScouring Coat2\OldScouringCoat2FinishingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\OldScouring Coat2\OldScouringCoat2PreparingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\OldScouring Coat2\ScouringCoat2ProcessingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Scouring Coat1\ScouringCoat1FinishingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Scouring Coat1\ScouringCoat1PreparingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Scouring Coat2 10\ScouringCoat210FinishingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Scouring Coat2 10\ScouringCoat210PreparingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Scouring Coat2\ScouringCoat2FinishingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Scouring Coat2\ScouringCoat2PreparingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Scouring1\Scouring1FinishingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Scouring1\Scouring1PreparingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Scouring2 Scouring Dry\Scouring2ScouringDryFinishingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Scouring2 Scouring Dry\Scouring2ScouringDryPreparingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Scouring2\Scouring2PreparingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Scouring2\Scouring2FinishingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\OldScouring2\OldScouring2PreparingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\ScouringDryer\ScouringDryerFinishingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\ScouringDryer\ScouringDryerPreparingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\12 - G3\CheckStockYarnPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\02 - Warping\WarpingRecordPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\02 - Warping\RemainYarnPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\02 - Warping\WarpingProcessPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\02 - Warping\WarperMCStatusPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\02 - Warping\WarpingSettingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\02 - Warping\WarpingMCMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\02 - Warping\WarpingReceiveYarnPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\03 - Beaming\BeamingMCMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\03 - Beaming\BeamingSetupPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\03 - Beaming\BeamingProcessPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\03 - Beaming\BeamingRecordPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\04 - Drawing\DrawingFinishPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\04 - Drawing\DrawingStartPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\05 - Weaving\WeavingProductionPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\05 - Weaving\WeavingDoffingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\05 - Weaving\WeavingProcessPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\OldCoating1 Coat\OldCoating12StepFinishingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\OldCoating1 Coat\OldCoating12StepPreparingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\OldCoating1 Coat\Coating12StepProcessingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Old Coating1 Dryer\OldCoating1DryerFinishingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Old Coating1 Dryer\OldCoating1DryerPreparingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Old Coating1 Dryer\Coating1DryerProcessingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Menu\FinishingMCMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Menu\FinishingSearchPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Menu\FinishingTestPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Menu\FinishRecordPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\10 - ProcessControl\SendAS400Page.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\11 - Cut &amp; Print\CutPrintListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\12 - G3\EditIssueRawMaterialPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\12 - G3\ReceiveReturnMaterialPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\12 - G3\IssueRawMaterialPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\13 - Packing\AutolivLabelPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\13 - Packing\RePrintLabelPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\13 - Packing\PalletEditPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\14 - LAB\WeavingHistoryPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\14 - LAB\LabFinishRecordPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\14 - LAB\GreigeSamplingStatusPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\14 - LAB\GreigeReceiveSamplingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\14 - LAB\GreigeMenuPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\14 - LAB\MassProPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\14 - LAB\GreigePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\14 - LAB\ReceiveSamplingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\14 - LAB\MassProMenuPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\14 - LAB\LABMenuPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\14 - LAB\SamplingStatusPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\16 - Defect\DefectCodePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\17 - ItemCode\ItemCodePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\18 - ProcessCondition\BeamingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\18 - ProcessCondition\WarpingConditionPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\18 - ProcessCondition\FinishingCoatingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\18 - ProcessCondition\DrawingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\18 - ProcessCondition\FinishingDryerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\18 - ProcessCondition\ProcessConditionMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\18 - ProcessCondition\FinishingScouringPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\19 - 100MRecord\HundredMRecordPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\20 - QualityAssurance\CheckingAirbagReportPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\20 - QualityAssurance\CheckingReportDataPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\20 - QualityAssurance\ManagementPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\20 - QualityAssurance\QualityAssuranceMenuPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\21 - AS400PCKPRFTP\AS400PCKPRFTPPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\21 - AS400PCKPRFTP\PackingListScanBarcodePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\21 - AS400PCKPRFTP\PackingListScanBarcodeToyotaPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\21 - AS400PCKPRFTP\ManualPackingListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\21 - AS400PCKPRFTP\PackingListMainMenuPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\02 - Warping\WarperMCEditWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\02 - Warping\WarpingEditWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\03 - Beaming\EditBeamNoWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\03 - Beaming\BeamerMCEditWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\03 - Beaming\BeamingEditWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\05 - Weaving\EditWeavingLotWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\05 - Weaving\WeavingSpecificMCStopWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\05 - Weaving\WeavingSamplingWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\05 - Weaving\WeavingWeftYarnWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\06 - Finishing\FinishingEditLengthWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\06 - Finishing\SamplingCoatingWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\10 - ProcessControl\ManualInspectionPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\12 - G3\AS400Page.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\12 - G3\ImportExcelPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\01 - Warehouse\DeliverYarnDetailPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\12 - G3\G3MenuPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\12 - G3\ReceiveFabricPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\12 - G3\ReceiveSiliconePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\01 - Warehouse\ReceiveYARNDetailPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\12 - G3\ReceiveYARNPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\01 - Warehouse\WarehouseMenuPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\02 - Warping\Old\CreateNewWarpingLotPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\02 - Warping\Old\WarpingConditioningPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\02 - Warping\WarpingMenuPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\02 - Warping\WarpingProcessMenuPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\02 - Warping\Old\OldWarpingProcessPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\02 - Warping\Old\OldWarpingReceiveYarnPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\02 - Warping\Old\OldWarpingRequestYarnPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\02 - Warping\Old\OldWarpingReturnYarnPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\02 - Warping\Old\WarpingSearchPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\02 - Warping\Old\OldWarpingSettingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\03 - Beaming\BeamingMenuPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\03 - Beaming\Old\BeamingProcessDetailPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\03 - Beaming\Old\BeamingSearchPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\03 - Beaming\Old\BeamingSettingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\04 - Drawing\DrawingMenuPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\04 - Drawing\Old\DrawingProcessPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\04 - Drawing\Old\DrawingSettingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\05 - Weaving\WeavingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\05 - Weaving\WeavingMenuPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\05 - Weaving\WeavingSettingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\05 - Weaving\Old\OldWeavingProcessPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\OldCoating1\OldCoating1PreparingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\OldCoating1\OldCoating1FinishingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\OldCoating1\Coating1ProcessingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\OldCoating2\OldCoating2FinishingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\OldCoating2\OldCoating2PreparingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\OldCoating2\Coating2ProcessingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\OldScouring1\OldScouring1FinishingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\OldScouring1\Scouring1ProcessingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\OldScouring1\OldScouring1PreparingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\OldScouring2\OldScouring2FinishingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\OldScouring2\Scouring2ProcessingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Old ScouringDryer\OldScouringDryerFinishingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Old ScouringDryer\ScouringDryerProcessingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 - Finishing\Old ScouringDryer\OldScouringDryerPreparingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\08 - Inspection\SearchInspectionDataPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\08 - Inspection\InspectionMCMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\08 - Inspection\InspectionModulePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\08 - Inspection\WeightMeasurementPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\09 - Operator\OperatorPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\10 - ProcessControl\ProcessControlMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\10 - ProcessControl\ProcessControlPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\11 - Cut &amp; Print\CutPrintMCMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\11 - Cut &amp; Print\CutPrintPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\13 - Packing\PalletListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\13 - Packing\PalletSetupPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\13 - Packing\PackingMCMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\13 - Packing\PackingLabelPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\14 - LAB\LABPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\15 - CustomerAndLoadingType\CustomerLoadingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\06 - Finishing\SamplingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\08 - Inspection\ConfirmstartLengthWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\08 - Inspection\ShiftRemarkWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\08 - Inspection\WeightMeasurementWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\08 - Inspection\InspectionTestEntryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\08 - Inspection\InspectionLotSelectionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Resource Include="Styles\InspectionDataItemStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ClassData\Print\Image\C.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ClassData\Print\Image\L.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ClassData\Print\Image\R.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ClassData\Print\Image\true.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\true.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\false.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>4</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>6</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

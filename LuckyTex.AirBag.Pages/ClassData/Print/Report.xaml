@@ -1,0 +1,16 @@
+﻿<Window x:Class="DataControl.ClassData.Report"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:if="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration" 
+         xmlns:reportviewer="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
+        Title="Report" Height="300" Width="300"
+        >
+    <Grid>
+        <if:WindowsFormsHost Grid.Row="1">
+
+            <reportviewer:ReportViewer x:Name="_reportViewer">
+
+            </reportviewer:ReportViewer>
+        </if:WindowsFormsHost>
+    </Grid>
+</Window>

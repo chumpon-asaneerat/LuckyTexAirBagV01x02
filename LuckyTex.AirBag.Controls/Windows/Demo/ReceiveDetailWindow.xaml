@@ -1,0 +1,198 @@
+﻿<Window x:Class="LuckyTex.Windows.ReceiveDetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Receive" 
+        Height="500" 
+        Width="900" 
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize" Loaded="Window_Loaded" Topmost="True">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/GroupBoxStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/RadioButtonStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <DockPanel LastChildFill="True">
+        <!-- Caption Bar -->
+        <Border DockPanel.Dock="Top" CornerRadius="3" Margin="3, 3, 3, 0"
+                Background="CornflowerBlue"
+                Height="40">
+            <TextBlock Text="Receive"
+                       Foreground="White"
+                       FontSize="30" 
+                       FontWeight="Bold"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"/>
+        </Border>
+        <!-- Button Command Bars -->
+        <Border Background="#F0F0F0"
+                DockPanel.Dock="Bottom">
+            <StackPanel DockPanel.Dock="Bottom" 
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+                <Button x:Name="cmdOk" 
+                        Content="OK"
+                        Margin="5" 
+                        FontSize="22"
+                        FontWeight="Bold"
+                        Height="40" 
+                        Width="107"
+                        Style="{StaticResource MenuButtonStyle}" Click="cmdOk_Click">
+                </Button>
+                <Button x:Name="cmdCancel" 
+                        Content="CANCEL"
+                        Margin="5" 
+                        FontSize="22"
+                        FontWeight="Bold"
+                        Height="40" 
+                        Width="107"
+                        Style="{StaticResource MenuButtonStyle}" Click="cmdCancel_Click">
+                </Button>
+            </StackPanel>
+        </Border>
+        <!-- Content -->
+        <Border Background="#F0F0F0"
+                DockPanel.Dock="Bottom">
+            <StackPanel DockPanel.Dock="Bottom" 
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="439*" />
+                        <ColumnDefinition Width="439*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Margin="0,0,277,12" Text="Other (ระบุ) : " FontSize="24" FontWeight="Bold" VerticalAlignment="Bottom" HorizontalAlignment="Right" TextAlignment="Center" />
+                    <Border BorderBrush="Black" BorderThickness="1" CornerRadius="3" Margin="0,0,100,3" Background="White" HorizontalAlignment="Right" Width="170" Height="50" VerticalAlignment="Bottom">
+                        <TextBox x:Name="txtOther" Margin="5" Text="" Foreground="Black" FontSize="24" FontWeight="Bold" Width="164" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"/>
+                    </Border>
+                    <TextBlock Margin="18,0,0,12" Text="Action : " FontSize="24" FontWeight="Bold" VerticalAlignment="Bottom" HorizontalAlignment="Left" TextAlignment="Center" Grid.Column="1" />
+                    <Border BorderBrush="Black" BorderThickness="1" CornerRadius="3" Margin="120,0,0,4" Background="White" HorizontalAlignment="Left" Width="170" Height="50" VerticalAlignment="Bottom" Grid.Column="1">
+                        <TextBox x:Name="txtAction" Margin="5" Text="" Foreground="Black" FontSize="24" FontWeight="Bold" Width="164" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"/>
+                    </Border>
+                </Grid>
+            </StackPanel>
+        </Border>
+        <!-- Content -->
+        <Border CornerRadius="3" Margin="3" 
+                BorderThickness="2" BorderBrush="Black">
+            <DataGrid x:Name="grid"
+                  Margin="5"
+                  ItemsSource="{Binding}"
+                  AlternatingRowBackground="AntiqueWhite"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="True"
+                  CanUserDeleteRows="True"
+                  CanUserReorderColumns="False"
+                  CanUserResizeRows="False" 
+                  GridLinesVisibility="None"
+                  EnableColumnVirtualization="True"
+                  EnableRowVirtualization="True"
+                  SelectionMode="Extended"
+                  SelectionUnit="Cell"
+                  CanUserResizeColumns="False"
+                  CanUserSortColumns="False"
+                  IsSynchronizedWithCurrentItem="True"
+                  HorizontalGridLinesBrush="Silver" 
+                  VerticalGridLinesBrush="Silver"
+                  FontFamily="Times New Roman" 
+                  FontSize="20">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Width="100"
+                                        Header="Packaging">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <RadioButton x:Name="rbPackaging" Width="50"
+                                         Background="Transparent"
+                                         GroupName="{Binding Index}"
+                                         IsChecked="{Binding Packaging, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         Style="{StaticResource imageRadioButtonOKStyle}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="80"
+                                        Header="Clear">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <RadioButton x:Name="rbClear" Width="50"
+                                         Background="Transparent"
+                                         GroupName="{Binding Index}"
+                                         IsChecked="{Binding Clear, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         Style="{StaticResource imageRadioButtonNGStyle}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="80"
+                                        Header="Tearing">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <RadioButton x:Name="rbTearing" Width="50"
+                                         Background="Transparent"
+                                         GroupName="{Binding Index}"
+                                         IsChecked="{Binding Tearing, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         Style="{StaticResource imageRadioButtonNGStyle}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="100"
+                                        Header="Fall Down">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <RadioButton x:Name="rbFallDown" Width="50"
+                                         Background="Transparent"
+                                         GroupName="{Binding Index}"
+                                         IsChecked="{Binding FallDown, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         Style="{StaticResource imageRadioButtonNGStyle}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="120"
+                                        Header="Certification">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <RadioButton x:Name="rbCertification" Width="50"
+                                         Background="Transparent"
+                                         GroupName="{Binding Index}"
+                                         IsChecked="{Binding Certification, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         Style="{StaticResource imageRadioButtonNGStyle}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="80"
+                                        Header="Invoice">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <RadioButton x:Name="rbInvoice" Width="50"
+                                         Background="Transparent"
+                                         GroupName="{Binding Index}"
+                                         IsChecked="{Binding Invoice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         Style="{StaticResource imageRadioButtonNGStyle}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="120"
+                                        Header="Identify Area">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <RadioButton x:Name="rbIdentifyArea" Width="50"
+                                         Background="Transparent"
+                                         GroupName="{Binding Index}"
+                                         IsChecked="{Binding IdentifyArea, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         Style="{StaticResource imageRadioButtonNGStyle}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Width="150" Header="Amount of pallet" 
+                                    Binding="{Binding Amount}" 
+                                    IsReadOnly="True"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </Border>
+    </DockPanel>
+</Window>

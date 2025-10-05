@@ -1,0 +1,306 @@
+﻿<UserControl x:Class="LuckyTex.Pages.WeavingSettingPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="845" d:DesignWidth="1200" Loaded="UserControl_Loaded">
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/GroupBoxStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/RadioButtonStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/CheckedBoxStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="CenterCellStyle" TargetType="DataGridCell">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="RightCellStyle" TargetType="DataGridCell">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Right"
+                                      VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <DockPanel LastChildFill="True">
+        <!-- Caption Bar -->
+        <Border DockPanel.Dock="Top" CornerRadius="3" Margin="3, 3, 3, 0"
+                Background="CornflowerBlue"
+                Height="40">
+            <TextBlock Text="Weaving Setting"
+                       Foreground="White"
+                       FontSize="30" 
+                       FontWeight="Bold"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"/>
+        </Border>
+        <!-- Button Command Bars -->
+        <DockPanel DockPanel.Dock="Bottom" LastChildFill="True" 
+                   Background="#F0F0F0"
+                   Margin="5, 0">
+            <!-- Back -->
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <Button x:Name="cmdBack"
+                        Content="Back"
+                        Margin="2" 
+                        Width="150"
+                        FontSize="30" 
+                        FontWeight="Bold"
+                        Style="{StaticResource MenuButtonStyle}" 
+                        Click="cmdBack_Click" />
+            </StackPanel>
+            <Grid/>
+        </DockPanel>
+        <!-- Content -->
+        <Border CornerRadius="3" Margin="3" 
+                BorderThickness="2" BorderBrush="Black">
+            <ScrollViewer HorizontalContentAlignment="Center"
+                          VerticalContentAlignment="Center"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto">
+            <Grid HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="150" />
+                    <RowDefinition Height="45" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="45" />
+                    <RowDefinition Height="520" />
+                    <RowDefinition Height="5*" />
+                    </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="190" />
+                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="260" />
+                    <ColumnDefinition Width="220*" />
+                    <ColumnDefinition Width="10" />
+                </Grid.ColumnDefinitions>
+                    <Grid Name="grid2" 
+                          Margin="3" 
+                          Grid.Row="0"
+                          Grid.Column="2" Grid.ColumnSpan="2">
+                        <TextBlock Text="Select Zone" 
+                                   Margin="7,6,0,0"
+                                   FontSize="24" 
+                                   FontWeight="Bold"  
+                                   TextAlignment="Right" 
+                                   FlowDirection="RightToLeft" 
+                                   Width="197"
+                                   VerticalAlignment="Top" 
+                                   HorizontalAlignment="Left" />
+                        <StackPanel Margin="0,44,0,0" 
+                                    Width="416"
+                                    HorizontalAlignment="Left"  
+                                    Orientation="Horizontal" 
+                                    VerticalAlignment="Top" >
+                            <RadioButton Name="rbA" 
+                                         Content="A" 
+                                         Margin="5" 
+                                         FlowDirection="LeftToRight" 
+                                         FontSize="24" 
+                                         FontWeight="Bold" 
+                                         IsChecked="True"   
+                                         Style="{StaticResource imageRadioButtonORBStyle}" Checked="rbA_Checked" />
+                            <RadioButton Name="rbB" 
+                                         Content="B" 
+                                         Margin="5" 
+                                         FlowDirection="LeftToRight" 
+                                         FontSize="24" 
+                                         FontWeight="Bold"   
+                                         Style="{StaticResource imageRadioButtonORBStyle}" Checked="rbB_Checked" />
+                            <RadioButton Name="rbC" 
+                                         Content="C" 
+                                         Margin="5" 
+                                         FlowDirection="LeftToRight" 
+                                         FontSize="24" 
+                                         FontWeight="Bold"   
+                                         Style="{StaticResource imageRadioButtonORBStyle}" Checked="rbC_Checked" />
+                            <RadioButton Name="rbD" 
+                                         Content="D" 
+                                         Margin="5" 
+                                         FlowDirection="LeftToRight" 
+                                         FontSize="24" 
+                                         FontWeight="Bold"   
+                                         Style="{StaticResource imageRadioButtonORBStyle}" Checked="rbD_Checked" />
+                            <RadioButton Name="rbE" 
+                                         Content="E" 
+                                         Margin="5" 
+                                         FlowDirection="LeftToRight" 
+                                         FontSize="24" 
+                                         FontWeight="Bold"   
+                                         Style="{StaticResource imageRadioButtonORBStyle}" Checked="rbE_Checked" />
+                            <RadioButton Name="rbF" 
+                                         Content="F" 
+                                         Margin="5" 
+                                         FlowDirection="LeftToRight" 
+                                         FontSize="24" 
+                                         FontWeight="Bold"   
+                                         Style="{StaticResource imageRadioButtonORBStyle}" Checked="rbF_Checked" />
+                            <RadioButton Name="rbG" 
+                                         Content="G" 
+                                         Margin="5" 
+                                         FlowDirection="LeftToRight" 
+                                         FontSize="24" 
+                                         FontWeight="Bold"   
+                                         Style="{StaticResource imageRadioButtonORBStyle}" Checked="rbG_Checked" />
+                        </StackPanel>
+                    </Grid>
+                    <Grid Name="grid1" 
+                          Margin="3" 
+                          Grid.Row="0"
+                          Grid.Column="4"  
+                          Grid.RowSpan="2"
+                          VerticalAlignment="Top">
+                        <TextBlock Text="Type of Product"
+                                   Margin="6,6,0,0"
+                                   FontSize="24" 
+                                   FontWeight="Bold" 
+                                   TextAlignment="Right"
+                                   FlowDirection="RightToLeft"
+                                   Width="197"
+                                   HorizontalAlignment="Left"    
+                                   VerticalAlignment="Top"  />
+                        <StackPanel Margin="6,44,0,0"
+                                    Orientation="Vertical" 
+                                    VerticalAlignment="Top" 
+                                    HorizontalAlignment="Left" 
+                                    Width="240" 
+                                    Height="79" >
+                            <RadioButton x:Name="rbMassProduction"  
+                                         Content="Mass Production" 
+                                         Margin="5"
+                                         FontSize="24" 
+                                         FontWeight="Bold"
+                                         IsChecked="True"
+                                         Style="{StaticResource imageRadioButtonORBStyle}" FlowDirection="LeftToRight" />
+                            <RadioButton x:Name="rbTest" 
+                                         Margin="5"
+                                         Content="Test" 
+                                         FontSize="24" 
+                                         FontWeight="Bold"
+                                         Style="{StaticResource imageRadioButtonORBStyle}" FlowDirection="LeftToRight" />
+                        </StackPanel>
+                    </Grid>
+                    <TextBlock Text="Select M/C : "
+                               Margin="3" 
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               HorizontalAlignment="Stretch" 
+                               VerticalAlignment="Center" 
+                               TextAlignment="Right" 
+                               Grid.Column="1" Grid.Row="1" />
+                    <TextBox Name="txtTotal" 
+                             
+                             Margin="3"
+                             MaxLength="9"
+                             FontSize="24" 
+                             FontWeight="Bold"
+                             CharacterCasing="Upper"
+                             HorizontalContentAlignment="Center" 
+                             VerticalAlignment="Center" 
+                             VerticalContentAlignment="Center" 
+                             Grid.Column="2" Grid.Row="1" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtTotal_KeyDown" TextChanged="txtTotal_TextChanged" />
+
+                    <Grid  Name="grid3"
+                           Grid.Column="3" 
+                           Grid.Row="2">
+                        <Button Name="cmdOK" 
+                            Content="O.K." 
+                            Margin="19,5,0,0"
+                            FontSize="24" 
+                            FontWeight="Bold"
+                            Height="40" Width="120"  
+                                VerticalAlignment="Top" 
+                                HorizontalAlignment="Left" 
+                                Style="{StaticResource MenuButtonStyle}" 
+                                Click="cmdOK_Click"/>
+                        <Button Name="cmdCancel" 
+                            Content="Cancel" 
+                            Margin="0,5,19,0"
+                            FontSize="24" 
+                            FontWeight="Bold"
+                            Height="40" Width="120"  
+                                VerticalAlignment="Top" 
+                                HorizontalAlignment="Right" 
+                                Style="{StaticResource MenuButtonStyle}" 
+                                Click="cmdCancel_Click"/>
+                    </Grid>
+                    <Button Name="cmdRefresh" 
+                            Content="Refresh" 
+                            Margin="5,3,0,0"
+                            FontSize="24" 
+                            FontWeight="Bold"
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            Height="40" Width="120"  
+                                VerticalAlignment="Top" 
+                                HorizontalAlignment="Left" 
+                                Style="{StaticResource MenuButtonStyle}" 
+                                Click="cmdRefresh_Click"/>
+                    <Button Name="cmdCancelLoomSetting" 
+                            Content="Cancel Loom Setting " 
+                            Margin="5,3,0,0"
+                            FontSize="24" 
+                            FontWeight="Bold"
+                            Grid.Row="3"
+                            Grid.Column="4"
+                            Height="40" Width="239"  
+                                VerticalAlignment="Top" 
+                                HorizontalAlignment="Left" 
+                                Style="{StaticResource MenuButtonStyle}" 
+                                Click="cmdCancelLoomSetting_Click"/>
+                    <DataGrid 
+                             x:Name="gridWeaving" 
+                                Margin="3"
+                                ItemsSource="{Binding}"
+                                SelectionMode="Single"
+                                AlternatingRowBackground="AntiqueWhite"
+                                AutoGenerateColumns="False"
+                                CanUserAddRows="False"
+                                CanUserDeleteRows="False"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                HorizontalGridLinesBrush="Silver" 
+                                VerticalGridLinesBrush="Silver"
+                                Grid.Row="4" Grid.ColumnSpan="5" Grid.Column="1" HorizontalContentAlignment="Left" 
+                        ScrollViewer.CanContentScroll="True" 
+      ScrollViewer.VerticalScrollBarVisibility="Auto"
+      ScrollViewer.HorizontalScrollBarVisibility="Auto" SelectedCellsChanged="gridWeaving_SelectedCellsChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding MC}" Header="Loom No" IsReadOnly="True" Width="100" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding BEAMLOT}" Header="Beamer Roll" IsReadOnly="True" Width="150" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding ITM_WEAVING}" Header="Item Weaving" IsReadOnly="True" Width="150" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Width="170" Header="Start Date" 
+                                    Binding="{Binding STARTDATE, StringFormat=\{0:dd/MM/yyyy HH:mm\}}" 
+                                    IsReadOnly="True" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding SETTINGBY}" Header="Setting By" IsReadOnly="True" Width="120" CellStyle="{StaticResource CenterCellStyle}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </ScrollViewer>
+        </Border>
+    </DockPanel>
+</UserControl>

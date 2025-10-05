@@ -1,0 +1,87 @@
+﻿<Window x:Class="LuckyTex.Windows.MessageOKCancelWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Message" 
+        Height="300" 
+        Width="500" 
+        ShowInTaskbar="False"
+        Topmost="True"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/GroupBoxStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/RadioButtonStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    
+    <DockPanel LastChildFill="True">
+        <!-- Caption Bar -->
+        <Border DockPanel.Dock="Top" CornerRadius="3" Margin="3, 3, 3, 0"
+                Background="CornflowerBlue"
+                Height="40">
+            <TextBlock Text="Message"
+                       Foreground="White"
+                       FontSize="30" 
+                       FontWeight="Bold"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"/>
+        </Border>
+        <!-- Button Command Bars -->
+        <Border DockPanel.Dock="Bottom" 
+                Background="#F0F0F0">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <Button x:Name="cmdOk" 
+                        Content="OK"
+                        FontSize="22" 
+                        FontWeight="Bold"
+                        Margin="5" 
+                        Height="40"
+                        Width="100"
+                        Style="{StaticResource MenuButtonStyle}" Click="cmdOk_Click">
+                </Button>
+                <Button x:Name="cmdCancel" 
+                        Content="Cancel"
+                        FontSize="22" 
+                        FontWeight="Bold"
+                        Margin="5" 
+                        Height="40"
+                        Width="100"
+                        Style="{StaticResource MenuButtonStyle}" Click="cmdCancel_Click">
+                </Button>
+            </StackPanel>
+        </Border>
+        <!-- Content -->
+        <Border CornerRadius="3" Margin="3" 
+                BorderThickness="2" BorderBrush="Black">
+                <Grid HorizontalAlignment="Stretch" 
+                      VerticalAlignment="Stretch"
+                      Width="450" Height="150">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="440" />
+                        <ColumnDefinition Width="5" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5" />
+                        <RowDefinition Height="140" />
+                        <RowDefinition Height="5" />
+                    </Grid.RowDefinitions>
+                    <TextBox x:Name="txtMsg" 
+                     Text=""
+                     FontSize="22" 
+                     FontWeight="Bold" 
+                     TextAlignment="Center"
+                     TextWrapping="Wrap"
+                     AcceptsReturn="True"
+                     MinLines="4"
+                     Grid.Column="1" Grid.Row="1" />
+                </Grid>
+        </Border>
+    </DockPanel>
+</Window>

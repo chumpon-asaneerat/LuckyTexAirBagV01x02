@@ -1,0 +1,469 @@
+﻿<UserControl x:Class="LuckyTex.Pages.BeamingSetupPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="845" 
+             d:DesignWidth="1200" Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded">
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/GroupBoxStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/RadioButtonStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/CheckedBoxStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="CenterCellStyle" TargetType="DataGridCell">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="RightCellStyle" TargetType="DataGridCell">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Right"
+                                      VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <DockPanel LastChildFill="True">
+        <!-- Caption Bar -->
+        <Border DockPanel.Dock="Top" CornerRadius="3" Margin="3, 3, 3, 0"
+                Background="CornflowerBlue"
+                Height="40">
+            <TextBlock Text="Beaming Set Up"
+                       Foreground="White"
+                       FontSize="30" 
+                       FontWeight="Bold"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"/>
+        </Border>
+        <!-- Button Command Bars -->
+        <DockPanel DockPanel.Dock="Bottom" LastChildFill="True" 
+                   Background="#F0F0F0"
+                   Margin="5, 0">
+            <!-- Back -->
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                
+                <Button x:Name="cmdBack"
+                        Content="Back"
+                        Margin="2" 
+                        Width="150"
+                        FontSize="30" 
+                        FontWeight="Bold"
+                        Style="{StaticResource MenuButtonStyle}" 
+                        Click="cmdBack_Click" />
+            </StackPanel>
+            <Grid/>
+        </DockPanel>
+        <!-- Content -->
+        <Border CornerRadius="3" Margin="3" 
+                BorderThickness="2" BorderBrush="Black">
+            <ScrollViewer HorizontalContentAlignment="Center"
+                          VerticalContentAlignment="Center"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="160" />
+                        <ColumnDefinition Width="160" />
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="180" />
+                        <ColumnDefinition Width="130" />
+                        <ColumnDefinition Width="180" />
+                        <ColumnDefinition Width="155*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5" />
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="225" />
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="225*" />
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="5" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Item Prepare" 
+                               Margin="3"  
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               FlowDirection="RightToLeft"
+                               Height="41" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" />
+                    <ComboBox Name="cbItemCode" 
+                              Margin="3"
+                               DisplayMemberPath="ITM_PREPARE" 
+                               SelectedValuePath="ITM_PREPARE"
+                               FontSize="22"      
+                               FontWeight="Bold" 
+                               ItemsSource="{Binding GetItemCodeData, Mode=OneWay}"
+                              Grid.Column="2" Grid.Row="1" VerticalAlignment="Top" LostFocus="cbItemCode_LostFocus" />
+                    <TextBlock Text="Beamer Lot"
+                               Margin="3"  
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               FlowDirection="RightToLeft"
+                               Height="41" VerticalAlignment="Top" Grid.Column="3" Grid.Row="1" />
+                    <TextBox x:Name="txtBeamerNo"  
+                                Margin="3"
+                                IsReadOnly="False"
+                                CharacterCasing="Upper"
+                                FontSize="20"
+                                FontWeight="Bold"
+                                TextAlignment="Center" VerticalAlignment="Top"
+                                Grid.Column="4" 
+                                Grid.Row="1" Grid.ColumnSpan="2" KeyDown="txtBeamerNo_KeyDown">
+                    </TextBox>
+                    <TextBox x:Name="txtMCNo"  
+                                Margin="3"
+                             IsReadOnly="True"
+                                CharacterCasing="Upper"
+                                FontSize="20"
+                                FontWeight="Bold"
+                                TextAlignment="Center" VerticalAlignment="Top"
+                                Grid.Column="6" 
+                                Grid.Row="1" KeyDown="txtBeamerNo_KeyDown">
+                    </TextBox>
+                    <TextBlock Text="No Beam "
+                               Margin="3"  
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               FlowDirection="RightToLeft"
+                               Height="41" VerticalAlignment="Top" Grid.Column="1" Grid.Row="2" />
+                    <TextBox x:Name="txtNOWARPBEAM"  
+                                Margin="3"
+                                IsReadOnly="True"
+                                CharacterCasing="Upper"
+                                FontSize="20"
+                                FontWeight="Bold"
+                                TextAlignment="Center" VerticalAlignment="Top"
+                                Grid.Column="2" 
+                                Grid.Row="2" PreviewKeyDown="Common_PreviewKeyDown" >
+                    </TextBox>
+                    <TextBlock Text="Total Yarn "
+                               Margin="3"  
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               FlowDirection="RightToLeft"
+                               Height="41" VerticalAlignment="Top" Grid.Column="3" Grid.Row="2" />
+                    <TextBox x:Name="txtTOTALYARN"  
+                                Margin="3"
+                                IsReadOnly="True"
+                                CharacterCasing="Upper"
+                                FontSize="20"
+                                FontWeight="Bold"
+                                TextAlignment="Center" VerticalAlignment="Top"
+                                Grid.Column="4" 
+                                Grid.Row="2" PreviewKeyDown="Common_PreviewKeyDown" >
+                    </TextBox>
+                    <TextBlock Text="Keba Yarn "
+                               Margin="3"  
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               FlowDirection="RightToLeft"
+                               Height="41" VerticalAlignment="Top" Grid.Column="5" Grid.Row="2" />
+                    <TextBox x:Name="txtTOTALKEBA"  
+                                Margin="3"
+                                IsReadOnly="True"
+                                CharacterCasing="Upper"
+                                FontSize="20"
+                                FontWeight="Bold"
+                                TextAlignment="Center" VerticalAlignment="Top"
+                                Grid.Column="6" 
+                                Grid.Row="2" PreviewKeyDown="Common_PreviewKeyDown" >
+                    </TextBox>
+                    <TextBlock Text="Adjust Keba Yarn "
+                               Margin="91,3,3,0"  
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               FlowDirection="RightToLeft"
+                               Height="41" VerticalAlignment="Top" Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="2" Width="216" />
+                    <TextBox x:Name="txtADJUSTKEBA"  
+                                Margin="3"
+ 
+                                CharacterCasing="Upper"
+                                FontSize="20"
+                                FontWeight="Bold"
+                                TextAlignment="Center" VerticalAlignment="Top"
+                                Grid.Column="6" 
+                                Grid.Row="3" KeyDown="txtADJUSTKEBA_KeyDown" PreviewTextInput="txtADJUSTKEBA_PreviewTextInput">
+                    </TextBox>
+                    <Grid Name="grid2"  
+                                          Margin="7,3,0,0" 
+                                          VerticalAlignment="Top" 
+                              HorizontalAlignment="Left" 
+                              Grid.Column="7" 
+                              Grid.RowSpan="3" Height="118" Grid.Row="1">
+                        <TextBlock Text="Type of Product"
+                                                   Margin="6,6,0,0"
+                                                   FontSize="24" 
+                                                   FontWeight="Bold" 
+                                                   TextAlignment="Right"
+                                                   Width="197"
+                                                   HorizontalAlignment="Left"   
+                                                   VerticalAlignment="Top"  />
+                        <StackPanel Margin="5,44,5,5" Orientation="Vertical">
+                            <RadioButton Name="rbMassProduction" 
+                                                         Content="Mass Production" 
+                                                         Margin="5" 
+                                                         FlowDirection="LeftToRight" 
+                                                         FontSize="24" 
+                                                         FontWeight="Bold" 
+                                                         IsChecked="True"   
+                                                         Style="{StaticResource imageRadioButtonORBStyle}" />
+                            <RadioButton Name="rbTest" 
+                                                         Content="Test" 
+                                                         Margin="5" 
+                                                         FlowDirection="LeftToRight" 
+                                                         FontSize="24" 
+                                                         FontWeight="Bold"  
+                                                         Style="{StaticResource imageRadioButtonORBStyle}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <DataGrid 
+                             x:Name="gridBeaming" 
+                                Margin="3,3,3,3"
+                                ItemsSource="{Binding}"
+                                SelectionMode="Single"
+                                AlternatingRowBackground="AntiqueWhite"
+                                AutoGenerateColumns="False"
+                                CanUserAddRows="False"
+                                CanUserDeleteRows="False"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                HorizontalGridLinesBrush="Silver" 
+                                VerticalGridLinesBrush="Silver"
+                                Grid.Row="4" Grid.ColumnSpan="7" Grid.Column="1" HorizontalContentAlignment="Left" SelectedCellsChanged="gridBeaming_SelectedCellsChanged"
+                                ScrollViewer.CanContentScroll="True" 
+                                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                ScrollViewer.HorizontalScrollBarVisibility="Auto" >
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="Select"  Width="80">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Path=IsSelect, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Name="Selected" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" 
+                                                  Checked="Selected_Checked" 
+                                                  Unchecked="Selected_Unchecked" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Binding="{Binding WARPHEADNO}" Header="Warper Lot" IsReadOnly="True" Width="180" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Width="160" Header="Warping Date" 
+                                    Binding="{Binding STARTDATE, StringFormat=\{0:dd/MM/yyyy \}}" 
+                                    IsReadOnly="True" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Width="160" Header="Warper Roll" 
+                                    Binding="{Binding TOTALBEAM, StringFormat='{}{0:#,##0}'}"
+                                    IsReadOnly="True" CellStyle="{StaticResource RightCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding WARPMC}" Header="Warper MC No" IsReadOnly="True" Width="180" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Width="160" Header="Total End" 
+                                    Binding="{Binding ACTUALCH, StringFormat='{}{0:#,##0}'}"
+                                    IsReadOnly="True" CellStyle="{StaticResource RightCellStyle}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <TextBlock Text="Warper Lot "
+                               Margin="3"  
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               FlowDirection="RightToLeft"
+                               Height="41" VerticalAlignment="Top" Grid.Column="1" Grid.Row="5" />
+                    <TextBox x:Name="txtWARPHEADNO"  
+                             IsReadOnly="True"
+                                Margin="3"
+                                CharacterCasing="Upper"
+                                FontSize="20"
+                                FontWeight="Bold"
+                                TextAlignment="Center" VerticalAlignment="Top"
+                                Grid.Column="2" 
+                                Grid.Row="5" >
+                    </TextBox>
+                    <TextBlock Text="Warper Roll "
+                               Margin="3"  
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               FlowDirection="RightToLeft"
+                               Height="41" VerticalAlignment="Top" Grid.Column="3" Grid.Row="5" />
+                    <TextBox x:Name="txtWarperLot"  
+                                Margin="3"
+                                CharacterCasing="Upper"
+                                FontSize="20"
+                                FontWeight="Bold"
+                                TextAlignment="Center" VerticalAlignment="Top"
+                                Grid.Column="4" 
+                                Grid.Row="5" KeyDown="txtWarperLot_KeyDown">
+                    </TextBox>
+                    <DataGrid 
+                             x:Name="gridBeam" 
+                                Margin="3,3,3,3"
+                                ItemsSource="{Binding}"
+                                SelectionMode="Single"
+                                AlternatingRowBackground="AntiqueWhite"
+                                AutoGenerateColumns="False"
+                                CanUserAddRows="False"
+                                CanUserDeleteRows="False"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                HorizontalGridLinesBrush="Silver" 
+                                VerticalGridLinesBrush="Silver"
+                                Grid.Row="6" Grid.ColumnSpan="5" Grid.Column="1" HorizontalContentAlignment="Left"
+                                ScrollViewer.CanContentScroll="True" 
+                                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                ScrollViewer.HorizontalScrollBarVisibility="Auto" SelectedCellsChanged="gridBeam_SelectedCellsChanged" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding WARPHEADNO}" Header="Warper Lot" IsReadOnly="True" Width="180" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding WARPERLOT}" Header="Warper Roll" IsReadOnly="True" Width="180" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Width="130" Header="Length" 
+                                    Binding="{Binding LENGTH, StringFormat={}{0:n2}}" 
+                                    IsReadOnly="True" CellStyle="{StaticResource RightCellStyle}"/>
+                            <DataGridTemplateColumn Header="Total End"  Width="130">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding TOTALEND, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat='{}{0:#,##0}'}" Name="TotalEnd" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LostFocus="TotalEnd_LostFocus" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Take Out"  Width="130">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding TAKEOUT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat='{}{0:#,##0}'}" Name="TakeOut" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LostFocus="TakeOut_LostFocus" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <TextBlock Text="Total Yarn "
+                               Margin="3"  
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               FlowDirection="RightToLeft"
+                               Height="41" VerticalAlignment="Top" Grid.Column="1" Grid.Row="7" />
+                    <TextBox x:Name="txtTotalEnd"  
+                                Margin="3"
+                                CharacterCasing="Upper"
+                                FontSize="20"
+                                FontWeight="Bold"
+                                TextAlignment="Center" VerticalAlignment="Top"
+                                Grid.Column="2" 
+                                Grid.Row="7" >
+                    </TextBox>
+                    <TextBox x:Name="txtTakeOut"  
+                                Margin="3"
+                                IsReadOnly="True"
+                                CharacterCasing="Upper"
+                                FontSize="20"
+                                FontWeight="Bold"
+                                TextAlignment="Center" VerticalAlignment="Top"
+                                Grid.Column="3" 
+                                Grid.Row="7">
+                    </TextBox>
+                    <TextBlock Text="Actual Beam "
+                               Margin="3"  
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               FlowDirection="RightToLeft"
+                               Height="41" VerticalAlignment="Top" Grid.Column="4" Grid.Row="7" />
+                    <TextBox x:Name="txtActualBeam"  
+                                Margin="3"
+                                IsReadOnly="True"
+                                CharacterCasing="Upper"
+                                FontSize="20"
+                                FontWeight="Bold"
+                                TextAlignment="Center" VerticalAlignment="Top"
+                                Grid.Column="5" 
+                                Grid.Row="7">
+                    </TextBox>
+                    <Button Name="cmdClear" 
+                        Content="Clear" 
+                        Margin="3"
+                        Width="150"
+                        FontSize="30" 
+                        FontWeight="Bold"
+                        Style="{StaticResource MenuButtonStyle}"  
+                        Grid.Column="6" 
+                                Grid.Row="7" HorizontalAlignment="Right" Click="cmdClear_Click" />
+                    <Button Name="cmdStart" 
+                        Content="Start" 
+                        Margin="3"
+                        Width="150"
+                        FontSize="30" 
+                        FontWeight="Bold"
+                        Style="{StaticResource MenuButtonStyle}"  
+                        Grid.Column="7" 
+                                Grid.Row="7" HorizontalAlignment="Left" Click="cmdStart_Click" />
+                    <Grid 
+                        Grid.Row="8" 
+                        Grid.Column="1"  Grid.ColumnSpan="2">
+                        <TextBlock 
+                                            Text="Operator" 
+                                            Margin="3,9,0,0" 
+                                            FontSize="20" 
+                                            FontWeight="Bold" 
+                                            TextAlignment="Center" 
+                                            HorizontalAlignment="Left" 
+                                            VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtOperator"  
+                                             Margin="94,6,6,0"
+                                             IsReadOnly="True"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top">
+                        </TextBox>
+                    </Grid>
+                    <Grid Name="gridRemark" 
+                          Margin="3,3,3,3"
+                          Grid.Column="6" 
+                          Grid.ColumnSpan="2" 
+                          Grid.Row="6">
+                        <Border DockPanel.Dock="Top" CornerRadius="3" Background="CornflowerBlue"
+                Height="40" VerticalAlignment="Top">
+                     <TextBlock Text="Remark"
+                       Foreground="White"
+                       FontSize="30" 
+                       FontWeight="Bold"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBox x:Name="txtRemark" 
+                     Text=""
+                     FontSize="24" 
+                     FontWeight="Bold"
+                     VerticalAlignment="Stretch"
+                     HorizontalAlignment="Stretch"
+                     VerticalContentAlignment="Stretch" 
+                     HorizontalContentAlignment="Stretch"
+                     TextAlignment="Left"
+                     Margin="0,46,0,0" 
+                     TextWrapping="Wrap"
+                     AcceptsReturn="True"
+                     MinLines="4" />
+
+                    </Grid>
+
+                </Grid>
+            </ScrollViewer>
+        </Border>
+    </DockPanel>
+  
+</UserControl>

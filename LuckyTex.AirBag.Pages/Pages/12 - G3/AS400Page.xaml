@@ -1,0 +1,170 @@
+﻿<UserControl x:Class="LuckyTex.Pages.AS400Page"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="845" d:DesignWidth="1200" 
+             Loaded="UserControl_Loaded" 
+             Unloaded="UserControl_Unloaded">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/GroupBoxStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/RadioButtonStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="CenterCellStyle" TargetType="DataGridCell">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="RightCellStyle" TargetType="DataGridCell">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Right"
+                                      VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel LastChildFill="True">
+        <!-- Caption Bar -->
+        <Border DockPanel.Dock="Top" CornerRadius="3" Margin="3, 3, 3, 0"
+                Background="CornflowerBlue"
+                Height="40">
+            <TextBlock Text="AS400"
+                       Foreground="White"
+                       FontSize="30" 
+                       FontWeight="Bold"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"/>
+        </Border>
+        <!-- Button Command Bars -->
+        <DockPanel DockPanel.Dock="Bottom" LastChildFill="True" 
+                   Background="#F0F0F0"
+                   Margin="5, 0">
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <!-- Back -->
+                <Button x:Name="cmdBack"
+                        Content="Back"
+                        Margin="2" 
+                        Width="150"
+                        FontSize="30" 
+                        FontWeight="Bold"
+                        Style="{StaticResource MenuButtonStyle}" 
+                        Click="cmdBack_Click" />
+            </StackPanel>
+            <Grid/>
+        </DockPanel>
+        <!-- Content -->
+        <Border CornerRadius="3" Margin="3" 
+                BorderThickness="2" BorderBrush="Black">
+            <ScrollViewer HorizontalContentAlignment="Center"
+                          VerticalContentAlignment="Center"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto">
+                <Grid HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="1170*" />
+                        <ColumnDefinition Width="10" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="55" />
+                        <RowDefinition Height="59" />
+                        <RowDefinition Height="607*" />
+                    </Grid.RowDefinitions>
+                    <Grid VerticalAlignment="Top"
+                          Grid.Row="1"
+                          Grid.Column="1" 
+                          Height="54">
+                        <Button Name="cmdConnectAS400" 
+                                Content="Connect AS400"
+                                Margin="10,6,0,0" 
+                                FontSize="22"
+                                FontWeight="Bold"
+                                Height="40" 
+                                Width="180" 
+                                HorizontalAlignment="Left" 
+                                VerticalAlignment="Top"  
+                                Style="{StaticResource MenuButtonStyle}" Click="cmdConnectAS400_Click">
+                        </Button>
+                        <Label x:Name="labConnect"
+                               Margin="200,5,0,7" 
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               Height="41" 
+                               HorizontalAlignment="Left" 
+                               VerticalAlignment="Center" />
+                        <Button Name="cmdTest" Content="Test Print" Margin="0,6,1482,0" FontSize="22" FontWeight="Bold" Height="40" HorizontalAlignment="Right" Style="{StaticResource MenuButtonStyle}" VerticalAlignment="Top" Width="180" Click="cmdTest_Click" />
+                        <Button Name="cmdTest2" Content="Test Print 2" Margin="0,6,1296,0" FontSize="22" FontWeight="Bold" Height="40" HorizontalAlignment="Right" Style="{StaticResource MenuButtonStyle}" VerticalAlignment="Top" Width="180" Click="cmdTest2_Click" />
+                        <Button Name="cmdPreview" Content="Test Preview" Margin="0,6,1110,0" FontSize="22" FontWeight="Bold" Height="40" HorizontalAlignment="Right" Style="{StaticResource MenuButtonStyle}" VerticalAlignment="Top" Width="180" Click="cmdPreview_Click" />
+                    </Grid>
+                    <ListBox Grid.Column="1" Grid.Row="2" Height="55" HorizontalAlignment="Left" Name="listBox1" VerticalAlignment="Top" Width="1222" />
+                    <DataGrid Name="gridAS400" ItemsSource="{Binding}"
+                                SelectionMode="Single"
+                                AlternatingRowBackground="AntiqueWhite"
+                                AutoGenerateColumns="False"
+                                CanUserAddRows="False"
+                                CanUserDeleteRows="False"
+                                HorizontalGridLinesBrush="Silver" 
+                                VerticalGridLinesBrush="Silver" HorizontalContentAlignment="Left"
+                        ScrollViewer.CanContentScroll="True" 
+      ScrollViewer.VerticalScrollBarVisibility="Auto"
+      ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.Row="3" Grid.Column="1">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding ANNUL}" Header="Flag" IsReadOnly="True" Width="50" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding FLAGS}" Header="Flag" IsReadOnly="True" Width="50" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding RECTY}" Header="Type" IsReadOnly="True" Width="50" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding CDSTO}" Header="Warehouse" IsReadOnly="True" Width="80" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding USRNM}" Header="User Name" IsReadOnly="True" Width="80" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding DTTRA}" Header="Movement Date" IsReadOnly="True" Width="100" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding DTINP}" Header="Entry Date" IsReadOnly="True" Width="90" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding CDEL0}" Header="Roll No" IsReadOnly="True" Width="80" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding CDCON}" Header="Pallet No" IsReadOnly="True" Width="80" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding BLELE}" Header="Quantity" IsReadOnly="True" Width="60" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding CDUM0}" Header="Unit" IsReadOnly="True" Width="50" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding CDKE1}" Header="Item Code" IsReadOnly="True" Width="80" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding CDKE2}" Header="Production Type" IsReadOnly="True" Width="100" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding CDKE3}" Header="-" IsReadOnly="True" Width="10" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding CDKE4}" Header="-" IsReadOnly="True" Width="10" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding CDKE5}" Header="-" IsReadOnly="True" Width="10" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding CDLOT}" Header="Lot No" IsReadOnly="True" Width="80" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding CDTRA}" Header="Transaction Code" IsReadOnly="True" Width="100" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding REFER}" Header="Document No" IsReadOnly="True" Width="100" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding LOCAT}" Header="Location" IsReadOnly="True" Width="80" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding CDQUA}" Header="Grade" IsReadOnly="True" Width="80" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding QUACA}" Header="Defect Group" IsReadOnly="True" Width="80" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding TECU1}" Header="Technical Date 1" IsReadOnly="True" Width="100" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding TECU2}" Header="Technical Date 2" IsReadOnly="True" Width="100" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding TECU3}" Header="Technical Date 3" IsReadOnly="True" Width="100" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding TECU4}" Header="Technical Date 4" IsReadOnly="True" Width="100" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding TECU5}" Header="Technical Date 5" IsReadOnly="True" Width="100" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding TECU6}" Header="Technical Date 6" IsReadOnly="True" Width="100" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding COMM0}" Header="Comment" IsReadOnly="True" Width="100" CellStyle="{StaticResource CenterCellStyle}"/>
+                            <DataGridTextColumn Binding="{Binding DTORA}" Header="Last Update Time" IsReadOnly="True" Width="100" CellStyle="{StaticResource CenterCellStyle}"/>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </ScrollViewer>
+        </Border>
+    </DockPanel>
+</UserControl>

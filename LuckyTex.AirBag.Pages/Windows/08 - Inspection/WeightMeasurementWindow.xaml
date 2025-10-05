@@ -1,0 +1,282 @@
+﻿<Window x:Class="LuckyTex.Windows.WeightMeasurementWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Weight Measurement" 
+        Height="450" 
+        Width="810" 
+        ShowInTaskbar="False"
+        Topmost="True"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Loaded="Window_Loaded"  
+        Unloaded="Window_Unloaded" Closing="Window_Closing">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/GroupBoxStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/RadioButtonStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/CheckedBoxStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <DockPanel LastChildFill="True">
+        <!-- Caption Bar -->
+        <Border DockPanel.Dock="Top" CornerRadius="3" Margin="3, 3, 3, 0"
+                Background="CornflowerBlue"
+                Height="40">
+            <TextBlock Text="Weight Measurement"
+                       Foreground="White"
+                       FontSize="30" 
+                       FontWeight="Bold"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"/>
+        </Border>
+        <!-- Button Command Bars -->
+        <Border DockPanel.Dock="Bottom" 
+                Background="#F0F0F0">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <Button x:Name="cmdSave" 
+                        Margin="5" 
+                        Content="Save"
+                        FontSize="22" 
+                        FontWeight="Bold"
+                        Height="40"
+                        Width="100"
+                        Style="{StaticResource MenuButtonStyle}" Click="cmdSave_Click">
+                </Button>
+                <Button x:Name="cmdPreview" 
+                        Margin="5" 
+                        Content="Preview"
+                        FontSize="22" 
+                        FontWeight="Bold"
+                        Height="40"
+                        Width="100"
+                        Style="{StaticResource MenuButtonStyle}" 
+                        Click="cmdPreview_Click">
+                </Button>           
+            </StackPanel>
+        </Border>
+        <!-- Content -->
+        <Border CornerRadius="3" Margin="3" 
+                BorderThickness="2" BorderBrush="Black">
+            <ScrollViewer HorizontalContentAlignment="Center"
+                          VerticalContentAlignment="Center"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto">
+                <Grid HorizontalAlignment="Center"
+                      VerticalAlignment="Center" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="250" />
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="250" />
+                        <ColumnDefinition Width="10" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="100" />
+                        <RowDefinition Height="10" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Item" 
+                               Margin="2"
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               HorizontalAlignment="Stretch" 
+                               VerticalAlignment="Center" 
+                               TextAlignment="Right" 
+                               Grid.Column="1" Grid.Row="1" />
+                    <Border Background="White" 
+                            BorderBrush="Black" 
+                            BorderThickness="1" 
+                            CornerRadius="3" 
+                            Margin="3" 
+                            HorizontalAlignment="Stretch" 
+                            VerticalAlignment="Stretch" 
+                            Grid.Column="2" Grid.Row="1">
+                        <TextBox Name="txtItem" 
+                                 Text="4L50B25" 
+                                 CharacterCasing="Upper"
+                                 BorderBrush="{x:Null}"
+                                 IsReadOnly="True"
+                                 Margin="2" 
+                                 FontSize="24" 
+                                 FontWeight="Bold" 
+                                 HorizontalAlignment="Stretch" 
+                                 VerticalAlignment="Center" 
+                                 TextAlignment="Center" />
+                    </Border>
+                    <TextBlock Text="Lot No" 
+                               Margin="2"
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               HorizontalAlignment="Stretch" 
+                               VerticalAlignment="Center" 
+                               TextAlignment="Right" 
+                               Grid.Column="3" Grid.Row="1"/>
+                    <Border Background="White" 
+                            BorderBrush="Black" 
+                            BorderThickness="1" 
+                            CornerRadius="3" 
+                            Margin="3" 
+                            HorizontalAlignment="Stretch" 
+                            VerticalAlignment="Stretch" 
+                            Grid.Column="4" Grid.Row="1">
+                        <TextBox Name="txtLotNo" 
+                                 Text="A01148191" 
+                                 CharacterCasing="Upper"
+                                 BorderBrush="{x:Null}"
+                                 Margin="2" 
+                                 FontSize="24" 
+                                 FontWeight="Bold" 
+                                 HorizontalAlignment="Stretch" 
+                                 VerticalAlignment="Center" 
+                                 TextAlignment="Center" 
+                                 LostFocus="txtLotNo_LostFocus" 
+                                 KeyDown="txtLotNo_KeyDown" />
+                    </Border>
+                    <TextBlock Text="Length" 
+                               Margin="2"
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               HorizontalAlignment="Stretch" 
+                               VerticalAlignment="Center" 
+                               TextAlignment="Right" 
+                               Grid.Column="1" Grid.Row="2"/>
+                    <Border Background="White" 
+                            BorderBrush="Black" 
+                            BorderThickness="1" 
+                            CornerRadius="3" 
+                            Margin="3" 
+                            HorizontalAlignment="Stretch" 
+                            VerticalAlignment="Stretch" 
+                            Grid.Column="2" Grid.Row="2">
+                        <TextBox Name="txtLength" 
+                                 Text="700" 
+                                 BorderBrush="{x:Null}"
+                                 CharacterCasing="Upper"
+                                 IsReadOnly="True"
+                                 Margin="2" 
+                                 FontSize="24" 
+                                 FontWeight="Bold" 
+                                 HorizontalAlignment="Stretch" 
+                                 VerticalAlignment="Center" 
+                                 TextAlignment="Center" 
+                                 PreviewKeyDown="Common_PreviewKeyDown" />
+                    </Border>
+                    <TextBlock Text="Grade" 
+                               Margin="2"
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               HorizontalAlignment="Stretch" 
+                               VerticalAlignment="Center" 
+                               TextAlignment="Right" 
+                               Grid.Column="3" Grid.Row="2"/>
+                    <Border Background="White" 
+                            BorderBrush="Black" 
+                            BorderThickness="1" 
+                            CornerRadius="3" 
+                            Margin="3" 
+                            HorizontalAlignment="Stretch" 
+                            VerticalAlignment="Stretch" 
+                            Grid.Column="4" Grid.Row="2">
+                        <TextBox Name="txtGrade" 
+                                 Text="A" 
+                                 CharacterCasing="Upper"
+                                 BorderBrush="{x:Null}"
+                                 IsReadOnly="True"
+                                 Margin="2" 
+                                 FontSize="24" 
+                                 FontWeight="Bold" 
+                                 HorizontalAlignment="Stretch" 
+                                 VerticalAlignment="Center" 
+                                 TextAlignment="Center" />
+                    </Border>
+                    <TextBlock Text="Weight" 
+                               Margin="2" 
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               HorizontalAlignment="Stretch" 
+                               VerticalAlignment="Center" 
+                               TextAlignment="Right" 
+                               Grid.Column="1" Grid.Row="3"/>
+                    <CheckBox Name="chkManual"
+                                  Content="Manual"         
+                                  Margin="5" 
+                                  FontSize="22" 
+                                  FontWeight="Bold" 
+                                  HorizontalAlignment="Left" 
+                                  VerticalAlignment="Center" 
+                                  Style="{StaticResource imageCheckedBoxOKStyle}"
+                                  Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="3" Checked="chkManual_Checked" Unchecked="chkManual_Unchecked" />
+                    <TextBlock Text="G.W." 
+                               Margin="2,32,2,30" 
+                               FontSize="28" 
+                               FontWeight="Bold" 
+                               HorizontalAlignment="Stretch" 
+                               VerticalAlignment="Center" 
+                               TextAlignment="Right" 
+                               Grid.Column="1" Grid.Row="4" />
+                    <Border Background="White" 
+                            BorderBrush="Black" 
+                            BorderThickness="1" 
+                            CornerRadius="3" 
+                            Margin="3,4,3,2" 
+                            HorizontalAlignment="Stretch" 
+                            VerticalAlignment="Stretch"
+                            Grid.Column="2" Grid.Row="4">
+                        <TextBox Name="txtGW" 
+                                 Text="250" 
+                                 CharacterCasing="Upper"
+                                 BorderBrush="{x:Null}"
+                                 Margin="2" 
+                                 FontSize="48" 
+                                 FontWeight="Bold" 
+                                 HorizontalAlignment="Stretch" 
+                                 VerticalAlignment="Center" 
+                                 TextAlignment="Center" 
+                                 PreviewKeyDown="Common_PreviewKeyDown" 
+                                 LostFocus="txtGW_LostFocus" 
+                                 KeyDown="txtGW_KeyDown" />
+                    </Border>
+                    <TextBlock Text="N.W." 
+                               Margin="2,32,2,30" 
+                               FontSize="28" 
+                               FontWeight="Bold" 
+                               HorizontalAlignment="Stretch" 
+                               VerticalAlignment="Center" 
+                               TextAlignment="Right" 
+                               Grid.Column="3" Grid.Row="4" />
+                    <Border Background="White" 
+                            BorderBrush="Black" 
+                            BorderThickness="1" 
+                            CornerRadius="3" 
+                            Margin="3,4,3,2" 
+                            HorizontalAlignment="Stretch" 
+                            VerticalAlignment="Stretch"
+                            Grid.Column="4" Grid.Row="4">
+                        <TextBox Name="txtNW"
+                                 Text="247" 
+                                 CharacterCasing="Upper"
+                                 BorderBrush="{x:Null}"
+                                 Margin="2" 
+                                 FontSize="48" 
+                                 FontWeight="Bold" 
+                                 HorizontalAlignment="Stretch" 
+                                 VerticalAlignment="Center" 
+                                 TextAlignment="Center" 
+                                 PreviewKeyDown="Common_PreviewKeyDown" 
+                                 KeyDown="txtNW_KeyDown" />
+                    </Border>
+                </Grid>
+            </ScrollViewer>
+        </Border>
+    </DockPanel>
+</Window>

@@ -1,0 +1,85 @@
+﻿<Window x:Class="LuckyTex.MainWindow"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		Title="Toray Textiles Air Bag Trace Ability System" 
+		Height="990" 
+		Width="1250" 
+		Loaded="Window_Loaded" 
+		WindowStartupLocation="Manual" 
+        Closing="Window_Closing" Closed="Window_Closed" WindowState="Maximized" Icon="/LuckyTex.AirBag.Application;component/Images/icon5.png">
+	<DockPanel LastChildFill="True">
+		<!-- BOTTOM STATUS BARS -->
+		<DockPanel Height="28" DockPanel.Dock="Bottom" Background="#1A3C7B">
+			<Border DockPanel.Dock="Right">
+				<TextBlock Name="txtINC" 
+						   Foreground="Yellow" 
+						   FontSize="10"
+						   Text="VS Enterprice Group Co.,Ltd"                       
+						   TextAlignment="Center"
+						   VerticalAlignment="Center"                           
+						   Margin="5, 0, 5, 0"
+						   HorizontalAlignment="Right"/>
+			</Border>
+			<Border DockPanel.Dock="Right">
+				<TextBlock Name="txtVersion" 
+						   Foreground="Yellow" 
+						   FontSize="10"
+						   Text="v1.0.4.888 (2010-08-16 02:59)"
+						   TextAlignment="Center"
+						   VerticalAlignment="Center"                           
+						   Margin="5, 0, 5, 0"
+						   HorizontalAlignment="Right"/>
+			</Border>
+			<StatusBar Name="SBar" Background="Transparent">
+				<StatusBarItem HorizontalAlignment="Stretch"
+							   HorizontalContentAlignment="Stretch"
+							   BorderThickness="0" BorderBrush="Black">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<!-- Status -->
+							<ColumnDefinition Width="65"/>
+							<ColumnDefinition />
+							<!-- DateTime -->
+							<ColumnDefinition Width="125"/>
+						</Grid.ColumnDefinitions>
+						<!-- Status -->
+						<Border BorderBrush="Black" BorderThickness="1"
+								Grid.Column="0">
+							<TextBlock Name="text1" 
+									   Foreground="White" 
+									   TextAlignment="Center"
+									   VerticalAlignment="Center"
+									   Background="#25FFFFFF"
+									   Text="Status:"/>
+						</Border>
+						<TextBlock Name="txtStatus" 
+								   Grid.Column="1"
+								   Foreground="White" 
+								   TextAlignment="Left"
+								   VerticalAlignment="Center"
+								   TextTrimming="CharacterEllipsis"        
+								   Margin="5, 0"
+								   Text="-"/>
+						<!-- DateTime -->
+						<Border BorderBrush="Black" BorderThickness="1"
+								Grid.Column="2">
+							<TextBlock Name="txtDateTime" 
+									   Foreground="White" 
+									   TextAlignment="Center"
+									   VerticalAlignment="Center"
+									   Margin="5, 0, 5, 0"
+									   Text="2013-07-19 13:00:00"/>
+						</Border>
+					</Grid>
+				</StatusBarItem>
+			</StatusBar>
+		</DockPanel>
+		<!-- CONTENT PAGE AREA -->
+		<Grid Margin="2">
+			<Border BorderBrush="Silver" 
+						BorderThickness="1">
+				<ContentPresenter x:Name="container"/>
+			</Border>
+		</Grid>
+	</DockPanel>
+</Window>

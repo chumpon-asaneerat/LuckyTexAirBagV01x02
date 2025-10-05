@@ -1,0 +1,356 @@
+﻿<Window x:Class="LuckyTex.Pages.WeavingSpecificMCStopWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
+        Title="Specific M/C Stop" 
+        Height="620" 
+        Width="690" 
+        ShowInTaskbar="False"
+        Topmost="True"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize" 
+        Loaded="Window_Loaded" >
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/GroupBoxStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/RadioButtonStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/CheckedBoxStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="CenterCellStyle" TargetType="DataGridCell">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="RightCellStyle" TargetType="DataGridCell">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Right"
+                                      VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="styleCalendar" TargetType="{x:Type Calendar}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Calendar}">
+                            <!-- Wrapping in ViewBox will enlarge calendar of that size.-->
+                            <Viewbox Height="400"
+                         Width="400">
+                                <CalendarItem x:Name="PART_CalendarItem"
+                                  Background="{TemplateBinding Background}"
+                                  BorderBrush="{TemplateBinding BorderBrush}"
+                                  BorderThickness="{TemplateBinding BorderThickness}"/>
+                            </Viewbox>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+
+
+    <DockPanel LastChildFill="True">
+        <!-- Caption Bar -->
+        <Border DockPanel.Dock="Top" CornerRadius="3" Margin="3, 3, 3, 0"
+                Background="CornflowerBlue"
+                Height="40">
+            <TextBlock Text="Specification M/C Stop"
+                       Foreground="White"
+                       FontSize="30" 
+                       FontWeight="Bold"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"/>
+        </Border>
+        <!-- Button Command Bars -->
+        <Border DockPanel.Dock="Bottom" 
+                CornerRadius="3" Margin="3, 3, 3, 0"
+                Height="200">
+                <DataGrid 
+                             x:Name="gridWeaving" 
+                                Margin="3,3,0,3"
+                                ItemsSource="{Binding}"
+                                SelectionMode="Single"
+                                AlternatingRowBackground="AntiqueWhite"
+                                AutoGenerateColumns="False"
+                                CanUserAddRows="False"
+                                CanUserDeleteRows="False"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                HorizontalGridLinesBrush="Silver" 
+                                VerticalGridLinesBrush="Silver"
+                                HorizontalContentAlignment="Left" 
+                                ScrollViewer.CanContentScroll="True" 
+                                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                ScrollViewer.HorizontalScrollBarVisibility="Auto" SelectedCellsChanged="gridWeaving_SelectedCellsChanged">
+                    <DataGrid.Columns>
+                    <DataGridTextColumn Width="175" Header="Date" 
+                                    Binding="{Binding STOPDATE, StringFormat=\{0:dd/MM/yyyy HH:mm\}}" 
+                                    IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding DEFECTCODE}" Header="Code" IsReadOnly="True" Width="70" CellStyle="{StaticResource CenterCellStyle}"/>
+                    <DataGridTextColumn Binding="{Binding DESCRIPTION}" Header="Stop Reason" IsReadOnly="True" Width="150" CellStyle="{StaticResource CenterCellStyle}"/>
+
+                        <DataGridTextColumn Width="100" Header="Length" 
+                                    Binding="{Binding DEFECTLENGTH, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                        <DataGridTextColumn Width="100" Header="Position" 
+                                    Binding="{Binding DEFECTPOSITION, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                    <DataGridTextColumn Width="200" Header="Remark" 
+                                    Binding="{Binding REMARK}" 
+                                    IsReadOnly="True" />
+                    <DataGridTextColumn Width="100" Header="Add By" 
+                                    Binding="{Binding CREATEBY}" 
+                                    IsReadOnly="True" CellStyle="{StaticResource CenterCellStyle}"/>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+        </Border>
+        <Border DockPanel.Dock="Bottom" 
+                Background="#F0F0F0">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <Button x:Name="cmdSave" 
+                        Content="Save"
+                        FontSize="22" 
+                        FontWeight="Bold"
+                        Margin="5" 
+                        Height="40"
+                        Width="100"
+                        Style="{StaticResource MenuButtonStyle}" Click="cmdSave_Click">
+                </Button>
+                <Button x:Name="cmdClose" 
+                        Content="Close"
+                        FontSize="22" 
+                        FontWeight="Bold"
+                        Margin="5" 
+                        Height="40"
+                        Width="100"
+                        Style="{StaticResource MenuButtonStyle}" Click="cmdClose_Click">
+                </Button>
+                <Button x:Name="cmdDelete" 
+                        Content="Delete"
+                        FontSize="22" 
+                        FontWeight="Bold"
+                        Margin="5" 
+                        Height="40"
+                        Width="100"
+                        Style="{StaticResource MenuButtonStyle}" Click="cmdDelete_Click">
+                </Button>
+            </StackPanel>
+        </Border>
+        <!-- Content -->
+        <Border CornerRadius="3" Margin="3" 
+                BorderThickness="2" BorderBrush="Black">
+                <Grid HorizontalAlignment="Stretch" 
+                      VerticalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="140" />
+                    <ColumnDefinition Width="240" />
+                    <ColumnDefinition Width="120" />
+                    <ColumnDefinition Width="140" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="8*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3" />
+                    <RowDefinition Height="45" />
+                    <RowDefinition Height="45" />
+                    <RowDefinition Height="45" />
+                    <RowDefinition Height="45" />
+                    <RowDefinition Height="45" />
+                    <RowDefinition Height="45" />
+                    <RowDefinition Height="3*" />
+                </Grid.RowDefinitions>
+                <TextBlock 
+                    Text="Beamer Roll" 
+                    Margin="3,9,9,0" 
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    FontSize="20" 
+                    FontWeight="Bold" 
+                    TextAlignment="Center" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Top"/>
+                <TextBox x:Name="txtBEAMLOT" 
+                    IsReadOnly="True"
+                    Margin="3,6,0,0" 
+                    Grid.Column="2"
+                    Grid.Row="1"
+                    CharacterCasing="Upper"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    TextAlignment="Center" VerticalAlignment="Top">
+                </TextBox>
+                <TextBlock 
+                    Text="Doff No" 
+                    Margin="3,9,9,0" 
+                    Grid.Column="3"
+                    Grid.Row="1"
+                    FontSize="20" 
+                    FontWeight="Bold" 
+                    TextAlignment="Center" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Top"/>
+                <TextBox x:Name="txtDOFFNO" 
+                    IsReadOnly="True"
+                    Margin="3,6,0,0" 
+                    Grid.Column="4"
+                    Grid.Row="1"
+                    CharacterCasing="Upper"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    TextAlignment="Center" VerticalAlignment="Top">
+                </TextBox>
+                <TextBlock 
+                    Text="Defect" 
+                    Margin="3,9,9,0" 
+                    Grid.Column="1"
+                    Grid.Row="2"
+                    FontSize="20" 
+                    FontWeight="Bold" 
+                    TextAlignment="Center" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Top"/>
+                <ComboBox Name="cbDefect" 
+                          IsEditable="True" 
+                              Margin="3,6,0,0" 
+                              TextSearch.TextPath=""
+                               FontSize="24"      
+                               FontWeight="Bold" 
+                               ItemsSource="{Binding WEAV_DEFECTLIST , Mode=OneWay}"
+                              Grid.Column="2" Grid.Row="2"  VerticalAlignment="Top" />
+                <TextBlock 
+                    Text="Length" 
+                    Margin="3,9,9,0" 
+                    Grid.Column="1"
+                    Grid.Row="3"
+                    FontSize="20" 
+                    FontWeight="Bold" 
+                    TextAlignment="Center" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Top"/>
+                <TextBox x:Name="txtLength" 
+                    Margin="3,6,0,0" 
+                    Grid.Column="2"
+                    Grid.Row="3"
+                    CharacterCasing="Upper"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    TextAlignment="Right" VerticalAlignment="Top" KeyDown="txtLength_KeyDown" PreviewKeyDown="Common_PreviewKeyDown">
+                </TextBox>
+                <TextBlock 
+                    Text="Position" 
+                    Margin="3,9,9,0" 
+                    Grid.Column="3"
+                    Grid.Row="3"
+                    FontSize="20" 
+                    FontWeight="Bold" 
+                    TextAlignment="Center" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Top"/>
+                <TextBox x:Name="txtPosition" 
+                    Margin="3,6,0,0" 
+                    Grid.Column="4"
+                    Grid.Row="3"
+                    CharacterCasing="Upper"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    TextAlignment="Right" VerticalAlignment="Top" KeyDown="txtPosition_KeyDown" PreviewKeyDown="Common_PreviewKeyDown">
+                </TextBox>
+                <TextBlock 
+                    Text="Remark" 
+                    Margin="3,9,9,0" 
+                    Grid.Column="1"
+                    Grid.Row="4"
+                    FontSize="20" 
+                    FontWeight="Bold" 
+                    TextAlignment="Center" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Top"/>
+                <TextBox x:Name="txtRemark" 
+                    Margin="3,6,0,0" 
+                    Grid.Column="2"
+                    Grid.ColumnSpan="3"
+                    Grid.Row="4"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    TextAlignment="Left" 
+                    VerticalAlignment="Top"  PreviewKeyDown="txtRemark_KeyDown">
+                </TextBox>
+                <TextBlock 
+                    Text="Date" 
+                    Margin="3,9,9,0" 
+                    Grid.Column="1"
+                    Grid.Row="5"
+                    FontSize="20" 
+                    FontWeight="Bold" 
+                    TextAlignment="Center" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Top"/>
+                <DatePicker Name="dteSTARTDATE" 
+                                 Margin="3"
+                                 FontSize="24" 
+                                 FontWeight="Bold" 
+                                 Foreground="Black" 
+                                 VerticalAlignment="Center" 
+                                 Grid.Column="2" Grid.Row="5"
+                                 CalendarStyle="{StaticResource styleCalendar}"/>
+                <Grid Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,92,0">
+                    <Border CornerRadius="1" BorderThickness="1" BorderBrush="Black">
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBox x:Name="HrTxtTime" Text="01" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="29.333" 
+                                 PreviewKeyDown="Common_PreviewKeyDown" KeyDown="HrTxtTime_KeyDown" BorderBrush="{x:Null}" Width="42" LostFocus="HrTxtTime_LostFocus">
+                            </TextBox>
+                            <TextBlock Text=":" FontSize="29.333" HorizontalAlignment="Center" />
+                            <TextBox x:Name="MinTxtTime" Text="00" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="29.333" 
+                                 PreviewKeyDown="Common_PreviewKeyDown" KeyDown="MinTxtTime_KeyDown" BorderBrush="{x:Null}" Width="42" LostFocus="MinTxtTime_LostFocus">
+                            </TextBox>
+                            <TextBlock Text=":" FontSize="29.333" HorizontalAlignment="Center" />
+                            <TextBox x:Name="SecTxtStart" Text="00" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="29.333" 
+                                 PreviewKeyDown="Common_PreviewKeyDown" KeyDown="SecTxtStart_KeyDown" BorderBrush="{x:Null}" Width="42" LostFocus="SecTxtStart_LostFocus">
+                            </TextBox>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+                <TextBlock Text="Operator" 
+                           Margin="3,9,9,0" 
+                    Grid.Column="1"
+                    Grid.Row="6"
+                    FontSize="20" 
+                    FontWeight="Bold" 
+                    TextAlignment="Center" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Top"/>
+                <TextBox x:Name="txtOperator" 
+                    Margin="3,6,0,0" 
+                    Grid.Column="2"
+                    Grid.Row="6"
+                    CharacterCasing="Upper"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="txtOperator_KeyDown">
+                </TextBox>
+            </Grid>
+        </Border>
+    </DockPanel>
+</Window>

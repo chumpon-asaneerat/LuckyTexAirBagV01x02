@@ -1,0 +1,104 @@
+﻿<Window x:Class="LuckyTex.Windows.ConfirmstartLengthWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Confirmstart Length" 
+        Height="250" 
+        Width="550" 
+        ShowInTaskbar="False"
+        Topmost="True"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Loaded="Window_Loaded" >
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/GroupBoxStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/RadioButtonStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/CheckedBoxStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <DockPanel LastChildFill="True">
+        <!-- Caption Bar -->
+        <Border DockPanel.Dock="Top" CornerRadius="3" Margin="3, 3, 3, 0"
+                Background="CornflowerBlue"
+                Height="40">
+            <TextBlock Text="Confirmstart Length"
+                       Foreground="White"
+                       FontSize="30" 
+                       FontWeight="Bold"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"/>
+        </Border>
+        <!-- Button Command Bars -->
+        <Border DockPanel.Dock="Bottom" 
+                Background="#F0F0F0">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <Button x:Name="cmdSave" 
+                        Margin="5" 
+                        Content="Save"
+                        FontSize="22" 
+                        FontWeight="Bold"
+                        Height="40"
+                        Width="100"
+                        Style="{StaticResource MenuButtonStyle}" Click="cmdSave_Click">
+                </Button>        
+            </StackPanel>
+        </Border>
+        <!-- Content -->
+        <Border CornerRadius="3" Margin="3" 
+                BorderThickness="2" BorderBrush="Black">
+            <ScrollViewer HorizontalContentAlignment="Center"
+                          VerticalContentAlignment="Center"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto">
+                <Grid HorizontalAlignment="Center"
+                      VerticalAlignment="Center" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="250" />
+                        <ColumnDefinition Width="250" />
+                        <ColumnDefinition Width="5" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5" />
+                        <RowDefinition Height="80" />
+                        <RowDefinition Height="5" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Confirm Starting : " 
+                               Margin="3" 
+                               FontSize="28" 
+                               FontWeight="Bold" 
+                               HorizontalAlignment="Stretch" 
+                               VerticalAlignment="Center" 
+                               TextAlignment="Right" 
+                               Grid.Column="1" Grid.Row="1" />
+                    <Border Background="White" 
+                            BorderBrush="Black" 
+                            BorderThickness="1" 
+                            CornerRadius="3" 
+                            Margin="3" 
+                            HorizontalAlignment="Stretch" 
+                            VerticalAlignment="Stretch"
+                            Grid.Column="2" Grid.Row="1">
+                        <TextBox Name="txtConfirmStarting" 
+                                 Text="0" 
+                                 CharacterCasing="Upper"
+                                 BorderBrush="{x:Null}"
+                                 Margin="2" 
+                                 FontSize="48" 
+                                 FontWeight="Bold" 
+                                 HorizontalAlignment="Stretch" 
+                                 VerticalAlignment="Center" 
+                                 TextAlignment="Center" 
+                                 PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly ="True" />
+                    </Border>
+                </Grid>
+            </ScrollViewer>
+        </Border>
+    </DockPanel>
+</Window>

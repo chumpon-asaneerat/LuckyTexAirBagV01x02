@@ -1,0 +1,306 @@
+﻿<UserControl x:Class="LuckyTex.Pages.BeamingRecordPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="845" 
+             d:DesignWidth="1200" Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded">
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/GroupBoxStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/RadioButtonStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/CheckedBoxStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="CenterCellStyle" TargetType="DataGridCell">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="RightCellStyle" TargetType="DataGridCell">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Right"
+                                      VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <DockPanel LastChildFill="True">
+        <!-- Caption Bar -->
+        <Border DockPanel.Dock="Top" CornerRadius="3" Margin="3, 3, 3, 0"
+                Background="CornflowerBlue"
+                Height="40">
+            <TextBlock Text="Beaming Record"
+                       Foreground="White"
+                       FontSize="30" 
+                       FontWeight="Bold"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"/>
+        </Border>
+        <!-- Button Command Bars -->
+        <DockPanel DockPanel.Dock="Bottom" LastChildFill="True" 
+                   Background="#F0F0F0"
+                   Margin="5, 0">
+            <!-- Back -->
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <Button x:Name="cmdBack"
+                        Content="Back"
+                        Margin="2" 
+                        Width="150"
+                        FontSize="30" 
+                        FontWeight="Bold"
+                        Style="{StaticResource MenuButtonStyle}" 
+                        Click="cmdBack_Click" />
+            </StackPanel>
+            <Grid/>
+        </DockPanel>
+        <!-- Content -->
+        <Border CornerRadius="3" Margin="3" 
+                BorderThickness="2" BorderBrush="Black">
+            <!--<ScrollViewer HorizontalContentAlignment="Center"
+                          VerticalContentAlignment="Center"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto">-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="180" />
+                        <ColumnDefinition Width="180" />
+                        <ColumnDefinition Width="140" />
+                        <ColumnDefinition Width="180" />
+                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="290*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5" />
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="125*" />
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="125*" />
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="5" />
+                    </Grid.RowDefinitions>
+                <TextBlock 
+                                Text="Beamer Lot" 
+                                Margin="3" 
+                    Grid.Row="1"
+                             Grid.Column="1"
+                                FontSize="24" 
+                                FontWeight="Bold" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Top"/>
+                <TextBox x:Name="txtBEAMERNO"  
+                                    Margin="3,3,0,0" 
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    CharacterCasing="Upper"
+                                    FontSize="24"
+                                    FontWeight="Bold"
+                                    TextAlignment="Center" VerticalAlignment="Top">
+                </TextBox>
+                <TextBlock Text="Beamer MC" 
+                               Margin="3"  
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               FlowDirection="RightToLeft"
+                               Height="41" VerticalAlignment="Top" Grid.Column="3" Grid.Row="1" />
+                <ComboBox Name="cbBeamingMC" 
+                              Margin="3"
+                               DisplayMemberPath="DisplayName" 
+                               SelectedValuePath="MCId"
+                               FontSize="22"      
+                               FontWeight="Bold" 
+                               ItemsSource="{Binding GetItemCodeData, Mode=OneWay}"
+                              Grid.Column="4" Grid.Row="1" VerticalAlignment="Top" />
+                <Grid 
+                        Grid.Row="1" 
+                        Grid.Column="5" Margin="0,0,0,0">
+                    <TextBlock 
+                                            Text="Operator" 
+                                            Margin="3,9,0,0" 
+                                            FontSize="20" 
+                                            FontWeight="Bold" 
+                                            TextAlignment="Center" 
+                                            HorizontalAlignment="Left" 
+                                            VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtOperator"  
+                                             Margin="94,6,6,0"
+                                             IsReadOnly="True"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top">
+                    </TextBox>
+                </Grid>
+                <TextBlock Text="Item Prepare" 
+                               Margin="3"  
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               FlowDirection="RightToLeft"
+                               Height="41" VerticalAlignment="Top" Grid.Column="1" Grid.Row="2" />
+                <ComboBox Name="cbItemCode" 
+                              Margin="3"
+                               DisplayMemberPath="ITM_PREPARE" 
+                               SelectedValuePath="ITM_PREPARE"
+                               FontSize="22"      
+                               FontWeight="Bold" 
+                               ItemsSource="{Binding GetItemCodeData, Mode=OneWay}"
+                              Grid.Column="2" Grid.Row="2" VerticalAlignment="Top" />
+                
+                <TextBlock Text="Start Date" 
+                               Margin="3"
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               FlowDirection="RightToLeft" 
+                               TextAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Grid.Column="3" />
+                <DatePicker Name="dteStartDate" 
+                                 Margin="3"
+                                 FontSize="24" 
+                                 FontWeight="Bold" 
+                                 Foreground="Black" 
+                                 VerticalAlignment="Center" 
+                                Grid.Column="4" 
+                                Grid.Row="2" />
+                <Button Name="cmdClear" 
+                            Content="Clear"
+                            Margin="8,1,0,0" 
+                            FontSize="22"
+                            FontWeight="Bold"
+                            Height="40" Width="107" HorizontalAlignment="Left"  VerticalAlignment="Top" Style="{StaticResource MenuButtonStyle}" Grid.Row="3" Grid.Column="4" Click="cmdClear_Click" >
+                    </Button>
+
+                    <Button Name="cmdSearch" 
+                            Content="Search"
+                            Margin="120,1,0,0" 
+                            FontSize="22"
+                            FontWeight="Bold"
+                            Height="40" Width="107" HorizontalAlignment="Left"  VerticalAlignment="Top" Style="{StaticResource MenuButtonStyle}" Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Click="cmdSearch_Click">
+                    </Button>
+                <Button Content="Send D365" FontSize="22" FontWeight="Bold" Grid.Column="6" Grid.Row="3" Height="40" HorizontalAlignment="Right" Margin="0,3,3,0" Name="cmdSendD365" Style="{StaticResource MenuButtonStyle}" VerticalAlignment="Top" Width="130" Click="cmdSendD365_Click" />
+                <DataGrid 
+                             x:Name="gridBeaming" 
+                                Margin="3"
+                                ItemsSource="{Binding}"
+                                SelectionMode="Single"
+                                AlternatingRowBackground="AntiqueWhite"
+                                AutoGenerateColumns="False"
+                                CanUserAddRows="False"
+                                CanUserDeleteRows="False"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                HorizontalGridLinesBrush="Silver" 
+                                VerticalGridLinesBrush="Silver"
+                                Grid.Row="4" Grid.ColumnSpan="6" Grid.Column="1" SelectedCellsChanged="gridBeaming_SelectedCellsChanged" HorizontalContentAlignment="Left"
+                        ScrollViewer.CanContentScroll="True" 
+      ScrollViewer.VerticalScrollBarVisibility="Auto"
+      ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                            <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding BEAMERNO}" Header="Beamer Lot" IsReadOnly="True" Width="150" CellStyle="{StaticResource CenterCellStyle}"/>
+                        <DataGridTextColumn Binding="{Binding WARPHEADNO}" Header="Warper Lot" IsReadOnly="True" Width="150" CellStyle="{StaticResource CenterCellStyle}"/>
+                        <DataGridTextColumn Binding="{Binding ITM_PREPARE}" Header="Item Preapre" IsReadOnly="True" Width="150" CellStyle="{StaticResource CenterCellStyle}"/>
+                        <DataGridTextColumn Binding="{Binding MCNO}" Header="Beamer MC" IsReadOnly="True" Width="120" CellStyle="{StaticResource CenterCellStyle}"/>
+                        <DataGridTextColumn Width="120" Header="Total Yarn" 
+                                    Binding="{Binding TOTALYARN, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                        <DataGridTextColumn Width="120" Header="Total Keba" 
+                                    Binding="{Binding TOTALKEBA, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                        <DataGridTextColumn Width="180" Header="Start Date" 
+                                    Binding="{Binding STARTDATE, StringFormat=\{0:dd/MM/yyyy HH:mm\}}" 
+                                    IsReadOnly="True" CellStyle="{StaticResource CenterCellStyle}"/>
+                        <DataGridTextColumn Width="180" Header="End Date" 
+                                    Binding="{Binding ENDDATE, StringFormat=\{0:dd/MM/yyyy HH:mm\}}" 
+                                    IsReadOnly="True" CellStyle="{StaticResource CenterCellStyle}"/>
+                        <DataGridTextColumn Binding="{Binding CREATEBY}" Header="Setting By" IsReadOnly="True" Width="120" CellStyle="{StaticResource CenterCellStyle}"/>
+                            </DataGrid.Columns>
+                    </DataGrid>
+                <Button Name="cmdBeamingRecord" 
+                            Content="Beaming Record"
+                            Margin="0,3,3,0" 
+                            FontSize="22"
+                            FontWeight="Bold"
+                            Height="40" Width="196" HorizontalAlignment="Right"  VerticalAlignment="Top" Style="{StaticResource MenuButtonStyle}" Grid.Row="5" Grid.Column="6" Click="cmdBeamingRecord_Click">
+                    </Button>
+                <TextBlock Text="Beamer Roll" 
+                               Margin="3"  
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               FlowDirection="RightToLeft"
+                               Height="41" VerticalAlignment="Top" Grid.Column="1" Grid.Row="5" />
+                <DataGrid x:Name="gridBeamer" 
+                                Margin="3"
+                                ItemsSource="{Binding}"
+                                SelectionMode="Single"
+                                AlternatingRowBackground="AntiqueWhite"
+                                AutoGenerateColumns="False"
+                                CanUserAddRows="False"
+                                CanUserDeleteRows="False"
+                                FontSize="20" 
+                                FontWeight="Bold" 
+                                HorizontalGridLinesBrush="Silver" 
+                                VerticalGridLinesBrush="Silver"
+                                Grid.Row="6" Grid.ColumnSpan="6" Grid.Column="1" HorizontalContentAlignment="Left" 
+                                ScrollViewer.CanContentScroll="True" 
+                                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                ScrollViewer.HorizontalScrollBarVisibility="Auto" SelectedCellsChanged="gridBeamer_SelectedCellsChanged">
+                        <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding BEAMERNO}" Header="Beamer Lot" IsReadOnly="True" Width="150" CellStyle="{StaticResource CenterCellStyle}"/>
+                        <DataGridTextColumn Binding="{Binding BEAMLOT}" Header="Beamer Roll" IsReadOnly="True" Width="150" CellStyle="{StaticResource CenterCellStyle}"/>
+                        <DataGridTextColumn Binding="{Binding BEAMNO}" Header="Beam No" IsReadOnly="True" Width="150" CellStyle="{StaticResource CenterCellStyle}"/>
+                        <DataGridTextColumn Width="120" Header="Length" 
+                                    Binding="{Binding LENGTH, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                        <DataGridTextColumn Binding="{Binding BEAMMC}" Header="Beamer MC" IsReadOnly="True" Width="120" CellStyle="{StaticResource CenterCellStyle}"/>
+                        <DataGridTextColumn Width="180" Header="Start Date" 
+                                    Binding="{Binding STARTDATE, StringFormat=\{0:dd/MM/yyyy HH:mm\}}" 
+                                    IsReadOnly="True" CellStyle="{StaticResource CenterCellStyle}"/>
+                        <DataGridTextColumn Width="180" Header="End Date" 
+                                    Binding="{Binding ENDDATE, StringFormat=\{0:dd/MM/yyyy HH:mm\}}" 
+                                    IsReadOnly="True" CellStyle="{StaticResource CenterCellStyle}"/>
+                        <DataGridTextColumn Width="130" Header="Start By" 
+                                    Binding="{Binding STARTBY}" 
+                                    IsReadOnly="True" CellStyle="{StaticResource RightCellStyle}"/>
+                        <DataGridTextColumn Width="130" Header="Doff By" 
+                                    Binding="{Binding DOFFBY}" 
+                                    IsReadOnly="True" CellStyle="{StaticResource RightCellStyle}"/>
+                    </DataGrid.Columns>
+                    </DataGrid>
+
+                <Button Name="cmdRePrintTransferSlip" 
+                            Content="Re-Print Transfer Slip"
+                            Margin="0,0,3,3" 
+                            FontSize="22"
+                            FontWeight="Bold"
+                            Height="40" Width="239" HorizontalAlignment="Right"  VerticalAlignment="Bottom" Style="{StaticResource MenuButtonStyle}" Grid.Row="7" Grid.Column="6" Click="cmdRePrintTransferSlip_Click">
+                    </Button>
+                </Grid>
+            <!--</ScrollViewer>-->
+        </Border>
+    </DockPanel>
+  
+</UserControl>

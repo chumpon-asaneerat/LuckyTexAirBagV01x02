@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BFB13DCE-F58C-4DCA-97BE-717B311FD5BE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LuckyTex</RootNamespace>
+    <AssemblyName>LuckyTex.AirBag.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Executables\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>softbase.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NLib">
+      <HintPath>..\References\NLib.dll</HintPath>
+    </Reference>
+    <Reference Include="NLib.Modbus, Version=4.0.4.1, Culture=neutral, PublicKeyToken=6b9d63d2a8a62ab5, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\NLib.Modbus.dll</HintPath>
+    </Reference>
+    <Reference Include="NModbus4, Version=1.12.0.0, Culture=neutral, PublicKeyToken=6b9d63d2a8a62ab5, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\NModbus4.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\Consts.cs" />
+    <Compile Include="Configs\CommomConfigs.cs" />
+    <Compile Include="Domains\AirbagSPs.cs" />
+    <Compile Include="Domains\Class1.cs" />
+    <Compile Include="Domains\D365.cs" />
+    <Compile Include="Models\Coatings.cs" />
+    <Compile Include="Models\ClearPallet.cs" />
+    <Compile Include="Models\Beaming.cs" />
+    <Compile Include="Models\BCSPRFTP.cs" />
+    <Compile Include="Models\ClearCutInfo.cs" />
+    <Compile Include="Models\D365.cs" />
+    <Compile Include="Models\PCKPRFTP.cs" />
+    <Compile Include="Models\QualityAssurance.cs" />
+    <Compile Include="Models\HundredMData.cs" />
+    <Compile Include="Models\ProcessCondition.cs" />
+    <Compile Include="Models\ItemCode.cs" />
+    <Compile Include="Models\DefectCode.cs" />
+    <Compile Include="Models\Drawing.cs" />
+    <Compile Include="Models\SpecificMCStop.cs" />
+    <Compile Include="Models\CustomerAndLoadingType.cs" />
+    <Compile Include="Models\Warping.cs" />
+    <Compile Include="Models\Weaving.cs" />
+    <Compile Include="Models\LAB.cs" />
+    <Compile Include="Models\Packing.cs" />
+    <Compile Include="Models\CutPrint.cs" />
+    <Compile Include="Models\G3.cs" />
+    <Compile Include="Models\ImportExcel.cs" />
+    <Compile Include="Models\Operator.cs" />
+    <Compile Include="Models\Demo\CauseOfBeamerStopInfo.cs" />
+    <Compile Include="Models\Demo\CauseOfWarperStopInfo.cs" />
+    <Compile Include="Models\ConfirmGradeInfo.cs" />
+    <None Include="Models\Demo\DefectListInfo.cs" />
+    <Compile Include="Models\Demo\Positon.cs" />
+    <Compile Include="Models\Demo\Process.cs" />
+    <Compile Include="Models\Demo\InspectionRecordInfo.cs" />
+    <Compile Include="Models\Demo\InstGradeInInfo.cs" />
+    <Compile Include="Models\Finishings.cs" />
+    <Compile Include="Models\Inspections.cs" />
+    <Compile Include="Models\LogInInfo.cs" />
+    <Compile Include="Models\Demo\Machines.cs" />
+    <Compile Include="Models\Demo\ReceiveDetailInfo.cs" />
+    <Compile Include="Models\ModbusModels.cs" />
+    <Compile Include="Models\RemarkInfo.cs" />
+    <Compile Include="Models\Demo\StartNewInsLotInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DataService\BeamingDataService.cs" />
+    <Compile Include="Services\DataService\BCSPRFTPDataService.cs" />
+    <Compile Include="Services\DataService\D365DataService.cs" />
+    <Compile Include="Services\DataService\PCKPRFTPDataService.cs" />
+    <Compile Include="Services\DataService\QualityAssuranceDataServicecs.cs" />
+    <Compile Include="Services\DataService\HundredMDataService.cs" />
+    <Compile Include="Services\DataService\ProcessConditionDataService.cs" />
+    <Compile Include="Services\DataService\ItemCodeService.cs" />
+    <Compile Include="Services\DataService\DefectCodeService.cs" />
+    <Compile Include="Services\DataService\DrawingDataService.cs" />
+    <Compile Include="Services\DataService\CustomerAndLoadingTypeDataService.cs" />
+    <Compile Include="Services\DataService\WarpingDataService.cs" />
+    <Compile Include="Services\DataService\DataServicecs.cs" />
+    <Compile Include="Services\DataService\CutPrintDataService.cs" />
+    <Compile Include="Services\DataService\CoatingDataService.cs" />
+    <Compile Include="Services\DataService\UserDataService.cs" />
+    <Compile Include="Services\DataService\FinishingDataService.cs" />
+    <Compile Include="Services\DataService\WeavingDataService.cs" />
+    <Compile Include="Services\DataService\G3DataService.cs" />
+    <Compile Include="Services\DataService\PackingDataService.cs" />
+    <Compile Include="Services\DataService\LABDataService.cs" />
+    <Compile Include="Services\DatbaseConfigManager.cs" />
+    <Compile Include="Services\ModbusServices.cs" />
+    <Compile Include="Services\PLCServices.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="softbase.snk" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

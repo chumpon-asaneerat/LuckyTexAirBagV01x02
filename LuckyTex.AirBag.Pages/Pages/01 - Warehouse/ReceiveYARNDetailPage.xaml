@@ -1,0 +1,300 @@
+﻿<UserControl x:Class="LuckyTex.Pages.ReceiveYARNDetailPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="845" d:DesignWidth="1200" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/GroupBoxStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/RadioButtonStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel LastChildFill="True">
+        <!-- Caption Bar -->
+        <Border DockPanel.Dock="Top" CornerRadius="3" Margin="3, 3, 3, 0"
+                Background="CornflowerBlue"
+                Height="40">
+            <TextBlock Text="G3 - Receive Yarn Detail"
+                       Foreground="White"
+                       FontSize="30" 
+                       FontWeight="Bold"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"/>
+        </Border>
+        <!-- Button Command Bars -->
+        <DockPanel DockPanel.Dock="Bottom" LastChildFill="True" 
+                   Background="#F0F0F0"
+                   Margin="5, 0">
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <!-- Delete -->
+                <Button x:Name="cmdDelete"
+                        Content="Delete"
+                        Margin="2" 
+                        Width="150"
+                        FontSize="30" 
+                        FontWeight="Bold"
+                        Style="{StaticResource MenuButtonStyle}" 
+                        Click="cmdDelete_Click" />
+                <!-- Save -->
+                <Button x:Name="cmdSave"
+                        Content="Save"
+                        Margin="2" 
+                        Width="150"
+                        FontSize="30" 
+                        FontWeight="Bold"
+                        Style="{StaticResource MenuButtonStyle}" 
+                        Click="cmdSave_Click" />
+                <!-- Back -->
+                <Button x:Name="cmdBack"
+                        Content="Back"
+                        Margin="2" 
+                        Width="150"
+                        FontSize="30" 
+                        FontWeight="Bold"
+                        Style="{StaticResource MenuButtonStyle}" 
+                        Click="cmdBack_Click" />
+            </StackPanel>
+            <Grid/>
+        </DockPanel>
+        <!-- Content -->
+        <Border CornerRadius="3" Margin="3" 
+                BorderThickness="2" BorderBrush="Black">
+            <ScrollViewer HorizontalContentAlignment="Center"
+                          VerticalContentAlignment="Center"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto">
+                <Grid HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch">
+                    <Grid Height="190" Name="grid1" VerticalAlignment="Top">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="64*" />
+                            <RowDefinition Height="54*" />
+                            <RowDefinition Height="72*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="595" />
+                            <ColumnDefinition Width="595" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="วันที่รับสินค้า : "
+                                   Margin="0,22,188,0"  
+                                   FontSize="24" 
+                                   FontWeight="Bold" 
+                                   VerticalAlignment="Top" 
+                                   HorizontalAlignment="Right" 
+                                   TextAlignment="Center" />
+                        <Border 
+                            BorderBrush="Black" 
+                            BorderThickness="1" 
+                            CornerRadius="3" 
+                            Margin="0,16,10,0" 
+                            Background="CornflowerBlue" 
+                            Height="43" 
+                            VerticalAlignment="Top" 
+                            HorizontalAlignment="Right" 
+                            Width="170">
+                            <TextBlock x:Name="txtReceiveDate" 
+                                       Text="10/10/2014"
+                                       Margin="5" 
+                                       Foreground="White" 
+                                       FontSize="24" 
+                                       FontWeight="Bold" 
+                                       VerticalAlignment="Center" 
+                                       HorizontalAlignment="Center" 
+                                       TextAlignment="Center" />
+                        </Border>
+                        <TextBlock Text="Yarn Type : "
+                                   Margin="9,22,0,0" 
+                                   FontSize="24" 
+                                   FontWeight="Bold" 
+                                   VerticalAlignment="Top" 
+                                   HorizontalAlignment="Left" 
+                                   TextAlignment="Center" 
+                                   Grid.Column="1" />
+                        <Border 
+                            BorderBrush="Black" 
+                            BorderThickness="1" 
+                            CornerRadius="3" 
+                            Margin="148,16,0,0" 
+                            Background="CornflowerBlue" 
+                            Grid.Column="1" 
+                            Height="43" 
+                            VerticalAlignment="Top" 
+                            HorizontalAlignment="Left" 
+                            Width="200">
+                            <TextBlock x:Name="txtYarnType" 
+                                       Text="470-136-178E" 
+                                       Margin="5" 
+                                       Foreground="White" 
+                                       FontSize="24" 
+                                       FontWeight="Bold" 
+                                       VerticalAlignment="Center" 
+                                       HorizontalAlignment="Center" 
+                                       TextAlignment="Center" />
+                        </Border>
+                        <TextBlock Text="Type : " 
+                                   Margin="0,9,188,0" 
+                                   FontSize="24" 
+                                   FontWeight="Bold"
+                                   VerticalAlignment="Top" 
+                                   HorizontalAlignment="Right" 
+                                   TextAlignment="Center" Grid.Row="1" />
+                        <Border 
+                            BorderBrush="Black" 
+                            BorderThickness="1" 
+                            CornerRadius="3" 
+                            Margin="0,4,10,0" 
+                            Background="CornflowerBlue" 
+                            Height="43" 
+                            VerticalAlignment="Top" 
+                            HorizontalAlignment="Right" 
+                            Width="170" Grid.Row="1">
+                            <TextBlock x:Name="txtType" 
+                                       Text="Warp"
+                                       Margin="5" 
+                                       Foreground="White" 
+                                       FontSize="24" 
+                                       FontWeight="Bold" 
+                                       VerticalAlignment="Center" 
+                                       HorizontalAlignment="Center" 
+                                       TextAlignment="Center" />
+                        </Border>
+                        <TextBlock Text="Operator : " 
+                                   Margin="20,9,0,0" 
+                                   FontSize="24" 
+                                   FontWeight="Bold" 
+                                   VerticalAlignment="Top" 
+                                   HorizontalAlignment="Left" 
+                                   TextAlignment="Center" 
+                                   Grid.Column="1" Grid.Row="1" />
+                        <Border 
+                            BorderBrush="Black" 
+                            BorderThickness="1" 
+                            CornerRadius="3" 
+                            Margin="148,4,0,0" 
+                            Background="CornflowerBlue" 
+                            Grid.Column="1" 
+                            Height="43" 
+                            VerticalAlignment="Top" 
+                            HorizontalAlignment="Left" 
+                            Width="200" Grid.Row="1">
+                            <TextBlock x:Name="txtOperator" 
+                                       Text="Administrator" 
+                                       Margin="5" 
+                                       Foreground="White" 
+                                       FontSize="24" 
+                                       FontWeight="Bold" 
+                                       Width="300" 
+                                       VerticalAlignment="Center" 
+                                       HorizontalAlignment="Center" 
+                                       TextAlignment="Center" />
+                        </Border>
+                        <TextBlock Text="Pallet No : " 
+                                   Margin="0,14,188,0" 
+                                   FontSize="24" 
+                                   FontWeight="Bold" 
+                                   VerticalAlignment="Top" 
+                                   HorizontalAlignment="Right" 
+                                   TextAlignment="Center" Grid.Row="2" />
+                        <Border 
+                            BorderBrush="Black" 
+                            BorderThickness="1" 
+                            CornerRadius="3" 
+                            Margin="0,5,10,0" 
+                            Background="White" 
+                            HorizontalAlignment="Right" 
+                            Width="170" 
+                            Height="50" 
+                            VerticalAlignment="Top" Grid.Row="2">
+                            <TextBox x:Name="txtPalletNo" 
+                                     Text="2140126008" 
+                                     Margin="5" 
+                                     Foreground="Black" 
+                                     FontSize="24" 
+                                     FontWeight="Bold" 
+                                     Width="164" 
+                                     VerticalAlignment="Center" 
+                                     HorizontalAlignment="Center" 
+                                     TextAlignment="Center" 
+                                     KeyUp="txtPalletNo_KeyUp" />
+                        </Border>
+                    </Grid>
+                    <Grid Margin="0,188,0,0" Name="grid2" >
+                        <DataGrid x:Name="grid"
+                                  Margin="5"
+                                  ItemsSource="{Binding}"
+                                  AlternatingRowBackground="AntiqueWhite"
+                                  AutoGenerateColumns="False"
+                                  CanUserAddRows="True"
+                                  CanUserDeleteRows="True"
+                                  CanUserReorderColumns="False"
+                                  CanUserResizeRows="False" 
+                                  GridLinesVisibility="None"
+                                  EnableColumnVirtualization="True"
+                                  EnableRowVirtualization="True"
+                                  SelectionMode="Extended"
+                                  SelectionUnit="Cell"
+                  
+                                  CanUserResizeColumns="False"
+                                  CanUserSortColumns="False"
+                                  IsSynchronizedWithCurrentItem="True"
+                                  HorizontalGridLinesBrush="Silver" 
+                                  VerticalGridLinesBrush="Silver"
+                                  FontSize="22">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="100" Header="Pallet No" 
+                                                    Binding="{Binding PalletNo}" 
+                                                    IsReadOnly="True"/>
+                                <DataGridTextColumn Width="150" Header="Weight (Kgs.)" 
+                                                    Binding="{Binding Weight}" />
+                                <DataGridTextColumn Width="100" Header="CH" 
+                                                    Binding="{Binding CH}" />
+                                <DataGridTemplateColumn Width="80"
+                                                        Header="OK">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <RadioButton x:Name="rbOK" Width="50"
+                                                         Background="Transparent"
+                                                         GroupName="{Binding Index}"
+                                                         IsChecked="{Binding IsOK, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                         Style="{StaticResource imageRadioButtonOKStyle}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Width="80"
+                                                        Header="NG">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <RadioButton x:Name="rbNG" Width="50"
+                                                         Background="Transparent"
+                                                         GroupName="{Binding Index}"
+                                                         IsChecked="{Binding IsNG, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                         Style="{StaticResource imageRadioButtonNGStyle}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTextColumn Width="100" Header="Go Label" 
+                                                    Binding="{Binding GoLabel}" 
+                                                    IsReadOnly="True"/>
+
+                                <DataGridTemplateColumn Header="" Width="80">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button x:Name="cmdOpenForm" Width="75" Content="Open" 
+                                                    Background="Transparent" Click="cmdOpenForm_Click"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Grid>
+            </ScrollViewer>
+        </Border>
+    </DockPanel>
+</UserControl>

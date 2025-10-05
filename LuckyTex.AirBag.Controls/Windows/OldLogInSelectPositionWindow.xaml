@@ -1,0 +1,136 @@
+﻿<Window x:Class="LuckyTex.Windows.OldLogInSelectPositionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="User Log In" 
+        Height="400" 
+        Width="500" 
+        ShowInTaskbar="False"
+        Topmost="True"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize" 
+        Loaded="Window_Loaded">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/GroupBoxStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/RadioButtonStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    
+    <DockPanel LastChildFill="True">
+        <!-- Caption Bar -->
+        <Border DockPanel.Dock="Top" CornerRadius="3" Margin="3, 3, 3, 0"
+                Background="CornflowerBlue"
+                Height="40">
+            <TextBlock x:Name="txtMCNo"
+                       Text="User Log In"
+                       Foreground="White"
+                       FontSize="30" 
+                       FontWeight="Bold"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"/>
+        </Border>
+        <!-- Button Command Bars -->
+        <Border Background="#F0F0F0"
+                DockPanel.Dock="Bottom">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                
+                <Button x:Name="cmdCancel" 
+                        Margin="5" 
+                        Height="40" 
+                        Width="107"
+                        Content="Cancel"
+                        FontSize="22" 
+                        FontWeight="Bold"
+                        Style="{StaticResource MenuButtonStyle}" 
+                        Click="cmdCancel_Click">
+                </Button>
+            </StackPanel>
+        </Border>
+        <!-- Content -->
+        <Border CornerRadius="3" Margin="3" 
+                BorderThickness="2" BorderBrush="Black">
+                <StackPanel Orientation="Vertical" 
+                    Background="White"
+                    HorizontalAlignment="Stretch">
+                    <TextBlock Text="User Name : " 
+                       Margin="0, 2"
+                       FontSize="22" 
+                       FontWeight="Bold"
+                       TextAlignment="Left"/>
+                    <TextBox x:Name="txtUserName" 
+                     Height="40" 
+                     FontSize="22" 
+                     FontWeight="Bold"
+                     VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                     Margin="0, 2" PreviewKeyDown="txtUserName_PreviewKeyDown" />
+                    <TextBlock Text="Password : " 
+                       Margin="0, 2"
+                       FontSize="22" 
+                       FontWeight="Bold"
+                       TextAlignment="Left" />
+                    <PasswordBox x:Name="txtPwd"
+                         Height="40" 
+                         FontSize="22" 
+                         FontWeight="Bold"
+                         VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                         Margin="0, 2" PreviewKeyDown="txtPwd_PreviewKeyDown" />
+                <StackPanel x:Name="remarkPanel" 
+                        Orientation="Vertical" 
+                        HorizontalAlignment="Stretch">
+                    <TextBlock Text="Select Position" 
+                           Margin="0, 2"
+                           FontSize="22" 
+                           FontWeight="Bold"
+                           TextAlignment="Left" />
+                </StackPanel>
+                <StackPanel x:Name="selectPositionPanel" 
+                        Orientation="Horizontal" 
+                        HorizontalAlignment="Center">
+                    <Button x:Name="cmdPreparing" 
+                        Margin="5" 
+                        Height="40" 
+                        Width="130"
+                        Content="Preparing"
+                        FontSize="22" 
+                        FontWeight="Bold"
+                        Style="{StaticResource MenuButtonStyle}" 
+                        Click="cmdPreparing_Click">
+                    </Button>
+                    <Button x:Name="cmdProcessing" 
+                        Margin="5" 
+                        Height="40" 
+                        Width="130"
+                        Content="Processing"
+                        FontSize="22" 
+                        FontWeight="Bold"
+                        Style="{StaticResource MenuButtonStyle}" 
+                        Click="cmdProcessing_Click">
+                    </Button>
+                    <Button x:Name="cmdFinishing" 
+                        Margin="5" 
+                        Height="40" 
+                        Width="130"
+                        Content="Finishing"
+                        FontSize="22" 
+                        FontWeight="Bold"
+                        Style="{StaticResource MenuButtonStyle}" 
+                        Click="cmdFinishing_Click">
+                    </Button>
+                </StackPanel>
+                <TextBlock x:Name="txtMsg" 
+                       Text="" 
+                       Foreground="Red"
+                       Margin="0, 2"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       TextAlignment="Left" />
+            </StackPanel>
+        </Border>
+    </DockPanel>
+</Window>

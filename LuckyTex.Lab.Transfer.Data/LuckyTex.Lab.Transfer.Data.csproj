@@ -1,0 +1,453 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4E6978BD-2574-4271-93E4-C10AF8D04E3F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LuckyTex</RootNamespace>
+    <AssemblyName>LuckyTex.Lab.Transfer.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Executables_Lab\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>LuckyTex.App</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>softbase.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Google-Noto-Emoji-Objects-62986-microscope.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BarcodeLib, Version=1.0.0.18, Culture=neutral, PublicKeyToken=6b9d63d2a8a62ab5, processorArchitecture=x86">
+      <HintPath>..\References\BarcodeLib.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\References\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\References\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\References\Microsoft.ReportViewer.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\References\Microsoft.ReportViewer.WinForms.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLib">
+      <HintPath>..\References\NLib.dll</HintPath>
+    </Reference>
+    <Reference Include="NLib.Modbus">
+      <HintPath>..\References\NLib.Modbus.dll</HintPath>
+    </Reference>
+    <Reference Include="NLib.Reports">
+      <HintPath>..\References\NLib.Reports.dll</HintPath>
+    </Reference>
+    <Reference Include="NModbus4">
+      <HintPath>..\References\NModbus4.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI">
+      <HintPath>..\References\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML">
+      <HintPath>..\References\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net">
+      <HintPath>..\References\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats">
+      <HintPath>..\References\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Models\LabDataPDF.cs" />
+    <Compile Include="Pages\01 Lab Test\ExcelTestPage.xaml.cs">
+      <DependentUpon>ExcelTestPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\02 PDF Loading\TearStrengthPage.xaml.cs">
+      <DependentUpon>TearStrengthPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\02 PDF Loading\EdgecombPage.xaml.cs">
+      <DependentUpon>EdgecombPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\02 PDF Loading\ElongationPage.xaml.cs">
+      <DependentUpon>ElongationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\02 PDF Loading\PDFLoadingMenuPage.xaml.cs">
+      <DependentUpon>PDFLoadingMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\03 Lab Data Entry\OldLabDataEntryPage.xaml.cs">
+      <DependentUpon>OldLabDataEntryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\03 Lab Data Entry\LabDataEntryPage.xaml.cs">
+      <DependentUpon>LabDataEntryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\04 Production\LabDataEntryWindow.xaml.cs">
+      <DependentUpon>LabDataEntryWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pages\04 Production\ProductionPage.xaml.cs">
+      <DependentUpon>ProductionPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\05 Item Code Specification\ItemCodeSpecificationPage.xaml.cs">
+      <DependentUpon>ItemCodeSpecificationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 Sample Test Data\EntrySampleTestData2Window.xaml.cs">
+      <DependentUpon>EntrySampleTestData2Window.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 Sample Test Data\EntrySampleTestDataPage.xaml.cs">
+      <DependentUpon>EntrySampleTestDataPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 Sample Test Data\EntrySampleTestData1Window.xaml.cs">
+      <DependentUpon>EntrySampleTestData1Window.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 Sample Test Data\SearchSampleTestDataPage.xaml.cs">
+      <DependentUpon>SearchSampleTestDataPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\06 Sample Test Data\SampleTestDataMenuPage.xaml.cs">
+      <DependentUpon>SampleTestDataMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\07 PLC Get Data\AirPermeabilityPage.xaml.cs">
+      <DependentUpon>AirPermeabilityPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\07 PLC Get Data\StaticAirPage.xaml.cs">
+      <DependentUpon>StaticAirPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\07 PLC Get Data\DynamicAirPermeabilityPage.xaml.cs">
+      <DependentUpon>DynamicAirPermeabilityPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\07 PLC Get Data\StiffnessPage.xaml.cs">
+      <DependentUpon>StiffnessPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\07 PLC Get Data\ElectricBalancePage.xaml.cs">
+      <DependentUpon>ElectricBalancePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\07 PLC Get Data\PLC_TestPage.xaml.cs">
+      <DependentUpon>PLC_TestPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\07 PLC Get Data\PLCGetDataMenuPage.xaml.cs">
+      <DependentUpon>PLCGetDataMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\08 Import Excel\ImportDataExcelPage.xaml.cs">
+      <DependentUpon>ImportDataExcelPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\09 Sample Report\SampleReportPage.xaml.cs">
+      <DependentUpon>SampleReportPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\10 LABReportSetting\LABReportSettingPage.xaml.cs">
+      <DependentUpon>LABReportSettingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\11 UploadLABReport\UploadLABReportPage.xaml.cs">
+      <DependentUpon>UploadLABReportPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Services\DataService\LabDataPDFDataService.cs" />
+    <Compile Include="Windows\ApproveWindow.xaml.cs">
+      <DependentUpon>ApproveWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\RetestCoatedWeightWindow.xaml.cs">
+      <DependentUpon>RetestCoatedWeightWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\RetestUncoatedWeightWindow.xaml.cs">
+      <DependentUpon>RetestUncoatedWeightWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\RetestTotalWeightWindow.xaml.cs">
+      <DependentUpon>RetestTotalWeightWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\RetestDynamicAirWindow.xaml.cs">
+      <DependentUpon>RetestDynamicAirWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\RetestStaticAirWindow.xaml.cs">
+      <DependentUpon>RetestStaticAirWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\RetestStiffnessWindow.xaml.cs">
+      <DependentUpon>RetestStiffnessWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataControl\LoadPDFData.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Pages\00 - Common\MainMenuLabPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\01 Lab Test\ExcelTestPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\01 Lab Test\LABTestPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\02 PDF Loading\TearStrengthPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\02 PDF Loading\EdgecombPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\02 PDF Loading\ElongationPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\02 PDF Loading\PDFLoadingMenuPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\03 Lab Data Entry\OldLabDataEntryPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\03 Lab Data Entry\LabDataEntryPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\04 Production\LabDataEntryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\04 Production\ProductionPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\05 Item Code Specification\ItemCodeSpecificationPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 Sample Test Data\EntrySampleTestData2Window.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 Sample Test Data\EntrySampleTestDataPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 Sample Test Data\EntrySampleTestData1Window.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 Sample Test Data\SearchSampleTestDataPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\06 Sample Test Data\SampleTestDataMenuPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\07 PLC Get Data\AirPermeabilityPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\07 PLC Get Data\StaticAirPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\07 PLC Get Data\DynamicAirPermeabilityPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\07 PLC Get Data\StiffnessPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\07 PLC Get Data\ElectricBalancePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\07 PLC Get Data\PLC_TestPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\07 PLC Get Data\PLCGetDataMenuPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\08 Import Excel\ImportDataExcelPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\09 Sample Report\SampleReportPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\10 LABReportSetting\LABReportSettingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\11 UploadLABReport\UploadLABReportPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\ApproveWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\RetestCoatedWeightWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\RetestUncoatedWeightWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\RetestTotalWeightWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\RetestDynamicAirWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\RetestStaticAirWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\RetestStiffnessWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Pages\00 - Common\MainMenuLabPage.xaml.cs">
+      <DependentUpon>MainMenuLabPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\01 Lab Test\LABTestPage.xaml.cs">
+      <DependentUpon>LABTestPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+    <None Include="softbase.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Google-Noto-Emoji-Objects-62986-microscope.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\microscope-icon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\LuckyTexAirBagV01x02\LuckyTex.AirBag.Controls\LuckyTex.AirBag.Controls.csproj">
+      <Project>{A48DE6DA-9EE3-45D0-9833-A59BA43BE50D}</Project>
+      <Name>LuckyTex.AirBag.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\LuckyTexAirBagV01x02\LuckyTex.AirBag.Core\LuckyTex.AirBag.Core.csproj">
+      <Project>{BFB13DCE-F58C-4DCA-97BE-717B311FD5BE}</Project>
+      <Name>LuckyTex.AirBag.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\LuckyTexAirBagV01x02\LuckyTex.AirBag.Pages\LuckyTex.AirBag.Pages.csproj">
+      <Project>{FB191912-1638-4080-9021-39AB4E4980F0}</Project>
+      <Name>LuckyTex.AirBag.Pages</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

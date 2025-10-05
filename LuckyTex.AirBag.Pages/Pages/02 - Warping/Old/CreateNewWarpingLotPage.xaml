@@ -1,0 +1,510 @@
+﻿<UserControl x:Class="LuckyTex.Pages.CreateNewWarpingLotPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="845" d:DesignWidth="1200">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/GroupBoxStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/RadioButtonStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel LastChildFill="True">
+        <!-- Caption Bar -->
+        <Border DockPanel.Dock="Top" CornerRadius="3" Margin="3, 3, 3, 0"
+                Background="CornflowerBlue"
+                Height="40">
+            <TextBlock Text="Create New Warping Lot"
+                       Foreground="White"
+                       FontSize="30" 
+                       FontWeight="Bold"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"/>
+        </Border>
+        <!-- Button Command Bars -->
+        <DockPanel DockPanel.Dock="Bottom" LastChildFill="True" 
+                   Background="#F0F0F0"
+                   Margin="5, 0">
+            <!-- Back -->
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <Button x:Name="cmdBack"
+                        Content="Back"
+                        Margin="2" 
+                        Width="150"
+                        FontSize="30" 
+                        FontWeight="Bold"
+                        Style="{StaticResource MenuButtonStyle}" 
+                        Click="cmdBack_Click" />
+            </StackPanel>
+            <Grid/>
+        </DockPanel>
+        <!-- Content -->
+        <Border CornerRadius="3" Margin="3" 
+                BorderThickness="2" BorderBrush="Black">
+            <ScrollViewer HorizontalContentAlignment="Center"
+                          VerticalContentAlignment="Center"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto">
+                <Grid HorizontalAlignment="Center"
+                      VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="M/C : " 
+                               Margin="0,17,220,0" 
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               VerticalAlignment="Top" 
+                               HorizontalAlignment="Right" 
+                               TextAlignment="Right" 
+                               Width="144" />
+                    <Border 
+                        BorderBrush="Black" 
+                        BorderThickness="1" 
+                        CornerRadius="3" 
+                        Margin="0,11,12,0" 
+                        Background="CornflowerBlue" 
+                        Height="43" 
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Right" 
+                        Width="200">
+                        <TextBlock x:Name="txtMC" 
+                                   Text=" "
+                                   Margin="5" 
+                                   Foreground="White" 
+                                   FontSize="24" 
+                                   FontWeight="Bold" 
+                                   VerticalAlignment="Center" 
+                                   HorizontalAlignment="Center" 
+                                   TextAlignment="Center" />
+                    </Border>
+                    <TextBlock Text="Side : " 
+                               Margin="8,14,0,0" 
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               VerticalAlignment="Top" 
+                               HorizontalAlignment="Left" 
+                               TextAlignment="Right" 
+                               Grid.Column="1" 
+                               Width="124" />
+                    <Border 
+                        Background="White" 
+                        BorderBrush="Black" 
+                        BorderThickness="1" 
+                        CornerRadius="3" 
+                        HorizontalAlignment="Left" 
+                        Margin="143,8,0,0" 
+                        VerticalAlignment="Top" 
+                        Width="200" 
+                        Grid.Column="1">
+                        <TextBox x:Name="txtSide" 
+                                 Text=""
+                                 Margin="5" 
+                                 FontSize="24" 
+                                 FontWeight="Bold" 
+                                 Foreground="Black" 
+                                 HorizontalAlignment="Center" 
+                                 TextAlignment="Center" 
+                                 VerticalAlignment="Center" 
+                                 Width="185" />
+                    </Border>
+                    <TextBlock Text="M/C Speed : " 
+                               FontSize="24" 
+                               Margin="0,76,220,0" 
+                               FontWeight="Bold" 
+                               VerticalAlignment="Top" 
+                               HorizontalAlignment="Right" 
+                               TextAlignment="Right" 
+                               Width="144" />
+                    <Border Background="White" 
+                            BorderBrush="Black" 
+                            BorderThickness="1" 
+                            CornerRadius="3" 
+                            HorizontalAlignment="Right" 
+                            Margin="0,67,12,0" 
+                            VerticalAlignment="Top" 
+                            Width="200">
+                        <TextBlock x:Name="txtMCSpeed" 
+                                   Text=" "
+                                   FontSize="24" 
+                                   FontWeight="Bold" 
+                                   Foreground="Black" 
+                                   HorizontalAlignment="Center" 
+                                   Margin="5" 
+                                   TextAlignment="Center" 
+                                   VerticalAlignment="Center" 
+                                   Width="191" />
+                    </Border>
+                    <TextBlock Text="Date : " 
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               HorizontalAlignment="Left" 
+                               Margin="8,76,0,0" 
+                               TextAlignment="Right" 
+                               VerticalAlignment="Top" 
+                               Width="124" 
+                               Grid.Column="1" />
+                    <Border 
+                        Background="White" 
+                        BorderBrush="Black" 
+                        BorderThickness="1" 
+                        CornerRadius="3" 
+                        HorizontalAlignment="Left" 
+                        Margin="143,67,0,0" 
+                        VerticalAlignment="Top"
+                        Width="200" 
+                        Grid.Column="1">
+                        <TextBox x:Name="txtDate" 
+                                 Text="" 
+                                 Margin="5" 
+                                 FontSize="24" 
+                                 FontWeight="Bold" 
+                                 Foreground="Black"
+                                 HorizontalAlignment="Center" 
+                                 TextAlignment="Center" 
+                                 VerticalAlignment="Center" 
+                                 Width="185" />
+                    </Border>
+                    <TextBlock Text="Beam No : " 
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               Height="41" 
+                               HorizontalAlignment="Right" 
+                               Margin="0,132,220,0" 
+                               TextAlignment="Right" 
+                               VerticalAlignment="Top" 
+                               Width="144" />
+                    <ComboBox x:Name="cbBeamNo"
+                              FontSize="24" 
+                              FontWeight="Bold" 
+                              Height="41" 
+                              Margin="0,132,12,0" 
+                              HorizontalAlignment="Right" 
+                              VerticalAlignment="Top" 
+                              Width="200" />
+                    <TextBlock Text="Length : " 
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               Margin="8,138,0,0" 
+                               TextAlignment="Right" 
+                               HorizontalAlignment="Left" 
+                               VerticalAlignment="Top" 
+                               Width="124" 
+                               Grid.Column="1" />
+                    <Border 
+                        Background="White" 
+                        BorderBrush="Black" 
+                        BorderThickness="1" 
+                        CornerRadius="3" 
+                        Margin="143,129,0,0" 
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Top" 
+                        Width="200" 
+                        Grid.Column="1">
+                        <TextBox x:Name="txtLength" 
+                                 Text="" 
+                                 FontSize="24" 
+                                 FontWeight="Bold" 
+                                 Foreground="Black" 
+                                 Margin="5" 
+                                 TextAlignment="Center" 
+                                 HorizontalAlignment="Center" 
+                                 VerticalAlignment="Center" 
+                                 Width="185" />
+                    </Border>
+                    <TextBlock  Text="Start Time : " 
+                                FontSize="24" 
+                                FontWeight="Bold" 
+                                Margin="0,199,220,0" 
+                                TextAlignment="Right" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Top"
+                                Width="144" />
+                    <Border 
+                        Background="White" 
+                        BorderBrush="Black" 
+                        BorderThickness="1" 
+                        CornerRadius="3" 
+                        Margin="0,190,12,0" 
+                        HorizontalAlignment="Right" 
+                        VerticalAlignment="Top" 
+                        Width="200">
+                        <TextBox x:Name="txtStartTime" 
+                                 Text="" 
+                                 FontSize="24" 
+                                 FontWeight="Bold" 
+                                 Foreground="Black" 
+                                 Margin="5" 
+                                 TextAlignment="Center" 
+                                 HorizontalAlignment="Center" 
+                                 VerticalAlignment="Center" 
+                                 Width="185" />
+                    </Border>
+                    <TextBlock Text="End Time : " 
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               Margin="11,199,0,0" 
+                               TextAlignment="Right" 
+                               HorizontalAlignment="Left" 
+                               VerticalAlignment="Top" 
+                               Width="124" 
+                               Grid.Column="1" />
+                    <Border 
+                        Background="White" 
+                        BorderBrush="Black" 
+                        BorderThickness="1" 
+                        CornerRadius="3" 
+                        Margin="143,190,0,0" 
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Top" 
+                        Width="200" 
+                        Grid.Column="1">
+                        <TextBox x:Name="txtEndTime" 
+                                 Text="" 
+                                 FontSize="24" 
+                                 FontWeight="Bold" 
+                                 Foreground="Black" 
+                                 Margin="5" 
+                                 TextAlignment="Center" 
+                                 HorizontalAlignment="Center" 
+                                 VerticalAlignment="Center" 
+                                 Width="185" />
+                    </Border>
+                    <TextBlock Text="Hardness : " 
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               Margin="0,263,281,0" 
+                               TextAlignment="Right" 
+                               HorizontalAlignment="Right" 
+                               VerticalAlignment="Top" 
+                               Width="124" />
+                    <TextBlock Text="L : " 
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               Margin="0,263,220,0" 
+                               TextAlignment="Right"
+                               HorizontalAlignment="Right" 
+                               VerticalAlignment="Top" 
+                               Width="55" />
+                    <Border 
+                        Background="White" 
+                        BorderBrush="Black" 
+                        BorderThickness="1" 
+                        CornerRadius="3" 
+                        Margin="0,254,12,0" 
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top" 
+                        Width="200">
+                        <TextBox x:Name="txtL" 
+                                 Text=""
+                                 FontSize="24" 
+                                 FontWeight="Bold" 
+                                 Foreground="Black"
+                                 Margin="5" 
+                                 TextAlignment="Center" 
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center" 
+                                 Width="185" />
+                    </Border>
+                    <TextBlock Text="M : " 
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               Margin="80,260,0,0" 
+                               TextAlignment="Right" 
+                               HorizontalAlignment="Left" 
+                               VerticalAlignment="Top" 
+                               Width="55" 
+                               Grid.Column="1" />
+                    <Border 
+                        Background="White" 
+                        BorderBrush="Black" 
+                        BorderThickness="1"
+                        CornerRadius="3" 
+                        Margin="143,251,0,0" 
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Top" 
+                        Width="200" 
+                        Grid.Column="1">
+                        <TextBox  x:Name="txtM" 
+                                  Text="" 
+                                  FontSize="24" 
+                                  FontWeight="Bold"
+                                  Foreground="Black" 
+                                  Margin="5" 
+                                  TextAlignment="Center"
+                                  HorizontalAlignment="Center" 
+                                  VerticalAlignment="Center" 
+                                  Width="185" />
+                    </Border>
+                    <TextBlock Text="R : "
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               Margin="0,328,220,0" 
+                               TextAlignment="Right" 
+                               HorizontalAlignment="Right" 
+                               VerticalAlignment="Top" 
+                               Width="55" />
+                    <Border 
+                        Background="White" 
+                        BorderBrush="Black" 
+                        BorderThickness="1" 
+                        CornerRadius="3" 
+                        Margin="0,319,12,0" 
+                        HorizontalAlignment="Right" 
+                        VerticalAlignment="Top" 
+                        Width="200">
+                        <TextBox x:Name="txtR" 
+                                 Text="" 
+                                 FontSize="24" 
+                                 FontWeight="Bold" 
+                                 Foreground="Black" 
+                                 Margin="5" 
+                                 TextAlignment="Center" 
+                                 HorizontalAlignment="Center" 
+                                 VerticalAlignment="Center" 
+                                 Width="185" />
+                    </Border>
+                    <TextBlock Text="Tension : "
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               Margin="11,328,0,0" 
+                               TextAlignment="Right" 
+                               HorizontalAlignment="Left" 
+                               VerticalAlignment="Top" 
+                               Width="124" 
+                               Grid.Column="1" />
+                    <Border 
+                        Background="White" 
+                        BorderBrush="Black" 
+                        BorderThickness="1" 
+                        CornerRadius="3" 
+                        Margin="143,319,0,0"
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Top" 
+                        Width="200" 
+                        Grid.Column="1">
+                        <TextBox x:Name="txtTension" 
+                                 Text=""
+                                 FontSize="24" 
+                                 FontWeight="Bold" 
+                                 Foreground="Black" 
+                                 Margin="5" 
+                                 TextAlignment="Center"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center"
+                                 Width="185" />
+                    </Border>
+
+                    <Grid 
+                        Margin="0,375,0,0" 
+                        HorizontalAlignment="Right" 
+                        Width="600">
+                        <Grid Height="60" 
+                              VerticalAlignment="Top">
+                            <Border 
+                                DockPanel.Dock="Top" 
+                                CornerRadius="3" 
+                                Margin="0,0,0,0"
+                                    Background="CornflowerBlue"
+                                    Height="60">
+                                <TextBlock Text="Specification type of PM"
+                                           Foreground="White"
+                                           FontSize="35" 
+                                           FontStretch="Normal" 
+                                           FontWeight="ExtraBold"
+                                           TextAlignment="Center"
+                                           VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
+                        <ComboBox 
+                            x:Name="cbSpecificationType" 
+                            Margin="42,78,0,0" 
+                            Width="200" 
+                            FontSize="24" 
+                            FontWeight="Bold" 
+                            Height="41" 
+                            VerticalAlignment="Top" 
+                            HorizontalAlignment="Left" />
+                        <TextBlock Text="Length : " 
+                                   FontSize="24" 
+                                   FontWeight="Bold" 
+                                   Margin="261,87,0,0" 
+                                   TextAlignment="Center" 
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Top" />
+                        <Border 
+                            Background="White" 
+                            BorderBrush="Black" 
+                            BorderThickness="1" 
+                            CornerRadius="3" 
+                            Height="50" 
+                            Margin="365,78,0,0"
+                            VerticalAlignment="Top" 
+                            HorizontalAlignment="Left" 
+                            Width="119">
+                            <TextBox x:Name="txtLength2" 
+                                     Text=""
+                                     FontSize="24" 
+                                     FontWeight="Bold" 
+                                     Foreground="Black" 
+                                     Margin="5" 
+                                     TextAlignment="Center" 
+                                     HorizontalAlignment="Center" 
+                                     VerticalAlignment="Center" 
+                                     Width="110" />
+                        </Border>
+                        <TextBlock
+                            Text="Other : " 
+                            Margin="17,143,0,0" 
+                            FontSize="24" 
+                            FontWeight="Bold" 
+                            TextAlignment="Right" 
+                            Width="124" 
+                            Height="42" 
+                            VerticalAlignment="Top" 
+                            HorizontalAlignment="Left" />
+                        <Border 
+                            BorderBrush="Black" 
+                            BorderThickness="1" 
+                            CornerRadius="3" 
+                            Margin="153,138,0,0" 
+                            Background="White" 
+                            VerticalAlignment="Top" 
+                            HorizontalAlignment="Left" 
+                            Width="331">
+                            <TextBox x:Name="txtOther" 
+                                     Text=""
+                                     Margin="5"  
+                                     Foreground="Black" 
+                                     FontSize="24" 
+                                     FontWeight="Bold" 
+                                     Width="316" 
+                                     VerticalAlignment="Center"
+                                     HorizontalAlignment="Center" 
+                                     TextAlignment="Center" />
+                        </Border>
+                    </Grid>
+
+                    <Button 
+                        x:Name="cmdCreate" 
+                        Margin="143,382,0,0" 
+                        Content="Create"
+                        FontSize="40" 
+                        Height="50" 
+                        Width="202" 
+                        Style="{StaticResource MenuButtonStyle}" 
+                        Grid.Column="1" 
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Top">
+                    </Button>
+                </Grid>
+            </ScrollViewer>
+        </Border>
+    </DockPanel>  
+</UserControl>

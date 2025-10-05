@@ -1,0 +1,374 @@
+﻿<UserControl x:Class="LuckyTex.Pages.LABTestPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="845" 
+             d:DesignWidth="1200" Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded">
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/GroupBoxStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/RadioButtonStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/CheckedBoxStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="CenterCellStyle" TargetType="DataGridCell">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="RightCellStyle" TargetType="DataGridCell">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Right"
+                                      VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <DockPanel LastChildFill="True">
+        <!-- Caption Bar -->
+        <Border DockPanel.Dock="Top" CornerRadius="3" Margin="3, 3, 3, 0"
+                Background="CornflowerBlue"
+                Height="40">
+            <TextBlock Text="LAB LOAD PDF"
+                       Foreground="White"
+                       FontSize="30" 
+                       FontWeight="Bold"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"/>
+        </Border>
+        <!-- Button Command Bars -->
+        <DockPanel DockPanel.Dock="Bottom" LastChildFill="True" 
+                   Background="#F0F0F0"
+                   Margin="5, 0">
+            <!-- Back -->
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <Button x:Name="cmdBack"
+                        Content="Back"
+                        Margin="2" 
+                        Width="150"
+                        FontSize="30" 
+                        FontWeight="Bold"
+                        Style="{StaticResource MenuButtonStyle}" 
+                        Click="cmdBack_Click" />
+            </StackPanel>
+            <Grid/>
+        </DockPanel>
+        <!-- Content -->
+        <Border CornerRadius="3" Margin="3" 
+                BorderThickness="2" BorderBrush="Black">
+            <ScrollViewer HorizontalContentAlignment="Center"
+                          VerticalContentAlignment="Center"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="1185*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5" />
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="5" />
+                        <RowDefinition Height="600*" />
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="5" />
+                    </Grid.RowDefinitions>
+                    <Button Name="cmdSearch" 
+                            Content="Load PDF"
+                            Margin="3,1,0,0" 
+                            FontSize="22"
+                            FontWeight="Bold"
+                            Height="40" Width="120" HorizontalAlignment="Left"  VerticalAlignment="Top" Style="{StaticResource MenuButtonStyle}" Grid.Row="1" Grid.Column="1" Click="cmdSearch_Click">
+                    </Button>
+                    <Button Name="cmdClear" 
+                            Content="Clear"
+                            Margin="129,1,0,0" 
+                            FontSize="22"
+                            FontWeight="Bold"
+                            Height="40" Width="107" HorizontalAlignment="Left"  VerticalAlignment="Top" Style="{StaticResource MenuButtonStyle}" Grid.Row="1" Grid.Column="1" Click="cmdClear_Click">
+                    </Button>
+                    <Button Name="cmdBackup" Content="Backup" FontSize="22" FontWeight="Bold" Grid.Column="1" Grid.Row="1" Height="40" HorizontalAlignment="Left" Margin="368,1,0,0"  Style="{StaticResource MenuButtonStyle}" VerticalAlignment="Top" Width="107" Click="cmdBackup_Click" />
+                    <Button Name="cmdMove" Content="Move" FontSize="22" FontWeight="Bold" Grid.Column="1" Grid.Row="1" Height="40" HorizontalAlignment="Left" Margin="481,1,0,0" Style="{StaticResource MenuButtonStyle}" VerticalAlignment="Top" Width="107" Click="cmdMove_Click" />
+
+                    <Button Name="cmdExpExcel" Content="Exp Excel" FontSize="22" FontWeight="Bold" Grid.Column="1" Grid.Row="1" Height="40" HorizontalAlignment="Left" Margin="242,1,0,0" Style="{StaticResource MenuButtonStyle}" VerticalAlignment="Top" Width="120" Click="cmdExpExcel_Click" />
+                    <TabControl Margin="3" Grid.Row="3" Grid.Column="1" Name="tabPDF"  FontSize="15"
+                            FontWeight="Bold">
+                        <TabItem Header="ID_PTF" Name="tabPTF">
+                            <Grid>
+                                <DataGrid 
+                                    x:Name="gridPTF" 
+                                    Margin="3,3,3,3"
+                                    ItemsSource="{Binding}"
+                                    SelectionMode="Extended"
+                                    AlternatingRowBackground="AntiqueWhite"
+                                    AutoGenerateColumns="False"
+                                    CanUserAddRows="False"
+                                    
+                                    FontSize="20" 
+                                    FontWeight="Bold" 
+                                    HorizontalGridLinesBrush="Silver" 
+                                    VerticalGridLinesBrush="Silver"
+                                    HorizontalContentAlignment="Left" 
+                                    SelectedCellsChanged="gridPTF_SelectedCellsChanged"
+                                    ScrollViewer.CanContentScroll="True" 
+                                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Auto" LoadingRow="gridPTF_LoadingRow" >
+                                   
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding Path= specimenLabel, Mode= OneWay}" CanUserSort="True" SortMemberPath="specimenLabel" Header="Specimen label" IsReadOnly="True" Width="150" CellStyle="{StaticResource CenterCellStyle}">
+                                        </DataGridTextColumn>
+                                        <DataGridTextColumn Binding="{Binding Path= specimenRep, Mode= OneWay}" CanUserSort="True" SortMemberPath="specimenRep" Header="Specimen Rep" IsReadOnly="True" Width="150" CellStyle="{StaticResource CenterCellStyle}">
+                                        </DataGridTextColumn>
+                                        <DataGridTextColumn Binding="{Binding Path= operatorID, Mode= OneWay}" CanUserSort="True" SortMemberPath="operatorID" Header="Operator ID" IsReadOnly="True" Width="130" CellStyle="{StaticResource CenterCellStyle}">
+                                        </DataGridTextColumn>
+                                        <DataGridTextColumn Binding="{Binding Path= weavingLot, Mode= OneWay}" CanUserSort="True" SortMemberPath="weavingLot" Header="Weaving Lot no." IsReadOnly="True" Width="170" CellStyle="{StaticResource CenterCellStyle}">
+                                        </DataGridTextColumn>
+                                        <DataGridTextColumn Binding="{Binding Path= weavingType, Mode= OneWay}" CanUserSort="True" SortMemberPath="weavingType" Header="Weaving Type" IsReadOnly="True" Width="170" CellStyle="{StaticResource CenterCellStyle}">
+                                        </DataGridTextColumn>
+                                        <DataGridTextColumn Binding="{Binding Path= finishingLot, Mode= OneWay}" CanUserSort="True" SortMemberPath="finishingLot" Header="Finishing Lot no." IsReadOnly="True" Width="170" CellStyle="{StaticResource CenterCellStyle}">
+                                        </DataGridTextColumn>
+
+                                        <DataGridTemplateColumn Header="Ave 1"  Width="100">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBox Text="{Binding ave1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:n2}}" Name="ave1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" PreviewTextInput="NumberValidationTextBox" LostFocus="AVE_LostFocus" />
+        
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+
+                                        <DataGridTemplateColumn Header="Ave 2"  Width="100">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBox Text="{Binding ave2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:n2}}" Name="ave2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" PreviewTextInput="NumberValidationTextBox" LostFocus="AVE_LostFocus"/>
+
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+
+                                        <DataGridTemplateColumn Header="Ave 3"  Width="100">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBox Text="{Binding ave3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:n2}}" Name="ave3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" PreviewTextInput="NumberValidationTextBox" LostFocus="AVE_LostFocus"/>
+
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+
+                                        <DataGridTemplateColumn Header="Ave 4"  Width="100">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBox Text="{Binding ave4, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:n2}}" Name="ave4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" PreviewTextInput="NumberValidationTextBox" LostFocus="AVE_LostFocus"/>
+
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+
+                                        <DataGridTemplateColumn Header="Ave 5"  Width="100">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBox Text="{Binding ave5, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:n2}}" Name="ave5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" PreviewTextInput="NumberValidationTextBox" LostFocus="AVE_LostFocus"/>
+
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+
+                                        <DataGridTemplateColumn Header="Ave 6"  Width="100">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBox Text="{Binding ave6, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:n2}}" Name="ave6" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" PreviewTextInput="NumberValidationTextBox" LostFocus="AVE_LostFocus"/>
+
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+
+                                        <DataGridTextColumn Width="100" Header="Avg" 
+                                    Binding="{Binding Path= avg, Mode= TwoWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+
+                                        <DataGridTemplateColumn Header="Approve" Width="100">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <CheckBox IsChecked="{Binding Path=Approve, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Name="Selected" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        
+                                        <DataGridTemplateColumn Header="" Width="120">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button x:Name="Approve" Width="100" Content="Approve" 
+                                                        Background="Transparent" Click="ShowApprove"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="ID_TENS" Name="tabTENS">
+                            <Grid>
+                                <Grid>
+                                    <DataGrid 
+                                    x:Name="gridTENS" 
+                                    Margin="3,3,3,3"
+                                    ItemsSource="{Binding}"
+                                    SelectionMode="Extended"
+                                    AlternatingRowBackground="AntiqueWhite"
+                                    AutoGenerateColumns="False"
+                                    CanUserAddRows="False"
+                                   
+                                    FontSize="20" 
+                                    FontWeight="Bold" 
+                                    HorizontalGridLinesBrush="Silver" 
+                                    VerticalGridLinesBrush="Silver"
+                                    HorizontalContentAlignment="Left" SelectedCellsChanged="gridTENS_SelectedCellsChanged"
+                                    ScrollViewer.CanContentScroll="True" 
+                                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Binding="{Binding Path= specimenLabel, Mode= OneWay}" CanUserSort="True" SortMemberPath="specimenLabel" Header="Specimen label" IsReadOnly="True" Width="150" CellStyle="{StaticResource CenterCellStyle}">
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Binding="{Binding Path= specimenRep, Mode= OneWay}" CanUserSort="True" SortMemberPath="specimenRep" Header="Specimen Rep" IsReadOnly="True" Width="150" CellStyle="{StaticResource CenterCellStyle}">
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Binding="{Binding Path= operatorID, Mode= OneWay}" CanUserSort="True" SortMemberPath="operatorID" Header="Operator ID" IsReadOnly="True" Width="120" CellStyle="{StaticResource CenterCellStyle}">
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Binding="{Binding Path= weavingLot, Mode= OneWay}" CanUserSort="True" SortMemberPath="weavingLot" Header="Weaving Lot no." IsReadOnly="True" Width="170" CellStyle="{StaticResource CenterCellStyle}">
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Binding="{Binding Path= weavingType, Mode= OneWay}" CanUserSort="True" SortMemberPath="weavingType" Header="Weaving Type" IsReadOnly="True" Width="150" CellStyle="{StaticResource CenterCellStyle}">
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Binding="{Binding Path= scouringLot , Mode= OneWay}" CanUserSort="True" SortMemberPath="scouringLot" Header="Scouring Lot no." IsReadOnly="True" Width="170" CellStyle="{StaticResource CenterCellStyle}">
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Binding="{Binding Path= methodType , Mode= OneWay}" CanUserSort="True" SortMemberPath="methodType" Header="Method Type" IsReadOnly="True" Width="150" CellStyle="{StaticResource CenterCellStyle}">
+                                            </DataGridTextColumn>
+                                            
+                                            <DataGridTextColumn Binding="{Binding Path= lastTestDate, Mode= OneWay}" CanUserSort="True" SortMemberPath="lastTestDate" Header="Last test date" IsReadOnly="True" Width="220" CellStyle="{StaticResource CenterCellStyle}">
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Binding="{Binding Path= lastTestTime , Mode= OneWay}" CanUserSort="True" SortMemberPath="lastTestTime" Header="Last test time" IsReadOnly="True" Width="140" CellStyle="{StaticResource CenterCellStyle}">
+                                            </DataGridTextColumn>
+
+                                            <DataGridTextColumn Width="100" Header="Max Ld 1" 
+                                    Binding="{Binding Path= max1, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                                            <DataGridTextColumn Width="100" Header="Max Strain 1" 
+                                    Binding="{Binding Path= maxStrain1, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                                            <DataGridTextColumn Width="100" Header="Max Ld 2" 
+                                    Binding="{Binding Path= max2, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                                            <DataGridTextColumn Width="100" Header="Max Strain 2" 
+                                    Binding="{Binding Path= maxStrain2, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                                            <DataGridTextColumn Width="100" Header="Max Ld 3" 
+                                    Binding="{Binding Path= max3, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                                            <DataGridTextColumn Width="100" Header="Max Strain 3" 
+                                    Binding="{Binding Path= maxStrain3, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                                            <DataGridTextColumn Width="100" Header="Max Ld 4" 
+                                    Binding="{Binding Path= max4, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                                            <DataGridTextColumn Width="100" Header="Max Strain 4" 
+                                    Binding="{Binding Path= maxStrain4, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                                            <DataGridTextColumn Width="100" Header="Max Ld 5" 
+                                    Binding="{Binding Path= max5, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                                            <DataGridTextColumn Width="100" Header="Max Strain 5" 
+                                    Binding="{Binding Path= maxStrain5, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                                            <DataGridTextColumn Width="100" Header="Max Ld 6" 
+                                    Binding="{Binding Path= max6, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+                                            <DataGridTextColumn Width="100" Header="Max Strain 6" 
+                                    Binding="{Binding Path= maxStrain6, Mode= OneWay, StringFormat='{}{0:#,##0.##}'}"  
+                                    IsReadOnly="True"
+                                    CellStyle="{StaticResource RightCellStyle}"/>
+
+                                            <DataGridTemplateColumn Width="120" Header="Approve">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Button Width="100" Click="ShowApprove">Approve</Button>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+
+                                </Grid>
+
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="File PDF" Name="tabFilePDF">
+                            <Grid>
+                                <TextBlock Margin="3" Name="txtBrowse" Text="" FontSize="15" DataContext="{Binding}" />
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                    
+                    <Grid 
+                        Grid.Row="4" 
+                        Grid.Column="1" HorizontalAlignment="Left" Width="236">
+                        <TextBlock 
+                                            Text="Operator" 
+                                            Margin="3,9,0,0" 
+                                            FontSize="20" 
+                                            FontWeight="Bold" 
+                                            TextAlignment="Center" 
+                                            HorizontalAlignment="Left" 
+                                            VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtOperator"  
+                                             Margin="94,6,6,0"
+                                             IsReadOnly="True"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center" VerticalAlignment="Top">
+                        </TextBox>
+                    </Grid>
+                    <Button Name="cmdSave" 
+                            Content="Save"
+                            Margin="0,0,8,3" 
+                            FontSize="22"
+                            FontWeight="Bold"
+                            Height="40" Width="165" HorizontalAlignment="Right"  VerticalAlignment="Bottom" Style="{StaticResource MenuButtonStyle}" Grid.Row="4" Grid.Column="1" Click="cmdSave_Click">
+                    </Button>
+                    
+                </Grid>
+            </ScrollViewer>
+        </Border>
+    </DockPanel>
+  
+</UserControl>

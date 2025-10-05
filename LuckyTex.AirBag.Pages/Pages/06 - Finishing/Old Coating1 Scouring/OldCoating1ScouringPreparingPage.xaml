@@ -1,0 +1,830 @@
+﻿<UserControl x:Class="LuckyTex.Pages.OldCoating1ScouringPreparingPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="845" 
+             d:DesignWidth="1200" 
+             Loaded="UserControl_Loaded" 
+             Unloaded="UserControl_Unloaded">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/GroupBoxStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/RadioButtonStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/CheckedBoxStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <DockPanel LastChildFill="True">
+        <!-- Caption Bar -->
+        <Border DockPanel.Dock="Top" CornerRadius="3" Margin="3, 3, 3, 0"
+                Background="CornflowerBlue"
+                Height="40">
+            <TextBlock Text="Preparing Coat #1 Scouring-Dry"
+                       Foreground="White"
+                       FontSize="30" 
+                       FontWeight="Bold"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"/>
+        </Border>
+        <!-- Button Command Bars -->
+        <DockPanel DockPanel.Dock="Bottom" LastChildFill="True" 
+                   Background="#F0F0F0"
+                   Margin="5, 0">
+            <!-- Back -->
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <Button x:Name="cmdBack"
+                        Content="Back"
+                        Margin="2" 
+                        Width="150"
+                        FontSize="30" 
+                        FontWeight="Bold"
+                        Style="{StaticResource MenuButtonStyle}" 
+                        Click="cmdBack_Click" />
+            </StackPanel>
+            <Grid/>
+        </DockPanel>
+
+        <!-- Content -->
+        <Border CornerRadius="3" Margin="3" 
+                BorderThickness="2" BorderBrush="Black">
+            <ScrollViewer HorizontalContentAlignment="Center"
+                          VerticalContentAlignment="Center"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto">
+                <Grid>
+                    <Grid Name="grid1"
+                                      Height="166" 
+                                      VerticalAlignment="Top">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="5" />
+                            <RowDefinition Height="52" />
+                            <RowDefinition Height="52" />
+                            <RowDefinition Height="52" />
+                            <RowDefinition Height="5" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="165" />
+                            <ColumnDefinition Width="175" />
+                            <ColumnDefinition Width="136" />
+                            <ColumnDefinition Width="175" />
+                            <ColumnDefinition Width="263" />
+                            <ColumnDefinition Width="230*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Customer"
+                                               Margin="0,11,5,0"
+                                               FontSize="24" 
+                                               FontWeight="Bold" 
+                                               HorizontalAlignment="Right"   
+                                               VerticalAlignment="Top" Grid.Row="1"/>
+                        <ComboBox Name="cbCustomer"
+                                              DisplayMemberPath="FINISHINGCUSTOMER" 
+                                              SelectedValuePath="FINISHINGCUSTOMER"
+                                              TextSearch.TextPath=""
+                                              Margin="5,5,5,0"
+                                              FontSize="22"      
+                                              FontWeight="Bold" 
+                                              ItemsSource="{Binding CUS_GETLIST, Mode=OneWay}"    
+                                              VerticalAlignment="Top" 
+                                              Height="40"
+                                              Grid.Row="1"
+                                              Grid.Column="1"
+                                              SelectionChanged="cbCustomer_SelectionChanged" />
+                        <TextBlock Text="Item Goods"
+                                               Margin="0,11,5,0"
+                                               FontSize="24" 
+                                               FontWeight="Bold" 
+                                               TextAlignment="Center"
+                                               HorizontalAlignment="Right"    
+                                               VerticalAlignment="Top" 
+                                               Grid.Row="1" 
+                                               Grid.Column="2" />
+                        <ComboBox Name="cbItemGoods"
+                                              DisplayMemberPath="ITM_CODE" 
+                                              SelectedValuePath="ITM_CODE"
+                                              TextSearch.TextPath=""
+                                              Margin="5,5,5,0"
+                                              FontSize="22"      
+                                              FontWeight="Bold" 
+                                              ItemsSource="{Binding CUS_GETITEMGOODBYCUSTOMER, Mode=OneWay}"    
+                                              VerticalAlignment="Top" 
+                                              Height="40"
+                                              Grid.Row="1"
+                                              Grid.Column="3" SelectionChanged="cbItemGoods_SelectionChanged" />
+
+
+                        <TextBlock Text="Item Weaving" 
+                                               Margin="0,11,5,0"
+                                               FontSize="24" 
+                                               FontWeight="Bold" 
+                                               TextAlignment="Center"
+                                               HorizontalAlignment="Right"   
+                                               VerticalAlignment="Top" Grid.Row="2" />
+                        <TextBox Name="txtItemWeaving" 
+                                                 Text=""
+                                                 Margin="3,9,3,10"
+                                                 FontSize="24" 
+                                                 FontWeight="Bold" 
+                                                 Foreground="Black" 
+                                                 CharacterCasing="Upper"
+                                                 TextAlignment="Center" 
+                                                 VerticalAlignment="Center" 
+                                                 Grid.Column="1" 
+                                                 Grid.Row="2" KeyDown="txtItemWeaving_KeyDown" LostFocus="txtItemWeaving_LostFocus" />
+
+                        <TextBlock Text="Lot"
+                                               Margin="0,11,5,0"
+                                               FontSize="24" 
+                                               FontWeight="Bold" 
+                                               TextAlignment="Center" 
+                                               HorizontalAlignment="Right"   
+                                               VerticalAlignment="Top" 
+                                               Grid.Column="2" 
+                                               Grid.Row="2" />
+                        <TextBox Name="txtLot" 
+                                                 Text=""
+                                                 Margin="3,9,3,10"
+                                                 FontSize="24" 
+                                                 FontWeight="Bold" 
+                                                 Foreground="Black"  
+                                                 CharacterCasing="Upper"
+                                                 TextAlignment="Center" VerticalAlignment="Center" 
+                                                 Grid.Column="3" 
+                                                 Grid.Row="2" KeyDown="txtLot_KeyDown" LostFocus="txtLot_LostFocus" />
+
+                        <TextBlock Text="Length"
+                                               Margin="0,11,5,0"
+                                               FontSize="24" 
+                                               FontWeight="Bold"
+                                               TextAlignment="Center"
+                                               HorizontalAlignment="Right"    
+                                               VerticalAlignment="Top" 
+                                               Grid.Row="3" />
+                        <TextBox Name="txtLength" 
+                                                 Text=""
+                                                 Margin="3,9,3,10"
+                                                 FontSize="24" 
+                                                 FontWeight="Bold" 
+                                                 Foreground="Black" 
+                                                 TextAlignment="Center" VerticalAlignment="Center" 
+                                                 Grid.Column="1" 
+                                                 Grid.Row="3" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtLength_KeyDown" />
+                        <CheckBox Name="chkManual"
+                                              Content="Manual"         
+                                              Margin="5" 
+                                              FontSize="22" 
+                                              FontWeight="Bold" 
+                                              HorizontalAlignment="Left" 
+                                              VerticalAlignment="Center" 
+                                              Style="{StaticResource imageCheckedBoxOKStyle}"
+                                              Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="3" Checked="chkManual_Checked" Unchecked="chkManual_Unchecked" />
+
+                        <TextBlock x:Name = "txtMCName"
+                                               Text="Coat #1 Scouring-Dry No"
+                                               Margin="0,11,5,0"
+                                               FontSize="24" 
+                                               FontWeight="Bold" 
+                                               Foreground="Blue"
+                                               TextAlignment="Center"
+                                               HorizontalAlignment="Left"    
+                                               VerticalAlignment="Top" 
+                                               Grid.Row="1" 
+                                               Grid.Column="5" />
+                        <TextBox Name="txtScouringNo" 
+                                                 Text="373"
+                                                 Margin="150,11,3,8"
+                                                 FontSize="24" 
+                                                 FontWeight="Bold" 
+                                                 Foreground="Black"  
+                                                 TextAlignment="Center" 
+                                                 VerticalAlignment="Center" 
+                                                 Grid.Column="5" 
+                                                 Grid.Row="1" />
+
+                        <Grid Name="grid2"  
+                                          Margin="7,9,0,0" 
+                                          Height="143"
+                                          VerticalAlignment="Top" 
+                              HorizontalAlignment="Left" 
+                              Grid.Column="4" 
+                              Grid.RowSpan="3" 
+                              Grid.Row="1">
+                            <TextBlock Text="Type of Product"
+                                                   Margin="6,6,0,0"
+                                                   FontSize="24" 
+                                                   FontWeight="Bold" 
+                                                   TextAlignment="Right"
+                                                   Width="197"
+                                                   HorizontalAlignment="Left"   
+                                                   VerticalAlignment="Top"  />
+                            <StackPanel Margin="5,44,5,5" Orientation="Vertical">
+                                <RadioButton Name="rbMassProduction" 
+                                                         Content="Mass Production" 
+                                                         Margin="5" 
+                                                         FlowDirection="LeftToRight" 
+                                                         FontSize="20" 
+                                                         FontWeight="Bold" 
+                                                         IsChecked="True"   
+                                                         Style="{StaticResource imageRadioButtonORBStyle}" />
+                                <RadioButton Name="rbTest" 
+                                                         Content="Test" 
+                                                         Margin="5" 
+                                                         FlowDirection="LeftToRight" 
+                                                         FontSize="20" 
+                                                         FontWeight="Bold"  
+                                                         Style="{StaticResource imageRadioButtonORBStyle}" />
+                                <RadioButton Name="rbGuide" 
+                                                         Content="Guide" 
+                                                         Margin="5" 
+                                                         FlowDirection="LeftToRight" 
+                                                         FontSize="20" 
+                                                         FontWeight="Bold"  
+                                                         Style="{StaticResource imageRadioButtonORBStyle}" />
+                            </StackPanel>
+                        </Grid>
+                        <CheckBox Name="chkReporcess"
+                                  Content="Reporcess" 
+                                  Margin="5" 
+                                  FontSize="22" 
+                                  FontWeight="Bold" 
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Center"
+                                  Grid.Row="3"  
+                                  Grid.Column="3"
+                                  Style="{StaticResource imageCheckedBoxOKStyle}"  Checked="chkReporcess_Checked" Unchecked="chkReporcess_Unchecked" />
+                        <TextBlock Name="labShift"
+                               Text="Group" 
+                               Margin="3,9,0,10" 
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               HorizontalAlignment="Left" 
+                               VerticalAlignment="Center" 
+                               TextAlignment="Right" 
+                               Grid.Column="5" 
+                               Grid.Row="2" Width="80" />
+                        <ComboBox Name="cbShift" 
+                              Margin="90,5,0,0"
+                              TextSearch.TextPath=""
+                               FontSize="24"      
+                               FontWeight="Bold" 
+                               ItemsSource="{Binding Shift , Mode=OneWay}"
+                              Grid.Column="5" Grid.Row="2" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" Width="70" />
+                        <Button Name="cmdClear" 
+                                            Content="Clear"
+                                            Margin="5,3,0,0" 
+                                            FontSize="22"
+                                            FontWeight="Bold"
+                                            Height="40" 
+                                            Width="107"
+                                            HorizontalAlignment="Left" 
+                                            VerticalAlignment="Top"
+                                            Style="{StaticResource MenuButtonStyle}"  
+                                            Grid.Column="5" 
+                                            Grid.Row="3" Click="cmdClear_Click">
+                        </Button>
+                        <Button Name="cmdStart" 
+                                            Content="Start"
+                                            Margin="117,3,0,0" 
+                                            FontSize="22"
+                                            FontWeight="Bold"
+                                            Height="40" 
+                                            Width="107" 
+                                            HorizontalAlignment="Left" 
+                                            VerticalAlignment="Top"  
+                                            Style="{StaticResource MenuButtonStyle}" 
+                                            Grid.Column="5" 
+                                            Grid.Row="3" Click="cmdStart_Click">
+                        </Button>
+                    </Grid>
+                    <Grid Name="grid3"
+                                      Margin="0,170,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="520*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="577*" />
+                            <ColumnDefinition Width="578*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Coating Process"
+                                               Margin="3,3,0,0"
+                                               FontSize="24" 
+                                               FontWeight="Bold" 
+                                               Foreground="Orange"
+                                               TextAlignment="Center"
+                                               HorizontalAlignment="Left"    
+                                               VerticalAlignment="Top" />
+
+                        <Grid Name="grid13" 
+                                             VerticalAlignment="Top" 
+                                             Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="41*" />
+                                <RowDefinition Height="35*" />
+                                <RowDefinition Height="35*" />
+                                <RowDefinition Height="35*" />
+                                <RowDefinition Height="35*" />
+                                <RowDefinition Height="35*" />
+                                <RowDefinition Height="35*" />
+                                <RowDefinition Height="35*" />
+                                <RowDefinition Height="35*" />
+                                <RowDefinition Height="35*" />
+                                <RowDefinition Height="35*" />
+                                <RowDefinition Height="35*" />
+                                <RowDefinition Height="35*" />
+                                <RowDefinition Height="35*" />
+                                <RowDefinition Height="35*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="285*" />
+                                <ColumnDefinition Width="144*" />
+                                <ColumnDefinition Width="109*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Checking Item" 
+                                                       Margin="3,6,3,0"
+                                                       FontSize="24" 
+                                                       Background="Orange"
+                                                       Foreground="White"
+                                                       TextAlignment="Center"
+                                                       VerticalAlignment="Top" />
+                            <TextBlock Text="Specification" 
+                                                       Margin="3,6,3,0"
+                                                       FontSize="24" 
+                                                       Background="Orange"
+                                                       Foreground="White" 
+                                                       TextAlignment="Center"
+                                                       VerticalAlignment="Top" 
+                                                       Grid.Column="1" />
+                            <TextBlock Text="Actual" 
+                                                       Margin="3,6,3,0"
+                                                       FontSize="24" 
+                                                       Background="Orange"
+                                                       Foreground="White"
+                                                       TextAlignment="Center"
+                                                       VerticalAlignment="Top" 
+                                                       Grid.Column="2" />
+
+                            <TextBlock Text="Fabric Width Before Heating" 
+                                                               Margin="4,6,0,0"   
+                                                               FontSize="20" 
+                                                               FontWeight="Bold" 
+                                                               TextAlignment="Center"
+                                                               HorizontalAlignment="Left"   
+                                                               VerticalAlignment="Top" Grid.Row="1"  />
+                            <TextBox x:Name="txtWIDTH_BE_HEATSpecification"  
+                                                                Margin="3"
+                                                                IsReadOnly="True"
+                                                                CharacterCasing="Upper"
+                                                                FontSize="20"
+                                                                FontWeight="Bold"
+                                                                Foreground="Red"
+                                                                TextAlignment="Center"
+                                                                HorizontalAlignment="Stretch"
+                                                                VerticalAlignment="Center" Grid.Column="1" Grid.Row="1">
+                            </TextBox>
+                            <TextBox x:Name="txtWIDTH_BE_HEATActual"  
+                                                                Margin="3"
+                                                                CharacterCasing="Upper"
+                                                                FontSize="20"
+                                                                FontWeight="Bold"
+                                                                TextAlignment="Center"
+                                                                HorizontalAlignment="Stretch"
+                                                                VerticalAlignment="Center" Grid.Column="2" Grid.Row="1" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtWIDTH_BE_HEATActual_KeyDown">
+                            </TextBox>
+                            <TextBlock Text="Dryer1 Temp. Controller" 
+                                                               Margin="4,6"
+                                                               FontSize="20" 
+                                                               FontWeight="Bold" 
+                                                               TextAlignment="Center"
+                                                               HorizontalAlignment="Left"   
+                                                               VerticalAlignment="Top" Grid.Row="2"  />
+                            <TextBox x:Name="txtDRYERTEMP1Specification"  
+                                                                Margin="3"
+                                                                IsReadOnly="True"
+                                                                CharacterCasing="Upper"
+                                                                FontSize="20"
+                                                                FontWeight="Bold"
+                                                                Foreground="Red"
+                                                                TextAlignment="Center"
+                                                                HorizontalAlignment="Stretch"
+                                                                VerticalAlignment="Center" Grid.Column="1" Grid.Row="2">
+                            </TextBox>
+                            <TextBox x:Name="txtHOTPV"  
+                                                                Margin="3"
+                                                                CharacterCasing="Upper"
+                                                                FontSize="20"
+                                                                FontWeight="Bold"
+                                                                TextAlignment="Center"
+                                                                HorizontalAlignment="Stretch"
+                                                                VerticalAlignment="Center" Grid.Column="2" Grid.Row="2" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtHOTPV_KeyDown">
+                            </TextBox>
+
+                            <TextBlock Text="Production Speed" 
+                                                       Margin="4,6"
+                                                       FontSize="20" 
+                                                       FontWeight="Bold" 
+                                                       TextAlignment="Center"
+                                                       HorizontalAlignment="Left"   
+                                                       VerticalAlignment="Top" 
+                                                       Grid.Row="3"  />
+                            <TextBox x:Name="txtSPEEDSpecification"  
+                                                         Margin="3"
+                                                         IsReadOnly="True"
+                                                         CharacterCasing="Upper"
+                                                         FontSize="20"
+                                                         FontWeight="Bold"
+                                                         Foreground="Red"
+                                                         TextAlignment="Center"
+                                                         HorizontalAlignment="Stretch"
+                                                         VerticalAlignment="Center" 
+                                                         Grid.Row="3" 
+                                                         Grid.Column="1" >
+                            </TextBox>
+                            <TextBox x:Name="txtSPEED"  
+                                                        Margin="3"
+                                                        CharacterCasing="Upper"
+                                                        FontSize="20"
+                                                        FontWeight="Bold"
+                                                        TextAlignment="Center"
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Center" 
+                                                        Grid.Row="3" 
+                                                        Grid.Column="2" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtSPEED_KeyDown">
+                            </TextBox>
+
+                            <TextBlock Text="แรงดันไอน้ำ Steam Pressure" 
+                                                       Margin="4,6"
+                                                       FontSize="20" 
+                                                       FontWeight="Bold" 
+                                                       TextAlignment="Center"
+                                                       HorizontalAlignment="Left"   
+                                                       VerticalAlignment="Top" 
+                                                       Grid.Row="4"  />
+                            <TextBox x:Name="txtSTEAMPRESSURESpecification"  
+                                                         Margin="3"
+                                                         IsReadOnly="True"
+                                                         CharacterCasing="Upper"
+                                                         FontSize="20"
+                                                         FontWeight="Bold"
+                                                         Foreground="Red"
+                                                         TextAlignment="Center"
+                                                         HorizontalAlignment="Stretch"
+                                                         VerticalAlignment="Center" 
+                                                         Grid.Row="4" 
+                                                         Grid.Column="1" >
+                            </TextBox>
+                            <TextBox x:Name="txtSTEAMPRESSUREActual"  
+                                                        Margin="3"
+                                                        CharacterCasing="Upper"
+                                                        FontSize="20"
+                                                        FontWeight="Bold"
+                                                        TextAlignment="Center"
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Center" 
+                                                        Grid.Row="4" 
+                                                        Grid.Column="2" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtSTEAMPRESSUREActual_KeyDown">
+                            </TextBox>
+
+                            <TextBlock Text="Dryer Up Circu Fan" 
+                                                       Margin="4,6"
+                                                       FontSize="20" 
+                                                       FontWeight="Bold" 
+                                                       TextAlignment="Center"
+                                                       HorizontalAlignment="Left"   
+                                                       VerticalAlignment="Top" 
+                                                       Grid.Row="5"  />
+                            <TextBox x:Name="txtDRYERUPCIRCUFANSpecification"  
+                                                         Margin="3"
+                                                         IsReadOnly="True"
+                                                         CharacterCasing="Upper"
+                                                         FontSize="20"
+                                                         FontWeight="Bold"
+                                                         Foreground="Red"
+                                                         TextAlignment="Center"
+                                                         HorizontalAlignment="Stretch"
+                                                         VerticalAlignment="Center" 
+                                                         Grid.Row="5" 
+                                                         Grid.Column="1" >
+                            </TextBox>
+                            <TextBox x:Name="txtDRYERUPCIRCUFANActual"  
+                                                        Margin="3"
+                                                        CharacterCasing="Upper"
+                                                        FontSize="20"
+                                                        FontWeight="Bold"
+                                                        TextAlignment="Center"
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Center" 
+                                                        Grid.Row="5" 
+                                                        Grid.Column="2" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtDRYERUPCIRCUFANActual_KeyDown">
+                            </TextBox>
+                            <TextBlock Text="Dryer Exhaust Fan" 
+                                                       Margin="4,6"
+                                                       FontSize="20" 
+                                                       FontWeight="Bold" 
+                                                       TextAlignment="Center"
+                                                       HorizontalAlignment="Left"   
+                                                       VerticalAlignment="Top" 
+                                                       Grid.Row="6"  />
+                            <TextBox x:Name="txtEXHAUSTFANSpecification"  
+                                                         Margin="3"
+                                                         IsReadOnly="True"
+                                                         CharacterCasing="Upper"
+                                                         FontSize="20"
+                                                         FontWeight="Bold"
+                                                         Foreground="Red"
+                                                         TextAlignment="Center"
+                                                         HorizontalAlignment="Stretch"
+                                                         VerticalAlignment="Center" 
+                                                         Grid.Row="6" 
+                                                         Grid.Column="1" >
+                            </TextBox>
+                            <TextBox x:Name="txtEXHAUSTFANActual"  
+                                                        Margin="3"
+                                                        CharacterCasing="Upper"
+                                                        FontSize="20"
+                                                        FontWeight="Bold"
+                                                        TextAlignment="Center"
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Center" 
+                                                        Grid.Row="6" 
+                                                        Grid.Column="2" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtEXHAUSTFANActual_KeyDown">
+                            </TextBox>
+
+                            <TextBlock Text="Fabric Length After Heating" 
+                                                       Margin="4,6"
+                                                       FontSize="20" 
+                                                       FontWeight="Bold" 
+                                                       TextAlignment="Center"
+                                                       HorizontalAlignment="Left"   
+                                                       VerticalAlignment="Top" 
+                                                       Grid.Row="7"  />
+                            <TextBox x:Name="txtWIDTH_AF_HEATSpecification"  
+                                                         Margin="3"
+                                                         IsReadOnly="True"
+                                                         CharacterCasing="Upper"
+                                                         FontSize="20"
+                                                         FontWeight="Bold"
+                                                         Foreground="Red"
+                                                         TextAlignment="Center"
+                                                         HorizontalAlignment="Stretch"
+                                                         VerticalAlignment="Center" 
+                                                         Grid.Row="7" 
+                                                         Grid.Column="1" >
+                            </TextBox>
+                            <TextBox x:Name="txtWIDTH_AF_HEATActual"  
+                                                        Margin="3"
+                                                        CharacterCasing="Upper"
+                                                        FontSize="20"
+                                                        FontWeight="Bold"
+                                                        TextAlignment="Center"
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Center" 
+                                                        Grid.Row="7" 
+                                                        Grid.Column="2" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtWIDTH_AF_HEATActual_KeyDown">
+                            </TextBox>
+
+                            <TextBlock x:Name="txtClothHumidity"
+                                       Text="Cloth Humidity Before Heating" 
+                                               Margin="4,6"
+                                               FontSize="20" 
+                                               FontWeight="Bold" 
+                                               TextAlignment="Center"
+                                               HorizontalAlignment="Left"   
+                                               VerticalAlignment="Top" Grid.Row="8"  />
+                            <TextBox x:Name="txtHUMIDITYBFSpecification"  
+                                             Margin="3"
+                                             IsReadOnly="True"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             Foreground="Red"
+                                             TextAlignment="Center"
+                                             HorizontalAlignment="Stretch"
+                                             VerticalAlignment="Center" Grid.Column="1" Grid.Row="8">
+                            </TextBox>
+                            <TextBox x:Name="txtHUMIDITY_BF"  
+                                             Margin="3"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center"
+                                             HorizontalAlignment="Stretch"
+                                             VerticalAlignment="Center" Grid.Column="2" Grid.Row="8" 
+                                             PreviewKeyDown="Common_PreviewKeyDown" 
+                                             KeyDown="txtHUMIDITY_BF_KeyDown">
+                            </TextBox>
+
+                            <TextBlock Text="% Moisture After Dry" 
+                                               Margin="4,6"
+                                               FontSize="20" 
+                                               FontWeight="Bold" 
+                                               TextAlignment="Center"
+                                               HorizontalAlignment="Left"   
+                                               VerticalAlignment="Top" Grid.Row="9"  />
+                            <TextBox x:Name="txtHUMIDITYAFSpecification"  
+                                             Margin="3"
+                                             IsReadOnly="True"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             Foreground="Red"
+                                             TextAlignment="Center"
+                                             HorizontalAlignment="Stretch"
+                                             VerticalAlignment="Center" Grid.Column="1" Grid.Row="9">
+                            </TextBox>
+                            <TextBox x:Name="txtHUMIDITY_AF"  
+                                             Margin="3"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center"
+                                             HorizontalAlignment="Stretch"
+                                             VerticalAlignment="Center" Grid.Column="2" Grid.Row="9" 
+                                             PreviewKeyDown="Common_PreviewKeyDown" 
+                                             KeyDown="txtHUMIDITY_AF_KeyDown">
+                            </TextBox>
+                        </Grid>
+
+                        <Grid Name="grid4" 
+                                          Grid.Column="1" 
+                                          Margin="3" Grid.RowSpan="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="271" />
+                                <RowDefinition Height="362*" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Scouring Process" 
+                                                   Margin="3,3,0,0" 
+                                                   FontSize="24" 
+                                                   FontWeight="Bold" 
+                                                   Foreground="Blue"
+                                                   TextAlignment="Center"
+                                                   HorizontalAlignment="Left"   
+                                                   VerticalAlignment="Top" />
+
+                            <Grid Name="grid14"
+                                      Height="270"
+                                      Grid.Row="1"   
+                                      VerticalAlignment="Top">
+                                <ScrollViewer HorizontalContentAlignment="Center"
+                                      VerticalContentAlignment="Center"
+                                      HorizontalScrollBarVisibility="Auto"
+                                      VerticalScrollBarVisibility="Auto" Grid.Row="1">
+                                    <Grid Grid.Row="1" 
+                                              Name="grid15">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="41*" />
+                                            <RowDefinition Height="35*" />
+                                            <RowDefinition Height="35*" />
+                                            <RowDefinition Height="35*" />
+                                            <RowDefinition Height="35*" />
+                                            <RowDefinition Height="35*" />
+                                            <RowDefinition Height="35*" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="305" />
+                                            <ColumnDefinition Width="154*" />
+                                            <ColumnDefinition Width="116*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="Checking Item" 
+                                                       Margin="3,6,3,0"
+                                                       FontSize="24" 
+                                                       Background="CornflowerBlue"
+                                                       Foreground="White"
+                                                       TextAlignment="Center"
+                                                       VerticalAlignment="Top" />
+                                        <TextBlock Text="Specification" 
+                                                       Margin="3,6,3,0"
+                                                       FontSize="24" 
+                                                       Background="CornflowerBlue"
+                                                       Foreground="White" 
+                                                       TextAlignment="Center"
+                                                       VerticalAlignment="Top" 
+                                                       Grid.Column="1" />
+                                        <TextBlock Text="Actual" 
+                                                       Margin="3,6,3,0"
+                                                       FontSize="24" 
+                                                       Background="CornflowerBlue"
+                                                       Foreground="White"
+                                                       TextAlignment="Center"
+                                                       VerticalAlignment="Top" 
+                                                       Grid.Column="2" />
+
+                                        <TextBlock Text="Chemical Temp" 
+                                                               Margin="4,6,0,0"   
+                                                               FontSize="20" 
+                                                               FontWeight="Bold" 
+                                                               TextAlignment="Center"
+                                                               HorizontalAlignment="Left"   
+                                                               VerticalAlignment="Top" Grid.Row="1"  />
+                                        <TextBox x:Name="txtSATURATOR_CHEMSpecification"  
+                                                                Margin="3"
+                                                                IsReadOnly="True"
+                                                                CharacterCasing="Upper"
+                                                                FontSize="20"
+                                                                FontWeight="Bold"
+                                                                Foreground="Red"
+                                                                TextAlignment="Center"
+                                                                HorizontalAlignment="Stretch"
+                                                                VerticalAlignment="Center" Grid.Column="1" Grid.Row="1">
+                                        </TextBox>
+                                        <TextBox x:Name="txtSATPV"  
+                                                                Margin="3"
+                                                                CharacterCasing="Upper"
+                                                                FontSize="20"
+                                                                FontWeight="Bold"
+                                                                TextAlignment="Center"
+                                                                HorizontalAlignment="Stretch"
+                                                                VerticalAlignment="Center" Grid.Column="2" Grid.Row="1" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtSATPV_KeyDown">
+                                        </TextBox>
+
+                                        <TextBlock Text="Washer No1 Temp" 
+                                                               Margin="4,6,0,0"
+                                                               FontSize="20" 
+                                                               FontWeight="Bold" 
+                                                               TextAlignment="Center"
+                                                               HorizontalAlignment="Left"   
+                                                               VerticalAlignment="Top" Grid.Row="2" />
+                                        <TextBox x:Name="txtWASHING1Specification"  
+                                                                 Margin="3"
+                                                                 IsReadOnly="True"
+                                                                 CharacterCasing="Upper"
+                                                                 FontSize="20"
+                                                                 FontWeight="Bold"
+                                                                 Foreground="Red"
+                                                                 TextAlignment="Center"
+                                                                 HorizontalAlignment="Stretch"
+                                                                 VerticalAlignment="Center" Grid.Column="1" Grid.Row="2">
+                                        </TextBox>
+                                        <TextBox x:Name="txtWASH1PV"  
+                                                                 Margin="3"
+                                                                 CharacterCasing="Upper"
+                                                                 FontSize="20"
+                                                                 FontWeight="Bold"
+                                                                 TextAlignment="Center"
+                                                                 HorizontalAlignment="Stretch"
+                                                                 VerticalAlignment="Center" Grid.Column="2" Grid.Row="2" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtWASH1PV_KeyDown">
+                                        </TextBox>
+
+                                        <TextBlock Text="Washer No2 Temp" 
+                                                                Margin="4,6,0,0"
+                                                                FontSize="20" 
+                                                                FontWeight="Bold" 
+                                                                TextAlignment="Center"
+                                                                HorizontalAlignment="Left"   
+                                                                VerticalAlignment="Top" Grid.Row="3" />
+                                        <TextBox x:Name="txtWASHING2Specification"  
+                                                                Margin="3"
+                                                                IsReadOnly="True"
+                                                                CharacterCasing="Upper"
+                                                                FontSize="20"
+                                                                FontWeight="Bold"
+                                                                Foreground="Red"
+                                                                TextAlignment="Center"
+                                                                HorizontalAlignment="Stretch"
+                                                                VerticalAlignment="Center" Grid.Column="1" Grid.Row="3">
+                                        </TextBox>
+                                        <TextBox x:Name="txtWASH2PV"  
+                                                                Margin="3"
+                                                                CharacterCasing="Upper"
+                                                                FontSize="20"
+                                                                FontWeight="Bold"
+                                                                TextAlignment="Center"
+                                                                HorizontalAlignment="Stretch"
+                                                                VerticalAlignment="Center" Grid.Column="2" Grid.Row="3" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtWASH2PV_KeyDown">
+                                        </TextBox>
+                                        <TextBlock Text="Operator" 
+                                               Margin="0,3,3,0"
+                                               FontSize="20" 
+                                               FontWeight="Bold" 
+                                               TextAlignment="Center"
+                                               HorizontalAlignment="Right"   
+                                               VerticalAlignment="Top" Grid.Row="5" Grid.Column="1"/>
+                                        <TextBox x:Name="txtOperator"  
+                                             Margin="3"
+                                             IsReadOnly="True"
+                                             CharacterCasing="Upper"
+                                             FontSize="20"
+                                             FontWeight="Bold"
+                                             TextAlignment="Center"
+                                             HorizontalAlignment="Stretch"
+                                             VerticalAlignment="Center" Grid.Row="5" Grid.Column="2">
+                                        </TextBox>
+
+                                    </Grid>
+                                </ScrollViewer>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </ScrollViewer>
+        </Border>
+        
+    </DockPanel>
+  
+</UserControl>

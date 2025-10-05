@@ -1,0 +1,120 @@
+﻿<UserControl x:Class="LuckyTex.Pages.PLCGetDataMenuPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="845" d:DesignWidth="1200">
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/GroupBoxStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/RadioButtonStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/CheckedBoxStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="CenterCellStyle" TargetType="DataGridCell">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="RightCellStyle" TargetType="DataGridCell">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Right"
+                                      VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <DockPanel LastChildFill="True">
+        <!-- Caption Bar -->
+        <Border DockPanel.Dock="Top" CornerRadius="3" Margin="3, 3, 3, 0"
+                Background="CornflowerBlue"
+                Height="40">
+            <TextBlock Text="PLC Get Data Menu"
+                       Foreground="White"
+                       FontFamily="Times New Roman" FontSize="40" FontStretch="Normal" FontWeight="ExtraBold"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"/>
+        </Border>
+        <!-- Button Command Bars -->
+        <DockPanel DockPanel.Dock="Bottom" LastChildFill="True" 
+                   Background="#F0F0F0"
+                   Margin="5, 0">
+            <!-- Back -->
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <Button x:Name="cmdBack"
+                        Content="Back"
+                        Margin="2" 
+                        Width="150"
+                        FontSize="30" 
+                        FontWeight="Bold"
+                        Style="{StaticResource MenuButtonStyle}" 
+                        Click="cmdBack_Click" />
+            </StackPanel>
+            <Grid/>
+        </DockPanel>
+        <!-- Content -->
+        <Border CornerRadius="3" Margin="3" 
+                BorderThickness="2" BorderBrush="Black">
+            <ScrollViewer HorizontalContentAlignment="Center"
+                          VerticalContentAlignment="Center"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto">
+                <Grid HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch" Width="1195">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="90*" />
+                        <RowDefinition Height="225*" />
+                        <RowDefinition Height="90*" />
+                        <RowDefinition Height="225*" />
+                        <RowDefinition Height="90" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="74*" />
+                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="74*" />
+                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="74*" />
+                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="74*" />
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="cmdElectricBalance" Margin="3" Style="{StaticResource MenuButtonStyle}" Click="cmdElectricBalance_Click" Grid.Column="1" Grid.Row="1">
+                        <TextBlock Text="Electric Balance (Weight)" FontFamily="Times New Roman" FontSize="35" FontStretch="Normal" FontWeight="ExtraBold" TextWrapping="Wrap" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Center"/>
+                    </Button>
+                    <Button x:Name="cmdSTIFFNESS" Margin="3" Style="{StaticResource MenuButtonStyle}" Click="cmdSTIFFNESS_Click" Grid.Column="3" Grid.Row="1">
+                        <TextBlock Text="STIFFNESS M/C" FontFamily="Times New Roman" FontSize="35" FontStretch="Normal" FontWeight="ExtraBold" TextWrapping="Wrap" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Center"/>
+                    </Button>
+                    <Button x:Name="cmdStaticAir" Margin="3" Style="{StaticResource MenuButtonStyle}" Grid.Column="5" Grid.Row="1" Click="cmdStaticAir_Click">
+                        <TextBlock Text="Static Air M/C" FontFamily="Times New Roman" FontSize="35" FontStretch="Normal" FontWeight="ExtraBold" TextWrapping="Wrap" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Center"/>
+                    </Button>
+
+                    <Button x:Name="cmdAIRPERMEABILITY" Margin="3" Style="{StaticResource MenuButtonStyle}" Click="cmdAIRPERMEABILITY_Click" Grid.Column="1" Grid.Row="3">
+                        <TextBlock Text="AIR PERMEABILITY HIGH PRESSURE M/C" FontFamily="Times New Roman" FontSize="35" FontStretch="Normal" FontWeight="ExtraBold" TextWrapping="Wrap" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Center"/>
+                    </Button>
+                    <Button x:Name="cmdDynamicAirPermeabilityPage" Margin="3" Style="{StaticResource MenuButtonStyle}" Click="cmdDynamicAirPermeabilityPage_Click" Grid.Column="3" Grid.Row="3">
+                        <TextBlock Text="Dynamic Air Permeability" FontFamily="Times New Roman" FontSize="35" FontStretch="Normal" FontWeight="ExtraBold" TextWrapping="Wrap" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Center"/>
+                    </Button>
+                    <Button Content="PLC Test" FontSize="30" FontWeight="Bold" Margin="0,0,3,3" Name="cmdPLC_TestPage" Style="{StaticResource MenuButtonStyle}" Width="160" Grid.Column="5" Grid.Row="3" Height="40" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="cmdPLC_TestPage_Click" />
+                </Grid>
+            </ScrollViewer>
+        </Border>
+    </DockPanel>
+</UserControl>

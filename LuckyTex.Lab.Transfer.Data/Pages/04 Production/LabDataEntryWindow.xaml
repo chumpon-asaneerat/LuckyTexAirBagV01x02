@@ -1,0 +1,638 @@
+﻿<Window x:Class="LuckyTex.Windows.LabDataEntryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Height="765" 
+             Width="1200"  
+        ShowInTaskbar="False"
+        Topmost="True"
+        WindowStartupLocation="CenterScreen"
+        MinHeight="300" MinWidth="500" Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/GroupBoxStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/RadioButtonStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/CheckedBoxStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="CenterCellStyle" TargetType="DataGridCell">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="RightCellStyle" TargetType="DataGridCell">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Right"
+                                      VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <DockPanel LastChildFill="True">
+        <!-- Caption Bar -->
+        <Border DockPanel.Dock="Top" CornerRadius="3" Margin="3, 3, 3, 0"
+                Background="CornflowerBlue"
+                Height="40">
+            <TextBlock Text="Lab Result Detail"
+                       Foreground="White"
+                       FontSize="30" 
+                       FontWeight="Bold"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"/>
+        </Border>
+        <!-- Button Command Bars -->
+        <DockPanel DockPanel.Dock="Bottom" LastChildFill="True" 
+                   Background="#F0F0F0"
+                   Margin="5, 0">
+            <!-- Back -->
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <Grid>
+                <Button Name="cmdApprove" Content="Approve" Margin="0,0,331,1" FontSize="22" FontWeight="Bold" Height="40" Style="{StaticResource MenuButtonStyle}" Width="165" Click="cmdApprove_Click" HorizontalAlignment="Right" />
+                <Button Name="cmdNotApprove" Content="Not Approve" Margin="0,0,159,1" FontSize="22" FontWeight="Bold" Height="40" Width="165" Style="{StaticResource MenuButtonStyle}" Click="cmdNotApprove_Click" HorizontalAlignment="Right"></Button>
+                <Button x:Name="cmdBack"
+                        Content="Close"
+                        Margin="0,2,2,2" 
+                        Width="150"
+                        FontSize="30" 
+                        FontWeight="Bold"
+                        Style="{StaticResource MenuButtonStyle}" 
+                        Click="cmdBack_Click" HorizontalAlignment="Right" />
+                </Grid>
+            </StackPanel>
+            <Grid>
+                <TextBlock Text="Status : " Margin="10,10,0,0" FontSize="18" FontWeight="Bold" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                <TextBox x:Name="txtStatus" Margin="84,9,0,0" IsReadOnly="True" CharacterCasing="Upper" FontSize="18" FontWeight="Bold" TextAlignment="Center" VerticalAlignment="Top" HorizontalAlignment="Left" Width="212"></TextBox>
+            </Grid>
+        </DockPanel>
+        <!-- Content -->
+        <Border CornerRadius="3" Margin="3" 
+                BorderThickness="2" BorderBrush="Black">
+            <ScrollViewer HorizontalContentAlignment="Center"
+                          VerticalContentAlignment="Center"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1" />
+                        <ColumnDefinition Width="1185*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5" />
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="5" />
+                        <RowDefinition Height="645*" />
+                        <RowDefinition Height="5" />
+                    </Grid.RowDefinitions>
+                    <Label Content="Item Code : " Grid.Column="1" Grid.Row="1" Margin="2,4,0,0" Name="labITMCODE" 
+                           FontSize="18" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtITMCODE"  
+                                    Margin="117,8,0,0" Grid.Row="1"
+                                    CharacterCasing="Upper"
+                                    FontSize="18"
+                                    FontWeight="Bold"
+                                    TextAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Width="150" HorizontalAlignment="Left" KeyDown="txtITMCODE_KeyDown" >
+                    </TextBox>
+                    <Label Name="labWEAVINGLOG" Content="Production Lot : " FontSize="18" FontWeight="Bold" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="269,4,0,0" VerticalAlignment="Top" />
+                    <TextBox Name="txtWEAVINGLOG" CharacterCasing="Upper" FontSize="18" FontWeight="Bold" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="423,8,0,0" TextAlignment="Center" VerticalAlignment="Top" Width="150" KeyDown="txtWEAVINGLOG_KeyDown" />
+                    <Label Name="labFINISHINGLOT" Content="Finishing Lot : " FontSize="18" FontWeight="Bold" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="576,4,0,0" VerticalAlignment="Top" />
+                    <TextBox Name="txtFINISHINGLOT" CharacterCasing="Upper" FontSize="18" FontWeight="Bold" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="712,8,0,0" TextAlignment="Center" VerticalAlignment="Top" Width="150" KeyDown="txtFINISHINGLOT_KeyDown"/>
+                    <Label Content="Entry Date : " FontSize="18" FontWeight="Bold" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="865,4,0,0" Name="labEntryDate" VerticalAlignment="Top" />
+                    <DatePicker Name="dteEntryDate" 
+                                 Margin="984,5,0,0"
+                                 FontSize="18" 
+                                 FontWeight="Bold" 
+                                 Foreground="Black" 
+                                 VerticalAlignment="Top" 
+                                 Grid.Column="1" Grid.Row="1" Width="160" HorizontalAlignment="Left" />
+                    <Grid Margin="3" Grid.Row="3" Grid.Column="1" >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="385*"/>
+                                <RowDefinition Height="275*" />
+                            </Grid.RowDefinitions>
+                            <Border BorderBrush="Black" BorderThickness="2" Grid.Row="1" Margin="1">
+                                <Grid>
+                                    <Grid Grid.Row="1" Margin="32,0,0,0" Name="grid1">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="45" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="4*" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="180" />
+                                            <ColumnDefinition Width="80" />
+                                            <ColumnDefinition Width="140" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="4*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label Content="Method" FontSize="18" FontWeight="Bold" Margin="33,3,33,0" Name="labMethodPDF" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                                        <Label Content="Yarn" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0" Name="labYarnPDF" VerticalAlignment="Top" Grid.Column="1" />
+                                        <Label Content="Specification" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0"  Name="labSpecificationPDF" VerticalAlignment="Top" Grid.Column="2" />
+                                        <Label Content="N1" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0" Name="labN1PDF" VerticalAlignment="Top" Grid.Column="3" />
+                                        <Label Content="N2" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0" Name="labN2PDF" VerticalAlignment="Top" Grid.Column="4" />
+                                        <Label Content="N3" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0" Name="labN3PDF" VerticalAlignment="Top" Grid.Column="5" />
+                                        <Label Content="N4" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0" Name="labN4PDF" VerticalAlignment="Top" Grid.Column="6" />
+                                        <Label Content="N5" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0" Name="labN5PDF" VerticalAlignment="Top" Grid.Column="7" />
+                                        <Label Content="N6" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0" Name="labN6PDF" VerticalAlignment="Top" Grid.Column="8" />
+                                        <Label Content="Ave" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0" Name="labAvePDF" VerticalAlignment="Top" Grid.Column="9" />
+
+                                        <!-- -->
+                                        <!-- Maximun -->
+                                        <Label Content="Maximun Force " FontSize="18" FontWeight="Bold" Margin="0,3,3,0" Name="labMaximunForce" VerticalAlignment="Top" Grid.Row="1" HorizontalAlignment="Right" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtMAXFORCE_WYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1" Text="Warp" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtMAXFORCE_WSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtMAXFORCE_WN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtMAXFORCE_WN1_KeyDown" LostFocus="MAXFORCE_W_LostFocus" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtMAXFORCE_WN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtMAXFORCE_WN2_KeyDown" LostFocus="MAXFORCE_W_LostFocus" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtMAXFORCE_WN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtMAXFORCE_WN3_KeyDown" LostFocus="MAXFORCE_W_LostFocus" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtMAXFORCE_WN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtMAXFORCE_WN4_KeyDown" LostFocus="MAXFORCE_W_LostFocus" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtMAXFORCE_WN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtMAXFORCE_WN5_KeyDown" LostFocus="MAXFORCE_W_LostFocus" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtMAXFORCE_WN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtMAXFORCE_WN6_KeyDown" LostFocus="MAXFORCE_W_LostFocus" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtMAXFORCE_WAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- MAXFORCE_F -->
+                                        <Label Content="(Tensile) : " FontSize="18" FontWeight="Bold" Margin="0,3,3,0" Name="labMAXFORCE_F" VerticalAlignment="Top" Grid.Row="2" HorizontalAlignment="Right"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtMAXFORCE_FYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1" Text="Weft" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtMAXFORCE_FSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtMAXFORCE_FN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="MAXFORCE_F_LostFocus" KeyDown="txtMAXFORCE_FN1_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtMAXFORCE_FN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="MAXFORCE_F_LostFocus" KeyDown="txtMAXFORCE_FN2_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtMAXFORCE_FN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="MAXFORCE_F_LostFocus" KeyDown="txtMAXFORCE_FN3_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtMAXFORCE_FN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="MAXFORCE_F_LostFocus" KeyDown="txtMAXFORCE_FN4_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtMAXFORCE_FN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="MAXFORCE_F_LostFocus" KeyDown="txtMAXFORCE_FN5_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtMAXFORCE_FN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="MAXFORCE_F_LostFocus" KeyDown="txtMAXFORCE_FN6_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtMAXFORCE_FAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- ELONGATIONFORCE_W -->
+                                        <Label Content="Elongation at" FontSize="18" FontWeight="Bold" Margin="0,3,3,0" Name="labELONGATIONFORCE_W" VerticalAlignment="Top" Grid.Row="3" Grid.RowSpan="2" HorizontalAlignment="Right" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtELONGATIONFORCE_WYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="3" Grid.Column="1" Text="Warp" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtELONGATIONFORCE_WSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="3" Grid.Column="2" IsReadOnly="True" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtELONGATIONFORCE_WN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="3" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="ELONGATIONFORCE_W_LostFocus" KeyDown="txtELONGATIONFORCE_WN1_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtELONGATIONFORCE_WN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="3" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="ELONGATIONFORCE_W_LostFocus" KeyDown="txtELONGATIONFORCE_WN2_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtELONGATIONFORCE_WN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="3" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="ELONGATIONFORCE_W_LostFocus" KeyDown="txtELONGATIONFORCE_WN3_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtELONGATIONFORCE_WN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="3" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="ELONGATIONFORCE_W_LostFocus" KeyDown="txtELONGATIONFORCE_WN4_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtELONGATIONFORCE_WN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="3" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="ELONGATIONFORCE_W_LostFocus" KeyDown="txtELONGATIONFORCE_WN5_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtELONGATIONFORCE_WN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="3" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="ELONGATIONFORCE_W_LostFocus" KeyDown="txtELONGATIONFORCE_WN6_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtELONGATIONFORCE_WAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="3" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- ELONGATIONFORCE_F -->
+                                        <Label Content="Maximum Force : " FontSize="18" FontWeight="Bold" Margin="0,3,3,0" Name="labELONGATIONFORCE_F" VerticalAlignment="Top" Grid.Row="4" HorizontalAlignment="Right"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtELONGATIONFORCE_FYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="4" Grid.Column="1" Text="Weft" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtELONGATIONFORCE_FSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="4" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtELONGATIONFORCE_FN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="4" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="ELONGATIONFORCE_F_LostFocus" KeyDown="txtELONGATIONFORCE_FN1_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtELONGATIONFORCE_FN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="4" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="ELONGATIONFORCE_F_LostFocus" KeyDown="txtELONGATIONFORCE_FN2_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtELONGATIONFORCE_FN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="4" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="ELONGATIONFORCE_F_LostFocus" KeyDown="txtELONGATIONFORCE_FN3_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtELONGATIONFORCE_FN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="4" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="ELONGATIONFORCE_F_LostFocus" KeyDown="txtELONGATIONFORCE_FN4_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtELONGATIONFORCE_FN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="4" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="ELONGATIONFORCE_F_LostFocus" KeyDown="txtELONGATIONFORCE_FN5_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtELONGATIONFORCE_FN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="4" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="ELONGATIONFORCE_F_LostFocus" KeyDown="txtELONGATIONFORCE_FN6_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtELONGATIONFORCE_FAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="4" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- EDGECOMB_W -->
+                                        <Label Content="Edgecomb" FontSize="18" FontWeight="Bold" Margin="0,3,3,0" Name="labEDGECOMB_W" VerticalAlignment="Top" Grid.Row="5" Grid.RowSpan="2" HorizontalAlignment="Right" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtEDGECOMB_WYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="5" Grid.Column="1" Text="Warp" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtEDGECOMB_WSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="5" Grid.Column="2" IsReadOnly="True" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtEDGECOMB_WN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="5" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="EDGECOMB_W_LostFocus" KeyDown="txtEDGECOMB_WN1_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtEDGECOMB_WN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="5" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="EDGECOMB_W_LostFocus" KeyDown="txtEDGECOMB_WN2_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtEDGECOMB_WN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="5" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="EDGECOMB_W_LostFocus" KeyDown="txtEDGECOMB_WN3_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtEDGECOMB_WN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="5" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="EDGECOMB_W_LostFocus" KeyDown="txtEDGECOMB_WN4_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtEDGECOMB_WN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="5" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="EDGECOMB_W_LostFocus" KeyDown="txtEDGECOMB_WN5_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtEDGECOMB_WN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="5" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="EDGECOMB_W_LostFocus" KeyDown="txtEDGECOMB_WN6_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtEDGECOMB_WAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="5" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- EDGECOMB_F -->
+                                        <Label Content="Resistance : " FontSize="18" FontWeight="Bold" Margin="0,3,3,0" Name="labEDGECOMB_F" VerticalAlignment="Top" Grid.Row="6" HorizontalAlignment="Right"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtEDGECOMB_FYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="6" Grid.Column="1" Text="Weft" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtEDGECOMB_FSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="6" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtEDGECOMB_FN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="6" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="EDGECOMB_F_LostFocus" KeyDown="txtEDGECOMB_FN1_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtEDGECOMB_FN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="6" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="EDGECOMB_F_LostFocus" KeyDown="txtEDGECOMB_FN2_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtEDGECOMB_FN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="6" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="EDGECOMB_F_LostFocus" KeyDown="txtEDGECOMB_FN3_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtEDGECOMB_FN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="6" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="EDGECOMB_F_LostFocus" KeyDown="txtEDGECOMB_FN4_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtEDGECOMB_FN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="6" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="EDGECOMB_F_LostFocus" KeyDown="txtEDGECOMB_FN5_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtEDGECOMB_FN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="6" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="EDGECOMB_F_LostFocus" KeyDown="txtEDGECOMB_FN6_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtEDGECOMB_FAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="6" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- TEAR_W -->
+                                        <Label Content="Tear Force : " FontSize="18" FontWeight="Bold" Margin="0,3,3,0" Name="labTEAR_W" VerticalAlignment="Top" Grid.Row="7" Grid.RowSpan="2" HorizontalAlignment="Right" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTEAR_WYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="7" Grid.Column="1" Text="Warp" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTEAR_WSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="7" Grid.Column="2" IsReadOnly="True" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTEAR_WN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="7" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="TEAR_W_LostFocus" KeyDown="txtTEAR_WN1_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTEAR_WN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="7" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="TEAR_W_LostFocus" KeyDown="txtTEAR_WN2_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTEAR_WN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="7" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="TEAR_W_LostFocus" KeyDown="txtTEAR_WN3_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTEAR_WN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="7" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="TEAR_W_LostFocus" KeyDown="txtTEAR_WN4_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTEAR_WN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="7" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="TEAR_W_LostFocus" KeyDown="txtTEAR_WN5_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTEAR_WN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="7" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="TEAR_W_LostFocus" KeyDown="txtTEAR_WN6_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTEAR_WAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="7" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- TEAR_F -->
+                                        <Label Content="" FontSize="18" FontWeight="Bold" Margin="0,3,3,0" Name="labTEAR_F" VerticalAlignment="Top" Grid.Row="8" HorizontalAlignment="Right"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTEAR_FYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="8" Grid.Column="1" Text="Weft" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTEAR_FSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="8" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTEAR_FN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="8" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="TEAR_F_LostFocus" KeyDown="txtTEAR_FN1_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTEAR_FN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="8" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="TEAR_F_LostFocus" KeyDown="txtTEAR_FN2_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTEAR_FN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="8" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="TEAR_F_LostFocus" KeyDown="txtTEAR_FN3_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTEAR_FN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="8" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="TEAR_F_LostFocus" KeyDown="txtTEAR_FN4_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTEAR_FN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="8" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="TEAR_F_LostFocus" KeyDown="txtTEAR_FN5_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTEAR_FN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="8" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="TEAR_F_LostFocus" KeyDown="txtTEAR_FN6_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTEAR_FAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="8" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                            <Border BorderBrush="Black" BorderThickness="2" Grid.Row="2" Margin="1">
+                                <Grid>
+                                    <Grid Name="gridTest" Grid.Row="2" Margin="3" SelectiveScrollingGrid.SelectiveScrollingOrientation="Horizontal">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="1" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                            <RowDefinition Height="42" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="210" />
+                                            <ColumnDefinition Width="80" />
+                                            <ColumnDefinition Width="140" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="5*" />
+                                        </Grid.ColumnDefinitions>
+                                        <!-- Width -->
+                                        <Label Content="Width : " FontSize="18" FontWeight="Bold" Margin="0,3,3,0" Name="labWidth" VerticalAlignment="Top" Grid.Row="1" HorizontalAlignment="Right"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtWidthYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1" Text="-" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtWidthSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtWidthN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtWidthN1_KeyDown" LostFocus="WIDTH_LostFocus" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtWidthN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtWidthN2_KeyDown" LostFocus="WIDTH_LostFocus" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtWidthN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtWidthN3_KeyDown" LostFocus="WIDTH_LostFocus" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtWidthN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtWidthN4_KeyDown" LostFocus="WIDTH_LostFocus" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtWidthN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtWidthN5_KeyDown" LostFocus="WIDTH_LostFocus" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtWidthN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtWidthN6_KeyDown" LostFocus="WIDTH_LostFocus" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtWidthAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- USABLE_WIDTH -->
+                                        <Label Content="Usable Width : " FontSize="18" FontWeight="Bold" Margin="0,3,3,0" Name="labUSABLE_WIDTH" VerticalAlignment="Top" Grid.Row="2" HorizontalAlignment="Right"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtUSABLE_WIDTHYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1" Text="-" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtUSABLE_WIDTHSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtUSABLE_WIDTHN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="USABLE_WIDTH_LostFocus" KeyDown="txtUSABLE_WIDTHN1_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtUSABLE_WIDTHN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="USABLE_WIDTH_LostFocus" KeyDown="txtUSABLE_WIDTHN2_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtUSABLE_WIDTHN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="USABLE_WIDTH_LostFocus" KeyDown="txtUSABLE_WIDTHN3_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtUSABLE_WIDTHN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="USABLE_WIDTH_LostFocus" KeyDown="txtUSABLE_WIDTHN4_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtUSABLE_WIDTHN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="USABLE_WIDTH_LostFocus" KeyDown="txtUSABLE_WIDTHN5_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtUSABLE_WIDTHN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="USABLE_WIDTH_LostFocus" KeyDown="txtUSABLE_WIDTHN6_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtUSABLE_WIDTHAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- WIDTH_SILICONE -->
+                                        <Label Content="Width of Silicone : " FontSize="18" FontWeight="Bold" Margin="0,3,3,0" Name="labWIDTH_SILICONE" VerticalAlignment="Top" Grid.Row="3" HorizontalAlignment="Right"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtWIDTH_SILICONEYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="3" Grid.Column="1" Text="-" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtWIDTH_SILICONESpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="3" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtWIDTH_SILICONEN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="3" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="WIDTH_SILICONE_LostFocus" KeyDown="txtWIDTH_SILICONEN1_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtWIDTH_SILICONEN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="3" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="WIDTH_SILICONE_LostFocus" KeyDown="txtWIDTH_SILICONEN2_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtWIDTH_SILICONEN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="3" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="WIDTH_SILICONE_LostFocus" KeyDown="txtWIDTH_SILICONEN3_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtWIDTH_SILICONEN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="3" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="WIDTH_SILICONE_LostFocus" KeyDown="txtWIDTH_SILICONEN4_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtWIDTH_SILICONEN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="3" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="WIDTH_SILICONE_LostFocus" KeyDown="txtWIDTH_SILICONEN5_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtWIDTH_SILICONEN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="3" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="WIDTH_SILICONE_LostFocus" KeyDown="txtWIDTH_SILICONEN6_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtWIDTH_SILICONEAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="3" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- NUMTHREADS_W -->
+                                        <Label Content="Number of threads" FontSize="18" FontWeight="Bold" Margin="0,3,3,0" Name="labNUMTHREADS_W" VerticalAlignment="Top" Grid.Row="4" Grid.RowSpan="2" HorizontalAlignment="Right" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtNUMTHREADS_WYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="4" Grid.Column="1" Text="Warp" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtNUMTHREADS_WSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="4" Grid.Column="2" IsReadOnly="True" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtNUMTHREADS_WN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="4" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="NUMTHREADS_W_LostFocus" KeyDown="txtNUMTHREADS_WN1_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtNUMTHREADS_WN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="4" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="NUMTHREADS_W_LostFocus" KeyDown="txtNUMTHREADS_WN2_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtNUMTHREADS_WN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="4" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="NUMTHREADS_W_LostFocus" KeyDown="txtNUMTHREADS_WN3_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtNUMTHREADS_WN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="4" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="NUMTHREADS_W_LostFocus" KeyDown="txtNUMTHREADS_WN4_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtNUMTHREADS_WN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="4" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="NUMTHREADS_W_LostFocus" KeyDown="txtNUMTHREADS_WN5_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtNUMTHREADS_WN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="4" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="NUMTHREADS_W_LostFocus" KeyDown="txtNUMTHREADS_WN6_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtNUMTHREADS_WAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="4" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- NUMTHREADS_F -->
+                                        <Label Content="(fabric sett) : " FontSize="18" FontWeight="Bold" Margin="0,3,3,0" Name="labNUMTHREADS_F" VerticalAlignment="Top" Grid.Row="5" HorizontalAlignment="Right"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtNUMTHREADS_FYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="5" Grid.Column="1" Text="Weft" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtNUMTHREADS_FSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="5" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtNUMTHREADS_FN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="5" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="NUMTHREADS_F_LostFocus" KeyDown="txtNUMTHREADS_FN1_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtNUMTHREADS_FN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="5" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="NUMTHREADS_F_LostFocus" KeyDown="txtNUMTHREADS_FN2_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtNUMTHREADS_FN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="5" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="NUMTHREADS_F_LostFocus" KeyDown="txtNUMTHREADS_FN3_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtNUMTHREADS_FN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="5" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="NUMTHREADS_F_LostFocus" KeyDown="txtNUMTHREADS_FN4_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtNUMTHREADS_FN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="5" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="NUMTHREADS_F_LostFocus" KeyDown="txtNUMTHREADS_FN5_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtNUMTHREADS_FN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="5" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="NUMTHREADS_F_LostFocus" KeyDown="txtNUMTHREADS_FN6_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtNUMTHREADS_FAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="5" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- TOTALWEIGHT -->
+                                        <Label Content="Total Weight : " FontSize="18" FontWeight="Bold" Margin="0,3,3,0" Name="labTOTALWEIGHT" VerticalAlignment="Top" Grid.Row="6" HorizontalAlignment="Right"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTOTALWEIGHTYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="6" Grid.Column="1" Text="-" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTOTALWEIGHTSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="6" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTOTALWEIGHTN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="6" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="TOTALWEIGHT1_LostFocus" KeyDown="txtTOTALWEIGHTN1_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTOTALWEIGHTN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="6" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="TOTALWEIGHT2_LostFocus" KeyDown="txtTOTALWEIGHTN2_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTOTALWEIGHTN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="6" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="TOTALWEIGHT3_LostFocus" KeyDown="txtTOTALWEIGHTN3_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTOTALWEIGHTN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="6" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="TOTALWEIGHT4_LostFocus" KeyDown="txtTOTALWEIGHTN4_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTOTALWEIGHTN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="6" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="TOTALWEIGHT5_LostFocus" KeyDown="txtTOTALWEIGHTN5_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTOTALWEIGHTN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="6" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="TOTALWEIGHT6_LostFocus" KeyDown="txtTOTALWEIGHTN6_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTOTALWEIGHTAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="6" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- UNCOATEDWEIGHT -->
+                                        <Label Content="Uncoated Weight : " FontSize="18" FontWeight="Bold" Margin="0,3,3,0" Name="labUNCOATEDWEIGHT" VerticalAlignment="Top" Grid.Row="7" HorizontalAlignment="Right"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtUNCOATEDWEIGHTYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="7" Grid.Column="1" Text="-" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtUNCOATEDWEIGHTSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="7" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtUNCOATEDWEIGHTN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="7" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="UNCOATEDWEIGHT1_LostFocus" KeyDown="txtUNCOATEDWEIGHTN1_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtUNCOATEDWEIGHTN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="7" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="UNCOATEDWEIGHT2_LostFocus" KeyDown="txtUNCOATEDWEIGHTN2_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtUNCOATEDWEIGHTN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="7" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="UNCOATEDWEIGHT3_LostFocus" KeyDown="txtUNCOATEDWEIGHTN3_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtUNCOATEDWEIGHTN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="7" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="UNCOATEDWEIGHT4_LostFocus" KeyDown="txtUNCOATEDWEIGHTN4_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtUNCOATEDWEIGHTN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="7" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="UNCOATEDWEIGHT5_LostFocus" KeyDown="txtUNCOATEDWEIGHTN5_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtUNCOATEDWEIGHTN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="7" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="UNCOATEDWEIGHT6_LostFocus" KeyDown="txtUNCOATEDWEIGHTN6_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtUNCOATEDWEIGHTAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="7" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- COATINGWEIGHT -->
+                                        <Label Content="Total Coating Weight : " FontSize="18" FontWeight="Bold" Margin="0,3,3,0" Name="labCOATINGWEIGHT" VerticalAlignment="Top" Grid.Row="8" HorizontalAlignment="Right"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtCOATINGWEIGHTYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="8" Grid.Column="1" Text="-" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtCOATINGWEIGHTSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="8" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtCOATINGWEIGHTN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="8" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="COATINGWEIGHT_LostFocus" KeyDown="txtCOATINGWEIGHTN1_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtCOATINGWEIGHTN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="8" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="COATINGWEIGHT_LostFocus" KeyDown="txtCOATINGWEIGHTN2_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtCOATINGWEIGHTN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="8" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="COATINGWEIGHT_LostFocus" KeyDown="txtCOATINGWEIGHTN3_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtCOATINGWEIGHTN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="8" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="COATINGWEIGHT_LostFocus" KeyDown="txtCOATINGWEIGHTN4_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtCOATINGWEIGHTN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="8" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="COATINGWEIGHT_LostFocus" KeyDown="txtCOATINGWEIGHTN5_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtCOATINGWEIGHTN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="8" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="COATINGWEIGHT_LostFocus" KeyDown="txtCOATINGWEIGHTN6_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtCOATINGWEIGHTAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="8" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- THICKNESS -->
+                                        <Label Content="Thickness : " FontSize="18" FontWeight="Bold" Margin="0,3,3,0" Name="labTHICKNESS" VerticalAlignment="Top" Grid.Row="9" HorizontalAlignment="Right"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTHICKNESSYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="9" Grid.Column="1" Text="-" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTHICKNESSSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="9" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTHICKNESSN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="9" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="THICKNESS_LostFocus" KeyDown="txtTHICKNESSN1_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTHICKNESSN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="9" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="THICKNESS_LostFocus" KeyDown="txtTHICKNESSN2_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTHICKNESSN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="9" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="THICKNESS_LostFocus" KeyDown="txtTHICKNESSN3_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTHICKNESSN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="9" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="THICKNESS_LostFocus" KeyDown="txtTHICKNESSN4_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTHICKNESSN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="9" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="THICKNESS_LostFocus" KeyDown="txtTHICKNESSN5_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTHICKNESSN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="9" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="THICKNESS_LostFocus" KeyDown="txtTHICKNESSN6_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtTHICKNESSAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="9" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- FLAMMABILITY_W -->
+                                        <Label Content="Flammability : " FontSize="18" FontWeight="Bold" Margin="0,3,3,0" Name="labFLAMMABILITY_W" VerticalAlignment="Top" Grid.Row="10" Grid.RowSpan="2" HorizontalAlignment="Right" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLAMMABILITY_WYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="10" Grid.Column="1" Text="Warp" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLAMMABILITY_WSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="10" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLAMMABILITY_WN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="10" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLAMMABILITY_W_LostFocus" KeyDown="txtFLAMMABILITY_WN1_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLAMMABILITY_WN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="10" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLAMMABILITY_W_LostFocus" KeyDown="txtFLAMMABILITY_WN2_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLAMMABILITY_WN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="10" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLAMMABILITY_W_LostFocus" KeyDown="txtFLAMMABILITY_WN3_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLAMMABILITY_WN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="10" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLAMMABILITY_W_LostFocus" KeyDown="txtFLAMMABILITY_WN4_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLAMMABILITY_WN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="10" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLAMMABILITY_W_LostFocus" KeyDown="txtFLAMMABILITY_WN5_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLAMMABILITY_WN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="10" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLAMMABILITY_W_LostFocus" KeyDown="txtFLAMMABILITY_WN6_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLAMMABILITY_WAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="10" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- FLAMMABILITY_F -->
+                                        <Label Content="" FontSize="18" FontWeight="Bold" Margin="0,3,3,0" Name="labFLAMMABILITY_F" VerticalAlignment="Top" Grid.Row="11" HorizontalAlignment="Right"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLAMMABILITY_FYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="11" Grid.Column="1" Text="Weft" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLAMMABILITY_FSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="11" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLAMMABILITY_FN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="11" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLAMMABILITY_F_LostFocus" KeyDown="txtFLAMMABILITY_FN1_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLAMMABILITY_FN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="11" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLAMMABILITY_F_LostFocus" KeyDown="txtFLAMMABILITY_FN2_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLAMMABILITY_FN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="11" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLAMMABILITY_F_LostFocus" KeyDown="txtFLAMMABILITY_FN3_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLAMMABILITY_FN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="11" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLAMMABILITY_F_LostFocus" KeyDown="txtFLAMMABILITY_FN4_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLAMMABILITY_FN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="11" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLAMMABILITY_F_LostFocus" KeyDown="txtFLAMMABILITY_FN5_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLAMMABILITY_FN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="11" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLAMMABILITY_F_LostFocus" KeyDown="txtFLAMMABILITY_FN6_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLAMMABILITY_FAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="11" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- STIFFNES_W -->
+                                        <Label Content="Stiffness : " FontSize="18" FontWeight="Bold" Margin="0,3,3,0" Name="labSTIFFNES_W" VerticalAlignment="Top" Grid.Row="12" Grid.RowSpan="2" HorizontalAlignment="Right" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtSTIFFNES_WYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="12" Grid.Column="1" Text="Warp" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtSTIFFNES_WSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="12" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtSTIFFNES_WN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="12" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="STIFFNES_W_LostFocus" KeyDown="txtSTIFFNES_WN1_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtSTIFFNES_WN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="12" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="STIFFNES_W_LostFocus" KeyDown="txtSTIFFNES_WN2_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtSTIFFNES_WN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="12" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="STIFFNES_W_LostFocus" KeyDown="txtSTIFFNES_WN3_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtSTIFFNES_WN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="12" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="STIFFNES_W_LostFocus" KeyDown="txtSTIFFNES_WN4_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtSTIFFNES_WN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="12" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="STIFFNES_W_LostFocus" KeyDown="txtSTIFFNES_WN5_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtSTIFFNES_WN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="12" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="STIFFNES_W_LostFocus" KeyDown="txtSTIFFNES_WN6_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtSTIFFNES_WAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="12" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True" />
+
+                                        <!-- STIFFNES_F -->
+                                        <Label Content="" FontSize="18" FontWeight="Bold" Margin="0,3,3,0" Name="labSTIFFNES_F" VerticalAlignment="Top" Grid.Row="13" HorizontalAlignment="Right"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtSTIFFNES_FYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="13" Grid.Column="1" Text="Weft" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtSTIFFNES_FSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="13" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtSTIFFNES_FN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="13" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="STIFFNES_F_LostFocus" KeyDown="txtSTIFFNES_FN1_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtSTIFFNES_FN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="13" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="STIFFNES_F_LostFocus" KeyDown="txtSTIFFNES_FN2_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtSTIFFNES_FN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="13" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="STIFFNES_F_LostFocus" KeyDown="txtSTIFFNES_FN3_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtSTIFFNES_FN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="13" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="STIFFNES_F_LostFocus" KeyDown="txtSTIFFNES_FN4_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtSTIFFNES_FN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="13" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="STIFFNES_F_LostFocus" KeyDown="txtSTIFFNES_FN5_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtSTIFFNES_FN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="13" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="STIFFNES_F_LostFocus" KeyDown="txtSTIFFNES_FN6_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtSTIFFNES_FAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="13" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- STATIC_AIR -->
+                                        <Label Content="Static Air Permeability : " FontSize="18" FontWeight="Bold" Margin="0,3,3,0" Name="labSTATIC_AIR" VerticalAlignment="Top" Grid.Row="14" HorizontalAlignment="Right"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtSTATIC_AIRYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="14" Grid.Column="1" Text="-" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtSTATIC_AIRSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="14" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtSTATIC_AIRN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="14" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="STATIC_AIR_LostFocus" KeyDown="txtSTATIC_AIRN1_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtSTATIC_AIRN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="14" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="STATIC_AIR_LostFocus" KeyDown="txtSTATIC_AIRN2_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtSTATIC_AIRN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="14" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="STATIC_AIR_LostFocus" KeyDown="txtSTATIC_AIRN3_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtSTATIC_AIRN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="14" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="STATIC_AIR_LostFocus" KeyDown="txtSTATIC_AIRN4_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtSTATIC_AIRN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="14" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="STATIC_AIR_LostFocus" KeyDown="txtSTATIC_AIRN5_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtSTATIC_AIRN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="14" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="STATIC_AIR_LostFocus" KeyDown="txtSTATIC_AIRN6_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtSTATIC_AIRAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="14" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- DYNAMIC_AIR -->
+                                        <Label Content="Dynamic Air Permeability : " FontSize="18" FontWeight="Bold" Margin="0,3,3,0" Name="labDYNAMIC_AIR" VerticalAlignment="Top" Grid.Row="15" HorizontalAlignment="Right"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtDYNAMIC_AIRYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="15" Grid.Column="1" Text="-" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtDYNAMIC_AIRSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="15" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtDYNAMIC_AIRN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="15" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="DYNAMIC_AIR_LostFocus" KeyDown="txtDYNAMIC_AIRN1_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtDYNAMIC_AIRN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="15" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="DYNAMIC_AIR_LostFocus" KeyDown="txtDYNAMIC_AIRN2_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtDYNAMIC_AIRN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="15" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="DYNAMIC_AIR_LostFocus" KeyDown="txtDYNAMIC_AIRN3_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtDYNAMIC_AIRN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="15" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="DYNAMIC_AIR_LostFocus" KeyDown="txtDYNAMIC_AIRN4_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtDYNAMIC_AIRN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="15" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="DYNAMIC_AIR_LostFocus" KeyDown="txtDYNAMIC_AIRN5_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtDYNAMIC_AIRN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="15" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="DYNAMIC_AIR_LostFocus" KeyDown="txtDYNAMIC_AIRN6_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtDYNAMIC_AIRAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="15" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- EXPONENT -->
+                                        <Label Content="Exponent : " FontSize="18" FontWeight="Bold" Margin="0,3,3,0" Name="labEXPONENT" VerticalAlignment="Top" Grid.Row="16" HorizontalAlignment="Right"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtEXPONENTYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="16" Grid.Column="1" Text="-" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtEXPONENTSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="16" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtEXPONENTN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="16" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="EXPONENT_LostFocus" KeyDown="txtEXPONENTN1_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtEXPONENTN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="16" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="EXPONENT_LostFocus" KeyDown="txtEXPONENTN2_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtEXPONENTN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="16" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="EXPONENT_LostFocus" KeyDown="txtEXPONENTN3_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtEXPONENTN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="16" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="EXPONENT_LostFocus" KeyDown="txtEXPONENTN4_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtEXPONENTN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="16" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="EXPONENT_LostFocus" KeyDown="txtEXPONENTN5_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtEXPONENTN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="16" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="EXPONENT_LostFocus" KeyDown="txtEXPONENTN6_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtEXPONENTAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="16" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- DIMENSCHANGE_W -->
+                                        <Label Content="Dimensional Change : " FontSize="18" FontWeight="Bold" Margin="0,3,3,0" Name="labDIMENSCHANGE_W" VerticalAlignment="Top" Grid.Row="17" Grid.RowSpan="2" HorizontalAlignment="Right" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtDIMENSCHANGE_WYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="17" Grid.Column="1" Text="Warp" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtDIMENSCHANGE_WSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="17" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtDIMENSCHANGE_WN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="17" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="DIMENSCHANGE_W_LostFocus" KeyDown="txtDIMENSCHANGE_WN1_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtDIMENSCHANGE_WN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="17" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="DIMENSCHANGE_W_LostFocus" KeyDown="txtDIMENSCHANGE_WN2_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtDIMENSCHANGE_WN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="17" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="DIMENSCHANGE_W_LostFocus" KeyDown="txtDIMENSCHANGE_WN3_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtDIMENSCHANGE_WN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="17" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="DIMENSCHANGE_W_LostFocus" KeyDown="txtDIMENSCHANGE_WN4_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtDIMENSCHANGE_WN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="17" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="DIMENSCHANGE_W_LostFocus" KeyDown="txtDIMENSCHANGE_WN5_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtDIMENSCHANGE_WN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="17" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="DIMENSCHANGE_W_LostFocus" KeyDown="txtDIMENSCHANGE_WN6_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtDIMENSCHANGE_WAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="17" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- DIMENSCHANGE_F -->
+                                        <Label Content="" FontSize="18" FontWeight="Bold" Margin="0,3,3,0" Name="labDIMENSCHANGE_F" VerticalAlignment="Top" Grid.Row="18" HorizontalAlignment="Right"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtDIMENSCHANGE_FYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="18" Grid.Column="1" Text="Weft" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtDIMENSCHANGE_FSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="18" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtDIMENSCHANGE_FN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="18" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="DIMENSCHANGE_F_LostFocus" KeyDown="txtDIMENSCHANGE_FN1_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtDIMENSCHANGE_FN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="18" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="DIMENSCHANGE_F_LostFocus" KeyDown="txtDIMENSCHANGE_FN2_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtDIMENSCHANGE_FN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="18" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="DIMENSCHANGE_F_LostFocus" KeyDown="txtDIMENSCHANGE_FN3_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtDIMENSCHANGE_FN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="18" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="DIMENSCHANGE_F_LostFocus" KeyDown="txtDIMENSCHANGE_FN4_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtDIMENSCHANGE_FN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="18" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="DIMENSCHANGE_F_LostFocus" KeyDown="txtDIMENSCHANGE_FN5_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtDIMENSCHANGE_FN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="18" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="DIMENSCHANGE_F_LostFocus" KeyDown="txtDIMENSCHANGE_FN6_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtDIMENSCHANGE_FAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="18" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- FLEXABRASION_W -->
+                                        <Label Content="Flex Abrasion (scrub) : " FontSize="18" FontWeight="Bold" Margin="0,3,3,0" Name="labFLEXABRASION_W" VerticalAlignment="Top" Grid.Row="19" Grid.RowSpan="2" HorizontalAlignment="Right" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEXABRASION_WYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="19" Grid.Column="1" Text="Warp" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEXABRASION_WSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="19" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEXABRASION_WN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="19" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLEXABRASION_W_LostFocus" KeyDown="txtFLEXABRASION_WN1_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEXABRASION_WN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="19" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLEXABRASION_W_LostFocus" KeyDown="txtFLEXABRASION_WN2_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEXABRASION_WN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="19" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLEXABRASION_W_LostFocus" KeyDown="txtFLEXABRASION_WN3_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEXABRASION_WN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="19" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLEXABRASION_W_LostFocus" KeyDown="txtFLEXABRASION_WN4_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEXABRASION_WN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="19" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLEXABRASION_W_LostFocus" KeyDown="txtFLEXABRASION_WN5_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEXABRASION_WN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="19" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLEXABRASION_W_LostFocus" KeyDown="txtFLEXABRASION_WN6_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEXABRASION_WAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="19" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- FLEXABRASION_F -->
+                                        <Label Content="" FontSize="18" FontWeight="Bold" Margin="0,3,3,0" Name="labFLEXABRASION_F" VerticalAlignment="Top" Grid.Row="20" HorizontalAlignment="Right"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEXABRASION_FYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="20" Grid.Column="1" Text="Weft" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEXABRASION_FSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="20" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEXABRASION_FN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="20" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLEXABRASION_F_LostFocus" KeyDown="txtFLEXABRASION_FN1_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEXABRASION_FN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="20" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLEXABRASION_F_LostFocus" KeyDown="txtFLEXABRASION_FN2_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEXABRASION_FN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="20" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLEXABRASION_F_LostFocus" KeyDown="txtFLEXABRASION_FN3_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEXABRASION_FN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="20" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLEXABRASION_F_LostFocus" KeyDown="txtFLEXABRASION_FN4_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEXABRASION_FN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="20" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLEXABRASION_F_LostFocus" KeyDown="txtFLEXABRASION_FN5_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEXABRASION_FN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="20" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLEXABRASION_F_LostFocus" KeyDown="txtFLEXABRASION_FN6_KeyDown" />
+                                        <TextBox FontSize="18" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEXABRASION_FAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="20" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- BOW -->
+                                        <Label Content="BOW : " FontSize="20" FontWeight="Bold" Margin="0,3,3,0" Name="labBOW" VerticalAlignment="Top" Grid.Row="21" HorizontalAlignment="Right"/>
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtBOWYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="21" Grid.Column="1" Text="-" IsReadOnly="True"/>
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtBOWSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="21" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtBOWN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="21" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="BOW_LostFocus" KeyDown="txtBOWN1_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtBOWN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="21" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="BOW_LostFocus" KeyDown="txtBOWN2_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtBOWN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="21" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="BOW_LostFocus" KeyDown="txtBOWN3_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtBOWN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="21" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="BOW_LostFocus" KeyDown="txtBOWN4_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtBOWN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="21" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="BOW_LostFocus" KeyDown="txtBOWN5_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtBOWN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="21" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="BOW_LostFocus" KeyDown="txtBOWN6_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtBOWAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="21" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- SKEW -->
+                                        <Label Content="SKEW : " FontSize="20" FontWeight="Bold" Margin="0,3,3,0" Name="labSKEW" VerticalAlignment="Top" Grid.Row="22" HorizontalAlignment="Right"/>
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtSKEWYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="22" Grid.Column="1" Text="-" IsReadOnly="True"/>
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtSKEWSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="22" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtSKEWN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="22" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="SKEW_LostFocus" KeyDown="txtSKEWN1_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtSKEWN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="22" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="SKEW_LostFocus" KeyDown="txtSKEWN2_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtSKEWN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="22" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="SKEW_LostFocus" KeyDown="txtSKEWN3_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtSKEWN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="22" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="SKEW_LostFocus" KeyDown="txtSKEWN4_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtSKEWN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="22" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="SKEW_LostFocus" KeyDown="txtSKEWN5_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtSKEWN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="22" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="SKEW_LostFocus" KeyDown="txtSKEWN6_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtSKEWAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="22" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- BENDING_W -->
+                                        <Label Content="Bending resistance : " FontSize="20" FontWeight="Bold" Margin="0,3,3,0" Name="labBENDING_W" VerticalAlignment="Top" Grid.Row="23" Grid.RowSpan="2" HorizontalAlignment="Right" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtBENDING_WYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="23" Grid.Column="1" Text="Warp" IsReadOnly="True"/>
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtBENDING_WSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="23" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtBENDING_WN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="23" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="BENDING_W_LostFocus" KeyDown="txtBENDING_WN1_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtBENDING_WN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="23" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="BENDING_W_LostFocus" KeyDown="txtBENDING_WN2_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtBENDING_WN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="23" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="BENDING_W_LostFocus" KeyDown="txtBENDING_WN3_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtBENDING_WN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="23" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="BENDING_W_LostFocus" KeyDown="txtBENDING_WN4_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtBENDING_WN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="23" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="BENDING_W_LostFocus" KeyDown="txtBENDING_WN5_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtBENDING_WN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="23" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="BENDING_W_LostFocus" KeyDown="txtBENDING_WN6_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtBENDING_WAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="23" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- BENDING_F -->
+                                        <Label Content="" FontSize="20" FontWeight="Bold" Margin="0,3,3,0" Name="labBENDING_F" VerticalAlignment="Top" Grid.Row="24" HorizontalAlignment="Right"/>
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtBENDING_FYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="24" Grid.Column="1" Text="Weft" IsReadOnly="True"/>
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtBENDING_FSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="24" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtBENDING_FN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="24" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="BENDING_F_LostFocus" KeyDown="txtBENDING_FN1_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtBENDING_FN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="24" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="BENDING_F_LostFocus" KeyDown="txtBENDING_FN2_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtBENDING_FN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="24" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="BENDING_F_LostFocus" KeyDown="txtBENDING_FN3_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtBENDING_FN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="24" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="BENDING_F_LostFocus" KeyDown="txtBENDING_FN4_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtBENDING_FN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="24" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="BENDING_F_LostFocus" KeyDown="txtBENDING_FN5_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtBENDING_FN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="24" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="BENDING_F_LostFocus" KeyDown="txtBENDING_FN6_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtBENDING_FAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="24" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- FLEX_SCOTT_W -->
+                                        <Label Content="Flex Abrasion " FontSize="20" FontWeight="Bold" Margin="0,3,3,0" Name="labFLEX_SCOTT_W" VerticalAlignment="Top" Grid.Row="25" Grid.RowSpan="2" HorizontalAlignment="Right" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEX_SCOTT_WYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="25" Grid.Column="1" Text="Warp" IsReadOnly="True"/>
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEX_SCOTT_WSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="25" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEX_SCOTT_WN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="25" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLEX_SCOTT_W_LostFocus" KeyDown="txtFLEX_SCOTT_WN1_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEX_SCOTT_WN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="25" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLEX_SCOTT_W_LostFocus" KeyDown="txtFLEX_SCOTT_WN2_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEX_SCOTT_WN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="25" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLEX_SCOTT_W_LostFocus" KeyDown="txtFLEX_SCOTT_WN3_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEX_SCOTT_WN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="25" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLEX_SCOTT_W_LostFocus" KeyDown="txtFLEX_SCOTT_WN4_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEX_SCOTT_WN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="25" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLEX_SCOTT_W_LostFocus" KeyDown="txtFLEX_SCOTT_WN5_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEX_SCOTT_WN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="25" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLEX_SCOTT_W_LostFocus" KeyDown="txtFLEX_SCOTT_WN6_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEX_SCOTT_WAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="25" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                        <!-- FLEX_SCOTT_F -->
+                                        <Label Content="(Scott type) : " FontSize="20" FontWeight="Bold" Margin="0,3,3,0" Name="labFLEX_SCOTT_F" VerticalAlignment="Top" Grid.Row="26" HorizontalAlignment="Right"/>
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEX_SCOTT_FYarn" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="26" Grid.Column="1" Text="Weft" IsReadOnly="True"/>
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEX_SCOTT_FSpecification" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="26" Grid.Column="2" IsReadOnly="True"/>
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEX_SCOTT_FN1" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="26" Grid.Column="3" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLEX_SCOTT_F_LostFocus" KeyDown="txtFLEX_SCOTT_FN1_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEX_SCOTT_FN2" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="26" Grid.Column="4" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLEX_SCOTT_F_LostFocus" KeyDown="txtFLEX_SCOTT_FN2_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEX_SCOTT_FN3" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="26" Grid.Column="5" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLEX_SCOTT_F_LostFocus" KeyDown="txtFLEX_SCOTT_FN3_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEX_SCOTT_FN4" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="26" Grid.Column="6" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLEX_SCOTT_F_LostFocus" KeyDown="txtFLEX_SCOTT_FN4_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEX_SCOTT_FN5" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="26" Grid.Column="7" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLEX_SCOTT_F_LostFocus" KeyDown="txtFLEX_SCOTT_FN5_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEX_SCOTT_FN6" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="26" Grid.Column="8" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="FLEX_SCOTT_F_LostFocus" KeyDown="txtFLEX_SCOTT_FN6_KeyDown" />
+                                        <TextBox FontSize="20" FontWeight="Bold" Margin="3,7,3,0" Name="txtFLEX_SCOTT_FAve" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="26" Grid.Column="9" PreviewKeyDown="Common_PreviewKeyDown" IsReadOnly="True"/>
+
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </Grid>               
+                    </Grid>
+                </Grid>
+            </ScrollViewer>
+        </Border>
+    </DockPanel>
+  
+</Window>

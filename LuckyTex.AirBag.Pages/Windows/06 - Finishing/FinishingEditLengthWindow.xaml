@@ -1,0 +1,239 @@
+﻿<Window x:Class="LuckyTex.Pages.FinishingEditLengthWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Finishing Edit Length" 
+        Height="330" 
+        Width="680" 
+        ShowInTaskbar="False"
+        Topmost="True"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize" 
+        Loaded="Window_Loaded">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/GroupBoxStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/RadioButtonStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    
+    <DockPanel LastChildFill="True">
+        <!-- Caption Bar -->
+        <Border DockPanel.Dock="Top" CornerRadius="3" Margin="3, 3, 3, 0"
+                Background="CornflowerBlue"
+                Height="40">
+            <TextBlock Text="Finishing Edit Length"
+                       Foreground="White"
+                       FontSize="30" 
+                       FontWeight="Bold"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"/>
+        </Border>
+        <!-- Button Command Bars -->
+        <Border DockPanel.Dock="Bottom" 
+                Background="#F0F0F0">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <Button x:Name="cmdSave" 
+                        Content="Save"
+                        FontSize="22" 
+                        FontWeight="Bold"
+                        Margin="5" 
+                        Height="40"
+                        Width="100"
+                        Style="{StaticResource MenuButtonStyle}" Click="cmdSave_Click">
+                </Button>
+                <Button x:Name="cmdClose" 
+                        Content="Close"
+                        FontSize="22" 
+                        FontWeight="Bold"
+                        Margin="5" 
+                        Height="40"
+                        Width="100"
+                        Style="{StaticResource MenuButtonStyle}" Click="cmdClose_Click">
+                </Button>
+            </StackPanel>
+        </Border>
+        <!-- Content -->
+        <Border CornerRadius="3" Margin="3" 
+                BorderThickness="2" BorderBrush="Black">
+                <Grid HorizontalAlignment="Stretch" 
+                      VerticalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4" />
+                    <ColumnDefinition Width="140" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="4*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3" />
+                    <RowDefinition Height="45" />
+                    <RowDefinition Height="45" />
+                    <RowDefinition Height="45" />
+                    <RowDefinition Height="45" />
+                    <RowDefinition Height="3*" />
+                </Grid.RowDefinitions>
+                <TextBlock 
+                    Text="Length 1" 
+                    Margin="3,9,9,0" 
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    FontSize="20" 
+                    FontWeight="Bold" 
+                    TextAlignment="Center" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Top"/>
+                <TextBox x:Name="txtLENGTH1" 
+                    Margin="3,6,0,0" 
+                    Grid.Column="2"
+                    Grid.Row="1"
+                    CharacterCasing="Upper"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtLENGTH1_KeyDown" LostFocus="txtLENGTH1_LostFocus">
+                </TextBox>
+                <TextBlock 
+                    Text="Length 2" 
+                    Margin="3,9,9,0" 
+                    Grid.Column="3"
+                    Grid.Row="1"
+                    FontSize="20" 
+                    FontWeight="Bold" 
+                    TextAlignment="Center" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Top"/>
+                <TextBox x:Name="txtLENGTH2" 
+                    Margin="3,6,0,0" 
+                    Grid.Column="4"
+                    Grid.Row="1"
+                    CharacterCasing="Upper"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtLENGTH2_KeyDown" LostFocus="txtLENGTH2_LostFocus">
+                </TextBox>
+                <TextBlock 
+                    Text="Length 3" 
+                    Margin="3,9,9,0" 
+                    Grid.Column="5"
+                    Grid.Row="1"
+                    FontSize="20" 
+                    FontWeight="Bold" 
+                    TextAlignment="Center" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Top"/>
+                <TextBox x:Name="txtLENGTH3" 
+                    Margin="3,6,0,0" 
+                    Grid.Column="6"
+                    Grid.Row="1"
+                    CharacterCasing="Upper"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtLENGTH3_KeyDown" LostFocus="txtLENGTH3_LostFocus">
+                </TextBox>
+                <TextBlock 
+                    Text="Length 4" 
+                    Margin="3,9,9,0" 
+                    Grid.Column="1"
+                    Grid.Row="2"
+                    FontSize="20" 
+                    FontWeight="Bold" 
+                    TextAlignment="Center" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Top"/>
+                <TextBox x:Name="txtLENGTH4" 
+                    Margin="3,6,0,0" 
+                    Grid.Column="2"
+                    Grid.Row="2"
+                    CharacterCasing="Upper"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtLENGTH4_KeyDown" LostFocus="txtLENGTH4_LostFocus">
+                </TextBox>
+                <TextBlock 
+                    Text="Length 5" 
+                    Margin="3,9,9,0" 
+                    Grid.Column="3"
+                    Grid.Row="2"
+                    FontSize="20" 
+                    FontWeight="Bold" 
+                    TextAlignment="Center" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Top"/>
+                <TextBox x:Name="txtLENGTH5" 
+                    Margin="3,6,0,0" 
+                    Grid.Column="4"
+                    Grid.Row="2"
+                    CharacterCasing="Upper"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtLENGTH5_KeyDown" LostFocus="txtLENGTH5_LostFocus">
+                </TextBox>
+                <TextBlock 
+                    Text="Length 6" 
+                    Margin="3,9,9,0" 
+                    Grid.Column="5"
+                    Grid.Row="2"
+                    FontSize="20" 
+                    FontWeight="Bold" 
+                    TextAlignment="Center" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Top"/>
+                <TextBox x:Name="txtLENGTH6" 
+                    Margin="3,6,0,0" 
+                    Grid.Column="6"
+                    Grid.Row="2"
+                    CharacterCasing="Upper"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtLENGTH6_KeyDown" LostFocus="txtLENGTH6_LostFocus">
+                </TextBox>
+                <TextBlock 
+                    Text="Length 7" 
+                    Margin="3,9,9,0" 
+                    Grid.Column="1"
+                    Grid.Row="3"
+                    FontSize="20" 
+                    FontWeight="Bold" 
+                    TextAlignment="Center" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Top"/>
+                <TextBox x:Name="txtLENGTH7" 
+                    Margin="3,6,0,0" 
+                    Grid.Column="2"
+                    Grid.Row="3"
+                    CharacterCasing="Upper"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" KeyDown="txtLENGTH7_KeyDown" LostFocus="txtLENGTH7_LostFocus">
+                </TextBox>
+                <TextBlock 
+                    Text="Total Length" 
+                    Margin="3,9,9,0" 
+                    Grid.Column="1"
+                    Grid.Row="4"
+                    FontSize="20" 
+                    FontWeight="Bold" 
+                    TextAlignment="Center" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Top"/>
+                <TextBox x:Name="txtTOTALLENGTH" 
+                         IsReadOnly="True"
+                    Margin="3,6,0,0" 
+                    Grid.Column="2"
+                    Grid.Row="4"
+                    CharacterCasing="Upper"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    TextAlignment="Center" VerticalAlignment="Top" PreviewKeyDown="Common_PreviewKeyDown" LostFocus="txtTOTALLENGTH_LostFocus">
+                </TextBox>
+            </Grid>
+        </Border>
+    </DockPanel>
+</Window>

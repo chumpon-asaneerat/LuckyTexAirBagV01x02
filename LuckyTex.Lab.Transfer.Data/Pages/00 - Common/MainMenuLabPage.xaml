@@ -1,0 +1,115 @@
+﻿<UserControl x:Class="LuckyTex.Pages.MainMenuLabPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="1000" d:DesignWidth="1270">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/GroupBoxStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LuckyTex.AirBag.Controls;component/Styles/RadioButtonStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel LastChildFill="True">
+        <!-- Caption Bar -->
+        <Border DockPanel.Dock="Top" CornerRadius="3" Margin="3, 3, 3, 0"
+                Background="CornflowerBlue"
+                Height="40">
+            <TextBlock Text="Lab Transfer Data"
+                       Foreground="White"
+                       FontSize="30" 
+                       FontWeight="Bold"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"/>
+        </Border>
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20*" />
+                <ColumnDefinition Width="375*" />
+                <ColumnDefinition Width="20*" />
+                <ColumnDefinition Width="375*" />
+                <ColumnDefinition Width="20*" />
+                <ColumnDefinition Width="417*" />
+                <ColumnDefinition Width="20*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="54*" />
+                <RowDefinition Height="210*" />
+                <RowDefinition Height="100*" />
+                <RowDefinition Height="210*" />
+                <RowDefinition Height="100*" />
+                <RowDefinition Height="210*" />
+                <RowDefinition Height="54*" />
+            </Grid.RowDefinitions>
+            <Button x:Name="cmdPDFLoading" 
+                    Content="PDF Loading"
+                    Margin="3" 
+                    FontSize="35" 
+                    FontWeight="Bold"
+                    Style="{StaticResource MenuButtonStyle}"
+                    Grid.Column="1" Grid.Row="1" Click="cmdPDFLoading_Click" />
+            <Button x:Name="cmdPLCGetData" 
+                    Content="PLC Get Data"
+                    Margin="3" 
+                    FontSize="35" 
+                    FontWeight="Bold"
+                    Style="{StaticResource MenuButtonStyle}"
+                    Grid.Column="3" Grid.Row="1" Click="cmdPLCGetData_Click" />
+            <Button x:Name="cmdLabDataEntry" 
+                    Content="Lab Data Entry"
+                    Margin="3" 
+                    FontSize="35" 
+                    FontWeight="Bold"
+                    Style="{StaticResource MenuButtonStyle}"
+                    Grid.Column="5" Grid.Row="1" Click="cmdLabDataEntry_Click" />
+            <Button x:Name="cmdProduction" 
+                    Content="Production"
+                    Margin="3" 
+                    FontSize="35" 
+                    FontWeight="Bold"
+                    Style="{StaticResource MenuButtonStyle}"
+                    Grid.Column="1" Grid.Row="3" Click="cmdProduction_Click" />
+            <Button x:Name="cmdUploadLABReport" 
+                    Content="Upload LAB Report"
+                    Margin="3" 
+                    FontSize="35" 
+                    FontWeight="Bold"
+                    Style="{StaticResource MenuButtonStyle}"
+                    Grid.Column="3" Grid.Row="3" Click="cmdUploadLABReport_Click" />
+            <Button x:Name="cmdSampleTestData" 
+                    Content="Sample Test Data"
+                    Margin="3" 
+                    FontSize="35" 
+                    FontWeight="Bold"
+                    Style="{StaticResource MenuButtonStyle}"
+                    Grid.Column="5" Grid.Row="3" Click="cmdSampleTestData_Click" />
+            
+            <Button x:Name="cmdItemCodeSpecification" 
+                    Content="Item Code Specification"
+                    Margin="3" 
+                    FontSize="35" 
+                    FontWeight="Bold"
+                    Style="{StaticResource MenuButtonStyle}"
+                    Grid.Column="1" Grid.Row="5" Click="cmdItemCodeSpecification_Click" />
+            <Button x:Name="cmdLABReportSetting" 
+                    Content="LAB Report Setting"
+                    Margin="3" 
+                    FontSize="35" 
+                    FontWeight="Bold"
+                    Style="{StaticResource MenuButtonStyle}"
+                    Grid.Column="3" Grid.Row="5" Click="cmdLABReportSetting_Click" />
+
+            <Button x:Name="cmdSampleReport" 
+                    Content="Sample Report"
+                    Margin="3" 
+                    FontSize="35" 
+                    FontWeight="Bold"
+                    Style="{StaticResource MenuButtonStyle}"
+                    Grid.Column="5" Grid.Row="5" Click="cmdSampleReport_Click" />
+        </Grid>
+    </DockPanel>
+</UserControl>
