@@ -1,3 +1,0 @@
-Please check .PROCESS_GENERATION_TRACKER.md the last session you told me that task 1 is completed 4 files but 
-the tracking status still not update but session is reach limit so please verify task1 generated documents to 
-make sure all documents generated is completd and mark the tracking status 
