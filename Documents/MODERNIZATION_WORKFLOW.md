@@ -213,22 +213,72 @@ graph LR
 
 ### Beaming Workflow
 
-**UI Flow**:
-1. Scan multiple warp beams (typically 12-24 beams)
-2. System validates beam compatibility
-3. Select target beam ID
-4. Select machine
-5. Start beaming operation
-6. Monitor tension and alignment
-7. Complete and generate combined beam
+**Business Logic Sequence**:
 
-**Business Logic**:
+```mermaid
+sequenceDiagram
+    participant Operator
+    participant UI as Beaming UI
+    participant BL as Business Logic
+    participant DB as Database
+    participant Printer
+
+    Operator->>UI: Open Beaming page
+    UI->>UI: Clear beam list
+
+    loop Scan source beams (12-24 beams typical)
+        Operator->>UI: Scan warp beam barcode
+        UI->>BL: Get beam details
+        BL->>DB: sp_LuckyTex_Beaming_GetBeam
+        DB-->>BL: Beam info (yarn type, count, length)
+        BL-->>UI: Display beam in list
+
+        UI->>BL: Validate against first beam
+        alt First beam
+            BL-->>UI: Set as reference beam
+        else Subsequent beams
+            BL->>BL: Check yarn type matches
+            BL->>BL: Check length within ±5%
+
+            alt Compatible
+                BL-->>UI: Add to beam list (green)
+            else Incompatible
+                BL-->>UI: Show error (red), remove from list
+            end
+        end
+    end
+
+    Operator->>UI: Generate combined beam ID
+    Operator->>UI: Select machine
+    Operator->>UI: Click Start Beaming
+
+    UI->>BL: Validate all beams
+    BL->>DB: sp_LuckyTex_Beaming_ValidateBeams(beamList)
+
+    alt All beams valid
+        DB-->>BL: Validation passed
+        BL->>BL: Calculate total length = sum(beam lengths)
+        BL->>DB: sp_LuckyTex_Beaming_Create(combinedBeamId, sourceBeams, totalLength)
+        BL->>DB: sp_LuckyTex_Beaming_ConsumeSource(mark source beams as used)
+        DB-->>BL: Combined beam created
+        BL->>Printer: Print combined beam label
+        Printer-->>BL: Label printed
+        BL-->>UI: Beaming complete
+        UI->>UI: Display success message
+    else Validation failed
+        DB-->>BL: Error: Incompatible beams
+        BL-->>UI: Show error, cannot proceed
+    end
+```
+
+**Compatibility Rules**:
 - All beams must have same yarn type and count
 - All beams must have similar length (±5%)
 - Calculate total length of combined beam
-- Update status of source beams (consumed)
+- Source beams marked as consumed
 
 **Database Operations**:
+- `sp_LuckyTex_Beaming_GetBeam` - Get beam details
 - `sp_LuckyTex_Beaming_ValidateBeams` - Check compatibility
 - `sp_LuckyTex_Beaming_Create` - Create combined beam record
 - `sp_LuckyTex_Beaming_ConsumeSource` - Mark source beams as used
@@ -239,21 +289,54 @@ graph LR
 
 ### Drawing Workflow
 
-**UI Flow**:
-1. Scan combined beam barcode
-2. Display beam specifications
-3. Select loom number (determines heddle/reed pattern)
-4. Operator manually threads yarn through heddles/reeds
-5. Confirm completion
-6. System updates beam status to "Ready for Weaving"
+**Business Logic Sequence**:
 
-**Business Logic**:
+```mermaid
+sequenceDiagram
+    participant Operator
+    participant UI as Drawing UI
+    participant BL as Business Logic
+    participant DB as Database
+
+    Operator->>UI: Scan combined beam barcode
+    UI->>BL: Get beam for drawing
+    BL->>DB: sp_LuckyTex_Drawing_GetBeam
+
+    alt Beam is from beaming and not drawn
+        DB-->>BL: Beam details (yarn count, width, etc.)
+        BL-->>UI: Display beam specifications
+
+        Operator->>UI: Select loom number
+        UI->>BL: Get threading pattern for loom
+        BL->>DB: sp_LuckyTex_Drawing_GetPattern(loomNumber)
+        DB-->>BL: Threading pattern (heddles/reeds configuration)
+        BL-->>UI: Display pattern instructions
+
+        Note over Operator: Manual work: Thread yarn<br/>through heddles and reeds<br/>following pattern
+
+        Operator->>UI: Click Complete Drawing
+        UI->>BL: Confirm drawing completion
+        BL->>DB: sp_LuckyTex_Drawing_Complete(beamId, loomNumber, operator)
+        BL->>DB: sp_LuckyTex_Drawing_AssignLoom(beamId, loomNumber)
+        BL->>DB: Update beam status to READY_FOR_WEAVING
+        DB-->>BL: Drawing complete
+        BL-->>UI: Success - beam ready for weaving
+        UI->>UI: Display next beam prompt
+    else Invalid beam
+        DB-->>BL: Error: Beam not from beaming or already drawn
+        BL-->>UI: Show error message
+    end
+```
+
+**Process Notes**:
 - Validate beam is from beaming (not warping)
 - Loom number determines threading pattern
+- Manual operation - operator threads yarn through equipment
 - Record operator and time (critical for traceability)
 
 **Database Operations**:
 - `sp_LuckyTex_Drawing_GetBeam` - Get beam details
+- `sp_LuckyTex_Drawing_GetPattern` - Get threading pattern for loom
 - `sp_LuckyTex_Drawing_Complete` - Update beam status
 - `sp_LuckyTex_Drawing_AssignLoom` - Link beam to loom
 
