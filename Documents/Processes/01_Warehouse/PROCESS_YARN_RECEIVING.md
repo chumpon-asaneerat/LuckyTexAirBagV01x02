@@ -411,7 +411,564 @@ Rollback on any error to maintain data consistency.
 
 ---
 
-**Document Version**: 1.0
-**Last Updated**: 2025-10-05
-**Status**: Ready for Implementation
+---
+
+## 10. UI Input Logic Analysis
+
+### Overview
+
+This section provides detailed analysis of the user interface logic, input validation, state management, and user interaction flows based on the actual implementation in `ReceiveYARNPage.xaml` and `ReceiveYARNPage.xaml.cs`.
+
+### UI Controls and State Management
+
+#### Input Controls
+| Control Name | Type | Enabled State | Purpose | Validation |
+|--------------|------|---------------|---------|------------|
+| `txtPalletNo` | TextBox | Always enabled | Scan/Enter pallet barcode | Not empty, barcode format validation |
+| `txtLot` | TextBox | Disabled (read-only) | Display lot number from DB | Auto-populated from barcode lookup |
+| `txtITM_YARN` | TextBox | Disabled (read-only) | Display yarn item code | Auto-populated from barcode lookup |
+| `txtYarnType` | TextBox | Disabled (read-only) | Display yarn type | Auto-populated from barcode lookup |
+| `txtWeight` | TextBox | Disabled (read-only) | Display weight (kg) | Auto-populated, numeric only |
+| `txtTraceNo` | TextBox | Disabled (read-only) | Display trace number | Auto-populated from barcode lookup |
+| `rbOK` | RadioButton | Enabled after valid scan | Mark receipt as OK | Mutually exclusive with rbNG |
+| `rbNG` | RadioButton | Enabled after valid scan | Mark receipt as NG | Mutually exclusive with rbOK |
+| `txtOther` | TextBox | Enabled only when rbNG checked | Enter other issues | Free text when NG selected |
+| `txtAction` | TextBox | Enabled only when rbNG checked | Enter corrective action | Free text when NG selected |
+
+#### Quality Checkboxes (Enabled only when rbNG is checked)
+- `chkPackaging` - Material packaging condition
+- `chkClean` - Cleanliness check
+- `chkTearing` - Tearing/damage check
+- `chkFalldown` - Fall down check
+- `chkCertification` - Certification document check
+- `chkInvoice` - Invoice document check
+- `chkIdentifyarea` - Identification area check
+- `chkAmountpallet` - Pallet amount check
+
+#### Action Buttons
+| Button | Initial State | Enable Condition | Purpose |
+|--------|--------------|------------------|---------|
+| `cmdReceive` | Enabled | After valid pallet scan | Add current item to grid |
+| `cmdClear` | Enabled | Always | Clear current form inputs |
+| `cmdEdit` | Disabled | When grid row selected | Edit selected grid item |
+| `cmdVerify` | Hidden | N/A | Legacy verify function |
+| `cmdDelete` | Disabled | When grid row selected | Delete selected grid item |
+| `cmdSave` | Enabled | Always | Save all grid items to database |
+| `cmdAS400` | Enabled | Always | Import data from AS400 |
+| `cmdD365` | Enabled | Always | Import data from D365 |
+
+---
+
+### Input Validation Flowchart
+
+```mermaid
+flowchart TD
+    Start([User scans/enters Pallet No]) --> TrimBarcode[Trim and process barcode<br/>CutBarcode function]
+    TrimBarcode --> CheckEmpty{Pallet No<br/>empty?}
+
+    CheckEmpty -->|Yes| FocusInput[Keep focus on txtPalletNo]
+    CheckEmpty -->|No| CheckDuplicate{Pallet No already<br/>in grid?}
+
+    CheckDuplicate -->|Yes| ShowDupError[Show error:<br/>'Pallet No have in use']
+    ShowDupError --> ClearForm1[Clear form]
+    ClearForm1 --> FocusInput
+
+    CheckDuplicate -->|No| CallDB[Call G3_SearchByPalletNoDataList<br/>via G3DataService]
+    CallDB --> CheckDBResult{Result<br/>found?}
+
+    CheckDBResult -->|No| ShowNotFound[Show error:<br/>'Pallet No XXX Not Found']
+    ShowNotFound --> ClearForm2[Clear form]
+    ClearForm2 --> FocusInput
+
+    CheckDBResult -->|Yes| PopulateFields[Populate fields:<br/>- txtLot<br/>- txtYarnType<br/>- txtITM_YARN<br/>- txtWeight<br/>- txtTraceNo]
+    PopulateFields --> SetDefaults[Set defaults:<br/>- rbOK = Checked<br/>- rbNG = Unchecked]
+    SetDefaults --> EnableControls[Enable:<br/>- rbOK<br/>- rbNG<br/>- cmdEdit<br/>- cmdDelete]
+    EnableControls --> FocusOK[Focus on rbOK]
+    FocusOK --> End([Ready for verification])
+
+    style Start fill:#e1f5ff
+    style ShowDupError fill:#ffe1e1
+    style ShowNotFound fill:#ffe1e1
+    style End fill:#e1ffe1
+```
+
+---
+
+### Barcode Processing Logic
+
+```mermaid
+flowchart TD
+    Input[Barcode Input] --> CheckLength{Length = 10?}
+
+    CheckLength -->|Yes| ReturnAs10[Return barcode as-is]
+    CheckLength -->|No| CheckFirst{First character<br/>is numeric?}
+
+    CheckFirst -->|Yes| CheckLonger{Length > 10?}
+    CheckLonger -->|Yes| ExtractLast10[Extract last 10 characters]
+    CheckLonger -->|No| ReturnAsIs[Return barcode as-is]
+
+    CheckFirst -->|No| RemoveLast[Remove last character]
+    RemoveLast --> CheckRemaining{Remaining length > 8?}
+    CheckRemaining -->|Yes| ExtractLast8[Extract last 8 characters]
+    CheckRemaining -->|No| ReturnAsIs2[Return barcode as-is]
+
+    ExtractLast10 --> Result[Processed Barcode]
+    ExtractLast8 --> Result
+    ReturnAsIs --> Result
+    ReturnAsIs2 --> Result
+    ReturnAs10 --> Result
+
+    style Input fill:#e1f5ff
+    style Result fill:#e1ffe1
+```
+
+---
+
+### UI State Transition Diagram
+
+```mermaid
+stateDiagram-v2
+    [*] --> Initial: Page Load
+
+    state Initial {
+        [*] --> Ready
+        Ready: txtPalletNo Enabled, Empty, Focused
+        Ready: All other inputs Disabled
+        Ready: rbOK/rbNG Disabled
+        Ready: cmdEdit/cmdDelete Disabled
+    }
+
+    state PalletScanned {
+        [*] --> DataLoaded
+        DataLoaded: Display fields Populated
+        DataLoaded: rbOK Enabled and Checked
+        DataLoaded: rbNG Enabled
+        DataLoaded: txtOther/txtAction Disabled
+        DataLoaded: cmdEdit/cmdDelete Enabled
+    }
+
+    state OKSelected {
+        [*] --> Verified
+        Verified: rbOK Checked
+        Verified: txtOther/txtAction Disabled
+        Verified: Quality checkboxes Disabled
+    }
+
+    state NGSelected {
+        [*] --> NotGood
+        NotGood: rbNG Checked
+        NotGood: txtOther Enabled
+        NotGood: txtAction Enabled
+        NotGood: Quality checkboxes Enabled
+    }
+
+    state ItemAdded {
+        [*] --> InGrid
+        InGrid: Form cleared
+        InGrid: Item in DataGrid
+        InGrid: Focus on txtPalletNo
+    }
+
+    state GridRowSelected {
+        [*] --> Selected
+        Selected: Form populated from row
+        Selected: cmdEdit Enabled
+        Selected: cmdDelete Enabled
+        Selected: cmdReceive Disabled
+    }
+
+    state EditMode {
+        [*] --> Editing
+        Editing: Old row deleted
+        Editing: Modify data
+    }
+
+    state Deleted {
+        [*] --> Removed
+        Removed: Row removed from grid
+        Removed: Form cleared
+    }
+
+    state Saved {
+        [*] --> Complete
+        Complete: Grid cleared
+        Complete: Form reset
+        Complete: Success message
+    }
+
+    Initial --> PalletScanned: Valid barcode scanned
+    PalletScanned --> OKSelected: rbOK checked
+    PalletScanned --> NGSelected: rbNG checked
+    OKSelected --> ItemAdded: Click Receive
+    NGSelected --> ItemAdded: Click Receive
+    ItemAdded --> Initial: Ready for next pallet
+    ItemAdded --> GridRowSelected: Select grid row
+    GridRowSelected --> EditMode: Click Edit
+    GridRowSelected --> Deleted: Click Delete
+    EditMode --> ItemAdded: Save edited item
+    Deleted --> Initial: Form cleared
+    ItemAdded --> Saved: Click Save
+    Saved --> [*]
+```
+
+---
+
+### Validation Sequence Diagram
+
+```mermaid
+sequenceDiagram
+    actor Operator
+    participant UI as ReceiveYARNPage
+    participant Code as Code-Behind Logic
+    participant Svc as G3DataService
+    participant DB as Oracle Database
+
+    Note over UI,DB: Barcode Scan Flow
+
+    Operator->>UI: Scan barcode in txtPalletNo
+    Operator->>UI: Press Enter
+    UI->>Code: txtPalletNo_KeyDown event
+
+    Code->>Code: Check if barcode empty
+    alt Barcode is empty
+        Code->>UI: Keep focus on txtPalletNo
+        UI->>Operator: Awaiting input
+    else Barcode not empty
+        Code->>Code: CutBarcode(barcode)<br/>Process barcode format
+        Code->>Code: ChkPalletNoInList(barcode)<br/>Check if already in grid
+
+        alt Already in grid
+            Code->>UI: Show error "Pallet No have in use"
+            Code->>Code: ClearControl()
+            Code->>UI: Focus txtPalletNo
+            UI->>Operator: Error displayed
+        else Not in grid
+            Code->>Svc: G3_SearchByPalletNoDataList(palletNo)
+            Svc->>DB: sp_G3_SearchByPalletNo
+
+            alt Pallet found
+                DB-->>Svc: Return pallet data
+                Svc-->>Code: Pallet details
+                Code->>UI: Populate txtLot
+                Code->>UI: Populate txtYarnType
+                Code->>UI: Populate txtITM_YARN
+                Code->>UI: Populate txtWeight (formatted)
+                Code->>UI: Populate txtTraceNo
+                Code->>UI: Set rbOK = Checked
+                Code->>Code: EnabledControl(true)
+                Code->>UI: Enable rbOK, rbNG
+                Code->>UI: Focus rbOK
+                UI->>Operator: Ready for verification
+            else Pallet not found
+                DB-->>Svc: Null result
+                Svc-->>Code: Null
+                Code->>UI: Show error "Pallet No XXX Not Found"
+                Code->>Code: ClearControl()
+                Code->>UI: Focus txtPalletNo
+                UI->>Operator: Error displayed
+            end
+        end
+    end
+
+    Note over UI,DB: Verification Selection Flow
+
+    Operator->>UI: Select rbOK or rbNG
+
+    alt rbOK selected
+        UI->>Code: rbOK_Checked event
+        Code->>UI: Disable txtOther
+        Code->>UI: Disable txtAction
+        Code->>UI: Clear txtOther, txtAction
+        Code->>UI: Disable all quality checkboxes
+        Code->>UI: Uncheck all quality checkboxes
+    else rbNG selected
+        UI->>Code: rbNG_Checked event
+        Code->>UI: Enable txtOther
+        Code->>UI: Enable txtAction
+        Code->>UI: Enable all quality checkboxes
+    end
+
+    Note over UI,DB: Add to Grid Flow
+
+    Operator->>UI: Click Receive button
+    UI->>Code: cmdReceive_Click event
+    Code->>Code: CheckPalletNo(txtPalletNo.Text)<br/>Verify not duplicate
+
+    alt Duplicate in grid
+        Code->>UI: Show "Pallet No had in DataGrid"
+        Code->>Code: ClearControl()
+    else Not duplicate
+        Code->>Code: AddDataInGrid()
+        Code->>Code: Create ListG3_YarnData object
+        Code->>Code: Populate from UI controls
+        Code->>Code: Add to listG3_Yarn collection
+        Code->>UI: Bind gridG3.ItemsSource
+        Code->>UI: Display success
+        Code->>Code: ClearControl()
+        Code->>Code: CalTotal()<br/>Update total pallet count
+        Code->>UI: Update txtTotalPallet
+        UI->>Operator: Item added to grid
+    end
+
+    Note over UI,DB: Save to Database Flow
+
+    Operator->>UI: Click Save button
+    UI->>Code: cmdSave_Click event
+    Code->>Code: SaveG3_UPDATEYARN()
+
+    loop For each item in listG3_Yarn
+        Code->>Code: Map to G3Session object
+        Code->>Svc: G3_RECEIVEYARN(session data)
+        Svc->>DB: sp_G3_ReceiveYarn<br/>INSERT yarn receipt
+
+        alt Save success
+            DB-->>Svc: Success
+            Svc-->>Code: True
+        else Save failed
+            DB-->>Svc: Error
+            Svc-->>Code: False
+            Code->>Code: Break loop, set error flag
+        end
+    end
+
+    alt All saved
+        Code->>Svc: NewUpdateG3_yarn()<br/>Post-save operations
+        Code->>UI: Show "Save Data Complete"
+        Code->>UI: Clear grid
+        Code->>Code: ClearControl()
+        UI->>Operator: Success message
+    else Save error
+        Code->>UI: Show "Error on Save Data"
+        UI->>Operator: Error message with failed pallet
+    end
+```
+
+---
+
+### Validation Rules Table
+
+| Field | Validation Rule | Error Message | Action on Error |
+|-------|----------------|---------------|-----------------|
+| Pallet No | Must not be empty | (Focus remains on field) | Keep focus, wait for input |
+| Pallet No | Must not duplicate in grid | "Pallet No have in use" | Clear form, refocus |
+| Pallet No | Must exist in database | "Pallet No XXX Not Found in Database" | Clear form, refocus |
+| Pallet No | Format: 10 chars numeric OR 8 chars with prefix | (Auto-processed by CutBarcode) | Extract valid portion |
+| Weight | Numeric only | (PreviewKeyDown validation) | Reject non-numeric input |
+| Verification | Either OK or NG must be selected | (Default to OK) | Auto-select OK when loaded |
+| NG Reason | Required when NG selected | (No explicit validation) | Enable quality checkboxes |
+| Grid | Must have at least 1 item before Save | (No explicit check) | Save button always enabled |
+| TraceNo | Must not be empty before DB save | (Skip save if empty) | Skip record in loop |
+
+---
+
+### Control Enable/Disable Logic
+
+#### On Page Load
+```csharp
+txtTotalPallet.Text = "0";
+ClearControl();
+EnabledControl(false); // Disables rbOK, rbNG, cmdEdit, cmdVerify, cmdDelete
+```
+
+#### After Valid Barcode Scan
+```csharp
+EnabledControl(true);  // Enables rbOK, rbNG
+rbOK.Focus();
+```
+
+#### When rbOK Checked
+```csharp
+txtOther.IsEnabled = false;
+txtAction.IsEnabled = false;
+All quality checkboxes: IsEnabled = false, IsChecked = false
+```
+
+#### When rbNG Checked
+```csharp
+txtOther.IsEnabled = true;
+txtAction.IsEnabled = true;
+All quality checkboxes: IsEnabled = true
+```
+
+#### When Grid Row Selected
+```csharp
+cmdEdit.IsEnabled = true;
+cmdDelete.IsEnabled = true;
+EnabledControl(false); // Disables rbOK, rbNG initially
+LoadDataEdit();        // Populates form from selected row
+rbOK.IsEnabled = true;
+rbNG.IsEnabled = true;
+cmdReceive.IsEnabled = false;
+```
+
+#### After Receive/Edit/Delete
+```csharp
+ClearControl();        // Resets all inputs
+EnabledControl(false); // Disables verification controls
+txtPalletNo.Focus();   // Ready for next scan
+```
+
+---
+
+### Error Handling Patterns
+
+#### 1. Database Lookup Failure
+```csharp
+if (null == lots || lots.Count == 0 || null == lots[0])
+{
+    string ErrPalletNo = "Pallet No " + _palletNo + " Not Found in Database";
+    ErrPalletNo.ShowMessageBox(true); // true = error icon
+    ClearControl();
+    EnabledControl(false);
+    txtPalletNo.Focus();
+    txtPalletNo.SelectAll();
+}
+```
+
+#### 2. Duplicate Entry Prevention
+```csharp
+if (ChkPalletNoInList(palletNo) == false)
+{
+    LoadPalletNoData(palletNo);
+}
+else
+{
+    "Pallet No have in use".ShowMessageBox(true);
+    ClearControl();
+    txtPalletNo.Focus();
+    txtPalletNo.SelectAll();
+}
+```
+
+#### 3. Save Operation Error
+```csharp
+try
+{
+    // Save loop
+    if (chkError == false)
+    {
+        "Save Data Complete".ShowMessageBox(false); // false = info icon
+        // Clear and reset
+    }
+    else
+    {
+        string error = "Error on Save Data please try again: " + "\r\n Pallet No Error \r\n" + palletNo;
+        error.ShowMessageBox(true);
+    }
+}
+catch (Exception ex)
+{
+    ex.Message.ToString().ShowMessageBox(true);
+    chkSave = false;
+}
+```
+
+---
+
+### User Interaction Patterns
+
+#### Pattern 1: Happy Path Flow
+1. Page loads → Focus on `txtPalletNo`
+2. User scans barcode → Press Enter
+3. System validates → Populates fields
+4. User verifies OK → Clicks Receive
+5. Item added to grid → Form cleared automatically
+6. User scans next pallet → Repeat steps 2-5
+7. After all pallets → Click Save
+8. Success message → Grid cleared
+
+#### Pattern 2: NG (Not Good) Flow
+1. Scan barcode → System populates fields
+2. User selects rbNG
+3. Quality checkboxes auto-enabled
+4. User checks applicable issues (e.g., chkPackaging, chkClean)
+5. User enters text in txtOther (if needed)
+6. User enters corrective action in txtAction
+7. Click Receive → Item marked as NG in grid
+8. Continue with next pallet
+
+#### Pattern 3: Edit Existing Entry
+1. User selects row in grid
+2. Form auto-populates with row data
+3. cmdEdit/cmdDelete enabled
+4. User modifies verification status or quality checks
+5. Click Edit → Old row deleted, new row added
+6. Form cleared, ready for next entry
+
+#### Pattern 4: Delete Entry
+1. User selects row in grid
+2. Click Delete
+3. Row removed from grid
+4. Total count updated
+5. Form cleared and disabled
+
+---
+
+### Integration Points
+
+#### AS400/D365 Import Flow
+```mermaid
+sequenceDiagram
+    actor Operator
+    participant UI
+    participant Code
+    participant Service as BCSPRFTPDataService
+    participant AS400/D365 as External System
+    participant DB as Local Oracle DB
+
+    Operator->>UI: Click cmdAS400 or cmdD365
+    UI->>Code: Button click handler
+    Code->>Service: GetBCSPRFTP_D365(flags, type, store)
+    Service->>AS400/D365: Query external data
+    AS400/D365-->>Service: Return pallet records
+    Service-->>Code: List of records
+
+    loop For each record
+        Code->>Code: Parse and validate data
+        Code->>Code: Map to AS400G3 model
+        Code->>Service: G3_GETDATAD365(pallet data)
+        Service->>DB: INSERT into local tables
+
+        alt Insert success
+            DB-->>Service: Success
+            Code->>Service: DeleteBCSPRFTP(recordId)
+            Service->>AS400/D365: Delete processed record
+        else Insert failed
+            DB-->>Service: Error
+            Code->>Code: Log error, continue
+        end
+    end
+
+    Code->>UI: Show completion message<br/>"Update Data from D365 Complete<br/>Total D365 = X"
+    UI->>Operator: Display result
+```
+
+---
+
+### Performance Considerations
+
+1. **Barcode Scan Response**: Immediate validation on KeyDown event (Enter key)
+2. **Database Lookup**: Single stored procedure call per pallet scan
+3. **Grid Binding**: ItemsSource rebind on each add/delete (potential performance issue with large lists)
+4. **Save Operation**: Transactional loop through all items (should be batch operation)
+5. **Focus Management**: Automatic refocus to `txtPalletNo` after each operation for rapid scanning
+
+---
+
+### Recommendations for Refactoring
+
+1. **Input Validation**: Move to FluentValidation in service layer
+2. **State Management**: Implement ViewModel pattern with INotifyPropertyChanged
+3. **Grid Operations**: Use ObservableCollection for automatic UI updates
+4. **Error Handling**: Centralize error display logic
+5. **Async Operations**: Convert database calls to async/await pattern
+6. **Batch Save**: Replace loop with single batch INSERT operation
+7. **Barcode Processing**: Extract to separate utility class
+8. **Control State**: Implement state machine pattern for clearer state transitions
+
+---
+
+**Document Version**: 1.1
+**Last Updated**: 2025-10-06
+**Status**: Ready for Implementation + UI Logic Analysis Complete
 **Estimated Effort**: 2-3 days (1 developer)

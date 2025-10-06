@@ -393,7 +393,38 @@ COMMIT TRANSACTION
 
 ---
 
-**Document Version**: 1.0
-**Last Updated**: 2025-10-05
-**Status**: Ready for Implementation
+---
+
+## 10. UI Input Logic Analysis
+
+**See detailed UI logic documentation**: [PROCESS_YARN_ISSUING_UI_LOGIC.md](./PROCESS_YARN_ISSUING_UI_LOGIC.md)
+
+### Summary
+
+The Yarn Issuing process (`IssueRawMaterialPage`) implements complex validation logic:
+
+**Key Validation Rules:**
+- Request Number must be unique (database check)
+- Pallet Number must exist in stock and not already issued
+- Warp/Weft type must match Issue To destination (Warp AB/AD or Weft AB/AD)
+- Item Yarn and Yarn Type filters lock after first pallet selection
+
+**State Management:**
+- Request No becomes read-only after first item added
+- Can edit Request No via separate txtNewRequestNo field
+- Filters (cbItemYarn, cbYarnType) disabled when items selected
+- Totals auto-calculate: Total Pallets, Sum Weight, Sum CH
+
+**User Workflows:**
+1. **By Request Number**: Enter Request No → Scan pallets → Save
+2. **By Stock Filter**: Select ItemYarn + YarnType → Check pallets in grid → Enter Request No → Save
+3. **Edit Request**: Use Edit Request No button after first item added
+
+For complete analysis including flowcharts, state diagrams, and validation logic, see the detailed UI logic document linked above.
+
+---
+
+**Document Version**: 1.1
+**Last Updated**: 2025-10-06
+**Status**: Ready for Implementation + UI Logic Analysis Complete
 **Estimated Effort**: 1-2 days (1 developer)

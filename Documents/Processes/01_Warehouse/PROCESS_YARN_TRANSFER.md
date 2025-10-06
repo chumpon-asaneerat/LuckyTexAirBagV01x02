@@ -357,7 +357,42 @@ COMMIT TRANSACTION
 
 ---
 
-**Document Version**: 1.0
-**Last Updated**: 2025-10-05
-**Status**: Ready for Implementation
+---
+
+## 10. UI Input Logic Analysis
+
+### Summary
+
+The Yarn Transfer process (implementation pending) will require the following UI validation logic:
+
+**Key Validation Rules:**
+- Lot Number must exist in inventory system
+- Current location must be verified before transfer
+- Destination location must be different from current location
+- Destination location must be valid warehouse location code
+- Transfer reason required for audit trail
+
+**Expected State Management:**
+- Lot barcode input → triggers location lookup
+- Current location displayed (read-only)
+- Destination location dropdown (or validated input)
+- Transfer list in DataGrid with multi-lot support
+- Running total of lots to transfer
+
+**Expected User Workflows:**
+1. **Single Lot Transfer**: Scan lot → Select new location → Add → Save
+2. **Bulk Transfer**: Scan multiple lots to same destination → Review list → Save
+3. **Inter-Warehouse Transfer**: Scan lot → Select destination warehouse + location → Approve → Save
+
+**Implementation Notes:**
+- No actual implementation file found in codebase (YarnTransferPage.xaml not located)
+- Process may be handled through manual location updates or external system
+- Recommended to implement as separate module with location master data integration
+- Should include transfer document printing for material movement tracking
+
+---
+
+**Document Version**: 1.1
+**Last Updated**: 2025-10-06
+**Status**: Conceptual Design + UI Logic Planning
 **Estimated Effort**: 1 day (1 developer)

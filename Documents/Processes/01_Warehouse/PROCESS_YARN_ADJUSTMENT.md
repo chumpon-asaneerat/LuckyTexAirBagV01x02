@@ -471,8 +471,73 @@ COMMIT TRANSACTION
 
 ---
 
-**Document Version**: 1.0
-**Last Updated**: 2025-10-05
-**Status**: Ready for Implementation
+---
+
+## 10. UI Input Logic Analysis
+
+### Summary
+
+The Yarn Inventory Adjustment process (implementation pending) will require sophisticated UI validation logic:
+
+**Key Validation Rules:**
+- Lot Number must exist in inventory with current quantity > 0
+- Physical Count must be numeric, >= 0
+- Variance % calculated automatically: `(Physical - System) / System × 100`
+- Adjustment Reason required (dropdown + optional remarks)
+- Supervisor Approval required when Variance > 10% (configurable threshold)
+- Supervisor credentials validated against employee table with appropriate role
+
+**Expected State Management:**
+- Lot barcode input → triggers system quantity lookup
+- System Quantity displayed (read-only, bold/highlighted)
+- Physical Count input → auto-calculates Variance and Variance %
+- Variance display color-coded:
+  - **Green**: < 5% (minor discrepancy)
+  - **Yellow**: 5-10% (moderate discrepancy)
+  - **Red**: > 10% (major discrepancy - requires approval)
+- Supervisor section visibility: Hidden by default, shown when Variance > 10%
+- Adjustment list in DataGrid with variance totals
+
+**Expected User Workflows:**
+
+1. **Minor Adjustment (<5% variance)**:
+   - Scan lot → View system qty → Enter physical count → Select reason → Add → Save
+
+2. **Moderate Adjustment (5-10% variance)**:
+   - Scan lot → View system qty → Enter physical count (warning shown) → Select reason → Enter detailed remarks → Add → Save
+
+3. **Major Adjustment (>10% variance)**:
+   - Scan lot → View system qty → Enter physical count (supervisor required) → Supervisor section appears → Enter supervisor ID + password → Validate credentials → Select reason → Add → Save
+
+**Variance Calculation Logic:**
+```
+Variance = Physical Count - System Quantity
+Variance % = (Variance / System Quantity) × 100
+
+Examples:
+- System: 100 kg, Physical: 105 kg → Variance: +5 kg (+5%) → Yellow
+- System: 100 kg, Physical: 88 kg → Variance: -12 kg (-12%) → Red, Approval Required
+- System: 100 kg, Physical: 102 kg → Variance: +2 kg (+2%) → Green
+```
+
+**Security Considerations:**
+- Supervisor approval with credential validation (not just checkbox)
+- Audit trail logs: Operator ID, Supervisor ID (if applicable), Timestamp, Reason, Before/After quantities
+- Cannot adjust to negative quantities
+- Large negative adjustments (-20% or more) may require additional approvals
+- Adjustment history viewable but not editable
+
+**Implementation Notes:**
+- No actual implementation file found in codebase (YarnAdjustmentPage.xaml not located)
+- Critical for cycle counting and physical inventory processes
+- Should integrate with reporting for variance analysis
+- Consider mobile device support for warehouse floor use
+- May need barcode scanner integration for rapid lot scanning
+
+---
+
+**Document Version**: 1.1
+**Last Updated**: 2025-10-06
+**Status**: Conceptual Design + UI Logic Planning
 **Estimated Effort**: 2 days (1 developer)
-**Security Note**: Requires supervisor approval workflow
+**Security Note**: Requires supervisor approval workflow for variances >10%
