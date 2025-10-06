@@ -51,6 +51,85 @@ LuckyTexAirBagV01x02.exe
 
 ---
 
+## UI Logic Analysis Project
+
+**Status**: Active
+**Started**: 2025-10-06
+**Purpose**: Document detailed UI input logic, validation, and user interaction flows for all 180 XAML pages
+
+### Project Files
+
+**Tracking File**: `Documents/Processes/.PROCESS_UI_LOGIC_TRACKER.md`
+- Task list for all 30 process documents
+- Progress tracking
+- Completion status
+
+**Implementation Catalog**: `Documents/Processes/UI_Logic_Analysis/ACTUAL_IMPLEMENTATIONS_CATALOG.md`
+- Complete inventory of all 180 XAML files
+- Mapping to process documents
+- Implementation status (Active/Legacy/Not Found)
+
+**Mermaid Templates**: `Documents/Processes/UI_Logic_Analysis/MERMAID_DIAGRAM_TEMPLATES.md`
+- 12 validated diagram templates
+- Syntax error prevention
+- Ready-to-use patterns
+
+**Output Location**: `Documents/Processes/UI_Logic_Analysis/[Module]/`
+- Separate UI logic analysis files
+- Original process documents remain unchanged
+- Format: `UI_LOGIC_[PAGE_NAME].md`
+
+### When Starting a UI Logic Analysis Session
+
+**ALWAYS do this first:**
+
+1. **Read the tracker**:
+   ```
+   Read Documents/Processes/.PROCESS_UI_LOGIC_TRACKER.md
+   ```
+
+2. **Check the catalog**:
+   ```
+   Read Documents/Processes/UI_Logic_Analysis/ACTUAL_IMPLEMENTATIONS_CATALOG.md
+   ```
+
+3. **Use validated templates**:
+   ```
+   Use diagrams from MERMAID_DIAGRAM_TEMPLATES.md to avoid syntax errors
+   ```
+
+### Key Findings
+
+**Module 12 (G3) is the ACTUAL warehouse module** - not Module 01!
+- Module 01 has only stub implementations
+- All real warehouse operations are in G3:
+  - ReceiveYARNPage.xaml (2117 lines)
+  - IssueRawMaterialPage.xaml (900+ lines)
+  - CheckStockYarnPage.xaml (stock inquiry + delete)
+  - EditIssueRawMaterialPage.xaml (edit transactions)
+
+**No implementations found for:**
+- PROCESS_YARN_TRANSFER.md (transfer functionality doesn't exist)
+- PROCESS_YARN_ADJUSTMENT.md (adjustment functionality doesn't exist)
+
+**Total XAML pages**: 180 files across 21 modules
+
+### Analysis Rules
+
+1. **Only analyze ACTUAL implementations** - No conceptual/planning documents
+2. **Extract real validation logic** from source code (XAML + .cs files)
+3. **Use validated Mermaid diagrams** from templates
+4. **Create separate files** in UI_Logic_Analysis/ folder
+5. **Update tracker** after each completion
+6. **Include detailed diagrams**:
+   - Input validation flowcharts
+   - UI state transition diagrams
+   - Validation sequence diagrams
+   - Control enable/disable logic
+   - Error handling patterns
+
+---
+
 ## Architecture Overview
 
 ### High-Level Architecture
