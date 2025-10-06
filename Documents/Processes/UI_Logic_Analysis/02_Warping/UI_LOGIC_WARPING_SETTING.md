@@ -494,6 +494,46 @@ if (results[0].WARPHEADNO != null)
 
 ## 10. Error Handling Patterns
 
+### Error Handling Flowchart
+
+```mermaid
+flowchart TD
+    Action([User Action]) --> TryParse{Parse Input<br/>Fields}
+
+    TryParse -->|Success| Validate{Validate<br/>Data?}
+    TryParse -->|Exception| SilentDefault[Default to 0<br/>⚠️ No user notification]
+
+    SilentDefault --> Validate
+
+    Validate -->|Pass| TrySave{Try Save<br/>Operation}
+    Validate -->|Fail| ShowValidation[Show Validation Message]
+
+    ShowValidation --> FocusField[Focus Invalid Field]
+    FocusField --> End([End])
+
+    TrySave -->|Success| ShowSuccess[Show Success Message]
+    TrySave -->|DB Error| SilentFail[❌ Silent Failure<br/>return false]
+    TrySave -->|Grid Error| ShowError[Show Error MessageBox]
+
+    ShowSuccess --> ClearForm[Clear Form]
+    ClearForm --> End
+
+    SilentFail --> End
+    ShowError --> End
+
+    style Action fill:#e1f5ff
+    style SilentDefault fill:#ffe1e1
+    style SilentFail fill:#ff0000,color:#fff
+    style ShowSuccess fill:#e1ffe1
+```
+
+**Critical Issues Identified**:
+1. ❌ **Silent parsing failures** - Decimal parse errors default to 0 without notification
+2. ❌ **Silent save failures** - Save operation catch block returns false without user message
+3. ✅ **Grid errors shown** - Grid manipulation errors display MessageBox
+
+---
+
 ### Try-Catch Usage
 
 **Decimal Parsing** (lines 118-140):
@@ -502,7 +542,7 @@ try {
     noch = decimal.Parse(txtNoCH.Text);
 }
 catch {
-    noch = 0;
+    noch = 0;  // ⚠️ Silent failure - should notify user
 }
 ```
 
@@ -519,7 +559,7 @@ catch (Exception ex) {
 **Save Operation** (lines 1130-1133):
 ```csharp
 catch {
-    return false;  // Silent failure!
+    return false;  // ❌ Silent failure - no user notification or logging
 }
 ```
 
