@@ -1,1 +1,5 @@
 
+From last session the UI_LOGIC_WEIGHT_MEASUREMENT.md document in section Auto Weight Mode Workflow (Modbus) not show diagram (Error:  Expecting 'SQE', 'DOUBLECIRCLEEND', ...) so fixed it.
+then continue unfinished documents
+
+
