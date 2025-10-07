@@ -397,7 +397,7 @@ COMMIT TRANSACTION
 
 ## 10. UI Input Logic Analysis
 
-**See detailed UI logic documentation**: [PROCESS_YARN_ISSUING_UI_LOGIC.md](./PROCESS_YARN_ISSUING_UI_LOGIC.md)
+**See detailed UI logic documentation**: [004-UI_LOGIC_ISSUE_RAW_MATERIAL.md](../UI_Logic_Analysis/12_G3/004-UI_LOGIC_ISSUE_RAW_MATERIAL.md)
 
 ### Summary
 
