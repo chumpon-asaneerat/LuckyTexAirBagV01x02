@@ -592,7 +592,7 @@ flowchart TD
     Start([Page Load]) --> CheckManual{chkManual<br/>Checked?}
 
     CheckManual -->|Yes| ManualMode[Manual Mode<br/>Operator enters weight]
-    ManualMode --> End([Manual Entry])
+    ManualMode --> ManualEnd([Manual Entry])
 
     CheckManual -->|No| AutoMode[Auto Mode<br/>Enable Modbus]
 
@@ -616,7 +616,7 @@ flowchart TD
     UpdateGW --> CheckLotLoaded{Inspection Lot<br/>Loaded?}
 
     CheckLotLoaded -->|No| PollScale
-    CheckLotLoaded -->|Yes| AutoCalcNW[Auto-Calculate N.W.<br/>LoadNW()]
+    CheckLotLoaded -->|Yes| AutoCalcNW[Auto-Calculate N.W.<br/>LoadNW]
 
     AutoCalcNW --> DisplayWeights[Display G.W. and N.W.]
     DisplayWeights --> PollScale
