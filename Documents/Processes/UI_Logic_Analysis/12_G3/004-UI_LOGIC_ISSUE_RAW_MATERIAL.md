@@ -3,7 +3,7 @@
 **Page**: IssueRawMaterialPage.xaml
 **Module**: 12 - G3 (Warehouse Operations)
 **Process**: Issue/Withdraw yarn from warehouse to production (Warping/Weaving)
-**Related Process Doc**: Documents/Processes/01_Warehouse/PROCESS_YARN_ISSUING.md
+**Related Process Doc**: Documents/Processes/01_Warehouse/003-PROCESS_YARN_ISSUING.md
 **Code Files**:
 - `LuckyTex.AirBag.Pages/Pages/12 - G3/IssueRawMaterialPage.xaml` (580 lines)
 - `LuckyTex.AirBag.Pages/Pages/12 - G3/IssueRawMaterialPage.xaml.cs` (900+ lines)

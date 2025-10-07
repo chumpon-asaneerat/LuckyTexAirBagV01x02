@@ -3,7 +3,7 @@
 **Page**: ReceiveYARNPage.xaml
 **Module**: 12 - G3 (Warehouse Operations)
 **Process**: Yarn Receiving from Suppliers
-**Related Process Doc**: Documents/Processes/01_Warehouse/PROCESS_YARN_RECEIVING.md
+**Related Process Doc**: Documents/Processes/01_Warehouse/001-PROCESS_YARN_RECEIVING.md
 **Code Files**:
 - `LuckyTex.AirBag.Pages/Pages/12 - G3/ReceiveYARNPage.xaml` (717 lines)
 - `LuckyTex.AirBag.Pages/Pages/12 - G3/ReceiveYARNPage.xaml.cs` (2117 lines)
