@@ -9,7 +9,8 @@
       "Bash(do echo \"=== $dir ===\")",
       "Bash(ls:*)",
       "Bash(for file in \"LuckyTex.Lab.Transfer.Data/Pages/02 PDF Loading\"/*.xaml.cs)",
-      "Bash(for file in \"LuckyTex.Lab.Transfer.Data/Pages/03 Lab Data Entry\"/*.xaml.cs)"
+      "Bash(for file in \"LuckyTex.Lab.Transfer.Data/Pages/03 Lab Data Entry\"/*.xaml.cs)",
+      "Bash(for file in \"LuckyTex.Lab.Transfer.Data/Pages/04 Production\"/*.xaml.cs)"
     ],
     "deny": [],
     "ask": []
