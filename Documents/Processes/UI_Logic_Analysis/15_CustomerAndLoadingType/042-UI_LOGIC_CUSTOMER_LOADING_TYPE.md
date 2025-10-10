@@ -29,23 +29,54 @@ Manage master data for customer types and their associated loading types in a ma
 
 ## 2. Screen Layout
 
-### Layout Structure
-```
-┌─────────────────────────────────────────────────────────────┐
-│  Customer and Loading type                     [Back]       │
-├──────────────────────┬──────────────────────────────────────┤
-│ [Add New] [________] │ Loading Type [___________________]   │
-├──────────────────────┼──────────────────────────────────────┤
-│ ┌──────────────────┐ │ ┌──────────────────────────────────┐ │
-│ │ Customer Type    │ │ │ Loading Type                     │ │
-│ │  grid            │ │ │  grid                            │ │
-│ │  (left)          │ │ │  (right)                         │ │
-│ │                  │ │ │                                  │ │
-│ └──────────────────┘ │ └──────────────────────────────────┘ │
-│ [Edit] [Delete]      │ [☐ All Loading Type] [Delete]       │
-├──────────────────────┴──────────────────────────────────────┤
-│ Operator [_______________]          [Clear] [Save]          │
-└─────────────────────────────────────────────────────────────┘
+### UI Component Hierarchy
+
+```mermaid
+graph TD
+    Page[CustomerLoadingPage] --> Header[Header Section]
+    Page --> TopInputs[Top Input Row]
+    Page --> MainContent[Main Content - Dual Grids]
+    Page --> BottomBar[Bottom Bar]
+    Page --> Footer[Footer]
+
+    Header --> Title[Customer and Loading type]
+    Header --> BtnBack[cmdBack]
+
+    TopInputs --> LeftInput[Left: Customer Input]
+    TopInputs --> RightInput[Right: Loading Input]
+
+    LeftInput --> BtnAddNew[cmdAddNew]
+    LeftInput --> TxtCustomer[txtCUSTOMERTYPE]
+
+    RightInput --> LblLoading[Label: Loading Type]
+    RightInput --> TxtLoading[txtLOADINGTYPE]
+
+    MainContent --> LeftSection[Left Section]
+    MainContent --> RightSection[Right Section]
+
+    LeftSection --> GridCustomer[gridMASTER_CUSTOMERTYPELIST]
+    LeftSection --> LeftButtons[Left Buttons]
+
+    LeftButtons --> BtnEdit[cmdEdit]
+    LeftButtons --> BtnDelCustomer[cmdDeleteCustomerType]
+
+    RightSection --> GridLoading[gridMASTER_GETLOADINGBYCUSTYPE]
+    RightSection --> RightButtons[Right Buttons]
+
+    RightButtons --> ChkAll[chkAllLoadingType]
+    RightButtons --> BtnDelLoading[cmdDeleteLoadingType]
+
+    BottomBar --> Operator[txtOperator]
+    BottomBar --> Actions[Actions]
+
+    Actions --> BtnClear[cmdClear]
+    Actions --> BtnSave[cmdSave]
+
+    style Page fill:#e1f5ff
+    style LeftSection fill:#fff4e1
+    style RightSection fill:#e1ffe1
+    style TopInputs fill:#f5e1ff
+    style BottomBar fill:#f0f0f0
 ```
 
 ### Controls Inventory

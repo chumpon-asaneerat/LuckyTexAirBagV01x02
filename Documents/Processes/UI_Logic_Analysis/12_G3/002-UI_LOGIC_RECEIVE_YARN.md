@@ -28,7 +28,74 @@ Receive yarn pallets from suppliers with quality verification (OK/NG), import fr
 
 ---
 
-## 2. UI Controls Inventory
+## 2. Screen Layout
+
+### UI Component Hierarchy
+
+```mermaid
+graph TD
+    Page[ReceiveYARNPage] --> Header[Header: Yarn Receiving]
+    Page --> InputSection[Input Section]
+    Page --> QualitySection[Quality Verification]
+    Page --> Actions[Action Buttons]
+    Page --> Grid[Receipt Grid]
+    Page --> Summary[Summary Totals]
+
+    InputSection --> ScanRow[Pallet Scan Row]
+    InputSection --> DisplayRow[Display Fields Row]
+
+    ScanRow --> TxtPallet[txtPalletNo - Scanner]
+
+    DisplayRow --> TxtLot[txtLot]
+    DisplayRow --> TxtYarnType[txtYarnType]
+    DisplayRow --> TxtITM[txtITM_YARN]
+    DisplayRow --> TxtWeight[txtWeight]
+    DisplayRow --> TxtTrace[txtTraceNo]
+
+    QualitySection --> VerifyRadio[Verification Radio]
+    QualitySection --> NGPanel[NG Details Panel]
+
+    VerifyRadio --> RbOK[rbOK]
+    VerifyRadio --> RbNG[rbNG]
+
+    NGPanel --> Checkboxes[Quality Checkboxes x8]
+    NGPanel --> TxtOther[txtOther]
+    NGPanel --> TxtAction[txtAction]
+
+    Checkboxes --> Chk1[chkPackaging]
+    Checkboxes --> Chk2[chkClean]
+    Checkboxes --> Chk3[chkTearing]
+    Checkboxes --> Chk4[chkFalldown]
+    Checkboxes --> Chk5[chkCertification]
+    Checkboxes --> Chk6[chkInvoice]
+    Checkboxes --> Chk7[chkIdentifyarea]
+    Checkboxes --> Chk8[chkAmountpallet]
+
+    Actions --> BtnReceive[cmdReceive]
+    Actions --> BtnClear[cmdClear]
+    Actions --> BtnEdit[cmdEdit]
+    Actions --> BtnDelete[cmdDelete]
+    Actions --> BtnSave[cmdSave]
+    Actions --> BtnAS400[cmdAS400]
+    Actions --> BtnD365[cmdD365]
+
+    Grid --> GridData[gridG3 - Receipt items]
+
+    Summary --> TxtTotalPallet[txtTotalPallet]
+    Summary --> TxtSumWeight[txtSumWeight]
+    Summary --> TxtSumCH[txtSumCH]
+
+    style Page fill:#e1f5ff
+    style InputSection fill:#fff4e1
+    style QualitySection fill:#ffe1f5
+    style Actions fill:#e1ffe1
+    style Grid fill:#f5e1ff
+    style Summary fill:#f0f0f0
+```
+
+---
+
+## 3. UI Controls Inventory
 
 ### Input Controls
 
@@ -83,7 +150,7 @@ Receive yarn pallets from suppliers with quality verification (OK/NG), import fr
 
 ---
 
-## 3. Input Validation Flowchart
+## 4. Input Validation Flowchart
 
 ```mermaid
 flowchart TD
@@ -120,7 +187,7 @@ flowchart TD
 
 ---
 
-## 4. Barcode Processing Logic
+## 5. Barcode Processing Logic
 
 ### CutBarcode Function
 

@@ -35,33 +35,53 @@ Master data management page for defect code configuration. Allows users to creat
 
 ## 2. Screen Layout
 
-### 2.1 ASCII Layout
+### 2.1 UI Component Hierarchy
 
-```
-+------------------------------------------------------------------+
-|                         DEFECT CODE                              |
-+------------------------------------------------------------------+
-| Defect Code: [________]  [x] All     Process: [Dropdown___▼]    |
-|                                                                   |
-| Thai Description: [_____________________________________]         |
-|                                                                   |
-| Eng Description:  [_____________________________________]         |
-|                                                                   |
-| [x] Point                                                         |
-|                                                                   |
-| [Search] [Save] [New] [Edit] [Delete]                           |
-|                                                                   |
-| +--------------------------------------------------------------+ |
-| |   DEFECT CODE  |  PROCESS  |  THAI DESC  |  ENG DESC  | PT | |
-| +--------------------------------------------------------------+ |
-| | D001           | WEAVING   | ผ้าหลุด      | Dropped    | ✓  | |
-| | D002           | FINISHING | คราบน้ำมัน   | Oil Stain  | ✓  | |
-| | ...                                                          | |
-| +--------------------------------------------------------------+ |
-|                                                                   |
-+------------------------------------------------------------------+
-|                                            [Back]                 |
-+------------------------------------------------------------------+
+```mermaid
+graph TD
+    Page[DefectCodePage] --> Header[Header Section]
+    Page --> InputForm[Input Form]
+    Page --> Actions[Action Buttons]
+    Page --> Grid[Results Grid]
+    Page --> Footer[Footer Section]
+
+    Header --> Title[DEFECT CODE]
+
+    InputForm --> Row1[Row 1: Code and Process]
+    InputForm --> Row2[Row 2: Thai Description]
+    InputForm --> Row3[Row 3: English Description]
+    InputForm --> Row4[Row 4: Point Indicator]
+
+    Row1 --> DefCode[txtDEFECTID]
+    Row1 --> ChkAll[chkAll]
+    Row1 --> Process[cbPROCESSID]
+
+    Row2 --> ThaiDesc[txtTHAIDESC]
+
+    Row3 --> EngDesc[txtENGDESC]
+
+    Row4 --> ChkPoint[chkPOINT]
+
+    Actions --> BtnSearch[cmdSearch]
+    Actions --> BtnSave[cmdSave]
+    Actions --> BtnNew[cmdNew]
+    Actions --> BtnEdit[cmdEdit]
+    Actions --> BtnDelete[cmdDelete]
+
+    Grid --> GridData[gridDefect - 5 columns]
+    GridData --> Col1[DEFECTID]
+    GridData --> Col2[PROCESSID]
+    GridData --> Col3[THAIDESC]
+    GridData --> Col4[ENGDESC]
+    GridData --> Col5[POINT]
+
+    Footer --> BtnBack[cmdBack]
+
+    style Page fill:#e1f5ff
+    style InputForm fill:#fff4e1
+    style Actions fill:#e1ffe1
+    style Grid fill:#f5e1ff
+    style Footer fill:#f0f0f0
 ```
 
 ### 2.2 Controls Inventory

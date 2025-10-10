@@ -39,34 +39,61 @@ Master data management page for item code configuration. Item codes define produ
 
 ## 2. Screen Layout
 
-### 2.1 ASCII Layout
+### 2.1 UI Component Hierarchy
 
-```
-+------------------------------------------------------------------------------+
-|                              ITEM CODE                                       |
-+------------------------------------------------------------------------------+
-| Item Code: [______]  Item Weaving: [_________]  Yarn Code: [Dropdown_▼]   |
-|                                                                              |
-| Item Prepare: [______]  Item Yarn: [_________]  [Search]                   |
-|                                                                              |
-| Width: [______]  Weaving Width: [______]  Core Weight: [______]            |
-|                                                                              |
-| [x] DRYER  [x] SCOURING  [x] DRYING  [x] HEAT SETTING  [x] COATING  [ ] INSPECTION |
-|                                                                              |
-|                        [Save] [New] [Edit]                                   |
-|                                                                              |
-| +--------------------------------------------------------------------------+ |
-| | ITM_CODE | ITM_WEAVING | ITM_PREPARE | ITM_YARN | YARNCODE | WIDTH | ... | |
-| +--------------------------------------------------------------------------+ |
-| | ABC-001  | WV-001      | PR-001      | YN-001   | T        | 1200  | ... | |
-| | ABC-002  | WV-002      | PR-002      | YN-002   | J        | 1500  | ... | |
-| | ...                                                                      | |
-| +--------------------------------------------------------------------------+ |
-|                                                                              |
-| Operator: [OPERATOR001]                                                      |
-+------------------------------------------------------------------------------+
-|                                                  [Back]                      |
-+------------------------------------------------------------------------------+
+```mermaid
+graph TD
+    Page[ItemCodePage] --> Header[Header Section]
+    Page --> InputForm[Input Form]
+    Page --> ProcessConfig[Process Configuration]
+    Page --> Actions[Action Buttons]
+    Page --> Grid[Results Grid]
+    Page --> Footer[Footer Section]
+
+    Header --> Title[ITEM CODE]
+
+    InputForm --> Row1[Row 1: Basic Info]
+    InputForm --> Row2[Row 2: Specification]
+    InputForm --> Row3[Row 3: Dimensions]
+
+    Row1 --> ICode[txtITEMCODE]
+    Row1 --> IWeav[txtITEMWEAV]
+    Row1 --> YCode[cbYARNCODE]
+
+    Row2 --> IPrep[txtITEMPREPARE]
+    Row2 --> IYarn[txtITEMYARN]
+    Row2 --> BtnSearch[cmdSearch]
+
+    Row3 --> Width[txtWIDTH]
+    Row3 --> WeaveW[txtWEAVEWIDTH]
+    Row3 --> CoreW[txtCOREWEIGHT]
+
+    ProcessConfig --> Proc1[chkPROC1_DRYER]
+    ProcessConfig --> Proc2[chkPROC2_SCOURING]
+    ProcessConfig --> Proc3[chkPROC3_DRYING]
+    ProcessConfig --> Proc4[chkPROC4_HEATSETTING]
+    ProcessConfig --> Proc5[chkPROC5_COATING]
+    ProcessConfig --> Proc6[chkPROC6_INSPECTION]
+
+    Actions --> BtnSave[cmdSave]
+    Actions --> BtnNew[cmdNew]
+    Actions --> BtnEdit[cmdEdit]
+
+    Grid --> GridData[gridItem - 14 columns]
+    GridData --> Col1[ITM_CODE]
+    GridData --> Col2[ITM_WEAVING]
+    GridData --> Col3[ITM_PREPARE]
+    GridData --> Col4[...]
+
+    Footer --> Operator[txtOperator]
+    Footer --> BtnBack[cmdBack]
+
+    style Page fill:#e1f5ff
+    style InputForm fill:#fff4e1
+    style ProcessConfig fill:#ffe1f5
+    style Actions fill:#e1ffe1
+    style Grid fill:#f5e1ff
+    style Footer fill:#f0f0f0
 ```
 
 ### 2.2 Controls Inventory
