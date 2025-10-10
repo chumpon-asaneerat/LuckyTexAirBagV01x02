@@ -4,7 +4,10 @@
       "Bash(wc:*)",
       "Bash(for dir in \"LuckyTex.AirBag.Pages/Pages\"/*)",
       "Bash(done)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(for dir in \"15 - CustomerAndLoadingType\" \"16 - Defect\" \"17 - ItemCode\" \"18 - ProcessCondition\")",
+      "Bash(do echo \"=== $dir ===\")",
+      "Bash(ls:*)"
     ],
     "deny": [],
     "ask": []
