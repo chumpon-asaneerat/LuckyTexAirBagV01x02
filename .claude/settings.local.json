@@ -8,7 +8,8 @@
       "Bash(for dir in \"15 - CustomerAndLoadingType\" \"16 - Defect\" \"17 - ItemCode\" \"18 - ProcessCondition\")",
       "Bash(do echo \"=== $dir ===\")",
       "Bash(ls:*)",
-      "Bash(for file in \"LuckyTex.Lab.Transfer.Data/Pages/02 PDF Loading\"/*.xaml.cs)"
+      "Bash(for file in \"LuckyTex.Lab.Transfer.Data/Pages/02 PDF Loading\"/*.xaml.cs)",
+      "Bash(for file in \"LuckyTex.Lab.Transfer.Data/Pages/03 Lab Data Entry\"/*.xaml.cs)"
     ],
     "deny": [],
     "ask": []
