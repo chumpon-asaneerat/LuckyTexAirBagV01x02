@@ -1,6 +1,10 @@
 # LuckyTex AirBag MES - Modernization Session Tracker
 
 **Purpose**: Track progress across multiple work sessions for this large modernization project.
+**Last Updated**: 2025-10-10
+
+**Related Projects**:
+- 🔬 **Lab.Transfer.Data Analysis** - See `.LAB_TRANSFER_DATA_PROJECT_TRACKER.md` (Start after Main MES 30/30 complete)
 
 ---
 
