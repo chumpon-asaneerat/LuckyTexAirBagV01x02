@@ -1,5 +1,1 @@
-in last session we work refer to @Documents\.LAB_TRANSFER_DATA_PROJECT_TRACKER.md and  
-@Documents\LAB\.PROCESS_LAB_TRACKER.md and in @Documents\LAB\08_Import_Excel\ folder 
-the 008-PROCESS_EXCEL_DATA_IMPORT.md does not contains sequence diagram fix it.
-when fixed it please process generate next task 09
 
