@@ -247,6 +247,82 @@ graph TD
 
 ---
 
+## Business Logic Sequence Diagram
+
+```mermaid
+sequenceDiagram
+    participant Operator
+    participant UI as ImportDataExcelPage
+    participant Parser as Excel Parser<br/>(NPOI)
+    participant Logic as Import Logic
+    participant DB as Oracle Database
+    participant Grid as DataGrid
+
+    Note over Operator,Grid: Import Excel Data - 3 Methods (Load/Save/Save2)
+
+    Operator->>UI: Click Import Button<br/>(Load Test / Save / Save 2)
+    UI->>UI: Show File Dialog
+    Operator->>UI: Select .xls or .xlsx file
+
+    alt File Selected
+        UI->>UI: Check File Extension
+
+        alt .xlsx file
+            UI->>Parser: ExcelToDataTable(filePath)<br/>XSSF Parser
+        else .xls file
+            UI->>Parser: ExcelToDataTable97(filePath)<br/>HSSF Parser
+        end
+
+        Parser->>Parser: Open Workbook (NPOI)
+        Parser->>Parser: Get Sheet 0
+
+        loop For Each Row (Row 2 to End)
+            Parser->>Parser: Read Cell Values
+            Parser->>Parser: Map to LAB_ImportExcel1 DTO
+            Note over Parser: ~60 columns:<br/>ItemCode, ProductionLot,<br/>Width, Weight, Tensile, etc.
+        end
+
+        Parser-->>UI: Return List<LAB_ImportExcel1>
+
+        alt Import Mode = Load Test (Preview Only)
+            UI->>Grid: Display Data
+            Grid-->>Operator: Show Preview (No Save)
+
+        else Import Mode = Save (Method 1 or 2)
+            UI->>Logic: Process Import
+
+            loop For Each Row in List
+                Logic->>Logic: Extract Test Values
+
+                loop For Each Test Type (~60 tests)
+                    alt Test Value is NOT NULL
+                        Logic->>DB: Call Stored Procedure<br/>LAB_INSERT[TestType]<br/>(ItemCode, Lot, Value, Date, Operator)
+
+                        alt Insert Success
+                            DB-->>Logic: Success
+                        else Insert Error
+                            DB-->>Logic: Error Message
+                            Logic->>UI: Log Error to ListView
+                        end
+                    end
+                end
+            end
+
+            Logic-->>UI: Import Complete
+            UI->>Grid: Display Imported Data
+            UI->>UI: Show Status in ListView<br/>(Success Count / Error Count)
+            Grid-->>Operator: Show Results
+        end
+
+    else File Canceled
+        UI-->>Operator: Return to Page
+    end
+
+    Note over Operator,Grid: ISSUES: No transaction, No async,<br/>UI freezes during import
+```
+
+---
+
 ## Data Flow
 
 ### Input Data Sources
