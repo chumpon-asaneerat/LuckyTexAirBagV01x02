@@ -1,16 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "Bash(wc:*)",
-      "Bash(for dir in \"LuckyTex.AirBag.Pages/Pages\"/*)",
-      "Bash(done)",
-      "Bash(find:*)",
-      "Bash(for dir in \"15 - CustomerAndLoadingType\" \"16 - Defect\" \"17 - ItemCode\" \"18 - ProcessCondition\")",
-      "Bash(do echo \"=== $dir ===\")",
-      "Bash(ls:*)",
-      "Bash(for file in \"LuckyTex.Lab.Transfer.Data/Pages/02 PDF Loading\"/*.xaml.cs)",
-      "Bash(for file in \"LuckyTex.Lab.Transfer.Data/Pages/03 Lab Data Entry\"/*.xaml.cs)",
-      "Bash(for file in \"LuckyTex.Lab.Transfer.Data/Pages/04 Production\"/*.xaml.cs)"
+      "Bash",
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep"
     ],
     "deny": [],
     "ask": []
