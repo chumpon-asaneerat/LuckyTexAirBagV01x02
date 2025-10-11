@@ -89,22 +89,71 @@ Provide a simple menu interface for generating customer-specific sample reports.
 ### Page Structure
 
 **Simple Menu Layout**:
-```
-┌─────────────────────────────────────────────┐
-│         Sample Report (Header)              │
-├─────────────────────────────────────────────┤
-│                                             │
-│           ┌─────────┐   ┌─────────┐        │
-│           │ 4746P25R│   │ 4755ATW │        │
-│           └─────────┘   └─────────┘        │
-│                                             │
-│           ┌─────────┐                       │
-│           │4L50B25R │                       │
-│           └─────────┘                       │
-│                                             │
-├─────────────────────────────────────────────┤
-│                                    [ Back ] │
-└─────────────────────────────────────────────┘
+
+```mermaid
+graph TB
+    subgraph Page["SampleReportPage - Simple Menu Layout"]
+        Header["<div style='background:#6495ED;color:white;padding:10px;font-size:20px;text-align:center'>Sample Report</div>"]
+
+        subgraph Content["Content Area - 3x3 Grid"]
+            Row1["Row 1"]
+            Row2["Row 2"]
+            Row3["Row 3"]
+
+            subgraph Row1
+                Empty1[" "]
+                Button1["<div style='background:#4682B4;color:white;padding:20px;text-align:center'><b>4746P25R</b><br/>Toyota Report</div>"]
+                Empty2[" "]
+                Button2["<div style='background:#4682B4;color:white;padding:20px;text-align:center'><b>4755ATW</b><br/>Honda Report</div>"]
+                Empty3[" "]
+            end
+
+            subgraph Row2
+                Empty4[" "]
+                Empty5[" "]
+                Empty6[" "]
+                Empty7[" "]
+                Empty8[" "]
+            end
+
+            subgraph Row3
+                Empty9[" "]
+                Button3["<div style='background:#4682B4;color:white;padding:20px;text-align:center'><b>4L50B25R</b><br/>Generic Report</div>"]
+                Empty10[" "]
+                Empty11[" "]
+                Empty12[" "]
+            end
+        end
+
+        Footer["<div style='text-align:right;padding:10px'>[Back]</div>"]
+    end
+
+    Header ---|Page Layout| Content
+    Content ---|Page Layout| Footer
+
+    Button1 -.->|Click| Preview1[Preview<br/>Sample4746P25R]
+    Button2 -.->|Click| Preview2[Preview<br/>Sample4755ATW]
+    Button3 -.->|Click| Preview3[Preview<br/>Sample4L50B25R]
+
+    style Header fill:#6495ED,stroke:#4169E1,color:#fff
+    style Button1 fill:#4682B4,stroke:#1e3a8a,color:#fff
+    style Button2 fill:#4682B4,stroke:#1e3a8a,color:#fff
+    style Button3 fill:#4682B4,stroke:#1e3a8a,color:#fff
+    style Preview1 fill:#90ee90,stroke:#228b22
+    style Preview2 fill:#90ee90,stroke:#228b22
+    style Preview3 fill:#90ee90,stroke:#228b22
+    style Empty1 fill:none,stroke:none
+    style Empty2 fill:none,stroke:none
+    style Empty3 fill:none,stroke:none
+    style Empty4 fill:none,stroke:none
+    style Empty5 fill:none,stroke:none
+    style Empty6 fill:none,stroke:none
+    style Empty7 fill:none,stroke:none
+    style Empty8 fill:none,stroke:none
+    style Empty9 fill:none,stroke:none
+    style Empty10 fill:none,stroke:none
+    style Empty11 fill:none,stroke:none
+    style Empty12 fill:none,stroke:none
 ```
 
 ### UI Controls
