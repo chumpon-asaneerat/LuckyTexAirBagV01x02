@@ -29,7 +29,31 @@
 
 ### Returns (Cursor)
 
-Returns 23 fields including: ITM_CODE, ITM_WEAVING, ITM_YARN, ITM_WIDTH, ITM_PROC1-6, ITM_PREPARE, COREWEIGHT, FULLWEIGHT, ITM_GROUP, YARNCODE, WIDTHCODE, WIDTHWEAVING, LABFORM, WEAVE_TYPE, and audit fields
+| Column | Type | Description |
+|--------|------|-------------|
+| `ITM_CODE` | VARCHAR2 | Item code |
+| `ITM_WEAVING` | VARCHAR2 | Weaving item code |
+| `ITM_YARN` | VARCHAR2 | Yarn item code |
+| `ITM_WIDTH` | NUMBER | Fabric width |
+| `ITM_PROC1` | VARCHAR2 | Process parameter 1 |
+| `ITM_PROC2` | VARCHAR2 | Process parameter 2 |
+| `ITM_PROC3` | VARCHAR2 | Process parameter 3 |
+| `ITM_PROC4` | VARCHAR2 | Process parameter 4 |
+| `ITM_PROC5` | VARCHAR2 | Process parameter 5 |
+| `ITM_PROC6` | VARCHAR2 | Process parameter 6 |
+| `ITM_PREPARE` | VARCHAR2 | Item prepare code |
+| `COREWEIGHT` | NUMBER | Core weight (kg) |
+| `FULLWEIGHT` | NUMBER | Full weight (kg) |
+| `ITM_GROUP` | VARCHAR2 | Item group |
+| `YARNCODE` | VARCHAR2 | Yarn code |
+| `WIDTHCODE` | VARCHAR2 | Width code |
+| `WIDTHWEAVING` | NUMBER | Weaving width |
+| `LABFORM` | VARCHAR2 | Lab form code |
+| `WEAVE_TYPE` | VARCHAR2 | Weaving type |
+| `CREATE_BY` | VARCHAR2 | Created by user |
+| `CREATE_DATE` | DATE | Creation date |
+| `UPDATE_BY` | VARCHAR2 | Updated by user |
+| `UPDATE_DATE` | DATE | Update date |
 
 ---
 

@@ -28,7 +28,19 @@
 
 ### Returns (Cursor)
 
-Returns beam details: BEAMNO, BEAMLOT, LENGTH, TOTALYARN, ITM_PREPARE, PRODUCTTYPEID, DRAWINGTYPE, REEDNO, HEALDNO, HEALDCOLOR, REEDTYPE
+| Column | Type | Description |
+|--------|------|-------------|
+| `BEAMNO` | VARCHAR2 | Physical beam number |
+| `BEAMLOT` | VARCHAR2 | Beam lot barcode |
+| `LENGTH` | NUMBER | Beam length (meters) |
+| `TOTALYARN` | NUMBER | Total yarn count |
+| `ITM_PREPARE` | VARCHAR2 | Item prepare code |
+| `PRODUCTTYPEID` | VARCHAR2 | Product type ID |
+| `DRAWINGTYPE` | VARCHAR2 | Drawing type |
+| `REEDNO` | VARCHAR2 | Reed number |
+| `HEALDNO` | VARCHAR2 | Heald number |
+| `HEALDCOLOR` | VARCHAR2 | Heald color code |
+| `REEDTYPE` | VARCHAR2 | Reed type |
 
 ---
 

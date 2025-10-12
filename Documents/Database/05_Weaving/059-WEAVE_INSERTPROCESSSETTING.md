@@ -22,11 +22,27 @@
 
 ### Input (IN)
 
-12+ parameters including: P_BEAMLOT, P_MC (loom), P_ITMWEAVE, P_REEDNO2, P_TEMPLE, P_BARNO, P_PRODUCTTYPE, P_OPERATOR, etc.
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `P_BEAMLOT` | VARCHAR2(50) | ✅ | Beam lot barcode |
+| `P_MC` | VARCHAR2(50) | ✅ | Loom machine number |
+| `P_ITMWEAVE` | VARCHAR2(50) | ✅ | Weaving item code |
+| `P_REEDNO2` | VARCHAR2(50) | ✅ | Reed number 2 |
+| `P_TEMPLE` | VARCHAR2(50) | ✅ | Temple setting |
+| `P_BARNO` | VARCHAR2(50) | ✅ | Bar number |
+| `P_PRODUCTTYPE` | VARCHAR2(50) | ✅ | Product type |
+| `P_OPERATOR` | VARCHAR2(50) | ✅ | Operator name |
+| `P_REEDNO` | VARCHAR2(50) | ❌ | Reed number 1 |
+| `P_REEDTYPE` | VARCHAR2(50) | ❌ | Reed type |
+| `P_HEALDNO` | VARCHAR2(50) | ❌ | Heald number |
+| `P_HEALDCOLOR` | VARCHAR2(50) | ❌ | Heald color |
 
 ### Output (OUT)
 
-Returns WEAVE_INSERTPROCESSSETTING object with R_RESULT and generated setup ID
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `R_RESULT` | VARCHAR2 | Result message |
+| `SETUP_ID` | NUMBER | Generated setup ID |
 
 ---
 

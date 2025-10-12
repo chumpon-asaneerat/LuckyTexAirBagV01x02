@@ -28,7 +28,13 @@
 
 ### Returns (Cursor)
 
-Returns current setup on loom if exists (BEAMLOT, ITM_WEAVING, status fields)
+| Column | Type | Description |
+|--------|------|-------------|
+| `BEAMLOT` | VARCHAR2 | Current beam lot on loom |
+| `ITM_WEAVING` | VARCHAR2 | Weaving item code |
+| `STATUS` | VARCHAR2 | Setup status |
+| `CREATE_DATE` | DATE | Setup start date |
+| `OPERATOR` | VARCHAR2 | Operator name |
 
 ---
 

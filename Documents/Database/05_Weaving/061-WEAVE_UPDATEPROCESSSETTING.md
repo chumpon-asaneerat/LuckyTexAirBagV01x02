@@ -22,7 +22,16 @@
 
 ### Input (IN)
 
-8+ parameters: P_BEAMLOT, P_REEDNO2, P_TEMPLE, P_BARNO, P_PRODUCTTYPE, P_OPERATOR, etc.
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `P_BEAMLOT` | VARCHAR2(50) | ✅ | Beam lot barcode |
+| `P_REEDNO2` | VARCHAR2(50) | ✅ | Reed number 2 |
+| `P_TEMPLE` | VARCHAR2(50) | ✅ | Temple setting |
+| `P_BARNO` | VARCHAR2(50) | ✅ | Bar number |
+| `P_PRODUCTTYPE` | VARCHAR2(50) | ✅ | Product type |
+| `P_OPERATOR` | VARCHAR2(50) | ✅ | Operator name |
+| `P_REEDNO` | VARCHAR2(50) | ❌ | Reed number 1 |
+| `P_REEDTYPE` | VARCHAR2(50) | ❌ | Reed type |
 
 ### Output (OUT)
 

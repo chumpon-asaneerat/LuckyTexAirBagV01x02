@@ -22,7 +22,14 @@
 
 ### Input (IN)
 
-6+ parameters: P_BEAMLOT, P_DOFFNO, P_PALLETNO, P_CHLOTNO (China lot), P_POSITION, P_OPERATOR
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `P_BEAMLOT` | VARCHAR2(50) | ✅ | Beam lot barcode |
+| `P_DOFFNO` | NUMBER | ✅ | Doff number (fabric roll) |
+| `P_PALLETNO` | VARCHAR2(50) | ✅ | Weft yarn pallet number |
+| `P_CHLOTNO` | VARCHAR2(50) | ✅ | China lot number (weft yarn) |
+| `P_POSITION` | VARCHAR2(50) | ✅ | Pallet position on loom |
+| `P_OPERATOR` | VARCHAR2(50) | ✅ | Operator name |
 
 ### Output (OUT)
 
