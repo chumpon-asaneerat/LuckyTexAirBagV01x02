@@ -1,1 +1,6 @@
 
+In last session we work on Documents\Database folder please check generated documents and 
+after that the last document you generate is TEMPLATE_INDIVIDUAL_PROCEDURE.md please check is
+that file completed. Then check which files can be removed (i dont know why you generated a lot 
+of files instead update exists one so check what file you need and remove unused files) 
+After that i want to make adjustment later.
