@@ -4,28 +4,56 @@
 
 This directory contains database-related documentation for the LuckyTex AirBag MES system.
 
-## Files
+## Essential Files (3 Files Only)
 
-### `.DATABASE_STORED_PROCEDURES_TODO.md` (Main TODO Checklist)
+### 1. `.DATABASE_ANALYSIS_INSTRUCTIONS.md` ⭐ **START HERE**
 
-Comprehensive checklist of all 269+ unique stored procedures extracted from the codebase.
+**Purpose**: Complete workflow instructions for documenting stored procedures
 
-**Structure**:
-- Summary statistics
-- Procedures grouped by prefix/module (BEAM_, WARP_, WEAV_, etc.)
-- Each procedure listed with its DataService file(s)
-- Documentation guidelines
-- Phased implementation plan
+**Contains**:
+- Sequential work order (M02 → M03 → ... → Lab)
+- Step-by-step procedure documentation workflow
+- Incremental tracking rules (update after EACH document)
+- Session resumption instructions
+- Quick reference commands
+- Common mistakes to avoid
 
-**Key Metrics**:
-- **Total Unique Stored Procedures**: 269
-- **Total Checklist Items**: 320+ (some procedures used in multiple services)
-- **Total DataService Files**: 21
-- **Completion Progress**: 0/269 (0%)
+**When to Read**: At the start of EVERY documentation session
 
-### `.DATABASE_ANALYSIS_TRACKER.md`
+---
 
-Tracking file for database analysis tasks (if exists).
+### 2. `.DATABASE_STORED_PROCEDURES_TODO.md` (Progress Tracker)
+
+**Purpose**: Master checklist tracking all 296 stored procedures
+
+**Contains**:
+- Summary statistics and current progress (X/296, Y.Y%)
+- All procedures organized by module (M00-M21 + Lab System)
+- Checkbox status for each procedure [ ] or [x]
+- DataService file references
+
+**When to Read**:
+- At session start (to find next procedure)
+- After each document (to update progress)
+
+**Current Progress**: 26/296 (8.8%) - Updated incrementally after each document
+
+---
+
+### 3. `TEMPLATE_INDIVIDUAL_PROCEDURE.md` (Documentation Format)
+
+**Purpose**: Standardized template for procedure documentation
+
+**Required Sections**:
+- Procedure header (number, module, status)
+- Quick Reference table
+- Parameters (IN/OUT/Returns)
+- Database Operations (tables, indexes)
+- Business Logic (what and WHY)
+- Related Procedures (upstream/downstream)
+- Code Location (C# + estimated SQL)
+
+**When to Use**: As reference when creating each new procedure document
 
 ## Procedure Categories
 
@@ -144,14 +172,34 @@ The procedures are implemented across 21 DataService files:
 - CONDITION_* (Conditions - 6 procedures)
 - Shared procedures (14+ procedures)
 
-## How to Use This Checklist
+## How to Use - Quick Start
 
-1. **Open** `.DATABASE_STORED_PROCEDURES_TODO.md`
-2. **Select** a procedure to document
-3. **Mark as in progress** by changing `[ ]` to `[~]` (optional)
-4. **Document** the procedure following the guidelines
-5. **Mark as complete** by changing `[ ]` to `[x]`
-6. **Update** the completion progress counter
+### For Documentation Sessions
+
+**ALWAYS start by reading these 2 files**:
+```
+1. Read .DATABASE_ANALYSIS_INSTRUCTIONS.md (complete workflow)
+2. Read .DATABASE_STORED_PROCEDURES_TODO.md (find next procedure)
+```
+
+### Work Cycle (One Procedure at a Time)
+
+**For EACH procedure**:
+1. ✅ **Generate** documentation file (use TEMPLATE_INDIVIDUAL_PROCEDURE.md)
+2. ✅ **Update** tracker checkbox `[ ]` → `[x]`
+3. ✅ **Update** progress counter `X/296` → `(X+1)/296`
+4. ✅ **Move** to next procedure
+
+**CRITICAL**: Update tracker after EACH document, never batch!
+
+### Why Incremental Updates?
+
+- ✅ Session interruptions don't lose progress
+- ✅ Always know exact completion status
+- ✅ Seamless continuation across sessions
+- ✅ Real-time progress visibility
+
+See `.DATABASE_ANALYSIS_INSTRUCTIONS.md` for complete details.
 
 ## Documentation Template
 
