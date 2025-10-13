@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Delete weft yarn pallet from weaving setup |
 | **Operation** | DELETE |
-| **Tables** | tblWeavingWeftStock |
 | **Called From** | WeavingDataService.cs:1620 → WEAVE_DELETEWEFTYARN() |
 | **Frequency** | Medium |
 | **Performance** | Fast |
@@ -38,6 +37,22 @@ Boolean - true if deleted successfully
 ## Business Logic
 
 Removes weft yarn pallet from production tracking when pallet needs to be replaced or was added in error.
+
+---
+
+## Query/Code Location
+
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
+
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\WeavingDataService.cs`
+**Method**: `WEAVE_DELETEWEFTYARN()`
+**Line**: 1620
+
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: `WEAVE_DELETEWEFTYARN(WEAVE_DELETEWEFTYARNParameter)`
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 
