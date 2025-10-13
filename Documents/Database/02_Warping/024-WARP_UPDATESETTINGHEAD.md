@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Update warping creel setup status and completion information |
 | **Operation** | UPDATE |
-| **Tables** | tblWarpingCreelSetup |
 | **Called From** | WarpingDataService.cs:1573 → WARP_UPDATESETTINGHEAD_MCStatus()<br>WarpingDataService.cs:1612 → WARP_UPDATESETTINGHEAD() |
 | **Frequency** | High (status changes during warping lifecycle) |
 | **Performance** | Fast (single record update) |
@@ -47,26 +46,6 @@ N/A - Returns success/failure status
 N/A - Returns boolean in C# (true = success, false = failure)
 
 **Note**: This procedure is also used in BeamingDataService for similar status updates.
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblWarpingCreelSetup` - UPDATE - Updates status and timestamps for creel setup lifecycle
-
-**Transaction**: Yes (single update operation)
-
-### Indexes (if relevant)
-
-```sql
--- Expected indexes
-CREATE UNIQUE INDEX idx_creelsetup_pk ON tblWarpingCreelSetup(WARPHEADNO);
-CREATE INDEX idx_creelsetup_status ON tblWarpingCreelSetup(STATUS);
-CREATE INDEX idx_creelsetup_machine ON tblWarpingCreelSetup(WARPMC, SIDE);
-```
 
 ---
 
@@ -127,125 +106,17 @@ Updates the status and completion information of a warping creel setup as it pro
 
 ## Query/Code Location
 
-**Note**: This project does NOT use stored procedures in the database. Queries are hardcoded in C# DataService classes.
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
 
-**File**: `WarpingDataService.cs`
-**Methods**:
-- `WARP_UPDATESETTINGHEAD_MCStatus()` - Line 1573-1606
-- `WARP_UPDATESETTINGHEAD()` - Line 1612-1645
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\WarpingDataService.cs`
+**Method**: `WARP_UPDATESETTINGHEAD_MCStatus()` / `WARP_UPDATESETTINGHEAD()`
+**Line**: 1573-1606 / 1612-1645
 
-**Query Type**: Stored Procedure Call (Oracle)
-
-```csharp
-// VERSION 1: Update to Conditioning Status
-public bool WARP_UPDATESETTINGHEAD_MCStatus(string P_WARPHEADNO, DateTime? P_STARTDATE,
-    string P_CONDITONBY, string P_STATUS)
-{
-    bool result = false;
-
-    if (string.IsNullOrWhiteSpace(P_WARPHEADNO))
-        return result;
-
-    if (!HasConnection())
-        return result;
-
-    WARP_UPDATESETTINGHEADParameter dbPara = new WARP_UPDATESETTINGHEADParameter();
-    dbPara.P_WARPHEADNO = P_WARPHEADNO;
-    dbPara.P_STARTDATE = P_STARTDATE;          // CONDITIONSTART timestamp
-    dbPara.P_CONDITONBY = P_CONDITONBY;        // Operator who started conditioning
-    dbPara.P_STATUS = P_STATUS;                // 'C' for Conditioning
-
-    WARP_UPDATESETTINGHEADResult dbResult = null;
-
-    try
-    {
-        dbResult = DatabaseManager.Instance.WARP_UPDATESETTINGHEAD(dbPara);
-        result = (null != dbResult);
-    }
-    catch (Exception ex)
-    {
-        ex.Err();
-        result = false;
-    }
-
-    return result;
-}
-
-// VERSION 2: Update to Finished Status
-public bool WARP_UPDATESETTINGHEAD(string P_WARPHEADNO, DateTime? P_ENDDATE,
-    string P_STATUS, string P_FINISHBY)
-{
-    bool result = false;
-
-    if (string.IsNullOrWhiteSpace(P_WARPHEADNO))
-        return result;
-
-    if (!HasConnection())
-        return result;
-
-    WARP_UPDATESETTINGHEADParameter dbPara = new WARP_UPDATESETTINGHEADParameter();
-    dbPara.P_WARPHEADNO = P_WARPHEADNO;
-    dbPara.P_ENDDATE = P_ENDDATE;              // Completion timestamp
-    dbPara.P_STATUS = P_STATUS;                // 'F' for Finished
-    dbPara.P_FINISHBY = P_FINISHBY;            // Operator who finished
-
-    WARP_UPDATESETTINGHEADResult dbResult = null;
-
-    try
-    {
-        dbResult = DatabaseManager.Instance.WARP_UPDATESETTINGHEAD(dbPara);
-        result = (null != dbResult);
-    }
-    catch (Exception ex)
-    {
-        ex.Err();
-        result = false;
-    }
-
-    return result;
-}
-```
-
-**Expected Oracle Stored Procedure Logic**:
-```sql
--- Estimated stored procedure structure (handles both versions)
-PROCEDURE WARP_UPDATESETTINGHEAD(
-    P_WARPHEADNO IN VARCHAR2,
-    P_STARTDATE IN DATE DEFAULT NULL,         -- CONDITIONSTART
-    P_CONDITONBY IN VARCHAR2 DEFAULT NULL,    -- Conditioning operator
-    P_ENDDATE IN DATE DEFAULT NULL,           -- Completion date
-    P_STATUS IN VARCHAR2 DEFAULT NULL,        -- Status code
-    P_FINISHBY IN VARCHAR2 DEFAULT NULL       -- Finishing operator
-)
-IS
-BEGIN
-    UPDATE tblWarpingCreelSetup
-    SET STATUS = NVL(P_STATUS, STATUS),
-        CONDITIONSTART = NVL(P_STARTDATE, CONDITIONSTART),
-        CONDITIONBY = NVL(P_CONDITONBY, CONDITIONBY),
-        ENDDATE = NVL(P_ENDDATE, ENDDATE),
-        FINISHBY = NVL(P_FINISHBY, FINISHBY),
-        FINISHFLAG = CASE
-            WHEN P_STATUS = 'F' THEN 'Y'
-            ELSE FINISHFLAG
-        END,
-        EDITDATE = SYSDATE
-    WHERE WARPHEADNO = P_WARPHEADNO;
-
-    COMMIT;
-
-EXCEPTION
-    WHEN OTHERS THEN
-        ROLLBACK;
-        RAISE;
-END;
-```
-
-**Usage in UI Flow**:
-1. **Setup Created** → STATUS = NULL, FINISHFLAG = 'N'
-2. **Start Conditioning** → Call WARP_UPDATESETTINGHEAD_MCStatus() → STATUS = 'C'
-3. **Finish Setup** → Call WARP_UPDATESETTINGHEAD() → STATUS = 'F', FINISHFLAG = 'Y'
-4. **Start Production** → STATUS changes to 'S' (via WARP_INSERTWARPINGPROCESS)
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: WARP_UPDATESETTINGHEADParameter
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 
