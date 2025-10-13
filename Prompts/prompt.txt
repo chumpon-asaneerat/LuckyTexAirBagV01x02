@@ -8,5 +8,3 @@ DO NOT use Batch processing causes it lose progress when session ends. you shoul
 This way if session ends, all completed work is saved. 
 
 So continue properly - one file at a time, updating tracker after each:
-
-
