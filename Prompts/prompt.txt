@@ -1,4 +1,4 @@
-Check all instruction in @Documents\Dataase 
+Check all instruction in @Documents\Dataase folder and make sure next generate files will strict with my instructions.
 
 before start check this documents in @Documents\Dataase\05_Weaving folder 
 
@@ -18,4 +18,3 @@ all files violates the instructions (including "assumed" or "likely"
 SQL query structures and not show input/output as table descripb in text that is wrong) 
 fix it.
 
-Also make sure next generate files will strict with my instructions.
