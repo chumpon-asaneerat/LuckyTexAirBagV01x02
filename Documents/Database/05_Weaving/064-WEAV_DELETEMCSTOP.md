@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Delete machine stop record from weaving production |
 | **Operation** | DELETE |
-| **Tables** | tblWeavingMachineStop (assumed) |
 | **Called From** | WeavingDataService.cs:1919 → WEAV_DELETEMCSTOP() |
 | **Frequency** | Low - Manual correction when stop record entered incorrectly |
 | **Performance** | Fast - Single record deletion by composite key |
@@ -41,15 +40,6 @@ Empty result object indicating success/failure status
 ---
 
 ## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblWeavingMachineStop` - DELETE - Machine stop tracking table (assumed)
-
-**Transaction**: Should use transaction (data integrity concern)
-
-### Composite Key
 
 The deletion requires a composite key of 5 fields to uniquely identify the stop record:
 - LOOMNO + DOFFNO + BEAMROLL + DEFECT + DATE

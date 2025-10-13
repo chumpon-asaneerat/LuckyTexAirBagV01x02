@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get machine stops for specific doff/fabric roll |
 | **Operation** | SELECT |
-| **Tables** | tblWeavingMachineStop, tblDefectCode (joined) |
 | **Called From** | WeavingDataService.cs:1160 → WEAV_GETMCSTOPLISTBYDOFFNO() |
 | **Frequency** | Medium - Quality review per fabric roll |
 | **Performance** | Fast - Indexed by composite key |
@@ -51,46 +50,6 @@ None
 | `DEFECTLENGTH` | NUMBER | Length of defective section (meters) |
 | `STOPDATE` | DATE | When machine stopped |
 | `DESCRIPTION` | VARCHAR2 | Defect description (from master) |
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblWeavingMachineStop` - SELECT - Machine stop events
-- `tblDefectCode` - SELECT - Defect descriptions (JOIN)
-
-**Query Type**: Filtered by composite key (LOOM + DOFF + BEAM + LOT)
-
-**Transaction**: No (Read-only operation)
-
-### Likely Query Structure
-
-```sql
--- Assumed stored procedure logic
-SELECT
-    s.WEAVINGLOT,
-    s.DEFECTCODE,
-    s.DEFECTPOSITION,
-    s.CREATEBY,
-    s.CREATEDATE,
-    s.REMARK,
-    s.LOOMNO,
-    s.BEAMERROLL,
-    s.DOFFNO,
-    s.DEFECTLENGTH,
-    s.STOPDATE,
-    d.DESCRIPTION
-FROM tblWeavingMachineStop s
-LEFT JOIN tblDefectCode d ON s.DEFECTCODE = d.DEFECTCODE
-WHERE s.LOOMNO = P_LOOMNO
-  AND s.DOFFNO = P_DOFFNO
-  AND s.BEAMERROLL = P_BEAMROLL
-  AND s.WEAVINGLOT = P_WEAVELOT
-ORDER BY s.STOPDATE, s.DEFECTPOSITION;
-```
 
 ---
 

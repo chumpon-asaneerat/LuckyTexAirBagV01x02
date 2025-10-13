@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get machine count statistics by production zone and machine type |
 | **Operation** | SELECT (aggregate/summary query) |
-| **Tables** | tblMachine, tblMachineZone (assumed) |
 | **Called From** | WeavingDataService.cs:514 → WEAV_GETMACHINEZONELIST() |
 | **Frequency** | Low - Dashboard/reporting displays |
 | **Performance** | Fast - Aggregated summary data |
@@ -37,43 +36,6 @@ None
 | `ZONE` | VARCHAR2 | Production zone identifier (A, B, C, etc.) |
 | `TYPE` | VARCHAR2 | Machine type classification |
 | `TOTAL` | NUMBER | Count of machines in this zone/type combination |
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblMachine` - SELECT - Machine master data
-- `tblMachineZone` - SELECT - Zone assignment (or zone field in tblMachine)
-
-**Query Type**: Aggregate/GROUP BY query for statistics
-
-**Transaction**: No (Read-only operation)
-
-### Likely Query Structure
-
-```sql
--- Assumed stored procedure logic
-SELECT
-    ZONE,
-    TYPE,
-    COUNT(*) AS TOTAL
-FROM tblMachine
-WHERE ISACTIVE = 'Y'
-  AND MODULETYPE = 'WEAVING'  -- Only weaving machines
-GROUP BY ZONE, TYPE
-ORDER BY ZONE, TYPE;
-
--- Example result:
--- ZONE | TYPE  | TOTAL
--- A    | LOOM  | 15
--- A    | AUTO  | 8
--- B    | LOOM  | 12
--- B    | AUTO  | 6
--- C    | LOOM  | 20
-```
 
 ---
 

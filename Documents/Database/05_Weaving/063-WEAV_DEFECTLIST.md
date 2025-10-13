@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Retrieve master list of defect codes for weaving operations |
 | **Operation** | SELECT |
-| **Tables** | tblDefectCode (assumed master table) |
 | **Called From** | WeavingDataService.cs:262 → WEAV_DEFECTLIST() |
 | **Frequency** | Medium - Loaded at page initialization for defect entry screens |
 | **Performance** | Fast - Small master data lookup |
@@ -36,25 +35,6 @@ None
 | `DEFECTTYPE` | VARCHAR2 | Type/category of defect |
 | `DESCRIPTION` | VARCHAR2 | Human-readable defect description |
 | `YARN` | VARCHAR2 | Related yarn type or position (if applicable) |
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblDefectCode` - SELECT - Master defect code table (assumed)
-
-**Transaction**: No (Read-only operation)
-
-### Indexes
-
-```sql
--- Recommended indexes (if not exists)
-CREATE INDEX idx_defectcode_type ON tblDefectCode(DEFECTTYPE);
-CREATE INDEX idx_defectcode_active ON tblDefectCode(ISACTIVE); -- if has active flag
-```
 
 ---
 

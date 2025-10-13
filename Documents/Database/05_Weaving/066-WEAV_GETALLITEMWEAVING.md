@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Retrieve complete list of weaving item codes with fabric widths |
 | **Operation** | SELECT |
-| **Tables** | tblItemWeaving or tblProduct (assumed) |
 | **Called From** | WeavingDataService.cs:218 → WEAV_GETALLITEMWEAVING() |
 | **Frequency** | Medium - Page initialization for item selection dropdowns |
 | **Performance** | Fast - Small master data table |
@@ -34,31 +33,6 @@ None
 |--------|------|-------------|
 | `ITM_WEAVING` | VARCHAR2(50) | Weaving item code (product code for fabric) |
 | `WIDTHWEAVING` | NUMBER | Standard fabric width in cm or inches |
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblItemWeaving` - SELECT - Weaving item master data (assumed)
-- OR `tblProduct` with filter for weaving items
-
-**Transaction**: No (Read-only operation)
-
-### Likely Query Structure
-
-```sql
--- Assumed stored procedure logic
-SELECT
-    ITM_WEAVING,
-    WIDTHWEAVING
-FROM tblItemWeaving
-WHERE ISACTIVE = 'Y'  -- Only active items
-  AND ITEMTYPE = 'WEAVING'  -- Weaving products only
-ORDER BY ITM_WEAVING;
-```
 
 ---
 

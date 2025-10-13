@@ -42,25 +42,6 @@
 
 ---
 
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblTableName` - INSERT/UPDATE - Main operation table
-- `tblTableName2` - SELECT - Lookup/validation
-
-**Transaction**: Yes / No
-
-### Indexes (if relevant)
-
-```sql
--- Missing or existing indexes
-CREATE INDEX idx_name ON tblTableName(column1, column2);
-```
-
----
-
 ## Business Logic (What it does and why)
 
 Brief description of the business purpose and workflow:
@@ -83,23 +64,25 @@ Brief description of the business purpose and workflow:
 
 ## Query/Code Location
 
-**Note**: This project does NOT use stored procedures in the database. Queries are hardcoded in C# DataService classes.
+**Note**: This project uses Oracle stored procedures called from C# DataService classes.
 
-**File**: `ServiceName.cs`
+**DataService File**: `LuckyTex.AirBag.Core\Services\DataService\ServiceName.cs`
 **Method**: `MethodName()`
-**Line**: NNN-NNN
+**Lines**: NNN-NNN
 
-**Query Type**: SELECT / INSERT / UPDATE / DELETE / ExecuteNonQuery
+**Database Manager File**: `LuckyTex.AirBag.Core\Domains\AirbagSPs.cs`
+**Method**: `PROCEDURE_NAME(ParameterType para)`
+**Lines**: NNN-NNN
+
+---
+
+**IMPORTANT**: If this is a hardcoded query (NOT stored procedure), show the actual query from C# code:
 
 ```csharp
-// Code snippet showing the query
 string query = @"
     SELECT column1, column2, column3
     FROM tblTableName
-    WHERE condition = @param";
-
-// Or if using stored procedure call:
-// OracleCommand cmd = new OracleCommand("PROCEDURE_NAME", conn);
+    WHERE condition = :param1";
 ```
 
 ---

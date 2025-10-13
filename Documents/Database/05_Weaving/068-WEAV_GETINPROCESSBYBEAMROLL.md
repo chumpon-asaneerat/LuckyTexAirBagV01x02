@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Retrieve in-process weaving lot details by beam roll and loom number |
 | **Operation** | SELECT |
-| **Tables** | tblWeavingLot, tblWeavingDetail (assumed) |
 | **Called From** | WeavingDataService.cs:999 → WEAV_GETINPROCESSBYBEAMROLL() |
 | **Frequency** | High - Called when loading/resuming production on loom |
 | **Performance** | Fast - Single record lookup by composite key |
@@ -58,55 +57,6 @@ None
 | `DELETEFLAG` | VARCHAR2 | Soft delete indicator |
 | `DELETEBY` | VARCHAR2 | User who deleted record |
 | `DELETEDATE` | DATE | Deletion timestamp |
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblWeavingLot` - SELECT - Main weaving lot header
-- `tblWeavingDetail` - SELECT - Detailed production parameters
-
-**Query Type**: Single record lookup by composite key (BEAMROLL + LOOMNO)
-
-**Transaction**: No (Read-only operation)
-
-### Likely Query Structure
-
-```sql
--- Assumed stored procedure logic
-SELECT
-    w.WEAVINGLOT,
-    w.ITM_WEAVING,
-    w.LENGTH,
-    w.LOOMNO,
-    w.WEAVINGDATE,
-    w.SHIFT,
-    w.REMARK,
-    w.CREATEDATE,
-    w.WIDTH,
-    w.PREPAREBY,
-    w.WEAVINGNO,
-    w.BEAMLOT,
-    w.DOFFNO,
-    w.TENSION,
-    w.STARTDATE,
-    w.DOFFBY,
-    w.SPEED,
-    w.WASTE,
-    w.DENSITY_WARP,
-    w.DENSITY_WEFT,
-    w.DELETEFLAG,
-    w.DELETEBY,
-    w.DELETEDATE
-FROM tblWeavingLot w
-WHERE w.BEAMROLL = P_BEAMROLL
-  AND w.LOOMNO = P_LOOM
-  AND w.STATUS = 'INPROCESS'  -- Only active production
-  AND (w.DELETEFLAG IS NULL OR w.DELETEFLAG = 'N');
-```
 
 ---
 

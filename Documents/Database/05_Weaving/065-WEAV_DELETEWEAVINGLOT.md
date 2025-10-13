@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Delete entire weaving production lot (cancelled/rejected lot) |
 | **Operation** | DELETE (CASCADE - multiple related tables) |
-| **Tables** | tblWeavingLot, tblWeavingDetail, tblWeavingMachineStop, tblWeftYarn (assumed) |
 | **Called From** | WeavingDataService.cs:1882 → WEAV_DELETEWEAVINGLOT() |
 | **Frequency** | Low - Critical operation for cancelled production lots only |
 | **Performance** | Medium - Cascade deletion affects multiple tables |
@@ -40,42 +39,7 @@ Empty result object indicating success/failure status
 
 ## Database Operations
 
-### Tables
-
-**Primary Tables** (Cascade deletion):
-- `tblWeavingLot` - DELETE - Main weaving lot header
-- `tblWeavingDetail` - DELETE - Weaving production details (length, density, etc.)
-- `tblWeavingMachineStop` - DELETE - All machine stop records for this lot
-- `tblWeftYarn` - DELETE/UPDATE - Weft yarn consumption records
-- `tblBeamUsage` - UPDATE - May need to reverse beam consumption
-- `tblInventory` - UPDATE - May need to reverse inventory movements
-
-**Audit Table** (Should be logged):
-- `tblDeletionAudit` or similar - INSERT - Log deletion with reason and operator
-
-**Transaction**: **MUST use transaction** - Multiple table operations require atomicity
-
-### Data Integrity
-
-```sql
--- Critical: Must use transaction for cascade deletion
-BEGIN TRANSACTION;
-
--- Log deletion first (audit trail)
-INSERT INTO tblDeletionAudit (LotNumber, DeletedBy, DeletedDate, Reason, LotType)
-VALUES (P_WEAVINGLOT, P_OPERATOR, SYSDATE, P_REMARK, 'WEAVING');
-
--- Delete related records (order matters!)
-DELETE FROM tblWeavingMachineStop WHERE WEAVINGLOT = P_WEAVINGLOT;
-DELETE FROM tblWeavingDetail WHERE WEAVINGLOT = P_WEAVINGLOT;
-DELETE FROM tblWeftYarn WHERE WEAVINGLOT = P_WEAVINGLOT;
-DELETE FROM tblWeavingLot WHERE WEAVINGLOT = P_WEAVINGLOT;
-
--- Reverse inventory impact (if lot was in WIP)
-UPDATE tblBeamUsage SET STATUS = 'AVAILABLE' WHERE WEAVINGLOT = P_WEAVINGLOT;
-
-COMMIT;
-```
+This is a cascade deletion operation that removes the weaving lot and all related production data. The procedure accepts three parameters including audit information (remark and operator) to track who deleted the lot and why.
 
 ---
 

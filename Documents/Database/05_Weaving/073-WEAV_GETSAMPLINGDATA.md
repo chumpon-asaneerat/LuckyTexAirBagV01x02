@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get sampling data for specific beam and loom |
 | **Operation** | SELECT |
-| **Tables** | tblWeavingProcess, tblBeamingProcess, tblWarpingProcess (joined) |
 | **Called From** | WeavingDataService.cs:1100 → WEAV_GETSAMPLINGDATA() |
 | **Frequency** | Medium - When loading weaving lot for sampling |
 | **Performance** | Fast - Indexed by beam roll and loom |
@@ -54,21 +53,6 @@ None
 | `BEAMMC` | VARCHAR2 | Beaming machine number (upstream) |
 | `WARPMC` | VARCHAR2 | Warping machine number (upstream) |
 | `BEAMERNO` | VARCHAR2 | Beaming operator ID |
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblWeavingProcess` - SELECT - Main weaving production data
-- `tblBeamingProcess` - SELECT - Beam source information (JOIN)
-- `tblWarpingProcess` - SELECT - Warp origin information (JOIN)
-
-**Query Type**: Filtered by composite key (BEAMROLL + LOOM)
-
-**Transaction**: No (Read-only operation)
 
 ---
 

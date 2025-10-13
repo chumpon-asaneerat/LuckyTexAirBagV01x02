@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Retrieve list of weaving items with type, width, and yarn information |
 | **Operation** | SELECT |
-| **Tables** | tblItemWeaving, tblItemWeavingDetail (assumed) |
 | **Called From** | WeavingDataService.cs:80, 123, 167 (3 overloads)<br>WarpingDataService (also uses this) |
 | **Frequency** | High - Item lookup for production setup |
 | **Performance** | Fast - Master data lookup with optional filtering |
@@ -40,34 +39,6 @@ None
 | `WIDTHWEAVING` | NUMBER | Fabric width in cm |
 | `WEAVE_TYPE` | VARCHAR2 | Weave type classification (OPW/CPW/etc.) |
 | `ITM_YARN` | VARCHAR2 | Associated yarn item code |
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblItemWeaving` - SELECT - Weaving item master data
-- `tblItemWeavingDetail` - SELECT - Item specifications and yarn mapping
-
-**Transaction**: No (Read-only operation)
-
-### Likely Query Structure
-
-```sql
--- Assumed stored procedure logic
-SELECT
-    i.ITM_WEAVING,
-    i.WIDTHWEAVING,
-    i.WEAVE_TYPE,
-    d.ITM_YARN
-FROM tblItemWeaving i
-LEFT JOIN tblItemWeavingDetail d ON i.ITM_WEAVING = d.ITM_WEAVING
-WHERE i.ISACTIVE = 'Y'
-  AND (P_WEAVETYPE IS NULL OR i.WEAVE_TYPE = P_WEAVETYPE)
-ORDER BY i.ITM_WEAVING;
-```
 
 ---
 

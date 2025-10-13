@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get count of China lots (special lot tracking for Chinese customer orders) |
 | **Operation** | SELECT (scalar value) |
-| **Tables** | tblWeavingLot or tblChinaLot (assumed) |
 | **Called From** | WeavingDataService.cs:354 → WEAV_GETCNTCHINALOT()<br>BeamingDataService.cs:114 → WEAV_GETCNTCHINALOT() |
 | **Frequency** | Medium - Used during lot number generation/validation |
 | **Performance** | Fast - Single scalar value lookup |
@@ -35,43 +34,6 @@
 ### Returns
 
 Single OUT parameter value (scalar)
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblWeavingLot` - SELECT - Weaving lot records with China lot classification
-- OR `tblChinaLot` - SELECT - Dedicated China lot tracking table
-- May query across multiple modules (Warping, Beaming, Weaving)
-
-**Transaction**: No (Read-only operation)
-
-### Likely Query Structure
-
-```sql
--- Possible implementation 1: Count China lots with specific pattern
-SELECT COUNT(*) AS CNT
-FROM tblWeavingLot
-WHERE LOTNO LIKE P_LOT || '%'
-  AND CUSTOMERTYPE = 'CHINA'
-  AND STATUS = 'ACTIVE';
-
--- Possible implementation 2: Check if lot is China lot
-SELECT CASE
-    WHEN EXISTS (SELECT 1 FROM tblChinaLot WHERE LOTNO = P_LOT)
-    THEN '1'
-    ELSE '0'
-END AS CNT
-FROM DUAL;
-
--- Possible implementation 3: Get next sequence number for China lot
-SELECT TO_CHAR(NVL(MAX(SUBSTR(LOTNO, -4)), 0) + 1) AS CNT
-FROM tblWeavingLot
-WHERE LOTNO LIKE 'CN-' || TO_CHAR(SYSDATE, 'YYYY-MM') || '%';
-```
 
 ---
 

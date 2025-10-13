@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Retrieve all machine stop events for a specific weaving lot |
 | **Operation** | SELECT |
-| **Tables** | tblWeavingMachineStop, tblWeavingLot, tblDefectCode (joined) |
 | **Called From** | WeavingDataService.cs:934 → WEAV_GETMCSTOPBYLOT() |
 | **Frequency** | Medium - Viewed when reviewing lot history or troubleshooting |
 | **Performance** | Fast - Indexed by WEAVINGLOT |
@@ -51,50 +50,6 @@ None
 | `ITM_WEAVING` | VARCHAR2 | Item code being produced |
 | `WIDTH` | NUMBER | Fabric width |
 | `LENGTH` | NUMBER | Total lot length |
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblWeavingMachineStop` - SELECT - Machine stop events
-- `tblWeavingLot` - SELECT - Lot header information
-- `tblDefectCode` - SELECT - Defect descriptions (JOIN)
-
-**Query Type**: JOIN query returning multiple records ordered by stop date
-
-**Transaction**: No (Read-only operation)
-
-### Likely Query Structure
-
-```sql
--- Assumed stored procedure logic
-SELECT
-    s.WEAVINGLOT,
-    s.DEFECTCODE,
-    s.DEFECTPOSITION,
-    s.CREATEBY,
-    s.CREATEDATE,
-    s.REMARK,
-    s.LOOMNO,
-    s.BEAMERROLL,
-    s.DOFFNO,
-    s.DEFECTLENGTH,
-    s.STOPDATE,
-    d.DESCRIPTION,
-    l.WEAVSTARTDATE,
-    l.WEAVFINISHDATE,
-    l.ITM_WEAVING,
-    l.WIDTH,
-    l.LENGTH
-FROM tblWeavingMachineStop s
-INNER JOIN tblWeavingLot l ON s.WEAVINGLOT = l.WEAVINGLOT
-LEFT JOIN tblDefectCode d ON s.DEFECTCODE = d.DEFECTCODE
-WHERE s.WEAVINGLOT = P_WEAVINGLOT
-ORDER BY s.STOPDATE, s.CREATEDATE;
-```
 
 ---
 
