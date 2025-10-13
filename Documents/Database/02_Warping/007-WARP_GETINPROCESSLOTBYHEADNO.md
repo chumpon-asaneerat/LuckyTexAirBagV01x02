@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get in-process warping lots for specific head number |
 | **Operation** | SELECT |
-| **Tables** | tblWarpingProcess, tblWarpingHead |
 | **Called From** | WarpingDataService.cs:782 → WARP_GETINPROCESSLOTBYHEADNO() |
 | **Frequency** | Medium (checks production status) |
 | **Performance** | Fast |
@@ -54,26 +53,6 @@ None - Returns result set via cursor
 
 ---
 
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblWarpingProcess` - SELECT - Production records
-- `tblWarpingHead` - SELECT JOIN - Setup header
-
-**Transaction**: No (read-only operation)
-
-### Indexes (if relevant)
-
-```sql
--- Expected indexes
-CREATE INDEX idx_warpingprocess_headno ON tblWarpingProcess(WARPHEADNO);
-CREATE INDEX idx_warpingprocess_flag ON tblWarpingProcess(FLAG);
-```
-
----
-
 ## Business Logic (What it does and why)
 
 Retrieves all in-process (active) warping lots for a specific creel setup. Shows which beams are currently being produced from this setup, including production metrics (length, speed, hardness, tension) and responsible operators. Used for monitoring active production and displaying current status.
@@ -104,59 +83,15 @@ Retrieves all in-process (active) warping lots for a specific creel setup. Shows
 
 ## Query/Code Location
 
-**File**: `WarpingDataService.cs`
+**Note**: This project uses Oracle stored procedures called from C# DataService classes.
+
+**DataService File**: `LuckyTex.AirBag.Core\Services\DataService\WarpingDataService.cs`
 **Method**: `WARP_GETINPROCESSLOTBYHEADNO()`
-**Line**: 782-832
+**Lines**: 782-832
 
-**Query Type**: Stored Procedure Call (Oracle)
-
-```csharp
-public List<WARP_GETINPROCESSLOTBYHEADNO> WARP_GETINPROCESSLOTBYHEADNO(string P_WARPHEADNO)
-{
-    List<WARP_GETINPROCESSLOTBYHEADNO> results = null;
-
-    if (!HasConnection())
-        return results;
-
-    WARP_GETINPROCESSLOTBYHEADNOParameter dbPara = new WARP_GETINPROCESSLOTBYHEADNOParameter();
-    dbPara.P_WARPHEADNO = P_WARPHEADNO;
-
-    try
-    {
-        dbResults = DatabaseManager.Instance.WARP_GETINPROCESSLOTBYHEADNO(dbPara);
-        if (null != dbResults)
-        {
-            results = new List<WARP_GETINPROCESSLOTBYHEADNO>();
-            foreach (var dbResult in dbResults)
-            {
-                // Map 16 columns
-                inst.WARPHEADNO = dbResult.WARPHEADNO;
-                inst.WARPERLOT = dbResult.WARPERLOT;
-                inst.BEAMNO = dbResult.BEAMNO;
-                inst.SIDE = dbResult.SIDE;
-                inst.STARTDATE = dbResult.STARTDATE;
-                inst.ENDDATE = dbResult.ENDDATE;
-                inst.LENGTH = dbResult.LENGTH;
-                inst.SPEED = dbResult.SPEED;
-                inst.HARDNESS_L = dbResult.HARDNESS_L;
-                inst.HARDNESS_N = dbResult.HARDNESS_N;
-                inst.HARDNESS_R = dbResult.HARDNESS_R;
-                inst.TENSION = dbResult.TENSION;
-                inst.STARTBY = dbResult.STARTBY;
-                inst.DOFFBY = dbResult.DOFFBY;
-                inst.FLAG = dbResult.FLAG;
-                inst.WARPMC = dbResult.WARPMC;
-                inst.REMARK = dbResult.REMARK;
-
-                results.Add(inst);
-            }
-        }
-    }
-    catch (Exception ex) { ex.Err(); }
-
-    return results;
-}
-```
+**Database Manager File**: `LuckyTex.AirBag.Core\Domains\AirbagSPs.cs`
+**Method**: `WARP_GETINPROCESSLOTBYHEADNO(WARP_GETINPROCESSLOTBYHEADNOParameter para)`
+**Lines**: (locate in AirbagSPs.cs)
 
 ---
 
