@@ -51,26 +51,6 @@ None - Returns result set via cursor
 
 ---
 
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblWarpingHead` - SELECT - Machine status by side
-- `tblWarpingProcess` - SELECT JOIN - Current production info
-
-**Transaction**: No (read-only operation)
-
-### Indexes (if relevant)
-
-```sql
--- Expected indexes
-CREATE INDEX idx_warpinghead_mc_side ON tblWarpingHead(WARPMC, SIDE);
-CREATE INDEX idx_warpinghead_status ON tblWarpingHead(STATUS);
-```
-
----
-
 ## Business Logic (What it does and why)
 
 Retrieves real-time machine status for warping machines. Shows which setups are currently active on each machine side (A or B). Used for production monitoring dashboard, displays what each machine is producing, current status, and responsible operators. Critical for production planning and machine utilization monitoring.
@@ -108,67 +88,17 @@ Retrieves real-time machine status for warping machines. Shows which setups are 
 
 ## Query/Code Location
 
-**File**: `WarpingDataService.cs`
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
+
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\WarpingDataService.cs`
 **Method**: `Warp_GetWarperMCStatusSideA()` and `Warp_GetWarperMCStatusSideB()`
 **Line**: 408-461, 471-524
 
-**Query Type**: Stored Procedure Call (Oracle)
-
-```csharp
-// Side A variant (filters for Side A only)
-public List<WARP_GETWARPERMCSTATUS> Warp_GetWarperMCStatusSideA(string P_MCNO)
-{
-    List<WARP_GETWARPERMCSTATUS> results = null;
-
-    if (!HasConnection())
-        return results;
-
-    WARP_GETWARPERMCSTATUSParameter dbPara = new WARP_GETWARPERMCSTATUSParameter();
-    dbPara.P_MCNO = P_MCNO;
-
-    try
-    {
-        // Call Oracle stored procedure
-        dbResults = DatabaseManager.Instance.WARP_GETWARPERMCSTATUS(dbPara);
-        if (null != dbResults)
-        {
-            results = new List<WARP_GETWARPERMCSTATUS>();
-            foreach (var dbResult in dbResults)
-            {
-                inst.SIDE = dbResult.SIDE;
-
-                // Filter: Only include Side A records
-                if (inst.SIDE == "A")
-                {
-                    // Map 14 columns
-                    inst.WARPHEADNO = dbResult.WARPHEADNO;
-                    inst.ITM_PREPARE = dbResult.ITM_PREPARE;
-                    inst.PRODUCTTYPEID = dbResult.PRODUCTTYPEID;
-                    inst.WARPMC = dbResult.WARPMC;
-                    inst.ACTUALCH = dbResult.ACTUALCH;
-                    inst.WTYPE = dbResult.WTYPE;
-                    inst.STARTDATE = dbResult.STARTDATE;
-                    inst.CREATEBY = dbResult.CREATEBY;
-                    inst.CONDITIONSTART = dbResult.CONDITIONSTART;
-                    inst.CONDITIONBY = dbResult.CONDITIONBY;
-                    inst.ENDDATE = dbResult.ENDDATE;
-                    inst.STATUS = dbResult.STATUS;
-                    inst.FINISHBY = dbResult.FINISHBY;
-                    inst.CONDITIONING = dbResult.CONDITIONING;
-
-                    results.Add(inst);
-                }
-            }
-        }
-    }
-    catch (Exception ex) { ex.Err(); }
-
-    return results;
-}
-
-// Side B variant (identical except filters for Side B)
-// Warp_GetWarperMCStatusSideB() - filters for inst.SIDE == "B"
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: `WARP_GETWARPERMCSTATUS(WARP_GETWARPERMCSTATUSParameter)`
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 
