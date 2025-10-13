@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get machine stop reasons for a specific beam lot |
 | **Operation** | SELECT |
-| **Tables** | tblBeamingMCStop |
 | **Called From** | BeamingDataService.cs:384 → BEAM_GETSTOPREASONBYBEAMLOT() |
 | **Frequency** | Medium |
 | **Performance** | Fast |
@@ -42,24 +41,6 @@ None
 | `OPERATOR` | VARCHAR2 | Operator who recorded the stop |
 | `OTHERFLAG` | VARCHAR2 | Flag indicating if "Other" reason selected |
 | `CREATEDATE` | DATE | Timestamp when stop was recorded |
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblBeamingMCStop` - SELECT - Machine stop event log
-
-**Transaction**: No (Read-only query)
-
-### Indexes (if relevant)
-
-```sql
--- Recommended composite index for fast lookup
-CREATE INDEX idx_beamingmcstop_beamerno_lot ON tblBeamingMCStop(BEAMERNO, BEAMLOT);
-```
 
 ---
 
@@ -117,34 +98,17 @@ This data is critical for:
 
 ## Query/Code Location
 
-**Note**: This project does NOT use stored procedures in the database. Queries are hardcoded in C# DataService classes.
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
 
-**File**: `BeamingDataService.cs`
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\BeamingDataService.cs`
 **Method**: `BEAM_GETSTOPREASONBYBEAMLOT()`
 **Line**: 377-425
 
-**Query Type**: SELECT via DatabaseManager wrapper
-
-```csharp
-// Method signature
-public List<BEAM_GETSTOPREASONBYBEAMLOT> BEAM_GETSTOPREASONBYBEAMLOT(string P_BEAMERNO, string P_BEAMLOT)
-{
-    // Connection validation
-    if (!HasConnection())
-        return results;
-
-    // Parameter setup
-    BEAM_GETSTOPREASONBYBEAMLOTParameter dbPara = new BEAM_GETSTOPREASONBYBEAMLOTParameter();
-    dbPara.P_BEAMERNO = P_BEAMERNO;
-    dbPara.P_BEAMLOT = P_BEAMLOT;
-
-    // Execute via DatabaseManager
-    dbResults = DatabaseManager.Instance.BEAM_GETSTOPREASONBYBEAMLOT(dbPara);
-
-    // Returns List<BEAM_GETSTOPREASONBYBEAMLOT> with all stop events
-    // Ordered by CREATEDATE (chronological stop history)
-}
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: BEAM_GETSTOPREASONBYBEAMLOTParameter
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 

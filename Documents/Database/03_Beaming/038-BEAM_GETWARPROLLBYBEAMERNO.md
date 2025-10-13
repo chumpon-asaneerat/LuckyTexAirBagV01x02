@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get warp rolls used in a beaming setup for traceability |
 | **Operation** | SELECT |
-| **Tables** | tblBeamerRollSetting |
 | **Called From** | BeamingDataService.cs:849 → BEAM_GETWARPROLLBYBEAMERNO() |
 | **Frequency** | Medium |
 | **Performance** | Fast |
@@ -37,24 +36,6 @@ None
 | `BEAMERNO` | VARCHAR2 | Beamer setup/batch number |
 | `WARPHEADNO` | VARCHAR2 | Warp setup/batch number (from M02-Warping) |
 | `WARPERLOT` | VARCHAR2 | Individual warp roll barcode |
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblBeamerRollSetting` - SELECT - Mapping table linking warp rolls to beam setup
-
-**Transaction**: No (Read-only query)
-
-### Indexes (if relevant)
-
-```sql
--- Recommended index for fast lookup
-CREATE INDEX idx_beamerrollsetting_beamerno ON tblBeamerRollSetting(BEAMERNO);
-```
 
 ---
 
@@ -107,46 +88,17 @@ Retrieves the list of warp rolls (from M02-Warping) that were used as input mate
 
 ## Query/Code Location
 
-**Note**: This project does NOT use stored procedures in the database. Queries are hardcoded in C# DataService classes.
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
 
-**File**: `BeamingDataService.cs`
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\BeamingDataService.cs`
 **Method**: `BEAM_GETWARPROLLBYBEAMERNO()`
 **Line**: 843-885
 
-**Query Type**: SELECT via DatabaseManager wrapper
-
-```csharp
-// Method signature
-public List<BEAM_GETWARPROLLBYBEAMERNO> BEAM_GETWARPROLLBYBEAMERNO(string P_BEAMERNO)
-{
-    // Connection validation
-    if (!HasConnection())
-        return results;
-
-    // Parameter setup
-    BEAM_GETWARPROLLBYBEAMERNOParameter dbPara = new BEAM_GETWARPROLLBYBEAMERNOParameter();
-    dbPara.P_BEAMERNO = P_BEAMERNO;
-
-    // Execute via DatabaseManager
-    dbResults = DatabaseManager.Instance.BEAM_GETWARPROLLBYBEAMERNO(dbPara);
-
-    // Returns List<BEAM_GETWARPROLLBYBEAMERNO> with warp roll traceability
-    // Simple 3-field result set (BEAMERNO, WARPHEADNO, WARPERLOT)
-}
-```
-
-**Traceability Chain**:
-```
-Yarn Pallet (M12-G3)
-  ↓
-Warp Roll / WARPERLOT (M02-Warping)
-  ↓
-Beam Roll / BEAMNO (M03-Beaming) ← THIS QUERY LINKS HERE
-  ↓
-Fabric Roll / DOFFNO (M05-Weaving)
-  ↓
-Finished Goods (M13-Packing)
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: BEAM_GETWARPROLLBYBEAMERNOParameter
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 

@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get available warp head setups for beaming by item prepare |
 | **Operation** | SELECT |
-| **Tables** | tblWarpingHead, tblWarpingDetail |
 | **Called From** | BeamingDataService.cs:213 → BEAM_GETWARPNOBYITEMPREPARE() |
 | **Frequency** | High |
 | **Performance** | Fast |
@@ -41,25 +40,6 @@ None
 | `TOTALBEAM` | NUMBER | Total warp beams produced in this setup |
 
 **Note**: Model includes additional field `IsSelect` (Boolean) - added in C# code for UI selection
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblWarpingHead` - SELECT - Warping setup header data
-- `tblWarpingDetail` - SELECT - Warping production details (to count beams)
-
-**Transaction**: No (Read-only query)
-
-### Indexes (if relevant)
-
-```sql
--- Recommended composite index
-CREATE INDEX idx_warpinghead_itmprepare_status ON tblWarpingHead(ITMPREPARE, STATUS);
-```
 
 ---
 
@@ -114,43 +94,17 @@ Retrieves list of available warp setups that can be used for beaming when operat
 
 ## Query/Code Location
 
-**Note**: This project does NOT use stored procedures in the database. Queries are hardcoded in C# DataService classes.
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
 
-**File**: `BeamingDataService.cs`
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\BeamingDataService.cs`
 **Method**: `BEAM_GETWARPNOBYITEMPREPARE()`
 **Line**: 207-254
 
-**Query Type**: SELECT via DatabaseManager wrapper
-
-```csharp
-// Method signature
-public List<BEAM_GETWARPNOBYITEMPREPARE> BEAM_GETWARPNOBYITEMPREPARE(string P_ITMPREPARE)
-{
-    // Connection validation
-    if (!HasConnection())
-        return results;
-
-    // Parameter setup
-    BEAM_GETWARPNOBYITEMPREPAREParameter dbPara = new BEAM_GETWARPNOBYITEMPREPAREParameter();
-    dbPara.P_ITMPREPARE = P_ITMPREPARE;
-
-    // Execute via DatabaseManager
-    dbResults = DatabaseManager.Instance.BEAM_GETWARPNOBYITEMPREPARE(dbPara);
-
-    // Maps to model and adds UI field
-    foreach (BEAM_GETWARPNOBYITEMPREPAREResult dbResult in dbResults)
-    {
-        inst.IsSelect = false; // UI checkbox state (not from database)
-        inst.WARPHEADNO = dbResult.WARPHEADNO;
-        inst.STARTDATE = dbResult.STARTDATE;
-        inst.WARPMC = dbResult.WARPMC;
-        inst.ACTUALCH = dbResult.ACTUALCH;
-        inst.TOTALBEAM = dbResult.TOTALBEAM;
-    }
-
-    // Returns List<BEAM_GETWARPNOBYITEMPREPARE> for selection UI
-}
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: BEAM_GETWARPNOBYITEMPREPAREParameter
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 
