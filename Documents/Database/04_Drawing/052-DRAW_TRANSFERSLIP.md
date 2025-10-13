@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get drawing data for transfer slip to weaving (M04→M05) |
 | **Operation** | SELECT |
-| **Tables** | tblDrawing, tblBeamingDetail |
 | **Called From** | DrawingDataService.cs:370 → DRAW_TRANSFERSLIP() |
 | **Frequency** | Medium |
 | **Performance** | Fast |
@@ -55,6 +54,22 @@
 Retrieves complete drawing and beam data for printing transfer slip when beam moves from drawing (M04) to weaving (M05). Similar to BEAM_TRANFERSLIP but for drawing-to-weaving transfer.
 
 **Purpose**: Generate transfer document showing drawing operation completed, beam ready for weaving process.
+
+---
+
+## Query/Code Location
+
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
+
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DrawingDataService.cs`
+**Method**: `DRAW_TRANSFERSLIP()`
+**Line**: 370
+
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: `DRAW_TRANSFERSLIP(DRAW_TRANSFERSLIPParameter)`
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 

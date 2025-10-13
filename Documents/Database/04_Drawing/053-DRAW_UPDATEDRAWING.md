@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Update drawing production record and completion status |
 | **Operation** | UPDATE |
-| **Tables** | tblDrawing |
 | **Called From** | DrawingDataService.cs:471 → DRAW_UPDATEDRAWING() |
 | **Frequency** | High |
 | **Performance** | Fast |
@@ -64,14 +63,20 @@ Updates drawing record with final data and sets completion flag when drawing ope
 
 ---
 
-**File**: 53/296 | **Progress**: 17.9%
+## Query/Code Location
+
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
+
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DrawingDataService.cs`
+**Method**: `DRAW_UPDATEDRAWING()`
+**Line**: 471
+
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: `DRAW_UPDATEDRAWING(DRAW_UPDATEDRAWINGParameter)`
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 
-## Module M04-Drawing Complete! ✅
-
-**M04-Drawing**: 7/7 procedures documented (100% complete)
-- All drawing operations documented
-- Reed/heald threading process tracking
-- Transfer slip generation (M04→M05)
-- Cross-module integration with M03-Beaming and M05-Weaving
+**File**: 53/296 | **Progress**: 17.9%
