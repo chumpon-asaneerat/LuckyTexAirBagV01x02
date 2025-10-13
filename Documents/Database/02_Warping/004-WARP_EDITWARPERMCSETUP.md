@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Edit/change warping machine assignment for creel setup |
 | **Operation** | UPDATE |
-| **Tables** | tblWarpingCreelSetup, tblWarpingHead |
 | **Called From** | WarpingDataService.cs:1968 → WARP_EDITWARPERMCSETUP() |
 | **Frequency** | Low (only when changing machine assignment) |
 | **Performance** | Fast |
@@ -39,27 +38,6 @@
 ### Returns (if cursor)
 
 N/A - Returns single string result
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblWarpingHead` - UPDATE - Change machine assignment (WARPMC field)
-- `tblWarpingCreelSetup` - UPDATE - Update machine reference in setup records
-
-**Transaction**: Yes (should maintain referential integrity)
-
-### Indexes (if relevant)
-
-```sql
--- Expected indexes
-CREATE INDEX idx_warpinghead_headno ON tblWarpingHead(WARPHEADNO);
-CREATE INDEX idx_warpinghead_warpmc ON tblWarpingHead(WARPMC);
-CREATE INDEX idx_creelsetup_headno ON tblWarpingCreelSetup(WARPHEADNO, SIDE);
-```
 
 ---
 
@@ -96,55 +74,15 @@ Changes the warping machine assignment for an existing creel setup. Used when a 
 
 ## Query/Code Location
 
-**Note**: This project does NOT use stored procedures in the database. Queries are hardcoded in C# DataService classes.
+**Note**: This project uses Oracle stored procedures called from C# DataService classes.
 
-**File**: `WarpingDataService.cs`
+**DataService File**: `LuckyTex.AirBag.Core\Services\DataService\WarpingDataService.cs`
 **Method**: `WARP_EDITWARPERMCSETUP()`
-**Line**: 1968-2004
+**Lines**: 1968-2004
 
-**Query Type**: Stored Procedure Call (Oracle)
-
-```csharp
-public string WARP_EDITWARPERMCSETUP(string P_WARPHEADNO, string P_WARPMC, string P_SIDE, string P_NEWWARPMC, string P_OPERATOR)
-{
-    string result = string.Empty;
-
-    // Validation: warping head number required
-    if (string.IsNullOrWhiteSpace(P_WARPHEADNO))
-        return result;
-
-    // Validation: new machine number required
-    if (string.IsNullOrWhiteSpace(P_NEWWARPMC))
-        return result;
-
-    if (!HasConnection())
-        return result;
-
-    // Prepare parameters
-    WARP_EDITWARPERMCSETUPParameter dbPara = new WARP_EDITWARPERMCSETUPParameter();
-    dbPara.P_WARPHEADNO = P_WARPHEADNO;
-    dbPara.P_WARPMC = P_WARPMC;
-    dbPara.P_SIDE = P_SIDE;
-    dbPara.P_NEWWARPMC = P_NEWWARPMC;
-    dbPara.P_OPERATOR = P_OPERATOR;
-
-    WARP_EDITWARPERMCSETUPResult dbResult = null;
-
-    try
-    {
-        // Call Oracle stored procedure
-        dbResult = DatabaseManager.Instance.WARP_EDITWARPERMCSETUP(dbPara);
-        result = dbResult.RESULT;
-    }
-    catch (Exception ex)
-    {
-        ex.Err();
-        result = string.Empty;
-    }
-
-    return result;
-}
-```
+**Database Manager File**: `LuckyTex.AirBag.Core\Domains\AirbagSPs.cs`
+**Method**: `WARP_EDITWARPERMCSETUP(WARP_EDITWARPERMCSETUPParameter para)`
+**Lines**: (locate in AirbagSPs.cs)
 
 ---
 

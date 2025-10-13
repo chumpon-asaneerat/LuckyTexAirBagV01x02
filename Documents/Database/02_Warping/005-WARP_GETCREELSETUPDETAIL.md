@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get detailed pallet list for creel setup |
 | **Operation** | SELECT |
-| **Tables** | tblWarpingCreelSetup, tblYarnPallet |
 | **Called From** | WarpingDataService.cs:973 → WARP_GETCREELSETUPDETAIL() |
 | **Frequency** | High (displayed on creel setup screen) |
 | **Performance** | Fast |
@@ -47,18 +46,6 @@ None - Returns result set via cursor
 
 ---
 
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblWarpingCreelSetup` - SELECT - Get setup details
-- `tblYarnPallet` - SELECT JOIN - Get pallet information
-
-**Transaction**: No (read-only operation)
-
----
-
 ## Business Logic (What it does and why)
 
 Retrieves complete list of pallets allocated to a creel setup with detailed usage statistics. Displays to operator all pallets assigned to the setup showing how much has been used, rejected, and remaining for each pallet. Includes calculated fields for net usage and remaining quantity.
@@ -88,53 +75,15 @@ Retrieves complete list of pallets allocated to a creel setup with detailed usag
 
 ## Query/Code Location
 
-**File**: `WarpingDataService.cs`
+**Note**: This project uses Oracle stored procedures called from C# DataService classes.
+
+**DataService File**: `LuckyTex.AirBag.Core\Services\DataService\WarpingDataService.cs`
 **Method**: `WARP_GETCREELSETUPDETAIL()`
-**Line**: 973-1050+
+**Lines**: 973-1050
 
-**Query Type**: Stored Procedure Call (Oracle)
-
-```csharp
-public List<WARP_GETCREELSETUPDETAIL> WARP_GETCREELSETUPDETAIL(string P_WARPHEADNO)
-{
-    List<WARP_GETCREELSETUPDETAIL> results = null;
-
-    if (!HasConnection())
-        return results;
-
-    WARP_GETCREELSETUPDETAILParameter dbPara = new WARP_GETCREELSETUPDETAILParameter();
-    dbPara.P_WARPHEADNO = P_WARPHEADNO;
-
-    try
-    {
-        dbResults = DatabaseManager.Instance.WARP_GETCREELSETUPDETAIL(dbPara);
-        if (null != dbResults)
-        {
-            results = new List<WARP_GETCREELSETUPDETAIL>();
-            foreach (var dbResult in dbResults)
-            {
-                // Map 7 columns + calculate 2 derived fields
-                inst.PALLETNO = dbResult.PALLETNO;
-                inst.RECEIVECH = dbResult.RECEIVECH ?? 0;
-                inst.USEDCH = dbResult.USEDCH ?? 0;
-                inst.REJECTCH = dbResult.REJECTCH ?? 0;
-                // ... other fields
-
-                // Calculate remaining
-                inst.NoCH = (RECEIVECH - USEDCH - REJECTCH);
-
-                // Calculate net usage
-                inst.Use = inst.PUSED ?? (USEDCH - PREJECT);
-
-                results.Add(inst);
-            }
-        }
-    }
-    catch (Exception ex) { ex.Err(); }
-
-    return results;
-}
-```
+**Database Manager File**: `LuckyTex.AirBag.Core\Domains\AirbagSPs.cs`
+**Method**: `WARP_GETCREELSETUPDETAIL(WARP_GETCREELSETUPDETAILParameter para)`
+**Lines**: (locate in AirbagSPs.cs)
 
 ---
 
