@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get list of yarn pallets by item code for creel setup |
 | **Operation** | SELECT |
-| **Tables** | tblWarpingPallets (estimated), tblYarnStock |
 | **Called From** | WarpingDataService.cs:307 → WARP_PALLETLISTBYITMYARN() |
 | **Frequency** | High (every creel setup operation) |
 | **Performance** | Medium (filters by item and calculates remaining stock) |
@@ -55,27 +54,6 @@ N/A - Returns result set
 
 ---
 
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblWarpingPallets` - SELECT - Yarn pallet inventory with usage tracking
-- `tblYarnStock` - SELECT - Master yarn stock data
-
-**Transaction**: No (read-only query)
-
-### Indexes (if relevant)
-
-```sql
--- Expected indexes for performance
-CREATE INDEX idx_pallet_itemyarn ON tblWarpingPallets(ITM_YARN, FINISHFLAG);
-CREATE INDEX idx_pallet_receivedate ON tblWarpingPallets(RECEIVEDATE);
-CREATE INDEX idx_pallet_warpheadno ON tblWarpingPallets(WARPHEADNO);
-```
-
----
-
 ## Business Logic (What it does and why)
 
 Retrieves available yarn pallets for a specific yarn item code during warping creel setup. When an operator is setting up yarn on the creel, they need to select which pallets to use. This procedure shows all pallets for the selected yarn type with remaining quantities.
@@ -114,88 +92,17 @@ Retrieves available yarn pallets for a specific yarn item code during warping cr
 
 ## Query/Code Location
 
-**Note**: This project does NOT use stored procedures in the database. Queries are hardcoded in C# DataService classes.
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
 
-**File**: `WarpingDataService.cs`
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\WarpingDataService.cs`
 **Method**: `WARP_PALLETLISTBYITMYARN()`
 **Line**: 307-398
 
-**Query Type**: Stored Procedure Call (Oracle)
-
-```csharp
-public List<WARP_PALLETLISTBYITMYARN> WARP_PALLETLISTBYITMYARN(string P_ITEM_YARN, string P_WARPHEADNO)
-{
-    List<WARP_PALLETLISTBYITMYARN> results = null;
-
-    if (!HasConnection())
-        return results;
-
-    // Prepare parameters
-    WARP_PALLETLISTBYITMYARNParameter dbPara = new WARP_PALLETLISTBYITMYARNParameter();
-    dbPara.P_ITEM_YARN = P_ITEM_YARN;
-    dbPara.P_WARPHEADNO = P_WARPHEADNO;
-
-    List<WARP_PALLETLISTBYITMYARNResult> dbResults = null;
-
-    try
-    {
-        // Call Oracle stored procedure
-        dbResults = DatabaseManager.Instance.WARP_PALLETLISTBYITMYARN(dbPara);
-        if (null != dbResults)
-        {
-            results = new List<WARP_PALLETLISTBYITMYARN>();
-
-            decimal RECEIVECH = 0;
-            decimal USEDCH = 0;
-            decimal REJECTCH = 0;
-
-            foreach (WARP_PALLETLISTBYITMYARNResult dbResult in dbResults)
-            {
-                WARP_PALLETLISTBYITMYARN inst = new WARP_PALLETLISTBYITMYARN();
-
-                inst.IsSelect = false; // UI checkbox state
-                inst.ITM_YARN = dbResult.ITM_YARN;
-                inst.RECEIVEDATE = dbResult.RECEIVEDATE;
-                inst.PALLETNO = dbResult.PALLETNO;
-                inst.RECEIVEWEIGHT = dbResult.RECEIVEWEIGHT;
-                inst.USEDWEIGHT = dbResult.USEDWEIGHT;
-                inst.VERIFY = dbResult.VERIFY;
-                inst.REJECTID = dbResult.REJECTID;
-                inst.FINISHFLAG = dbResult.FINISHFLAG;
-                inst.RETURNFLAG = dbResult.RETURNFLAG;
-                inst.CREATEDATE = dbResult.CREATEDATE;
-                inst.CREATEBY = dbResult.CREATEBY;
-                inst.CLEARBY = dbResult.CLEARBY;
-                inst.REMARK = dbResult.REMARK;
-                inst.CLEARDATE = dbResult.CLEARDATE;
-
-                // Handle nullable decimals
-                RECEIVECH = dbResult.RECEIVECH ?? 0;
-                USEDCH = dbResult.USEDCH ?? 0;
-                REJECTCH = dbResult.REJECTCH ?? 0;
-
-                inst.RECEIVECH = RECEIVECH;
-                inst.USEDCH = USEDCH;
-                inst.REJECTCH = REJECTCH;
-
-                // Calculate remaining quantity
-                inst.NoCH = (RECEIVECH - USEDCH - REJECTCH);
-                inst.Use = inst.NoCH; // Default: use all remaining
-                inst.Reject = 0;      // Default: no rejects
-                inst.Remain = (inst.NoCH - inst.Use - inst.Reject);
-
-                results.Add(inst);
-            }
-        }
-    }
-    catch (Exception ex)
-    {
-        ex.Err();
-    }
-
-    return results;
-}
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: `WARP_PALLETLISTBYITMYARN(WARP_PALLETLISTBYITMYARNParameter)`
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 

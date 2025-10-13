@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Record machine stop incident during warping |
 | **Operation** | INSERT |
-| **Tables** | tblWarpingMachineStop |
 | **Called From** | WarpingDataService.cs:1838 → WARP_INSERTWARPMCSTOP() |
 | **Frequency** | Medium (whenever machine stops) |
 | **Performance** | Fast |
@@ -40,25 +39,6 @@
 ### Returns (if cursor)
 
 N/A - Returns single string result
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblWarpingMachineStop` - INSERT - Stop incident record
-
-**Transaction**: No (standalone insert for logging)
-
-### Indexes (if relevant)
-
-```sql
--- Expected indexes
-CREATE INDEX idx_warpingstop_headno_lot ON tblWarpingMachineStop(WARPHEADNO, WARPERLOT);
-CREATE INDEX idx_warpingstop_date ON tblWarpingMachineStop(CREATEDATE);
-```
 
 ---
 
@@ -104,54 +84,17 @@ Records machine stop incidents during warping production for downtime tracking a
 
 ## Query/Code Location
 
-**File**: `WarpingDataService.cs`
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
+
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\WarpingDataService.cs`
 **Method**: `WARP_INSERTWARPMCSTOP()`
 **Line**: 1838-1872
 
-**Query Type**: Stored Procedure Call (Oracle)
-
-```csharp
-public string WARP_INSERTWARPMCSTOP(
-    string P_WARPHEADNO, string P_WARPLOT, string P_REASON,
-    decimal? P_LENGTH, string P_OTHER, string P_OPERATOR)
-{
-    string result = string.Empty;
-
-    // Validation: warping head number required
-    if (string.IsNullOrWhiteSpace(P_WARPHEADNO))
-        return result;
-
-    if (!HasConnection())
-        return result;
-
-    // Prepare parameters
-    WARP_INSERTWARPMCSTOPParameter dbPara = new WARP_INSERTWARPMCSTOPParameter();
-    dbPara.P_WARPHEADNO = P_WARPHEADNO;
-    dbPara.P_WARPLOT = P_WARPLOT;
-    dbPara.P_REASON = P_REASON; // Stop reason code
-    dbPara.P_LENGTH = P_LENGTH; // Position where stopped
-    dbPara.P_OTHER = P_OTHER; // Additional notes
-    dbPara.P_OPERATOR = P_OPERATOR; // Who recorded
-
-    WARP_INSERTWARPMCSTOPResult dbResult = null;
-
-    try
-    {
-        // Call Oracle stored procedure
-        dbResult = DatabaseManager.Instance.WARP_INSERTWARPMCSTOP(dbPara);
-
-        // Return result code
-        result = dbResult.R_RESULT;
-    }
-    catch (Exception ex)
-    {
-        ex.Err();
-        result = string.Empty;
-    }
-
-    return result;
-}
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: `WARP_INSERTWARPMCSTOP(WARP_INSERTWARPMCSTOPParameter)`
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 

@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Start new warping production lot (beam) |
 | **Operation** | INSERT |
-| **Tables** | tblWarpingProcess |
 | **Called From** | WarpingDataService.cs:1660 → WARP_INSERTWARPINGPROCESS() |
 | **Frequency** | Medium (starting new beam production) |
 | **Performance** | Fast |
@@ -41,26 +40,6 @@
 ### Returns (if cursor)
 
 N/A - Returns object with lot number and result code
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblWarpingProcess` - INSERT - New production lot record
-
-**Transaction**: Yes (atomic operation for lot creation)
-
-### Indexes (if relevant)
-
-```sql
--- Expected indexes
-CREATE UNIQUE INDEX uk_warpingprocess_lot ON tblWarpingProcess(WARPERLOT);
-CREATE INDEX idx_warpingprocess_headno ON tblWarpingProcess(WARPHEADNO);
-CREATE INDEX idx_warpingprocess_beamno ON tblWarpingProcess(BEAMNO);
-```
 
 ---
 
@@ -104,56 +83,17 @@ Initiates new warping production run by creating production lot record. When ope
 
 ## Query/Code Location
 
-**File**: `WarpingDataService.cs`
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
+
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\WarpingDataService.cs`
 **Method**: `WARP_INSERTWARPINGPROCESS()`
 **Line**: 1660-1700
 
-**Query Type**: Stored Procedure Call (Oracle)
-
-```csharp
-public WARP_INSERTWARPINGPROCESS WARP_INSERTWARPINGPROCESS(
-    string P_WARPHEADNO, string P_WARPMC, string P_BEAMNO,
-    string P_SIDE, DateTime? P_STARTDATE, string P_STARTBY)
-{
-    WARP_INSERTWARPINGPROCESS results = null;
-
-    // Validation: warping head number required
-    if (string.IsNullOrWhiteSpace(P_WARPHEADNO))
-        return results;
-
-    if (!HasConnection())
-        return results;
-
-    // Prepare parameters
-    WARP_INSERTWARPINGPROCESSParameter dbPara = new WARP_INSERTWARPINGPROCESSParameter();
-    dbPara.P_WARPHEADNO = P_WARPHEADNO;
-    dbPara.P_WARPMC = P_WARPMC;
-    dbPara.P_BEAMNO = P_BEAMNO;
-    dbPara.P_SIDE = P_SIDE;
-    dbPara.P_STARTDATE = P_STARTDATE;
-    dbPara.P_STARTBY = P_STARTBY;
-
-    WARP_INSERTWARPINGPROCESSResult dbResults = null;
-
-    try
-    {
-        // Call Oracle stored procedure
-        dbResults = DatabaseManager.Instance.WARP_INSERTWARPINGPROCESS(dbPara);
-
-        results = new WARP_INSERTWARPINGPROCESS();
-
-        if (null != dbResults)
-        {
-            // Return generated lot number and result code
-            results.R_WRAPLOT = dbResults.R_WRAPLOT; // Generated lot number
-            results.RESULT = dbResults.RESULT; // Success/error code
-        }
-    }
-    catch (Exception ex) { ex.Err(); }
-
-    return results;
-}
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: `WARP_INSERTWARPINGPROCESS(WARP_INSERTWARPINGPROCESSParameter)`
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 
