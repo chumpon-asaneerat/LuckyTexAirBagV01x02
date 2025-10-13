@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Validate weaving item matches item prepare and get specifications |
 | **Operation** | SELECT |
-| **Tables** | tblItemCode, tblItemPrepare |
 | **Called From** | WeavingDataService.cs:562 → WEAVE_CHECKITEMPREPARE() |
 | **Frequency** | High |
 | **Performance** | Fast |
@@ -62,6 +61,22 @@
 Validates that selected weaving item is compatible with item prepare on beam. Returns complete item specifications for loom setup.
 
 **Purpose**: Ensure correct product specifications before starting weaving to prevent mismatched production.
+
+---
+
+## Query/Code Location
+
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
+
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\WeavingDataService.cs`
+**Method**: `WEAVE_CHECKITEMPREPARE()`
+**Line**: 562
+
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: `WEAVE_CHECKITEMPREPARE(WEAVE_CHECKITEMPREPAREParameter)`
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 

@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Check loom machine availability and current status |
 | **Operation** | SELECT |
-| **Tables** | tblWeavingSettingHead |
 | **Called From** | WeavingDataService.cs:1053 → WEAVE_CHECKWEAVINGMC() |
 | **Frequency** | High |
 | **Performance** | Fast |
@@ -41,6 +40,22 @@
 ## Business Logic
 
 Checks if loom is available or currently has an active setup. Prevents double-booking of looms.
+
+---
+
+## Query/Code Location
+
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
+
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\WeavingDataService.cs`
+**Method**: `WEAVE_CHECKWEAVINGMC()`
+**Line**: 1053
+
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: `WEAVE_CHECKWEAVINGMC(WEAVE_CHECKWEAVINGMCParameter)`
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 
