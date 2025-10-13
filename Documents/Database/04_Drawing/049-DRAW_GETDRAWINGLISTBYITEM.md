@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get drawing production records by item prepare code |
 | **Operation** | SELECT |
-| **Tables** | tblDrawing |
 | **Called From** | DrawingDataService.cs:245 → DRAW_GETDRAWINGLISTBYITEM() |
 | **Frequency** | Medium |
 | **Performance** | Fast |
@@ -53,6 +52,22 @@
 Lists all drawing operations for a specific product (item prepare code) for production tracking and history review.
 
 **When Used**: Search drawing history by product, review past operations, production analysis
+
+---
+
+## Query/Code Location
+
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
+
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DrawingDataService.cs`
+**Method**: `DRAW_GETDRAWINGLISTBYITEM()`
+**Line**: 245
+
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: `DRAW_GETDRAWINGLISTBYITEM(DRAW_GETDRAWINGLISTBYITEMParameter)`
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 

@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Create new drawing production record |
 | **Operation** | INSERT |
-| **Tables** | tblDrawing |
 | **Called From** | DrawingDataService.cs:427 → DRAW_INSERTDRAWING() |
 | **Frequency** | High |
 | **Performance** | Fast |
@@ -55,6 +54,22 @@ Creates new drawing record when operator starts drawing a beam through heddles a
 **Purpose**: Start drawing operation - log beam entering drawing process with setup parameters.
 
 **Workflow**: Operator scans beam → Selects drawing parameters → System calls this to create record → Drawing begins
+
+---
+
+## Query/Code Location
+
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
+
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DrawingDataService.cs`
+**Method**: `DRAW_INSERTDRAWING()`
+**Line**: 427
+
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: `DRAW_INSERTDRAWING(DRAW_INSERTDRAWINGParameter)`
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 
