@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get beam details for drawing setup validation |
 | **Operation** | SELECT |
-| **Tables** | tblBeamingHead, tblBeamingDetail |
 | **Called From** | DrawingDataService.cs:182 → CheckBeamLot_ITM_Prepare() |
 | **Frequency** | High |
 | **Performance** | Fast |
@@ -60,9 +59,17 @@ Retrieves beam details and validates beam lot matches the selected item prepare 
 
 ## Query/Code Location
 
-**File**: `DrawingDataService.cs`
-**Method**: `CheckBeamLot_ITM_Prepare()` (wrapper with validation)
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
+
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DrawingDataService.cs`
+**Method**: `CheckBeamLot_ITM_Prepare()`
 **Line**: 168-235
+
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: `DRAW_GETBEAMLOTDETAIL(DRAW_GETBEAMLOTDETAILParameter)`
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 

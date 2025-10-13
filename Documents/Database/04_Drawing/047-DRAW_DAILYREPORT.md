@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get daily drawing production report by date |
 | **Operation** | SELECT |
-| **Tables** | tblDrawing, tblBeamingDetail |
 | **Called From** | DrawingDataService.cs:305 → DRAW_DAILYREPORT() |
 | **Frequency** | Low |
 | **Performance** | Medium (date range query) |
@@ -53,26 +52,6 @@ None
 | `BEAMERNO` | VARCHAR2 | Beamer setup number |
 
 **Note**: Model adds `No` field (row number) in C# code
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblDrawing` - SELECT - Drawing production records
-- `tblBeamingDetail` - SELECT (JOIN) - Beam data (BEAMNO, LENGTH, BEAMERNO)
-
-**Transaction**: No (Read-only report query)
-
-### Indexes (if relevant)
-
-```sql
--- Recommended index for date range queries
-CREATE INDEX idx_drawing_startdate ON tblDrawing(STARTDATE);
-CREATE INDEX idx_drawing_endate ON tblDrawing(ENDATE);
-```
 
 ---
 
@@ -129,75 +108,17 @@ Generates daily production report showing all drawing operations completed on a 
 
 ## Query/Code Location
 
-**Note**: This project does NOT use stored procedures in the database. Queries are hardcoded in C# DataService classes.
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
 
-**File**: `DrawingDataService.cs`
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DrawingDataService.cs`
 **Method**: `DRAW_DAILYREPORT()`
 **Line**: 299-361
 
-**Query Type**: SELECT via DatabaseManager wrapper
-
-```csharp
-// Method signature
-public List<DRAW_DAILYREPORT> DRAW_DAILYREPORT(string P_DATE)
-{
-    List<DRAW_DAILYREPORT> results = null;
-
-    if (!HasConnection())
-        return results;
-
-    // Parameter setup
-    DRAW_DAILYREPORTParameter dbPara = new DRAW_DAILYREPORTParameter();
-    dbPara.P_DATE = P_DATE; // Date string
-
-    // Execute query
-    dbResults = DatabaseManager.Instance.DRAW_DAILYREPORT(dbPara);
-
-    // Add row numbers in code (not from database)
-    int i = 0;
-    foreach (DRAW_DAILYREPORTResult dbResult in dbResults)
-    {
-        inst.No = (i + 1); // Sequence number: 1, 2, 3...
-
-        // Map 17 fields from database
-        inst.BEAMLOT = dbResult.BEAMLOT;
-        inst.ITM_PREPARE = dbResult.ITM_PREPARE;
-        inst.PRODUCTTYPEID = dbResult.PRODUCTTYPEID;
-        // ... (17 total fields)
-
-        i++;
-    }
-
-    return results;
-}
-```
-
-**Usage Pattern**:
-```csharp
-// In Daily Report Screen (DrawingDailyReportPage.xaml.cs)
-private void btnGenerateReport_Click(object sender, RoutedEventArgs e)
-{
-    string reportDate = dtpDate.Text; // Selected date
-
-    var reportData = DrawingDataService.Instance.DRAW_DAILYREPORT(reportDate);
-
-    if (reportData != null && reportData.Count > 0)
-    {
-        // Display in grid
-        dgReport.ItemsSource = reportData;
-        lblTotalRecords.Text = $"Total: {reportData.Count} beams drawn";
-
-        // Or generate PDF report (RDLC)
-        var report = new DrawingDailyReport();
-        report.SetDataSource(reportData);
-        reportViewer.Report = report;
-    }
-    else
-    {
-        MessageBox.Show("No drawing operations on this date");
-    }
-}
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: `DRAW_DAILYREPORT(DRAW_DAILYREPORTParameter)`
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 
