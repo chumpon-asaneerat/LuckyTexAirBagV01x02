@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Cancel loom setup and release machine |
 | **Operation** | UPDATE/DELETE |
-| **Tables** | tblWeavingSettingHead, tblWeavingSettingDetail |
 | **Called From** | WeavingDataService.cs:1743 → WEAVE_CANCELLOOMSETUP() |
 | **Frequency** | Low |
 | **Performance** | Fast |
@@ -39,6 +38,22 @@
 ## Business Logic
 
 Cancels loom setup when beam cannot be used or setup needs to be redone. Releases loom for other work.
+
+---
+
+## Query/Code Location
+
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
+
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\WeavingDataService.cs`
+**Method**: `WEAVE_CANCELLOOMSETUP()`
+**Line**: 1743
+
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: `WEAVE_CANCELLOOMSETUP(WEAVE_CANCELLOOMSETUPParameter)`
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 
