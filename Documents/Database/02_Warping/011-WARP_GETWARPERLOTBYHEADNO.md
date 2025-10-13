@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get all warper lot records for specific head number |
 | **Operation** | SELECT |
-| **Tables** | tblWarpingProcess |
 | **Called From** | WarpingDataService.cs:534 → WARP_GETWARPERLOTBYHEADNO() |
 | **Frequency** | High (production history and reporting) |
 | **Performance** | Fast |

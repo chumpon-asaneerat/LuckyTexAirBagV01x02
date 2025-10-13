@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get warping machine status by machine and side |
 | **Operation** | SELECT |
-| **Tables** | tblWarpingHead, tblWarpingProcess |
 | **Called From** | WarpingDataService.cs:422 → Warp_GetWarperMCStatusSideA/B() |
 | **Frequency** | High (machine monitoring dashboard) |
 | **Performance** | Fast |

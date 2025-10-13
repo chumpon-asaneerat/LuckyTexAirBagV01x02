@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get warper roll/beam details by roll number |
 | **Operation** | SELECT |
-| **Tables** | tblWarpingProcess |
 | **Called From** | WarpingDataService.cs:1170 → WARP_GETWARPERROLLDETAIL() |
 | **Frequency** | High (barcode scanning, traceability) |
 | **Performance** | Fast (single record lookup) |

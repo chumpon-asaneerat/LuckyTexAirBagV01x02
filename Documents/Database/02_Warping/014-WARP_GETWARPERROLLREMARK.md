@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get remark text for warper lot |
 | **Operation** | SELECT |
-| **Tables** | tblWarpingProcess |
 | **Called From** | WarpingDataService.cs:1370 → WARP_GETWARPERROLLREMARK() |
 | **Frequency** | Medium (displaying lot details) |
 | **Performance** | Fast |

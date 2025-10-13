@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get machine stop reasons for warping lot |
 | **Operation** | SELECT |
-| **Tables** | tblWarpingMachineStop |
 | **Called From** | WarpingDataService.cs:731 → WARP_GETSTOPREASONBYWARPERLOT() |
 | **Frequency** | Medium (reviewing stop history) |
 | **Performance** | Fast |
@@ -42,25 +41,6 @@ None - Returns result set via cursor
 | `OPERATOR` | VARCHAR2(50) | Operator who recorded stop |
 | `OTHERFLAG` | VARCHAR2(1) | Other/miscellaneous flag |
 | `CREATEDATE` | DATE | Stop record creation date/time |
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblWarpingMachineStop` - SELECT - Machine stop records for specific lot
-
-**Transaction**: No (read-only operation)
-
-### Indexes (if relevant)
-
-```sql
--- Expected indexes
-CREATE INDEX idx_warpingstop_lot ON tblWarpingMachineStop(WARPHEADNO, WARPERLOT);
-CREATE INDEX idx_warpingstop_date ON tblWarpingMachineStop(CREATEDATE);
-```
 
 ---
 
@@ -103,50 +83,15 @@ Retrieves all machine stop incidents for specific warping lot. When machine stop
 
 ## Query/Code Location
 
-**File**: `WarpingDataService.cs`
+**Note**: This project uses Oracle stored procedures called from C# DataService classes.
+
+**DataService File**: `LuckyTex.AirBag.Core\Services\DataService\WarpingDataService.cs`
 **Method**: `WARP_GETSTOPREASONBYWARPERLOT()`
-**Line**: 731-772
+**Lines**: 731-772
 
-**Query Type**: Stored Procedure Call (Oracle)
-
-```csharp
-public List<WARP_GETSTOPREASONBYWARPERLOT> WARP_GETSTOPREASONBYWARPERLOT(string P_WARPHEADNO, string P_WARPLOT)
-{
-    List<WARP_GETSTOPREASONBYWARPERLOT> results = null;
-
-    if (!HasConnection())
-        return results;
-
-    WARP_GETSTOPREASONBYWARPERLOTParameter dbPara = new WARP_GETSTOPREASONBYWARPERLOTParameter();
-    dbPara.P_WARPHEADNO = P_WARPHEADNO;
-    dbPara.P_WARPLOT = P_WARPLOT;
-
-    try
-    {
-        dbResults = DatabaseManager.Instance.WARP_GETSTOPREASONBYWARPERLOT(dbPara);
-        if (null != dbResults)
-        {
-            results = new List<WARP_GETSTOPREASONBYWARPERLOT>();
-            foreach (var dbResult in dbResults)
-            {
-                // Map 7 columns
-                inst.WARPHEADNO = dbResult.WARPHEADNO;
-                inst.WARPERLOT = dbResult.WARPERLOT;
-                inst.REASON = dbResult.REASON;
-                inst.LENGTH = dbResult.LENGTH; // Meter position where stop occurred
-                inst.OPERATOR = dbResult.OPERATOR;
-                inst.OTHERFLAG = dbResult.OTHERFLAG;
-                inst.CREATEDATE = dbResult.CREATEDATE;
-
-                results.Add(inst);
-            }
-        }
-    }
-    catch (Exception ex) { ex.Err(); }
-
-    return results;
-}
-```
+**Database Manager File**: `LuckyTex.AirBag.Core\Domains\AirbagSPs.cs`
+**Method**: `WARP_GETSTOPREASONBYWARPERLOT(WARP_GETSTOPREASONBYWARPERLOTParameter para)`
+**Lines**: (locate in AirbagSPs.cs)
 
 ---
 
