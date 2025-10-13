@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Search beaming setup records with multiple filter criteria |
 | **Operation** | SELECT |
-| **Tables** | tblBeamingHead |
 | **Called From** | BeamingDataService.cs:788 → BEAM_SEARCHBEAMRECORD() |
 | **Frequency** | Medium |
 | **Performance** | Medium (depends on filters) |
@@ -52,24 +51,6 @@ None
 | `PRODUCTTYPEID` | VARCHAR2 | Product type ID |
 | `ADJUSTKEBA` | NUMBER | Adjusted keba value |
 | `REMARK` | VARCHAR2 | Setup remarks |
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblBeamingHead` - SELECT - Search setup records
-
-**Transaction**: No (Read-only query)
-
-### Indexes (if relevant)
-
-```sql
--- Recommended composite index for efficient search
-CREATE INDEX idx_beaminghead_search ON tblBeamingHead(BEAMERNO, MCNO, ITMPREPARE, STARTDATE);
-```
 
 ---
 
@@ -123,68 +104,17 @@ Searches beaming setup records with flexible filtering for production history re
 
 ## Query/Code Location
 
-**Note**: This project does NOT use stored procedures in the database. Queries are hardcoded in C# DataService classes.
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
 
-**File**: `BeamingDataService.cs`
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\BeamingDataService.cs`
 **Method**: `BEAM_SEARCHBEAMRECORD()`
 **Line**: 788-839
 
-**Query Type**: SELECT via DatabaseManager wrapper
-
-```csharp
-// Method signature
-public List<BEAM_SEARCHBEAMRECORD> BEAM_SEARCHBEAMRECORD(
-    string P_BEAMERNO,
-    string P_MC,
-    string P_ITMPREPARE,
-    string P_STARTDATE)
-{
-    List<BEAM_SEARCHBEAMRECORD> results = null;
-
-    if (!HasConnection())
-        return results;
-
-    // Parameter setup - all optional
-    BEAM_SEARCHBEAMRECORDParameter dbPara = new BEAM_SEARCHBEAMRECORDParameter();
-    dbPara.P_BEAMERNO = P_BEAMERNO;     // Can be null/empty
-    dbPara.P_MC = P_MC;                 // Can be null/empty
-    dbPara.P_ITMPREPARE = P_ITMPREPARE; // Can be null/empty
-    dbPara.P_STARTDATE = P_STARTDATE;   // Can be null/empty
-
-    // Execute search
-    dbResults = DatabaseManager.Instance.BEAM_SEARCHBEAMRECORD(dbPara);
-
-    // Returns List<BEAM_SEARCHBEAMRECORD> with all matching setups
-    // Maps 15 fields from result to model
-    foreach (BEAM_SEARCHBEAMRECORDResult dbResult in dbResults)
-    {
-        // Map all fields...
-        inst.BEAMERNO = dbResult.BEAMERNO;
-        inst.ITM_PREPARE = dbResult.ITM_PREPARE;
-        inst.TOTALYARN = dbResult.TOTALYARN;
-        // ... (15 total fields)
-    }
-
-    return results;
-}
-```
-
-**Usage Pattern**:
-```csharp
-// In Search Screen UI (BeamingSearchPage.xaml.cs)
-private void btnSearch_Click(object sender, RoutedEventArgs e)
-{
-    var results = BeamingDataService.Instance.BEAM_SEARCHBEAMRECORD(
-        txtBeamerNo.Text.Trim(),        // Optional: "" if empty
-        cboMachine.SelectedValue?.ToString(),  // Optional: null if not selected
-        cboItemPrepare.SelectedValue?.ToString(), // Optional: null if not selected
-        dtpStartDate.Text               // Optional: "" if empty
-    );
-
-    dgResults.ItemsSource = results;
-    lblCount.Text = $"Found {results?.Count ?? 0} records";
-}
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: BEAM_SEARCHBEAMRECORDParameter
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 

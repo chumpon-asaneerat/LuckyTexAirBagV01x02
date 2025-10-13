@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Update beam production data during or after production |
 | **Operation** | UPDATE |
-| **Tables** | tblBeamingDetail |
 | **Called From** | BeamingDataService.cs:1300 → BEAM_UPDATEBEAMDETAIL() (3 overloads) |
 | **Frequency** | High |
 | **Performance** | Fast |
@@ -62,24 +61,6 @@ None (Returns boolean)
 | Type | Description |
 |------|-------------|
 | `Boolean` | True if update successful, False if failed |
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblBeamingDetail` - UPDATE - Updates beam production record
-
-**Transaction**: Yes (should be part of production transaction)
-
-### Indexes (if relevant)
-
-```sql
--- Recommended composite unique index for update key
-CREATE UNIQUE INDEX idx_beamingdetail_key ON tblBeamingDetail(BEAMERNO, BEAMLOT);
-```
 
 ---
 
@@ -178,47 +159,19 @@ bool success = BeamingDataService.Instance.BEAM_UPDATEBEAMDETAIL_REMARK(
 
 ## Query/Code Location
 
-**Note**: This project does NOT use stored procedures in the database. Queries are hardcoded in C# DataService classes.
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
 
-**File**: `BeamingDataService.cs`
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\BeamingDataService.cs`
 **Methods**:
 - `BEAM_UPDATEBEAMDETAIL()` (Overload 1 - with doff) - Line 1298-1360
 - `BEAM_UPDATEBEAMDETAIL()` (Overload 2 - without doff) - Line 1364-1423
 - `BEAM_UPDATEBEAMDETAIL_REMARK()` (Overload 3 - remark only) - Line 1465-1498
 
-**Query Type**: UPDATE via DatabaseManager wrapper
-
-```csharp
-// Overload 1: Full update with doff
-public bool BEAM_UPDATEBEAMDETAIL(
-    string P_BEAMERNO, string P_BEAMLOT, decimal? P_LENGTH, DateTime? P_ENDDATE, ...26 parameters total)
-{
-    // Validation + parameter setup
-    // Includes P_ENDDATE and P_DOFFBY
-    dbResult = DatabaseManager.Instance.BEAM_UPDATEBEAMDETAIL(dbPara);
-    return (null != dbResult);
-}
-
-// Overload 2: Partial update without doff
-public bool BEAM_UPDATEBEAMDETAIL(
-    string P_BEAMERNO, string P_BEAMLOT, decimal? P_LENGTH, decimal? P_SPEED, ...24 parameters total)
-{
-    // Validation + parameter setup
-    // No P_ENDDATE or P_DOFFBY
-    dbResult = DatabaseManager.Instance.BEAM_UPDATEBEAMDETAIL(dbPara);
-    return (null != dbResult);
-}
-
-// Overload 3: Remark only
-public bool BEAM_UPDATEBEAMDETAIL_REMARK(
-    string P_BEAMERNO, string P_BEAMLOT, string P_REMARK)
-{
-    // Validation + parameter setup
-    // Only updates REMARK field
-    dbResult = DatabaseManager.Instance.BEAM_UPDATEBEAMDETAIL(dbPara);
-    return (null != dbResult);
-}
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: BEAM_UPDATEBEAMDETAILParameter
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 

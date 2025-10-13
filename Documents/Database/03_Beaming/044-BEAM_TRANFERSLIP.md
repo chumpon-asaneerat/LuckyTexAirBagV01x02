@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get beam data for transfer slip document generation |
 | **Operation** | SELECT |
-| **Tables** | tblBeamingDetail, tblBeamingHead |
 | **Called From** | BeamingDataService.cs:520 → BEAM_TRANFERSLIP() |
 | **Frequency** | Medium |
 | **Performance** | Fast |
@@ -55,25 +54,6 @@ None
 | `FLAG` | VARCHAR2 | Production status |
 | `REMARK` | VARCHAR2 | Production remarks |
 | `ITM_PREPARE` | VARCHAR2 | Item prepare code (from header) |
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblBeamingDetail` - SELECT - Beam production data
-- `tblBeamingHead` - SELECT (JOIN) - Setup header data
-
-**Transaction**: No (Read-only query)
-
-### Indexes (if relevant)
-
-```sql
--- Recommended index for fast barcode lookup
-CREATE INDEX idx_beamingdetail_beamlot ON tblBeamingDetail(BEAMLOT);
-```
 
 ---
 
@@ -130,72 +110,17 @@ Retrieves complete beam production data for generating a **transfer slip documen
 
 ## Query/Code Location
 
-**Note**: This project does NOT use stored procedures in the database. Queries are hardcoded in C# DataService classes.
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
 
-**File**: `BeamingDataService.cs`
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\BeamingDataService.cs`
 **Method**: `BEAM_TRANFERSLIP()`
 **Line**: 514-576
 
-**Query Type**: SELECT via DatabaseManager wrapper
-
-```csharp
-// Method signature
-public List<BEAM_TRANFERSLIP> BEAM_TRANFERSLIP(string P_BEAMLOT)
-{
-    List<BEAM_TRANFERSLIP> results = null;
-
-    if (!HasConnection())
-        return results;
-
-    // Parameter setup
-    BEAM_TRANFERSLIPParameter dbPara = new BEAM_TRANFERSLIPParameter();
-    dbPara.P_BEAMLOT = P_BEAMLOT;
-
-    // Execute query - joins detail + header tables
-    dbResults = DatabaseManager.Instance.BEAM_TRANFERSLIP(dbPara);
-
-    // Returns List<BEAM_TRANFERSLIP> with 21 fields
-    // Includes both beam detail and setup header data
-    foreach (BEAM_TRANFERSLIPResult dbResult in dbResults)
-    {
-        inst.BEAMERNO = dbResult.BEAMERNO;
-        inst.BEAMLOT = dbResult.BEAMLOT;
-        inst.BEAMNO = dbResult.BEAMNO;
-        // ... (21 total fields)
-        inst.ITM_PREPARE = dbResult.ITM_PREPARE; // From header table
-    }
-
-    return results;
-}
-```
-
-**Usage Pattern**:
-```csharp
-// In Transfer Slip Screen (BeamingTransferPage.xaml.cs)
-private void btnPrintTransferSlip_Click(object sender, RoutedEventArgs e)
-{
-    string beamLot = txtBeamLot.Text.Trim(); // Scanned barcode
-
-    var data = BeamingDataService.Instance.BEAM_TRANFERSLIP(beamLot);
-
-    if (data != null && data.Count > 0)
-    {
-        // Generate transfer slip report (RDLC)
-        var reportData = data[0];
-        var report = new BeamingTransferSlipReport();
-        report.SetDataSource(reportData);
-        report.Print(); // Print to default printer
-
-        // Or display on screen
-        reportViewer.Report = report;
-        reportViewer.RefreshReport();
-    }
-    else
-    {
-        MessageBox.Show("Beam lot not found");
-    }
-}
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: BEAM_TRANFERSLIPParameter
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 

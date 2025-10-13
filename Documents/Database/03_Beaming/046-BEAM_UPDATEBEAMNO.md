@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Update beaming setup status and completion |
 | **Operation** | UPDATE |
-| **Tables** | tblBeamingHead |
 | **Called From** | BeamingDataService.cs:1221 → BEAM_UPDATEBEAMNO() |
 | **Frequency** | Low |
 | **Performance** | Fast |
@@ -39,24 +38,6 @@
 | Type | Description |
 |------|-------------|
 | `String` | Result message from database |
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblBeamingHead` - UPDATE - Updates setup header status
-
-**Transaction**: Yes (should be final step in setup completion)
-
-### Indexes (if relevant)
-
-```sql
--- Recommended index on primary key
-CREATE UNIQUE INDEX idx_beaminghead_beamerno ON tblBeamingHead(BEAMERNO);
-```
 
 ---
 
@@ -117,82 +98,17 @@ Updates beaming setup header status and end date when setup is completed or stat
 
 ## Query/Code Location
 
-**Note**: This project does NOT use stored procedures in the database. Queries are hardcoded in C# DataService classes.
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
 
-**File**: `BeamingDataService.cs`
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\BeamingDataService.cs`
 **Method**: `BEAM_UPDATEBEAMNO()`
 **Line**: 1219-1254
 
-**Query Type**: UPDATE via DatabaseManager wrapper
-
-```csharp
-// Method signature
-public string BEAM_UPDATEBEAMNO(
-    string P_BEAMNO,      // Actually BEAMERNO (confusing naming)
-    DateTime P_ENDDATE,
-    string P_STATUS)
-{
-    string result = string.Empty;
-
-    // Input validation - BEAMNO required
-    if (string.IsNullOrWhiteSpace(P_BEAMNO))
-        return result; // Returns empty string
-
-    if (!HasConnection())
-        return result;
-
-    // Parameter setup
-    BEAM_UPDATEBEAMNOParameter dbPara = new BEAM_UPDATEBEAMNOParameter();
-    dbPara.P_BEAMNO = P_BEAMNO;     // BEAMERNO value
-    dbPara.P_ENDDATE = P_ENDDATE;
-    dbPara.P_STATUS = P_STATUS;     // S/P/F
-
-    // Execute update
-    dbResult = DatabaseManager.Instance.BEAM_UPDATEBEAMNO(dbPara);
-
-    result = dbResult.R_RESULT; // Returns success/error message
-
-    return result;
-}
-```
-
-**Usage Patterns**:
-
-**Pattern 1: Start Production (S → P)**
-```csharp
-// When first beam starts
-string result = BeamingDataService.Instance.BEAM_UPDATEBEAMNO(
-    beamerNo,
-    DateTime.Now,
-    "P"  // Processing
-);
-```
-
-**Pattern 2: Complete Setup (P → F)**
-```csharp
-// When all beams finished
-string result = BeamingDataService.Instance.BEAM_UPDATEBEAMNO(
-    beamerNo,
-    DateTime.Now,
-    "F"  // Finished
-);
-
-if (!string.IsNullOrEmpty(result))
-{
-    MessageBox.Show("Setup completed successfully");
-    UpdateMachineStatus(); // Refresh machine display
-}
-```
-
-**Pattern 3: Cancel Setup**
-```csharp
-// If setup needs to be cancelled
-string result = BeamingDataService.Instance.BEAM_UPDATEBEAMNO(
-    beamerNo,
-    DateTime.Now,
-    "C"  // Cancelled (if supported)
-);
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: BEAM_UPDATEBEAMNOParameter
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 
