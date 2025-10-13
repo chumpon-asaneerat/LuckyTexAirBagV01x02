@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Change beaming machine assignment for a beam setup |
 | **Operation** | UPDATE |
-| **Tables** | tblBeamingSetup |
 | **Called From** | BeamingDataService.cs:1583 → BEAM_EDITBEAMERMC() |
 | **Frequency** | Low (only when machine needs to be changed) |
 | **Performance** | Fast (single record update) |
@@ -38,25 +37,6 @@
 ### Returns (if cursor)
 
 N/A - Returns single string result
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblBeamingSetup` - UPDATE - Changes machine assignment for beam setup
-
-**Transaction**: Yes (single update operation with validation)
-
-### Indexes (if relevant)
-
-```sql
--- Expected indexes
-CREATE INDEX idx_beamingsetup_beamerno ON tblBeamingSetup(BEAMERNO);
-CREATE INDEX idx_beamingsetup_beammc ON tblBeamingSetup(BEAMMC);
-```
 
 ---
 
@@ -109,109 +89,17 @@ Allows changing the beaming machine assignment when a beam setup needs to be mov
 
 ## Query/Code Location
 
-**File**: `BeamingDataService.cs`
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
+
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\BeamingDataService.cs`
 **Method**: `BEAM_EDITBEAMERMC()`
 **Line**: 1583-1618
 
-**Query Type**: Stored Procedure Call (Oracle)
-
-```csharp
-public string BEAM_EDITBEAMERMC(string P_BEAMERNO, string P_BEAMMC,
-    string P_NEWBEAMMC, string P_OPERATOR)
-{
-    string result = string.Empty;
-
-    // Validation: beamer number and current machine required
-    if (string.IsNullOrWhiteSpace(P_BEAMERNO))
-        return result;
-
-    if (string.IsNullOrWhiteSpace(P_BEAMMC))
-        return result;
-
-    if (!HasConnection())
-        return result;
-
-    // Prepare parameters
-    BEAM_EDITBEAMERMCParameter dbPara = new BEAM_EDITBEAMERMCParameter();
-    dbPara.P_BEAMERNO = P_BEAMERNO;
-    dbPara.P_BEAMMC = P_BEAMMC;
-    dbPara.P_NEWBEAMMC = P_NEWBEAMMC;
-    dbPara.P_OPERATOR = P_OPERATOR;
-
-    BEAM_EDITBEAMERMCResult dbResult = null;
-
-    try
-    {
-        // Call Oracle stored procedure
-        dbResult = DatabaseManager.Instance.BEAM_EDITBEAMERMC(dbPara);
-
-        result = dbResult.RESULT;
-    }
-    catch (Exception ex)
-    {
-        ex.Err();
-        result = string.Empty;
-    }
-
-    return result;
-}
-```
-
-**Expected Oracle Stored Procedure Logic**:
-```sql
--- Estimated stored procedure structure
-PROCEDURE BEAM_EDITBEAMERMC(
-    P_BEAMERNO IN VARCHAR2,
-    P_BEAMMC IN VARCHAR2,
-    P_NEWBEAMMC IN VARCHAR2,
-    P_OPERATOR IN VARCHAR2,
-    O_RESULT OUT VARCHAR2
-)
-IS
-    v_count NUMBER;
-    v_new_mc_busy NUMBER;
-BEGIN
-    -- Validate setup exists with current machine
-    SELECT COUNT(*) INTO v_count
-    FROM tblBeamingSetup
-    WHERE BEAMERNO = P_BEAMERNO
-      AND BEAMMC = P_BEAMMC
-      AND STATUS NOT IN ('C', 'F'); -- Not completed/finished
-
-    IF v_count = 0 THEN
-        O_RESULT := 'ERROR: Setup not found or already completed';
-        RETURN;
-    END IF;
-
-    -- Check if new machine is available
-    SELECT COUNT(*) INTO v_new_mc_busy
-    FROM tblBeamingSetup
-    WHERE BEAMMC = P_NEWBEAMMC
-      AND STATUS IN ('S', 'P'); -- Processing status
-
-    IF v_new_mc_busy > 0 THEN
-        O_RESULT := 'ERROR: New machine is busy';
-        RETURN;
-    END IF;
-
-    -- Update machine assignment
-    UPDATE tblBeamingSetup
-    SET BEAMMC = P_NEWBEAMMC,
-        EDITBY = P_OPERATOR,
-        EDITDATE = SYSDATE
-    WHERE BEAMERNO = P_BEAMERNO
-      AND BEAMMC = P_BEAMMC;
-
-    COMMIT;
-
-    O_RESULT := 'SUCCESS: Machine changed to ' || P_NEWBEAMMC;
-
-EXCEPTION
-    WHEN OTHERS THEN
-        ROLLBACK;
-        O_RESULT := 'ERROR: ' || SQLERRM;
-END;
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: BEAM_EDITBEAMERMCParameter
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 

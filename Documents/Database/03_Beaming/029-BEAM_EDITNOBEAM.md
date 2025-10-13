@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Edit/change beam number for a completed beam roll |
 | **Operation** | UPDATE |
-| **Tables** | tblBeamingProcess |
 | **Called From** | BeamingDataService.cs:1545 → BEAM_EDITNOBEAM() |
 | **Frequency** | Low (corrections only) |
 | **Performance** | Fast |
@@ -34,17 +33,6 @@
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `R_RESULT` | VARCHAR2 | Result message |
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblBeamingProcess` - UPDATE - Changes beam number
-
-**Transaction**: Yes
 
 ---
 
@@ -76,44 +64,17 @@ Changes beam number when incorrectly assigned or needs correction for tracking/l
 
 ## Query/Code Location
 
-**File**: `BeamingDataService.cs`
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
+
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\BeamingDataService.cs`
 **Method**: `BEAM_EDITNOBEAM()`
 **Line**: 1545-1577
 
-```csharp
-public string BEAM_EDITNOBEAM(string P_BEAMROLL, string P_OLDNO,
-    string P_NEWNO, string P_OPERATOR)
-{
-    string result = string.Empty;
-
-    if (string.IsNullOrWhiteSpace(P_BEAMROLL))
-        return result;
-
-    if (!HasConnection())
-        return result;
-
-    BEAM_EDITNOBEAMParameter dbPara = new BEAM_EDITNOBEAMParameter();
-    dbPara.P_BEAMROLL = P_BEAMROLL;
-    dbPara.P_OLDNO = P_OLDNO;
-    dbPara.P_NEWNO = P_NEWNO;
-    dbPara.P_OPERATOR = P_OPERATOR;
-
-    BEAM_EDITNOBEAMResult dbResult = null;
-
-    try
-    {
-        dbResult = DatabaseManager.Instance.BEAM_EDITNOBEAM(dbPara);
-        result = dbResult.R_RESULT;
-    }
-    catch (Exception ex)
-    {
-        ex.Err();
-        result = string.Empty;
-    }
-
-    return result;
-}
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: BEAM_EDITNOBEAMParameter
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 

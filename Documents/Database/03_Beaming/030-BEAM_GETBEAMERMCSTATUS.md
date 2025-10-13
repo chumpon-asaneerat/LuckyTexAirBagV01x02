@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get beaming machine status and current setup information |
 | **Operation** | SELECT |
-| **Tables** | tblBeamingSetup |
 | **Called From** | BeamingDataService.cs:586 → BEAM_GETBEAMERMCSTATUS() |
 | **Frequency** | High (real-time machine monitoring) |
 | **Performance** | Fast |
@@ -54,23 +53,6 @@ N/A - Returns result set
 
 ---
 
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblBeamingSetup` - SELECT - Current machine setup status
-
-**Transaction**: No (read-only)
-
-### Indexes (if relevant)
-
-```sql
-CREATE INDEX idx_beamingsetup_mcno ON tblBeamingSetup(MCNO, STATUS);
-```
-
----
-
 ## Business Logic (What it does and why)
 
 Retrieves current status of beaming machines for production monitoring dashboard. Shows what each machine is currently working on, progress, and setup details.
@@ -106,64 +88,17 @@ Retrieves current status of beaming machines for production monitoring dashboard
 
 ## Query/Code Location
 
-**File**: `BeamingDataService.cs`
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
+
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\BeamingDataService.cs`
 **Method**: `BEAM_GETBEAMERMCSTATUS()`
 **Line**: 586-638
 
-```csharp
-public List<BEAM_GETBEAMERMCSTATUS> BEAM_GETBEAMERMCSTATUS(string P_MCNO)
-{
-    List<BEAM_GETBEAMERMCSTATUS> results = null;
-
-    if (!HasConnection())
-        return results;
-
-    BEAM_GETBEAMERMCSTATUSParameter dbPara = new BEAM_GETBEAMERMCSTATUSParameter();
-    dbPara.P_MCNO = P_MCNO;
-
-    List<BEAM_GETBEAMERMCSTATUSResult> dbResults = null;
-
-    try
-    {
-        dbResults = DatabaseManager.Instance.BEAM_GETBEAMERMCSTATUS(dbPara);
-        if (null != dbResults)
-        {
-            results = new List<BEAM_GETBEAMERMCSTATUS>();
-
-            foreach (BEAM_GETBEAMERMCSTATUSResult dbResult in dbResults)
-            {
-                BEAM_GETBEAMERMCSTATUS inst = new BEAM_GETBEAMERMCSTATUS();
-
-                inst.BEAMERNO = dbResult.BEAMERNO;
-                inst.ITM_PREPARE = dbResult.ITM_PREPARE;
-                inst.TOTALYARN = dbResult.TOTALYARN;
-                inst.TOTALKEBA = dbResult.TOTALKEBA;
-                inst.STARTDATE = dbResult.STARTDATE;
-                inst.ENDDATE = dbResult.ENDDATE;
-                inst.CREATEBY = dbResult.CREATEBY;
-                inst.CREATEDATE = dbResult.CREATEDATE;
-                inst.STATUS = dbResult.STATUS;
-                inst.FINISHFLAG = dbResult.FINISHFLAG;
-                inst.MCNO = dbResult.MCNO;
-                inst.WARPHEADNO = dbResult.WARPHEADNO;
-                inst.PRODUCTTYPEID = dbResult.PRODUCTTYPEID;
-                inst.ADJUSTKEBA = dbResult.ADJUSTKEBA;
-                inst.REMARK = dbResult.REMARK;
-                inst.NOWARPBEAM = dbResult.NOWARPBEAM;
-                inst.TOTALBEAM = dbResult.TOTALBEAM;
-
-                results.Add(inst);
-            }
-        }
-    }
-    catch (Exception ex)
-    {
-        ex.Err();
-    }
-
-    return results;
-}
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: BEAM_GETBEAMERMCSTATUSParameter
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 

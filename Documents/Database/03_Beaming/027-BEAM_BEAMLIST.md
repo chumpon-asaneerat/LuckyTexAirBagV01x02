@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Search and list completed beam production records |
 | **Operation** | SELECT |
-| **Tables** | tblBeamingProcess, tblBeamingSetup |
 | **Called From** | BeamingDataService.cs:1005 → BEAM_BEAMLIST() |
 | **Frequency** | Medium (production reporting and beam tracking) |
 | **Performance** | Medium (joins with multiple filters and date range) |
@@ -66,28 +65,6 @@ N/A - Returns result set
 | `WARPHEADNO` | VARCHAR2(50) | Warping head number (upstream traceability) |
 | `TOTALYARN` | NUMBER | Total yarn count |
 | `TOTALKEBA` | NUMBER | Total keba count |
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblBeamingProcess` - SELECT - Completed beam production records
-- `tblBeamingSetup` - SELECT (JOIN) - Product and warp beam information
-
-**Transaction**: No (read-only query)
-
-### Indexes (if relevant)
-
-```sql
--- Expected indexes for search performance
-CREATE INDEX idx_beamingprocess_beamerno ON tblBeamingProcess(BEAMERNO);
-CREATE INDEX idx_beamingprocess_beammc ON tblBeamingProcess(BEAMMC);
-CREATE INDEX idx_beamingprocess_dates ON tblBeamingProcess(STARTDATE, ENDDATE);
-CREATE INDEX idx_beamingprocess_composite ON tblBeamingProcess(BEAMMC, STARTDATE);
-```
 
 ---
 
@@ -149,93 +126,17 @@ Provides comprehensive search and reporting for completed beaming operations. Us
 
 ## Query/Code Location
 
-**File**: `BeamingDataService.cs`
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
+
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\BeamingDataService.cs`
 **Method**: `BEAM_BEAMLIST()`
 **Line**: 1005-1081
 
-**Query Type**: Stored Procedure Call (Oracle)
-
-```csharp
-public List<BEAM_BEAMLIST> BEAM_BEAMLIST(string P_BEAMERNO, string P_MC,
-    string P_ITMPREPARE, string P_STARTDATE, string P_ENDDATE)
-{
-    List<BEAM_BEAMLIST> results = null;
-
-    if (!HasConnection())
-        return results;
-
-    BEAM_BEAMLISTParameter dbPara = new BEAM_BEAMLISTParameter();
-    dbPara.P_BEAMERNO = P_BEAMERNO;
-    dbPara.P_MC = P_MC;
-    dbPara.P_ITMPREPARE = P_ITMPREPARE;
-    dbPara.P_STARTDATE = P_STARTDATE;
-    dbPara.P_ENDDATE = P_ENDDATE;
-
-    List<BEAM_BEAMLISTResult> dbResults = null;
-
-    try
-    {
-        dbResults = DatabaseManager.Instance.BEAM_BEAMLIST(dbPara);
-        if (null != dbResults)
-        {
-            results = new List<BEAM_BEAMLIST>();
-            foreach (BEAM_BEAMLISTResult dbResult in dbResults)
-            {
-                BEAM_BEAMLIST inst = new BEAM_BEAMLIST();
-
-                inst.BEAMERNO = dbResult.BEAMERNO;
-                inst.BEAMLOT = dbResult.BEAMLOT;
-                inst.BEAMNO = dbResult.BEAMNO;
-                inst.STARTDATE = dbResult.STARTDATE;
-                inst.ENDDATE = dbResult.ENDDATE;
-                inst.LENGTH = dbResult.LENGTH;
-                inst.SPEED = dbResult.SPEED;
-                inst.BEAMSTANDTENSION = dbResult.BEAMSTANDTENSION;
-                inst.WINDINGTENSION = dbResult.WINDINGTENSION;
-                inst.HARDNESS_L = dbResult.HARDNESS_L;
-                inst.HARDNESS_N = dbResult.HARDNESS_N;
-                inst.HARDNESS_R = dbResult.HARDNESS_R;
-                inst.INSIDE_WIDTH = dbResult.INSIDE_WIDTH;
-                inst.OUTSIDE_WIDTH = dbResult.OUTSIDE_WIDTH;
-                inst.FULL_WIDTH = dbResult.FULL_WIDTH;
-                inst.STARTBY = dbResult.STARTBY;
-                inst.DOFFBY = dbResult.DOFFBY;
-                inst.BEAMMC = dbResult.BEAMMC;
-                inst.FLAG = dbResult.FLAG;
-                inst.REMARK = dbResult.REMARK;
-
-                // 10 station tensions
-                inst.TENSION_ST1 = dbResult.TENSION_ST1;
-                inst.TENSION_ST2 = dbResult.TENSION_ST2;
-                inst.TENSION_ST3 = dbResult.TENSION_ST3;
-                inst.TENSION_ST4 = dbResult.TENSION_ST4;
-                inst.TENSION_ST5 = dbResult.TENSION_ST5;
-                inst.TENSION_ST6 = dbResult.TENSION_ST6;
-                inst.TENSION_ST7 = dbResult.TENSION_ST7;
-                inst.TENSION_ST8 = dbResult.TENSION_ST8;
-                inst.TENSION_ST9 = dbResult.TENSION_ST9;
-                inst.TENSION_ST10 = dbResult.TENSION_ST10;
-
-                inst.EDITBY = dbResult.EDITBY;
-                inst.OLDBEAMNO = dbResult.OLDBEAMNO;
-                inst.EDITDATE = dbResult.EDITDATE;
-                inst.ITM_PREPARE = dbResult.ITM_PREPARE;
-                inst.WARPHEADNO = dbResult.WARPHEADNO;
-                inst.TOTALYARN = dbResult.TOTALYARN;
-                inst.TOTALKEBA = dbResult.TOTALKEBA;
-
-                results.Add(inst);
-            }
-        }
-    }
-    catch (Exception ex)
-    {
-        ex.Err();
-    }
-
-    return results;
-}
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: BEAM_BEAMLISTParameter
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 
