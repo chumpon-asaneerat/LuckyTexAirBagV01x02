@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get creel setup status for machine and side |
 | **Operation** | SELECT |
-| **Tables** | tblWarpingHead, tblWarpingCreelSetup |
 | **Called From** | WarpingDataService.cs:842 → WARP_GETCREELSETUPSTATUS() |
 | **Frequency** | High (monitors machine status) |
 | **Performance** | Fast |
@@ -56,26 +55,6 @@ None - Returns result set via cursor
 
 ---
 
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblWarpingHead` - SELECT - Main setup header
-- `tblWarpingCreelSetup` - SELECT JOIN - Setup details
-
-**Transaction**: No (read-only operation)
-
-### Indexes (if relevant)
-
-```sql
--- Expected indexes
-CREATE INDEX idx_warpinghead_mcno_side ON tblWarpingHead(WARPMC, SIDE);
-CREATE INDEX idx_warpinghead_status ON tblWarpingHead(STATUS);
-```
-
----
-
 ## Business Logic (What it does and why)
 
 Retrieves current creel setup status for specified machine and side. Used for monitoring machine status, displaying active setups, and checking if machine is available. Returns complete setup information including item being processed, start/end times, status flags, and responsible operators.
@@ -106,61 +85,15 @@ Retrieves current creel setup status for specified machine and side. Used for mo
 
 ## Query/Code Location
 
-**File**: `WarpingDataService.cs`
+**Note**: This project uses Oracle stored procedures called from C# DataService classes.
+
+**DataService File**: `LuckyTex.AirBag.Core\Services\DataService\WarpingDataService.cs`
 **Method**: `WARP_GETCREELSETUPSTATUS()`
-**Line**: 842-894
+**Lines**: 842-894
 
-**Query Type**: Stored Procedure Call (Oracle)
-
-```csharp
-public List<WARP_GETCREELSETUPSTATUS> WARP_GETCREELSETUPSTATUS(string P_MCNO, string P_SIDE)
-{
-    List<WARP_GETCREELSETUPSTATUS> results = null;
-
-    if (!HasConnection())
-        return results;
-
-    WARP_GETCREELSETUPSTATUSParameter dbPara = new WARP_GETCREELSETUPSTATUSParameter();
-    dbPara.P_MCNO = P_MCNO;
-    dbPara.P_SIDE = P_SIDE;
-
-    try
-    {
-        dbResults = DatabaseManager.Instance.WARP_GETCREELSETUPSTATUS(dbPara);
-        if (null != dbResults)
-        {
-            results = new List<WARP_GETCREELSETUPSTATUS>();
-            foreach (var dbResult in dbResults)
-            {
-                // Map 17 columns
-                inst.WARPHEADNO = dbResult.WARPHEADNO;
-                inst.ITM_PREPARE = dbResult.ITM_PREPARE;
-                inst.PRODUCTTYPEID = dbResult.PRODUCTTYPEID;
-                inst.WARPMC = dbResult.WARPMC;
-                inst.SIDE = dbResult.SIDE;
-                inst.ACTUALCH = dbResult.ACTUALCH;
-                inst.WTYPE = dbResult.WTYPE;
-                inst.STARTDATE = dbResult.STARTDATE;
-                inst.CREATEBY = dbResult.CREATEBY;
-                inst.CONDITIONSTART = dbResult.CONDITIONSTART;
-                inst.CONDITIONBY = dbResult.CONDITIONBY;
-                inst.ENDDATE = dbResult.ENDDATE;
-                inst.STATUS = dbResult.STATUS;
-                inst.FINISHBY = dbResult.FINISHBY;
-                inst.FINISHFLAG = dbResult.FINISHFLAG;
-                inst.REEDNO = dbResult.REEDNO;
-                inst.EDITBY = dbResult.EDITBY;
-                inst.EDITDATE = dbResult.EDITDATE;
-
-                results.Add(inst);
-            }
-        }
-    }
-    catch (Exception ex) { ex.Err(); }
-
-    return results;
-}
-```
+**Database Manager File**: `LuckyTex.AirBag.Core\Domains\AirbagSPs.cs`
+**Method**: `WARP_GETCREELSETUPSTATUS(WARP_GETCREELSETUPSTATUSParameter para)`
+**Lines**: (locate in AirbagSPs.cs)
 
 ---
 
