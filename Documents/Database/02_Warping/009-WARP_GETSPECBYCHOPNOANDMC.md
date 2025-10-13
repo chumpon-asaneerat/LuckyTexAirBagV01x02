@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get warping specifications by item prepare and machine |
 | **Operation** | SELECT |
-| **Tables** | tblWarpingSpec, tblItemPrepare, tblMachine |
 | **Called From** | WarpingDataService.cs:243 → WARP_GETSPECBYCHOPNOANDMC() |
 | **Frequency** | High (loading production specs for setup) |
 | **Performance** | Fast |
@@ -58,27 +57,6 @@ None - Returns result set via cursor
 
 ---
 
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblWarpingSpec` - SELECT - Warping specifications by item and machine
-- `tblItemPrepare` - SELECT JOIN - Item preparation details
-- `tblMachine` - SELECT JOIN - Machine-specific parameters
-
-**Transaction**: No (read-only operation)
-
-### Indexes (if relevant)
-
-```sql
--- Expected indexes
-CREATE INDEX idx_warpingspec_itm_mc ON tblWarpingSpec(ITM_PREPARE, MCNO);
-CREATE INDEX idx_itemprepare_code ON tblItemPrepare(ITM_PREPARE);
-```
-
----
-
 ## Business Logic (What it does and why)
 
 Retrieves complete warping specifications for a specific item-machine combination. When operator starts new warping setup, system loads all technical parameters required for production including speed, tension, hardness ranges, and material requirements. These specs guide operator in machine setup and provide quality control limits.
@@ -115,63 +93,15 @@ Retrieves complete warping specifications for a specific item-machine combinatio
 
 ## Query/Code Location
 
-**File**: `WarpingDataService.cs`
+**Note**: This project uses Oracle stored procedures called from C# DataService classes.
+
+**DataService File**: `LuckyTex.AirBag.Core\Services\DataService\WarpingDataService.cs`
 **Method**: `WARP_GETSPECBYCHOPNOANDMC()`
-**Line**: 243-297
+**Lines**: 243-297
 
-**Query Type**: Stored Procedure Call (Oracle)
-
-```csharp
-public List<WARP_GETSPECBYCHOPNOANDMC> WARP_GETSPECBYCHOPNOANDMC(string P_ITMPREPARE, string P_MCNO)
-{
-    List<WARP_GETSPECBYCHOPNOANDMC> results = null;
-
-    if (!HasConnection())
-        return results;
-
-    WARP_GETSPECBYCHOPNOANDMCParameter dbPara = new WARP_GETSPECBYCHOPNOANDMCParameter();
-    dbPara.P_ITMPREPARE = P_ITMPREPARE;
-    dbPara.P_MCNO = P_MCNO;
-
-    try
-    {
-        dbResults = DatabaseManager.Instance.WARP_GETSPECBYCHOPNOANDMC(dbPara);
-        if (null != dbResults)
-        {
-            results = new List<WARP_GETSPECBYCHOPNOANDMC>();
-            foreach (var dbResult in dbResults)
-            {
-                // Map 19 columns - all critical production parameters
-                inst.CHOPNO = dbResult.CHOPNO;
-                inst.ITM_YARN = dbResult.ITM_YARN;
-                inst.WARPERENDS = dbResult.WARPERENDS;
-                inst.MAXLENGTH = dbResult.MAXLENGTH;
-                inst.MINLENGTH = dbResult.MINLENGTH;
-                inst.WAXING = dbResult.WAXING;
-                inst.COMBTYPE = dbResult.COMBTYPE;
-                inst.COMBPITCH = dbResult.COMBPITCH;
-                inst.KEBAYARN = dbResult.KEBAYARN;
-                inst.NOWARPBEAM = dbResult.NOWARPBEAM;
-                inst.MAXHARDNESS = dbResult.MAXHARDNESS;
-                inst.MINHARDNESS = dbResult.MINHARDNESS;
-                inst.MCNO = dbResult.MCNO;
-                inst.SPEED = dbResult.SPEED;
-                inst.SPEED_MARGIN = dbResult.SPEED_MARGIN;
-                inst.YARN_TENSION = dbResult.YARN_TENSION;
-                inst.YARN_TENSION_MARGIN = dbResult.YARN_TENSION_MARGIN;
-                inst.WINDING_TENSION = dbResult.WINDING_TENSION;
-                inst.WINDING_TENSION_MARGIN = dbResult.WINDING_TENSION_MARGIN;
-                inst.NOCH = dbResult.NOCH;
-
-                results.Add(inst);
-            }
-        }
-    }
-    catch (Exception ex) { ex.Err(); }
-
-    return results;
-}
-```
+**Database Manager File**: `LuckyTex.AirBag.Core\Domains\AirbagSPs.cs`
+**Method**: `WARP_GETSPECBYCHOPNOANDMC(WARP_GETSPECBYCHOPNOANDMCParameter para)`
+**Lines**: (locate in AirbagSPs.cs)
 
 ---
 

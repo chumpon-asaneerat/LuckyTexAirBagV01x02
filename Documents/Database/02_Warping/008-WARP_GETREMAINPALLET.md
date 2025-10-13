@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get remaining available pallets for specific yarn item |
 | **Operation** | SELECT |
-| **Tables** | tblYarnPallet |
 | **Called From** | WarpingDataService.cs:669 → WARP_GETREMAINPALLET() |
 | **Frequency** | High (selecting pallets for setup) |
 | **Performance** | Fast |
@@ -55,25 +54,6 @@ None - Returns result set via cursor
 
 ---
 
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblYarnPallet` - SELECT - Available pallets filtered by yarn item and availability
-
-**Transaction**: No (read-only operation)
-
-### Indexes (if relevant)
-
-```sql
--- Expected indexes
-CREATE INDEX idx_yarnpallet_item ON tblYarnPallet(ITM_YARN);
-CREATE INDEX idx_yarnpallet_flags ON tblYarnPallet(FINISHFLAG, RETURNFLAG);
-```
-
----
-
 ## Business Logic (What it does and why)
 
 Retrieves list of available pallets for specific yarn item during creel setup. Filters pallets to show only those with remaining quantity (not finished, not returned). Displays remaining cheese count to help operator select appropriate pallets for production. Essential for pallet selection during warping setup.
@@ -107,60 +87,15 @@ Retrieves list of available pallets for specific yarn item during creel setup. F
 
 ## Query/Code Location
 
-**File**: `WarpingDataService.cs`
+**Note**: This project uses Oracle stored procedures called from C# DataService classes.
+
+**DataService File**: `LuckyTex.AirBag.Core\Services\DataService\WarpingDataService.cs`
 **Method**: `WARP_GETREMAINPALLET()`
-**Line**: 669-720
+**Lines**: 669-720
 
-**Query Type**: Stored Procedure Call (Oracle)
-
-```csharp
-public List<WARP_GETREMAINPALLET> WARP_GETREMAINPALLET(string P_ITEM_YARN)
-{
-    List<WARP_GETREMAINPALLET> results = null;
-
-    if (!HasConnection())
-        return results;
-
-    WARP_GETREMAINPALLETParameter dbPara = new WARP_GETREMAINPALLETParameter();
-    dbPara.P_ITEM_YARN = P_ITEM_YARN;
-
-    try
-    {
-        dbResults = DatabaseManager.Instance.WARP_GETREMAINPALLET(dbPara);
-        if (null != dbResults)
-        {
-            results = new List<WARP_GETREMAINPALLET>();
-            foreach (var dbResult in dbResults)
-            {
-                // Map 17 columns
-                inst.ITM_YARN = dbResult.ITM_YARN;
-                inst.RECEIVEDATE = dbResult.RECEIVEDATE;
-                inst.PALLETNO = dbResult.PALLETNO;
-                inst.RECEIVEWEIGHT = dbResult.RECEIVEWEIGHT;
-                inst.RECEIVECH = dbResult.RECEIVECH;
-                inst.USEDWEIGHT = dbResult.USEDWEIGHT;
-                inst.USEDCH = dbResult.USEDCH;
-                inst.VERIFY = dbResult.VERIFY;
-                inst.REJECTID = dbResult.REJECTID;
-                inst.FINISHFLAG = dbResult.FINISHFLAG;
-                inst.RETURNFLAG = dbResult.RETURNFLAG;
-                inst.REJECTCH = dbResult.REJECTCH;
-                inst.CREATEDATE = dbResult.CREATEDATE;
-                inst.CREATEBY = dbResult.CREATEBY;
-                inst.CLEARBY = dbResult.CLEARBY;
-                inst.REMARK = dbResult.REMARK;
-                inst.CLEARDATE = dbResult.CLEARDATE;
-                inst.REMAINCH = dbResult.REMAINCH; // Calculated field
-
-                results.Add(inst);
-            }
-        }
-    }
-    catch (Exception ex) { ex.Err(); }
-
-    return results;
-}
-```
+**Database Manager File**: `LuckyTex.AirBag.Core\Domains\AirbagSPs.cs`
+**Method**: `WARP_GETREMAINPALLET(WARP_GETREMAINPALLETParameter para)`
+**Lines**: (locate in AirbagSPs.cs)
 
 ---
 
