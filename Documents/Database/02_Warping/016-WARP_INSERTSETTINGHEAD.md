@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Create new warping creel setup header record |
 | **Operation** | INSERT |
-| **Tables** | tblWarpingHead |
 | **Called From** | WarpingDataService.cs:1492 → WARP_INSERTSETTINGHEAD() |
 | **Frequency** | Medium (starting new warping setup) |
 | **Performance** | Fast |
@@ -43,25 +42,6 @@
 ### Returns (if cursor)
 
 N/A - Returns single string (new head number or error)
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblWarpingHead` - INSERT - New setup header record
-
-**Transaction**: Yes (should be atomic operation)
-
-### Indexes (if relevant)
-
-```sql
--- Expected indexes
-CREATE UNIQUE INDEX uk_warpinghead_headno ON tblWarpingHead(WARPHEADNO);
-CREATE INDEX idx_warpinghead_item_mc ON tblWarpingHead(ITM_PREPARE, WARPMC, SIDE);
-```
 
 ---
 
@@ -103,58 +83,17 @@ Creates master header record for new warping creel setup. This is the first step
 
 ## Query/Code Location
 
-**File**: `WarpingDataService.cs`
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
+
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\WarpingDataService.cs`
 **Method**: `WARP_INSERTSETTINGHEAD()`
 **Line**: 1492-1529
 
-**Query Type**: Stored Procedure Call (Oracle)
-
-```csharp
-public string WARP_INSERTSETTINGHEAD(
-    string P_ITMPREPARE, string P_PRODUCTID, string P_MCNO, string P_SIDE,
-    decimal? P_ACTUALCH, string P_WTYPE, string P_OPERATOR,
-    string P_WARPERHEADNO, string P_REEDNO)
-{
-    string result = string.Empty;
-
-    // Validation: item prepare code required
-    if (string.IsNullOrWhiteSpace(P_ITMPREPARE))
-        return result;
-
-    if (!HasConnection())
-        return result;
-
-    // Prepare parameters
-    WARP_INSERTSETTINGHEADParameter dbPara = new WARP_INSERTSETTINGHEADParameter();
-    dbPara.P_ITMPREPARE = P_ITMPREPARE;
-    dbPara.P_PRODUCTID = P_PRODUCTID;
-    dbPara.P_MCNO = P_MCNO;
-    dbPara.P_SIDE = P_SIDE;
-    dbPara.P_ACTUALCH = P_ACTUALCH;
-    dbPara.P_WTYPE = P_WTYPE;
-    dbPara.P_OPERATOR = P_OPERATOR;
-    dbPara.P_WARPERHEADNO = P_WARPERHEADNO;
-    dbPara.P_REEDNO = P_REEDNO;
-
-    WARP_INSERTSETTINGHEADResult dbResult = null;
-
-    try
-    {
-        // Call Oracle stored procedure
-        dbResult = DatabaseManager.Instance.WARP_INSERTSETTINGHEAD(dbPara);
-
-        // Return generated head number or error message
-        result = dbResult.R_RESULT;
-    }
-    catch (Exception ex)
-    {
-        ex.Err();
-        result = string.Empty;
-    }
-
-    return result;
-}
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: `WARP_INSERTSETTINGHEAD(WARP_INSERTSETTINGHEADParameter)`
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 

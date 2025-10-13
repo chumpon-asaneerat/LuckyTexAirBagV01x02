@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Insert pallet allocation detail for creel setup |
 | **Operation** | INSERT |
-| **Tables** | tblWarpingCreelSetupDetail, tblYarnPallet |
 | **Called From** | WarpingDataService.cs:1535 → WARP_INSERTSETTINGDETAIL() |
 | **Frequency** | High (allocating pallets to setup) |
 | **Performance** | Fast |
@@ -36,26 +35,6 @@ None - Returns boolean success/failure
 ### Returns (if cursor)
 
 N/A - Returns execution result (success = true, failure = false)
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblWarpingCreelSetupDetail` - INSERT - Pallet allocation record
-- `tblYarnPallet` - UPDATE - Update used quantities
-
-**Transaction**: Yes (should maintain data integrity between allocation and pallet update)
-
-### Indexes (if relevant)
-
-```sql
--- Expected indexes
-CREATE INDEX idx_creelsetup_headno_pallet ON tblWarpingCreelSetupDetail(WARPHEADNO, PALLETNO);
-CREATE INDEX idx_yarnpallet_palletno ON tblYarnPallet(PALLETNO);
-```
 
 ---
 
@@ -95,50 +74,17 @@ Allocates yarn pallet to creel setup by creating detail record linking pallet to
 
 ## Query/Code Location
 
-**File**: `WarpingDataService.cs`
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
+
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\WarpingDataService.cs`
 **Method**: `WARP_INSERTSETTINGDETAIL()`
 **Line**: 1535-1567
 
-**Query Type**: Stored Procedure Call (Oracle)
-
-```csharp
-public bool WARP_INSERTSETTINGDETAIL(string P_WARPHEADNO, string P_PALLETNO, decimal? P_USED, decimal? P_REJECTCH)
-{
-    bool result = false;
-
-    // Validation: warping head number required
-    if (string.IsNullOrWhiteSpace(P_WARPHEADNO))
-        return result;
-
-    if (!HasConnection())
-        return result;
-
-    // Prepare parameters
-    WARP_INSERTSETTINGDETAILParameter dbPara = new WARP_INSERTSETTINGDETAILParameter();
-    dbPara.P_WARPHEADNO = P_WARPHEADNO;
-    dbPara.P_PALLETNO = P_PALLETNO;
-    dbPara.P_USED = P_USED; // Initial used amount
-    dbPara.P_REJECTCH = P_REJECTCH; // Reject count
-
-    WARP_INSERTSETTINGDETAILResult dbResult = null;
-
-    try
-    {
-        // Call Oracle stored procedure
-        dbResult = DatabaseManager.Instance.WARP_INSERTSETTINGDETAIL(dbPara);
-
-        // Success if result is not null
-        result = (null != dbResult);
-    }
-    catch (Exception ex)
-    {
-        ex.Err();
-        result = false;
-    }
-
-    return result;
-}
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: `WARP_INSERTSETTINGDETAIL(WARP_INSERTSETTINGDETAILParameter)`
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 
