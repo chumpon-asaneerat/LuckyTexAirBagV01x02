@@ -59,25 +59,6 @@ None - Returns result set via cursor
 
 ---
 
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblWarpingProcess` - SELECT - Beam production record by barcode
-
-**Transaction**: No (read-only operation)
-
-### Indexes (if relevant)
-
-```sql
--- Expected indexes
-CREATE INDEX idx_warpingprocess_beamno ON tblWarpingProcess(BEAMNO);
-CREATE UNIQUE INDEX uk_warpingprocess_beamno ON tblWarpingProcess(BEAMNO);
-```
-
----
-
 ## Business Logic (What it does and why)
 
 Retrieves complete production details for warper beam by scanning beam barcode. Critical for traceability - when beam barcode is scanned in downstream processes (beaming, drawing, weaving), this procedure provides all production history and quality data. Shows how beam was produced, quality metrics, and responsible operators.
@@ -116,65 +97,17 @@ Retrieves complete production details for warper beam by scanning beam barcode. 
 
 ## Query/Code Location
 
-**File**: `WarpingDataService.cs`
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
+
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\WarpingDataService.cs`
 **Method**: `WARP_GETWARPERROLLDETAIL()`
 **Line**: 1170-1225
 
-**Query Type**: Stored Procedure Call (Oracle)
-
-```csharp
-public List<WARP_GETWARPERROLLDETAIL> WARP_GETWARPERROLLDETAIL(string P_WARPERROLL)
-{
-    List<WARP_GETWARPERROLLDETAIL> results = null;
-
-    if (!HasConnection())
-        return results;
-
-    WARP_GETWARPERROLLDETAILParameter dbPara = new WARP_GETWARPERROLLDETAILParameter();
-    dbPara.P_WARPERROLL = P_WARPERROLL; // Beam barcode
-
-    try
-    {
-        dbResults = DatabaseManager.Instance.WARP_GETWARPERROLLDETAIL(dbPara);
-        if (null != dbResults)
-        {
-            results = new List<WARP_GETWARPERROLLDETAIL>();
-            foreach (var dbResult in dbResults)
-            {
-                // Map 22 columns - complete production record
-                inst.WARPHEADNO = dbResult.WARPHEADNO;
-                inst.WARPERLOT = dbResult.WARPERLOT;
-                inst.BEAMNO = dbResult.BEAMNO;
-                inst.SIDE = dbResult.SIDE;
-                inst.STARTDATE = dbResult.STARTDATE;
-                inst.ENDDATE = dbResult.ENDDATE;
-                inst.LENGTH = dbResult.LENGTH;
-                inst.SPEED = dbResult.SPEED;
-                inst.HARDNESS_L = dbResult.HARDNESS_L;
-                inst.HARDNESS_N = dbResult.HARDNESS_N;
-                inst.HARDNESS_R = dbResult.HARDNESS_R;
-                inst.TENSION = dbResult.TENSION;
-                inst.STARTBY = dbResult.STARTBY;
-                inst.DOFFBY = dbResult.DOFFBY;
-                inst.FLAG = dbResult.FLAG;
-                inst.WARPMC = dbResult.WARPMC;
-                inst.REMARK = dbResult.REMARK;
-                inst.TENSION_IT = dbResult.TENSION_IT;
-                inst.TENSION_TAKEUP = dbResult.TENSION_TAKEUP;
-                inst.MC_COUNT_L = dbResult.MC_COUNT_L;
-                inst.MC_COUNT_S = dbResult.MC_COUNT_S;
-                inst.EDITDATE = dbResult.EDITDATE;
-                inst.EDITBY = dbResult.EDITBY;
-
-                results.Add(inst);
-            }
-        }
-    }
-    catch (Exception ex) { ex.Err(); }
-
-    return results;
-}
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: `WARP_GETWARPERROLLDETAIL(WARP_GETWARPERROLLDETAILParameter)`
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 

@@ -37,24 +37,6 @@ N/A - Returns single string value
 
 ---
 
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblWarpingProcess` - SELECT - Remark field only
-
-**Transaction**: No (read-only operation)
-
-### Indexes (if relevant)
-
-```sql
--- Expected indexes
-CREATE INDEX idx_warpingprocess_lot ON tblWarpingProcess(WARPERLOT);
-```
-
----
-
 ## Business Logic (What it does and why)
 
 Retrieves remark/notes text for specific warper lot. Displays operator notes about production issues, quality concerns, or special instructions recorded during warping. Used when viewing lot details to show any important notes left by operators or supervisors.
@@ -88,46 +70,17 @@ Retrieves remark/notes text for specific warper lot. Displays operator notes abo
 
 ## Query/Code Location
 
-**File**: `WarpingDataService.cs`
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
+
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\WarpingDataService.cs`
 **Method**: `WARP_GETWARPERROLLREMARK()`
 **Line**: 1370-1400
 
-**Query Type**: Stored Procedure Call (Oracle)
-
-```csharp
-public string WARP_GETWARPERROLLREMARK(string P_WARPLOT)
-{
-    string result = string.Empty;
-
-    // Validation: warper lot required
-    if (string.IsNullOrWhiteSpace(P_WARPLOT))
-        return result;
-
-    if (!HasConnection())
-        return result;
-
-    WARP_GETWARPERROLLREMARKParameter dbPara = new WARP_GETWARPERROLLREMARKParameter();
-    dbPara.P_WARPLOT = P_WARPLOT;
-
-    WARP_GETWARPERROLLREMARKResult dbResult = null;
-
-    try
-    {
-        // Call Oracle stored procedure
-        dbResult = DatabaseManager.Instance.WARP_GETWARPERROLLREMARK(dbPara);
-
-        // Extract remark string
-        result = dbResult.R_REMARK;
-    }
-    catch (Exception ex)
-    {
-        ex.Err();
-        result = string.Empty;
-    }
-
-    return result;
-}
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: `WARP_GETWARPERROLLREMARK(WARP_GETWARPERROLLREMARKParameter)`
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 
