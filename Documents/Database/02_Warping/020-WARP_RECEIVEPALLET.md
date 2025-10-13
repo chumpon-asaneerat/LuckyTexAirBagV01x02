@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Receive and register new yarn pallet into warping inventory |
 | **Operation** | INSERT |
-| **Tables** | tblWarpingPallets |
 | **Called From** | WarpingDataService.cs:1406 → WARP_RECEIVEPALLET() |
 | **Frequency** | Medium (yarn receiving operations) |
 | **Performance** | Fast (single insert) |
@@ -40,26 +39,6 @@ N/A - Returns success/failure status
 ### Returns (if cursor)
 
 N/A - Returns boolean in C# (true = success, false = failure)
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblWarpingPallets` - INSERT - Creates new pallet record with initial inventory
-
-**Transaction**: Yes (single insert operation)
-
-### Indexes (if relevant)
-
-```sql
--- Expected indexes
-CREATE UNIQUE INDEX idx_pallet_pk ON tblWarpingPallets(PALLETNO, RECEIVEDATE);
-CREATE INDEX idx_pallet_itemyarn ON tblWarpingPallets(ITM_YARN);
-CREATE INDEX idx_pallet_createdate ON tblWarpingPallets(CREATEDATE);
-```
 
 ---
 
@@ -104,117 +83,17 @@ Registers a new yarn pallet into the warping inventory system when yarn is recei
 
 ## Query/Code Location
 
-**Note**: This project does NOT use stored procedures in the database. Queries are hardcoded in C# DataService classes.
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
 
-**File**: `WarpingDataService.cs`
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\WarpingDataService.cs`
 **Method**: `WARP_RECEIVEPALLET()`
 **Line**: 1406-1445
 
-**Query Type**: Stored Procedure Call (Oracle)
-
-```csharp
-public bool WARP_RECEIVEPALLET(string P_ITMYARN, DateTime? P_RECEIVEDATE, string P_PALLETNO,
-    decimal? P_WEIGHT, decimal? P_CH, string P_VERIFY, string P_REJECTID, string P_OPERATOR)
-{
-    bool result = false;
-
-    // Validation: pallet number and item yarn required
-    if (string.IsNullOrWhiteSpace(P_PALLETNO))
-        return result;
-    if (string.IsNullOrWhiteSpace(P_ITMYARN))
-        return result;
-
-    if (!HasConnection())
-        return result;
-
-    // Prepare parameters
-    WARP_RECEIVEPALLETParameter dbPara = new WARP_RECEIVEPALLETParameter();
-    dbPara.P_ITMYARN = P_ITMYARN;
-    dbPara.P_RECEIVEDATE = P_RECEIVEDATE;
-    dbPara.P_PALLETNO = P_PALLETNO;
-    dbPara.P_WEIGHT = P_WEIGHT;
-    dbPara.P_CH = P_CH;
-    dbPara.P_VERIFY = P_VERIFY;
-    dbPara.P_REJECTID = P_REJECTID;
-    dbPara.P_OPERATOR = P_OPERATOR;
-
-    WARP_RECEIVEPALLETResult dbResult = null;
-
-    try
-    {
-        // Call Oracle stored procedure
-        dbResult = DatabaseManager.Instance.WARP_RECEIVEPALLET(dbPara);
-
-        result = (null != dbResult);
-    }
-    catch (Exception ex)
-    {
-        ex.Err();
-        result = false;
-    }
-
-    return result;
-}
-```
-
-**Expected Oracle Stored Procedure Logic**:
-```sql
--- Estimated stored procedure structure
-PROCEDURE WARP_RECEIVEPALLET(
-    P_ITMYARN IN VARCHAR2,
-    P_RECEIVEDATE IN DATE,
-    P_PALLETNO IN VARCHAR2,
-    P_WEIGHT IN NUMBER,
-    P_CH IN NUMBER,
-    P_VERIFY IN VARCHAR2,
-    P_REJECTID IN VARCHAR2,
-    P_OPERATOR IN VARCHAR2
-)
-IS
-BEGIN
-    INSERT INTO tblWarpingPallets (
-        ITM_YARN,
-        RECEIVEDATE,
-        PALLETNO,
-        RECEIVEWEIGHT,
-        RECEIVECH,
-        USEDWEIGHT,
-        USEDCH,
-        REJECTCH,
-        VERIFY,
-        REJECTID,
-        FINISHFLAG,
-        RETURNFLAG,
-        CREATEDATE,
-        CREATEBY
-    ) VALUES (
-        P_ITMYARN,
-        NVL(P_RECEIVEDATE, SYSDATE),
-        P_PALLETNO,
-        NVL(P_WEIGHT, 0),
-        NVL(P_CH, 0),
-        0, -- USEDWEIGHT
-        0, -- USEDCH
-        0, -- REJECTCH
-        NVL(P_VERIFY, 'N'),
-        P_REJECTID,
-        'N', -- FINISHFLAG
-        'N', -- RETURNFLAG
-        SYSDATE,
-        P_OPERATOR
-    );
-
-    COMMIT;
-
-EXCEPTION
-    WHEN DUP_VAL_ON_INDEX THEN
-        ROLLBACK;
-        RAISE_APPLICATION_ERROR(-20001, 'Pallet number already exists');
-    WHEN OTHERS THEN
-        ROLLBACK;
-        RAISE;
-END;
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: `WARP_RECEIVEPALLET(WARP_RECEIVEPALLETParameter)`
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 

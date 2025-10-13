@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Update pallet usage quantities during creel setup allocation |
 | **Operation** | UPDATE |
-| **Tables** | tblWarpingPallets |
 | **Called From** | WarpingDataService.cs:1451 → WARP_UPDATEPALLET() |
 | **Frequency** | High (every creel setup when allocating pallets) |
 | **Performance** | Fast (single pallet update) |
@@ -38,25 +37,6 @@ N/A - Returns success/failure status
 ### Returns (if cursor)
 
 N/A - Returns boolean in C# (true = success, false = failure)
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblWarpingPallets` - UPDATE - Updates usage counters for pallet allocation
-
-**Transaction**: Yes (single update with potential trigger for FINISHFLAG)
-
-### Indexes (if relevant)
-
-```sql
--- Expected indexes
-CREATE UNIQUE INDEX idx_pallet_pk ON tblWarpingPallets(PALLETNO, RECEIVEDATE);
-CREATE INDEX idx_pallet_warpheadno ON tblWarpingPallets(WARPHEADNO);
-```
 
 ---
 
@@ -119,100 +99,17 @@ FINISHFLAG = 'N' (still has stock)
 
 ## Query/Code Location
 
-**Note**: This project does NOT use stored procedures in the database. Queries are hardcoded in C# DataService classes.
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
 
-**File**: `WarpingDataService.cs`
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\WarpingDataService.cs`
 **Method**: `WARP_UPDATEPALLET()`
 **Line**: 1451-1486
 
-**Query Type**: Stored Procedure Call (Oracle)
-
-```csharp
-public bool WARP_UPDATEPALLET(DateTime? P_RECEIVEDATE, string P_PALLETNO,
-    decimal? P_USEDCH, decimal? P_REJECTCH, decimal? P_REMAINCH, string P_WARPHEADNO)
-{
-    bool result = false;
-
-    // Validation: pallet number required
-    if (string.IsNullOrWhiteSpace(P_PALLETNO))
-        return result;
-
-    if (!HasConnection())
-        return result;
-
-    // Prepare parameters
-    WARP_UPDATEPALLETParameter dbPara = new WARP_UPDATEPALLETParameter();
-    dbPara.P_RECEIVEDATE = P_RECEIVEDATE;
-    dbPara.P_PALLETNO = P_PALLETNO;
-    dbPara.P_USEDCH = P_USEDCH;
-    dbPara.P_REJECTCH = P_REJECTCH;
-    dbPara.P_REMAINCH = P_REMAINCH;
-    dbPara.P_WARPHEADNO = P_WARPHEADNO;
-
-    WARP_UPDATEPALLETResult dbResult = null;
-
-    try
-    {
-        // Call Oracle stored procedure
-        dbResult = DatabaseManager.Instance.WARP_UPDATEPALLET(dbPara);
-
-        result = (null != dbResult);
-    }
-    catch (Exception ex)
-    {
-        ex.Err();
-        result = false;
-    }
-
-    return result;
-}
-```
-
-**Expected Oracle Stored Procedure Logic**:
-```sql
--- Estimated stored procedure structure
-PROCEDURE WARP_UPDATEPALLET(
-    P_RECEIVEDATE IN DATE,
-    P_PALLETNO IN VARCHAR2,
-    P_USEDCH IN NUMBER,
-    P_REJECTCH IN NUMBER,
-    P_REMAINCH IN NUMBER,
-    P_WARPHEADNO IN VARCHAR2
-)
-IS
-    v_receivech NUMBER;
-    v_kgperch NUMBER;
-BEGIN
-    -- Get pallet info
-    SELECT RECEIVECH, KGPERCH
-    INTO v_receivech, v_kgperch
-    FROM tblWarpingPallets
-    WHERE PALLETNO = P_PALLETNO
-      AND RECEIVEDATE = P_RECEIVEDATE;
-
-    -- Update pallet usage
-    UPDATE tblWarpingPallets
-    SET USEDCH = NVL(P_USEDCH, USEDCH),
-        REJECTCH = NVL(P_REJECTCH, REJECTCH),
-        USEDWEIGHT = NVL(P_USEDCH, USEDCH) * v_kgperch,
-        WARPHEADNO = P_WARPHEADNO,
-        FINISHFLAG = CASE
-            WHEN (v_receivech - NVL(P_USEDCH, USEDCH) - NVL(P_REJECTCH, REJECTCH)) <= 0
-            THEN 'Y'
-            ELSE 'N'
-        END,
-        EDITDATE = SYSDATE
-    WHERE PALLETNO = P_PALLETNO
-      AND RECEIVEDATE = P_RECEIVEDATE;
-
-    COMMIT;
-
-EXCEPTION
-    WHEN OTHERS THEN
-        ROLLBACK;
-        RAISE;
-END;
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: WARP_UPDATEPALLETParameter
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 

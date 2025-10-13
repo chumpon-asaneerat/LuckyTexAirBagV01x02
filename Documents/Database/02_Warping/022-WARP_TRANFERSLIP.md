@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get transfer slip data for completed warp beam (for printing/reporting) |
 | **Operation** | SELECT |
-| **Tables** | tblWarpingProcess, tblWarpingCreelSetup |
 | **Called From** | WarpingDataService.cs:606 → WARP_TRANFERSLIP() |
 | **Frequency** | Medium (every warp beam completion for transfer documentation) |
 | **Performance** | Fast (single beam lookup) |
@@ -53,27 +52,6 @@ N/A - Returns result set
 | `WARPMC` | VARCHAR2(50) | Warping machine number |
 | `ITM_PREPARE` | VARCHAR2(50) | Item prepare code (product) |
 | `ITM_YARN` | VARCHAR2(50) | Yarn item code used |
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblWarpingProcess` - SELECT - Completed warp beam production data
-- `tblWarpingCreelSetup` - SELECT (JOIN) - Product and yarn information
-
-**Transaction**: No (read-only query)
-
-### Indexes (if relevant)
-
-```sql
--- Expected indexes
-CREATE INDEX idx_warpingprocess_headno ON tblWarpingProcess(WARPHEADNO);
-CREATE INDEX idx_warpingprocess_warplot ON tblWarpingProcess(WARPERLOT);
-CREATE INDEX idx_warpingprocess_composite ON tblWarpingProcess(WARPHEADNO, WARPERLOT);
-```
 
 ---
 
@@ -123,123 +101,17 @@ Retrieves complete production data for a warp beam to generate transfer document
 
 ## Query/Code Location
 
-**Note**: This project does NOT use stored procedures in the database. Queries are hardcoded in C# DataService classes.
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
 
-**File**: `WarpingDataService.cs`
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\WarpingDataService.cs`
 **Method**: `WARP_TRANFERSLIP()`
 **Line**: 606-659
 
-**Query Type**: Stored Procedure Call (Oracle)
-
-```csharp
-public List<WARP_TRANFERSLIP> WARP_TRANFERSLIP(string P_WARPHEADNO, string P_WARPLOT)
-{
-    List<WARP_TRANFERSLIP> results = null;
-
-    if (!HasConnection())
-        return results;
-
-    // Prepare parameters
-    WARP_TRANFERSLIPParameter dbPara = new WARP_TRANFERSLIPParameter();
-    dbPara.P_WARPHEADNO = P_WARPHEADNO;
-    dbPara.P_WARPLOT = P_WARPLOT;
-
-    List<WARP_TRANFERSLIPResult> dbResults = null;
-
-    try
-    {
-        // Call Oracle stored procedure
-        dbResults = DatabaseManager.Instance.WARP_TRANFERSLIP(dbPara);
-        if (null != dbResults)
-        {
-            results = new List<WARP_TRANFERSLIP>();
-            foreach (WARP_TRANFERSLIPResult dbResult in dbResults)
-            {
-                WARP_TRANFERSLIP inst = new WARP_TRANFERSLIP();
-
-                inst.WARPHEADNO = dbResult.WARPHEADNO;
-                inst.WARPERLOT = dbResult.WARPERLOT;
-                inst.BEAMNO = dbResult.BEAMNO;
-                inst.SIDE = dbResult.SIDE;
-                inst.STARTDATE = dbResult.STARTDATE;
-                inst.ENDDATE = dbResult.ENDDATE;
-                inst.LENGTH = dbResult.LENGTH;
-                inst.SPEED = dbResult.SPEED;
-                inst.HARDNESS_L = dbResult.HARDNESS_L;
-                inst.HARDNESS_N = dbResult.HARDNESS_N;
-                inst.HARDNESS_R = dbResult.HARDNESS_R;
-                inst.TENSION = dbResult.TENSION;
-                inst.STARTBY = dbResult.STARTBY;
-                inst.DOFFBY = dbResult.DOFFBY;
-                inst.FLAG = dbResult.FLAG;
-                inst.WARPMC = dbResult.WARPMC;
-
-                // Item information from creel setup
-                inst.ITM_PREPARE = dbResult.ITM_PREPARE;
-                inst.ITM_YARN = dbResult.ITM_YARN;
-
-                results.Add(inst);
-            }
-        }
-    }
-    catch (Exception ex)
-    {
-        ex.Err();
-    }
-
-    return results;
-}
-```
-
-**Expected Oracle Stored Procedure Logic**:
-```sql
--- Estimated stored procedure structure
-PROCEDURE WARP_TRANFERSLIP(
-    P_WARPHEADNO IN VARCHAR2,
-    P_WARPLOT IN VARCHAR2,
-    CUR_RESULT OUT SYS_REFCURSOR
-)
-IS
-BEGIN
-    OPEN CUR_RESULT FOR
-    SELECT
-        wp.WARPHEADNO,
-        wp.WARPERLOT,
-        wp.BEAMNO,
-        wp.SIDE,
-        wp.STARTDATE,
-        wp.ENDDATE,
-        wp.LENGTH,
-        wp.SPEED,
-        wp.HARDNESS_L,
-        wp.HARDNESS_N,
-        wp.HARDNESS_R,
-        wp.TENSION,
-        wp.STARTBY,
-        wp.DOFFBY,
-        wp.FLAG,
-        wp.WARPMC,
-        wcs.ITM_PREPARE,
-        wcs.ITM_YARN
-    FROM tblWarpingProcess wp
-    INNER JOIN tblWarpingCreelSetup wcs
-        ON wp.WARPHEADNO = wcs.WARPHEADNO
-    WHERE wp.WARPHEADNO = P_WARPHEADNO
-      AND wp.WARPERLOT = P_WARPLOT;
-END;
-```
-
-**Report Usage**:
-This data is typically used to generate a transfer slip report/label that includes:
-- Barcode: WARPERLOT (for scanning at next operation)
-- Product: ITM_PREPARE
-- Yarn: ITM_YARN
-- Beam No: BEAMNO
-- Length: LENGTH meters
-- Machine: WARPMC
-- Date: ENDDATE
-- Operator: DOFFBY
-- QC Params: HARDNESS_L/N/R, TENSION, SPEED
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: WARP_TRANFERSLIPParameter
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 

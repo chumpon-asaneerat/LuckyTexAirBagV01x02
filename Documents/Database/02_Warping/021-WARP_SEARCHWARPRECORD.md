@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Search warping production records with multiple filter criteria |
 | **Operation** | SELECT |
-| **Tables** | tblWarpingCreelSetup |
 | **Called From** | WarpingDataService.cs:1070 → WARP_SEARCHWARPRECORD() |
 | **Frequency** | Medium (used in warping record search screen) |
 | **Performance** | Medium (multiple optional filters with wildcards) |
@@ -55,28 +54,6 @@ N/A - Returns result set
 | `REEDNO` | VARCHAR2(50) | Reed number used |
 | `EDITBY` | VARCHAR2(50) | Last operator to edit |
 | `EDITDATE` | DATE | Last edit timestamp |
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblWarpingCreelSetup` - SELECT - Warping creel setup records with multi-criteria search
-
-**Transaction**: No (read-only query)
-
-### Indexes (if relevant)
-
-```sql
--- Expected indexes for search performance
-CREATE INDEX idx_creelsetup_warpheadno ON tblWarpingCreelSetup(WARPHEADNO);
-CREATE INDEX idx_creelsetup_warpmc ON tblWarpingCreelSetup(WARPMC);
-CREATE INDEX idx_creelsetup_itmprepare ON tblWarpingCreelSetup(ITM_PREPARE);
-CREATE INDEX idx_creelsetup_startdate ON tblWarpingCreelSetup(STARTDATE);
-CREATE INDEX idx_creelsetup_composite ON tblWarpingCreelSetup(ITM_PREPARE, WARPMC, STARTDATE);
-```
 
 ---
 
@@ -125,115 +102,17 @@ Provides flexible search functionality for warping production records. Operators
 
 ## Query/Code Location
 
-**Note**: This project does NOT use stored procedures in the database. Queries are hardcoded in C# DataService classes.
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
 
-**File**: `WarpingDataService.cs`
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\WarpingDataService.cs`
 **Method**: `WARP_SEARCHWARPRECORD()`
 **Line**: 1070-1124
 
-**Query Type**: Stored Procedure Call (Oracle)
-
-```csharp
-public List<WARP_SEARCHWARPRECORD> WARP_SEARCHWARPRECORD(string P_WARPHEADNO, string P_WARPMC,
-    string P_ITMPREPARE, string P_STARTDATE)
-{
-    List<WARP_SEARCHWARPRECORD> results = null;
-
-    if (!HasConnection())
-        return results;
-
-    // Prepare parameters
-    WARP_SEARCHWARPRECORDParameter dbPara = new WARP_SEARCHWARPRECORDParameter();
-    dbPara.P_WARPHEADNO = P_WARPHEADNO;
-    dbPara.P_WARPMC = P_WARPMC;
-    dbPara.P_ITMPREPARE = P_ITMPREPARE;
-    dbPara.P_STARTDATE = P_STARTDATE;
-
-    List<WARP_SEARCHWARPRECORDResult> dbResults = null;
-
-    try
-    {
-        // Call Oracle stored procedure
-        dbResults = DatabaseManager.Instance.WARP_SEARCHWARPRECORD(dbPara);
-        if (null != dbResults)
-        {
-            results = new List<WARP_SEARCHWARPRECORD>();
-            foreach (WARP_SEARCHWARPRECORDResult dbResult in dbResults)
-            {
-                WARP_SEARCHWARPRECORD inst = new WARP_SEARCHWARPRECORD();
-
-                inst.WARPHEADNO = dbResult.WARPHEADNO;
-                inst.ITM_PREPARE = dbResult.ITM_PREPARE;
-                inst.PRODUCTTYPEID = dbResult.PRODUCTTYPEID;
-                inst.WARPMC = dbResult.WARPMC;
-                inst.SIDE = dbResult.SIDE;
-                inst.ACTUALCH = dbResult.ACTUALCH;
-                inst.WTYPE = dbResult.WTYPE;
-                inst.STARTDATE = dbResult.STARTDATE;
-                inst.CREATEBY = dbResult.CREATEBY;
-                inst.CONDITIONSTART = dbResult.CONDITIONSTART;
-                inst.CONDITIONBY = dbResult.CONDITIONBY;
-                inst.ENDDATE = dbResult.ENDDATE;
-                inst.STATUS = dbResult.STATUS;
-                inst.FINISHBY = dbResult.FINISHBY;
-                inst.FINISHFLAG = dbResult.FINISHFLAG;
-                inst.REEDNO = dbResult.REEDNO;
-                inst.EDITBY = dbResult.EDITBY;
-                inst.EDITDATE = dbResult.EDITDATE;
-
-                results.Add(inst);
-            }
-        }
-    }
-    catch (Exception ex)
-    {
-        ex.Err();
-    }
-
-    return results;
-}
-```
-
-**Expected Oracle Stored Procedure Logic**:
-```sql
--- Estimated stored procedure structure
-PROCEDURE WARP_SEARCHWARPRECORD(
-    P_WARPHEADNO IN VARCHAR2,
-    P_WARPMC IN VARCHAR2,
-    P_ITMPREPARE IN VARCHAR2,
-    P_STARTDATE IN VARCHAR2,
-    CUR_RESULT OUT SYS_REFCURSOR
-)
-IS
-BEGIN
-    OPEN CUR_RESULT FOR
-    SELECT
-        WARPHEADNO,
-        ITM_PREPARE,
-        PRODUCTTYPEID,
-        WARPMC,
-        SIDE,
-        ACTUALCH,
-        WTYPE,
-        STARTDATE,
-        CREATEBY,
-        CONDITIONSTART,
-        CONDITIONBY,
-        ENDDATE,
-        STATUS,
-        FINISHBY,
-        FINISHFLAG,
-        REEDNO,
-        EDITBY,
-        EDITDATE
-    FROM tblWarpingCreelSetup
-    WHERE (P_WARPHEADNO IS NULL OR WARPHEADNO LIKE '%' || P_WARPHEADNO || '%')
-      AND (P_WARPMC IS NULL OR WARPMC = P_WARPMC)
-      AND (P_ITMPREPARE IS NULL OR ITM_PREPARE LIKE '%' || P_ITMPREPARE || '%')
-      AND (P_STARTDATE IS NULL OR TRUNC(STARTDATE) >= TO_DATE(P_STARTDATE, 'YYYY-MM-DD'))
-    ORDER BY STARTDATE DESC;
-END;
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: WARP_SEARCHWARPRECORDParameter
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 
