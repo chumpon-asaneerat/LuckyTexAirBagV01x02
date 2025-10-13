@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Cancel creel setup for warping machine |
 | **Operation** | UPDATE / DELETE |
-| **Tables** | tblWarpingCreelSetup (estimated) |
 | **Called From** | WarpingDataService.cs:2017 → WARP_CANCELCREELSETUP() |
 | **Frequency** | Low (only when operator needs to cancel setup) |
 | **Performance** | Fast |
@@ -38,26 +37,6 @@
 ### Returns (if cursor)
 
 N/A - Returns single string result
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblWarpingCreelSetup` - DELETE or UPDATE status - Remove or mark cancelled creel setup records
-- `tblWarpingPallets` - DELETE or UPDATE - Remove allocated pallet records for this setup
-
-**Transaction**: Yes (likely requires transaction to maintain data integrity)
-
-### Indexes (if relevant)
-
-```sql
--- Expected indexes
-CREATE INDEX idx_creelsetup_headno ON tblWarpingCreelSetup(WARPHEADNO);
-CREATE INDEX idx_warpingpallets_headno ON tblWarpingPallets(WARPHEADNO, SIDE);
-```
 
 ---
 
@@ -90,50 +69,15 @@ Cancels a creel setup that was previously configured for warping production. Whe
 
 ## Query/Code Location
 
-**Note**: This project does NOT use stored procedures in the database. Queries are hardcoded in C# DataService classes.
+**Note**: This project uses Oracle stored procedures called from C# DataService classes.
 
-**File**: `WarpingDataService.cs`
+**DataService File**: `LuckyTex.AirBag.Core\Services\DataService\WarpingDataService.cs`
 **Method**: `WARP_CANCELCREELSETUP()`
-**Line**: 2017-2049
+**Lines**: 2017-2049
 
-**Query Type**: Stored Procedure Call (Oracle)
-
-```csharp
-public string WARP_CANCELCREELSETUP(string P_WARPHEADNO, string P_WARPMC, string P_SIDE, string P_OPERATOR)
-{
-    string result = string.Empty;
-
-    // Validation: warping head number required
-    if (string.IsNullOrWhiteSpace(P_WARPHEADNO))
-        return result;
-
-    if (!HasConnection())
-        return result;
-
-    // Prepare parameters
-    WARP_CANCELCREELSETUPParameter dbPara = new WARP_CANCELCREELSETUPParameter();
-    dbPara.P_WARPHEADNO = P_WARPHEADNO;
-    dbPara.P_WARPMC = P_WARPMC;
-    dbPara.P_SIDE = P_SIDE;
-    dbPara.P_OPERATOR = P_OPERATOR;
-
-    WARP_CANCELCREELSETUPResult dbResult = null;
-
-    try
-    {
-        // Call Oracle stored procedure
-        dbResult = DatabaseManager.Instance.WARP_CANCELCREELSETUP(dbPara);
-        result = dbResult.RESULT;
-    }
-    catch (Exception ex)
-    {
-        ex.Err();
-        result = string.Empty;
-    }
-
-    return result;
-}
-```
+**Database Manager File**: `LuckyTex.AirBag.Core\Domains\AirbagSPs.cs`
+**Method**: `WARP_CANCELCREELSETUP(WARP_CANCELCREELSETUPParameter para)`
+**Lines**: (locate in AirbagSPs.cs)
 
 ---
 

@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Clear/reset pallet usage data for warping |
 | **Operation** | UPDATE |
-| **Tables** | tblYarnPallet, tblWarpingPalletUsage |
 | **Called From** | WarpingDataService.cs:1885 → WARP_CLEARPALLET() |
 | **Frequency** | Low (only when clearing pallet usage records) |
 | **Performance** | Fast |
@@ -36,26 +35,6 @@ None - Returns boolean success/failure
 ### Returns (if cursor)
 
 N/A - Returns execution result (success = true, failure = false)
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblYarnPallet` - UPDATE - Reset usage counters (USEDWEIGHT, USEDCH to 0)
-- `tblWarpingPalletUsage` - UPDATE or DELETE - Clear usage history records
-
-**Transaction**: Yes (should maintain data integrity when resetting counters)
-
-### Indexes (if relevant)
-
-```sql
--- Expected indexes
-CREATE INDEX idx_yarnpallet_palletno ON tblYarnPallet(PALLETNO);
-CREATE INDEX idx_warpingusage_palletno ON tblWarpingPalletUsage(PALLETNO, RECEIVEDATE);
-```
 
 ---
 
@@ -91,52 +70,15 @@ Clears or resets pallet usage data when an error occurred during warping setup o
 
 ## Query/Code Location
 
-**Note**: This project does NOT use stored procedures in the database. Queries are hardcoded in C# DataService classes.
+**Note**: This project uses Oracle stored procedures called from C# DataService classes.
 
-**File**: `WarpingDataService.cs`
+**DataService File**: `LuckyTex.AirBag.Core\Services\DataService\WarpingDataService.cs`
 **Method**: `WARP_CLEARPALLET()`
-**Line**: 1885-1917
+**Lines**: 1885-1917
 
-**Query Type**: Stored Procedure Call (Oracle)
-
-```csharp
-public bool WARP_CLEARPALLET(string P_PALLETNO, DateTime? P_RECEIVEDATE, string P_OPERATOR, string P_REMARK)
-{
-    bool result = false;
-
-    // Validation: pallet number required
-    if (string.IsNullOrWhiteSpace(P_PALLETNO))
-        return result;
-
-    if (!HasConnection())
-        return result;
-
-    // Prepare parameters
-    WARP_CLEARPALLETParameter dbPara = new WARP_CLEARPALLETParameter();
-    dbPara.P_PALLETNO = P_PALLETNO;
-    dbPara.P_RECEIVEDATE = P_RECEIVEDATE;
-    dbPara.P_OPERATOR = P_OPERATOR;
-    dbPara.P_REMARK = P_REMARK;
-
-    WARP_CLEARPALLETResult dbResult = null;
-
-    try
-    {
-        // Call Oracle stored procedure
-        dbResult = DatabaseManager.Instance.WARP_CLEARPALLET(dbPara);
-
-        // Success if result is not null
-        result = (null != dbResult);
-    }
-    catch (Exception ex)
-    {
-        ex.Err();
-        result = false;
-    }
-
-    return result;
-}
-```
+**Database Manager File**: `LuckyTex.AirBag.Core\Domains\AirbagSPs.cs`
+**Method**: `WARP_CLEARPALLET(WARP_CLEARPALLETParameter para)`
+**Lines**: (locate in AirbagSPs.cs)
 
 ---
 

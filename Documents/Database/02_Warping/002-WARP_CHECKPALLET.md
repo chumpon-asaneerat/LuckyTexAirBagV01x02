@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Check pallet details and availability for warping |
 | **Operation** | SELECT |
-| **Tables** | tblYarnPallet, tblYarnStock |
 | **Called From** | WarpingDataService.cs:1236 → WARP_CHECKPALLET() |
 | **Frequency** | High (called every time operator scans pallet barcode) |
 | **Performance** | Fast (single pallet lookup) |
@@ -55,26 +54,6 @@ None - Returns result set via cursor
 
 ---
 
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblYarnPallet` - SELECT - Retrieve pallet information
-- `tblYarnStock` - SELECT - Check yarn stock details
-
-**Transaction**: No (read-only operation)
-
-### Indexes (if relevant)
-
-```sql
--- Expected indexes
-CREATE INDEX idx_yarnpallet_palletno ON tblYarnPallet(PALLETNO);
-CREATE UNIQUE INDEX uk_yarnpallet_palletno ON tblYarnPallet(PALLETNO);
-```
-
----
-
 ## Business Logic (What it does and why)
 
 Validates and retrieves pallet information when operator scans a pallet barcode during warping creel setup. This procedure checks if the pallet exists, is available for use, and returns all relevant pallet details including yarn type, weight, cheese count, and usage status.
@@ -109,71 +88,15 @@ Validates and retrieves pallet information when operator scans a pallet barcode 
 
 ## Query/Code Location
 
-**Note**: This project does NOT use stored procedures in the database. Queries are hardcoded in C# DataService classes.
+**Note**: This project uses Oracle stored procedures called from C# DataService classes.
 
-**File**: `WarpingDataService.cs`
+**DataService File**: `LuckyTex.AirBag.Core\Services\DataService\WarpingDataService.cs`
 **Method**: `WARP_CHECKPALLET()`
-**Line**: 1236-1287
+**Lines**: 1236-1287
 
-**Query Type**: Stored Procedure Call (Oracle)
-
-```csharp
-public List<WARP_CHECKPALLET> WARP_CHECKPALLET(string P_PALLETNO)
-{
-    List<WARP_CHECKPALLET> results = null;
-
-    if (!HasConnection())
-        return results;
-
-    // Prepare parameter
-    WARP_CHECKPALLETParameter dbPara = new WARP_CHECKPALLETParameter();
-    dbPara.P_PALLETNO = P_PALLETNO;
-
-    List<WARP_CHECKPALLETResult> dbResults = null;
-
-    try
-    {
-        // Call Oracle stored procedure
-        dbResults = DatabaseManager.Instance.WARP_CHECKPALLET(dbPara);
-        if (null != dbResults)
-        {
-            results = new List<WARP_CHECKPALLET>();
-            foreach (WARP_CHECKPALLETResult dbResult in dbResults)
-            {
-                WARP_CHECKPALLET inst = new WARP_CHECKPALLET();
-
-                // Map 16 columns
-                inst.ITM_YARN = dbResult.ITM_YARN;
-                inst.RECEIVEDATE = dbResult.RECEIVEDATE;
-                inst.PALLETNO = dbResult.PALLETNO;
-                inst.RECEIVEWEIGHT = dbResult.RECEIVEWEIGHT;
-                inst.RECEIVECH = dbResult.RECEIVECH;
-                inst.USEDWEIGHT = dbResult.USEDWEIGHT;
-                inst.USEDCH = dbResult.USEDCH;
-                inst.VERIFY = dbResult.VERIFY;
-                inst.REJECTID = dbResult.REJECTID;
-                inst.FINISHFLAG = dbResult.FINISHFLAG;
-                inst.RETURNFLAG = dbResult.RETURNFLAG;
-                inst.REJECTCH = dbResult.REJECTCH;
-                inst.CREATEDATE = dbResult.CREATEDATE;
-                inst.CREATEBY = dbResult.CREATEBY;
-                inst.CLEARBY = dbResult.CLEARBY;
-                inst.REMARK = dbResult.REMARK;
-                inst.CLEARDATE = dbResult.CLEARDATE;
-                inst.KGPERCH = dbResult.KGPERCH;
-
-                results.Add(inst);
-            }
-        }
-    }
-    catch (Exception ex)
-    {
-        ex.Err();
-    }
-
-    return results;
-}
-```
+**Database Manager File**: `LuckyTex.AirBag.Core\Domains\AirbagSPs.cs`
+**Method**: `WARP_CHECKPALLET(WARP_CHECKPALLETParameter para)`
+**Lines**: (locate in AirbagSPs.cs)
 
 ---
 
