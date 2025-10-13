@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Create new beaming setup/batch (header record) |
 | **Operation** | INSERT |
-| **Tables** | tblBeamingHead |
 | **Called From** | BeamingDataService.cs:1121 → BEAM_INSERTBEAMNO() |
 | **Frequency** | Low |
 | **Performance** | Fast |
@@ -46,28 +45,6 @@
 | Type | Description |
 |------|-------------|
 | `String` | Generated BEAMERNO if successful, empty if failed |
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblBeamingHead` - INSERT - Creates beaming setup header record
-
-**Transaction**: Yes (should be wrapped with warp roll mappings)
-
-### Indexes (if relevant)
-
-```sql
--- Recommended unique index on generated setup number
-CREATE UNIQUE INDEX idx_beaminghead_beamerno ON tblBeamingHead(BEAMERNO);
-
--- Also useful for machine status queries
-CREATE INDEX idx_beaminghead_mcno_status ON tblBeamingHead(MCNO, STATUS);
-CREATE INDEX idx_beaminghead_itmprepare ON tblBeamingHead(ITMPREPARE);
-```
 
 ---
 
@@ -126,90 +103,17 @@ This procedure generates a unique BEAMERNO that identifies this setup batch.
 
 ## Query/Code Location
 
-**Note**: This project does NOT use stored procedures in the database. Queries are hardcoded in C# DataService classes.
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
 
-**File**: `BeamingDataService.cs`
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\BeamingDataService.cs`
 **Method**: `BEAM_INSERTBEAMNO()`
 **Line**: 1119-1162
 
-**Query Type**: INSERT via DatabaseManager wrapper
-
-```csharp
-// Method signature
-public string BEAM_INSERTBEAMNO(
-    string P_BEAMNO,
-    string P_WARPERHEADNO,
-    string P_ITMPREPARE,
-    string P_PRODUCTID,
-    string P_MCNO,
-    decimal? P_TOTALYARN,
-    decimal? P_TOTALKEBA,
-    string P_OPERATOR,
-    decimal? P_ADJUSTKEBA,
-    string P_REMARK)
-{
-    string result = string.Empty;
-
-    // Input validation - P_BEAMNO required
-    if (string.IsNullOrWhiteSpace(P_BEAMNO))
-        return result; // Returns empty string
-
-    if (!HasConnection())
-        return result;
-
-    // Parameter setup (10 parameters)
-    BEAM_INSERTBEAMNOParameter dbPara = new BEAM_INSERTBEAMNOParameter();
-    dbPara.P_BEAMNO = P_BEAMNO;
-    dbPara.P_WARPERHEADNO = P_WARPERHEADNO;
-    dbPara.P_ITMPREPARE = P_ITMPREPARE;
-    dbPara.P_PRODUCTID = P_PRODUCTID;
-    dbPara.P_MCNO = P_MCNO;
-    dbPara.P_TOTALYARN = P_TOTALYARN;
-    dbPara.P_TOTALKEBA = P_TOTALKEBA;
-    dbPara.P_OPERATOR = P_OPERATOR;
-    dbPara.P_ADJUSTKEBA = P_ADJUSTKEBA;
-    dbPara.P_REMARK = P_REMARK;
-
-    // Execute insert - generates BEAMERNO
-    dbResult = DatabaseManager.Instance.BEAM_INSERTBEAMNO(dbPara);
-
-    result = dbResult.R_RESULT; // Returns generated BEAMERNO
-
-    return result;
-}
-```
-
-**Usage Pattern**:
-```csharp
-// In UI Setup Wizard (BeamingSetupPage.xaml.cs)
-// Step 1: Create setup header
-string beamerNo = BeamingDataService.Instance.BEAM_INSERTBEAMNO(
-    beamNo,              // User-entered or auto-generated
-    warpHeadNo,          // Selected warp setup
-    itemPrepare,         // Selected product
-    productTypeId,       // Product type
-    machineCode,         // Selected machine
-    totalYarn,           // From specs
-    totalKeba,           // From specs
-    currentOperatorID,   // Logged-in operator
-    adjustedKeba,        // Optional adjustment
-    remarks              // Optional notes
-);
-
-if (!string.IsNullOrEmpty(beamerNo))
-{
-    // Step 2: Link warp rolls
-    foreach (var warpRoll in selectedWarpRolls)
-    {
-        BeamingDataService.Instance.BEAM_INSERTBEAMERROLLSETTING(
-            beamerNo, warpRoll.WARPHEADNO, warpRoll.WARPERLOT
-        );
-    }
-
-    MessageBox.Show($"Setup created: {beamerNo}");
-    NavigateToProductionScreen(beamerNo);
-}
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: BEAM_INSERTBEAMNOParameter
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 

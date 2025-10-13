@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Create warp-to-beam mapping for traceability |
 | **Operation** | INSERT |
-| **Tables** | tblBeamerRollSetting |
 | **Called From** | BeamingDataService.cs:1504 → BEAM_INSERTBEAMERROLLSETTING() |
 | **Frequency** | Medium |
 | **Performance** | Fast |
@@ -37,29 +36,6 @@ None (Returns boolean via procedure result)
 | Type | Description |
 |------|-------------|
 | `Boolean` | True if insert successful, False if failed |
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblBeamerRollSetting` - INSERT - Creates warp-to-beam mapping record
-
-**Transaction**: Should be used (multiple warp rolls mapped per setup)
-
-### Indexes (if relevant)
-
-```sql
--- Recommended composite unique index to prevent duplicates
-CREATE UNIQUE INDEX idx_beamerrollsetting_unique
-ON tblBeamerRollSetting(BEAMERNO, WARPHEADNO, WARPERLOT);
-
--- Also useful for traceability queries
-CREATE INDEX idx_beamerrollsetting_beamerno ON tblBeamerRollSetting(BEAMERNO);
-CREATE INDEX idx_beamerrollsetting_warperlot ON tblBeamerRollSetting(WARPERLOT);
-```
 
 ---
 
@@ -117,62 +93,17 @@ Warp Roll (WARPERLOT) → Beaming Setup (BEAMERNO) → Beam Rolls (BEAMLOT) → 
 
 ## Query/Code Location
 
-**Note**: This project does NOT use stored procedures in the database. Queries are hardcoded in C# DataService classes.
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
 
-**File**: `BeamingDataService.cs`
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\BeamingDataService.cs`
 **Method**: `BEAM_INSERTBEAMERROLLSETTING()`
 **Line**: 1502-1539
 
-**Query Type**: INSERT via DatabaseManager wrapper
-
-```csharp
-// Method signature
-public bool BEAM_INSERTBEAMERROLLSETTING(string P_BEAMERNO, string P_WARPERHEADNO, string P_WARPLOT)
-{
-    bool result = false;
-
-    // Input validation - all 3 parameters required
-    if (string.IsNullOrWhiteSpace(P_BEAMERNO))
-        return result; // Returns false
-
-    if (string.IsNullOrWhiteSpace(P_WARPERHEADNO))
-        return result; // Returns false
-
-    if (!HasConnection())
-        return result;
-
-    // Parameter setup
-    BEAM_INSERTBEAMERROLLSETTINGParameter dbPara = new BEAM_INSERTBEAMERROLLSETTINGParameter();
-    dbPara.P_BEAMERNO = P_BEAMERNO;
-    dbPara.P_WARPERHEADNO = P_WARPERHEADNO;
-    dbPara.P_WARPLOT = P_WARPLOT;
-
-    // Execute insert
-    dbResult = DatabaseManager.Instance.BEAM_INSERTBEAMERROLLSETTING(dbPara);
-
-    result = (null != dbResult); // Returns true if successful
-
-    return result;
-}
-```
-
-**Usage Pattern** (Called in Loop):
-```csharp
-// In UI code-behind (BeamingSetupPage.xaml.cs)
-foreach (var selectedWarpRoll in selectedWarpRolls)
-{
-    bool success = BeamingDataService.Instance.BEAM_INSERTBEAMERROLLSETTING(
-        beamerNo,
-        selectedWarpRoll.WARPHEADNO,
-        selectedWarpRoll.WARPERLOT
-    );
-
-    if (!success) {
-        // Rollback transaction
-        // Show error to operator
-    }
-}
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: BEAM_INSERTBEAMERROLLSETTINGParameter
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 

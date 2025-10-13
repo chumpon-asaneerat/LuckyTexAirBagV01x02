@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Start a new beam roll production and generate beam lot number |
 | **Operation** | INSERT |
-| **Tables** | tblBeamingDetail |
 | **Called From** | BeamingDataService.cs:1176 → BEAM_INSERTBEAMINGDETAIL() |
 | **Frequency** | High |
 | **Performance** | Fast |
@@ -42,27 +41,6 @@
 | Type | Description |
 |------|-------------|
 | `BEAM_INSERTBEAMINGDETAIL` | Custom object with R_BEAMLOT and RESULT fields |
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblBeamingDetail` - INSERT - Creates new beam roll production record
-
-**Transaction**: Yes (should be part of production start transaction)
-
-### Indexes (if relevant)
-
-```sql
--- Recommended unique index on generated barcode
-CREATE UNIQUE INDEX idx_beamingdetail_beamlot ON tblBeamingDetail(BEAMLOT);
-
--- Also useful for machine status queries
-CREATE INDEX idx_beamingdetail_beamerno_flag ON tblBeamingDetail(BEAMERNO, FLAG);
-```
 
 ---
 
@@ -122,77 +100,17 @@ Creates a new beam roll production record and generates a unique barcode (BEAMLO
 
 ## Query/Code Location
 
-**Note**: This project does NOT use stored procedures in the database. Queries are hardcoded in C# DataService classes.
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
 
-**File**: `BeamingDataService.cs`
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\BeamingDataService.cs`
 **Method**: `BEAM_INSERTBEAMINGDETAIL()`
 **Line**: 1166-1215
 
-**Query Type**: INSERT via DatabaseManager wrapper
-
-```csharp
-// Method signature
-public BEAM_INSERTBEAMINGDETAIL BEAM_INSERTBEAMINGDETAIL(
-    string P_BEAMERNO,
-    string P_MCNO,
-    string P_BEAMNO,
-    DateTime? P_STARTDATE,
-    string P_STARTBY)
-{
-    BEAM_INSERTBEAMINGDETAIL results = null;
-
-    // Input validation - BEAMERNO required
-    if (string.IsNullOrWhiteSpace(P_BEAMERNO))
-        return results; // Returns null
-
-    if (!HasConnection())
-        return results;
-
-    // Parameter setup
-    BEAM_INSERTBEAMINGDETAILParameter dbPara = new BEAM_INSERTBEAMINGDETAILParameter();
-    dbPara.P_BEAMERNO = P_BEAMERNO;
-    dbPara.P_MCNO = P_MCNO;
-    dbPara.P_BEAMNO = P_BEAMNO;
-    dbPara.P_STARTDATE = P_STARTDATE;
-    dbPara.P_STARTBY = P_STARTBY;
-
-    // Execute insert - generates BEAMLOT
-    dbResults = DatabaseManager.Instance.BEAM_INSERTBEAMINGDETAIL(dbPara);
-
-    // Return object contains generated barcode
-    if (null != dbResults)
-    {
-        results.R_BEAMLOT = dbResults.R_BEAMLOT; // Generated barcode
-        results.RESULT = dbResults.RESULT;        // Success/error message
-    }
-
-    return results;
-}
-```
-
-**Usage Pattern**:
-```csharp
-// In UI code-behind (BeamingProductionPage.xaml.cs)
-var result = BeamingDataService.Instance.BEAM_INSERTBEAMINGDETAIL(
-    beamerNo,           // From machine status
-    machineCode,        // From machine selection
-    beamNo,             // Scanned/entered by operator
-    DateTime.Now,       // Current timestamp
-    currentOperatorID   // Logged-in operator
-);
-
-if (result != null && !string.IsNullOrEmpty(result.R_BEAMLOT))
-{
-    // Display generated barcode to operator
-    txtBeamLot.Text = result.R_BEAMLOT;
-
-    // Print barcode label
-    PrintBarcodeLabel(result.R_BEAMLOT);
-
-    // Enable production controls
-    EnableProductionControls();
-}
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: BEAM_INSERTBEAMINGDETAILParameter
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 

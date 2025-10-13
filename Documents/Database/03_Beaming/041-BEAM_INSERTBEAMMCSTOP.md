@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Record machine stop event during beam production |
 | **Operation** | INSERT |
-| **Tables** | tblBeamingMCStop |
 | **Called From** | BeamingDataService.cs:1260 → BEAM_INSERTBEAMMCSTOP() |
 | **Frequency** | Medium |
 | **Performance** | Fast |
@@ -42,39 +41,6 @@
 | Type | Description |
 |------|-------------|
 | `String` | Result message from database |
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblBeamingMCStop` - INSERT - Records machine stop event
-
-**Transaction**: Optional (single record insert, but should be part of production transaction)
-
-### Indexes (if relevant)
-
-```sql
--- Recommended composite index for retrieving stop history
-CREATE INDEX idx_beamingmcstop_beamerno_lot ON tblBeamingMCStop(BEAMERNO, BEAMLOT);
-
--- Also useful for downtime analysis reports
-CREATE INDEX idx_beamingmcstop_createdate ON tblBeamingMCStop(CREATEDATE);
-CREATE INDEX idx_beamingmcstop_reason ON tblBeamingMCStop(REASON);
-```
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblBeamingMCStop` - INSERT - Records stop event with timestamp
-
-**Transaction**: No (independent stop event logging)
 
 ---
 
@@ -146,78 +112,17 @@ This data is critical for:
 
 ## Query/Code Location
 
-**Note**: This project does NOT use stored procedures in the database. Queries are hardcoded in C# DataService classes.
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
 
-**File**: `BeamingDataService.cs`
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\BeamingDataService.cs`
 **Method**: `BEAM_INSERTBEAMMCSTOP()`
 **Line**: 1258-1294
 
-**Query Type**: INSERT via DatabaseManager wrapper
-
-```csharp
-// Method signature
-public string BEAM_INSERTBEAMMCSTOP(
-    string P_BEAMERNO,
-    string P_BEAMLOT,
-    string P_REASON,
-    decimal? P_LENGTH,
-    string P_OTHER,
-    string P_OPERATOR)
-{
-    string result = string.Empty;
-
-    // Input validation - BEAMERNO required
-    if (string.IsNullOrWhiteSpace(P_BEAMERNO))
-        return result; // Returns empty string
-
-    if (!HasConnection())
-        return result;
-
-    // Parameter setup
-    BEAM_INSERTBEAMMCSTOPParameter dbPara = new BEAM_INSERTBEAMMCSTOPParameter();
-    dbPara.P_BEAMERNO = P_BEAMERNO;
-    dbPara.P_BEAMLOT = P_BEAMLOT;
-    dbPara.P_REASON = P_REASON;
-    dbPara.P_LENGTH = P_LENGTH;
-    dbPara.P_OTHER = P_OTHER;
-    dbPara.P_OPERATOR = P_OPERATOR;
-
-    // Execute insert
-    dbResult = DatabaseManager.Instance.BEAM_INSERTBEAMMCSTOP(dbPara);
-
-    result = dbResult.R_RESULT; // Returns success/error message
-
-    return result;
-}
-```
-
-**Usage Pattern**:
-```csharp
-// In UI code-behind (BeamingProductionPage.xaml.cs)
-private void btnRecordStop_Click(object sender, RoutedEventArgs e)
-{
-    string reason = cboStopReason.SelectedValue.ToString();
-    decimal? length = string.IsNullOrEmpty(txtLength.Text)
-        ? null
-        : decimal.Parse(txtLength.Text);
-    string other = (reason == "Other") ? txtOtherReason.Text : null;
-
-    string result = BeamingDataService.Instance.BEAM_INSERTBEAMMCSTOP(
-        currentBeamerNo,
-        currentBeamLot,
-        reason,
-        length,
-        other,
-        currentOperatorID
-    );
-
-    if (!string.IsNullOrEmpty(result))
-    {
-        MessageBox.Show("Stop recorded successfully");
-        RefreshStopHistory(); // Reload stop list
-    }
-}
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: BEAM_INSERTBEAMMCSTOPParameter
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 
