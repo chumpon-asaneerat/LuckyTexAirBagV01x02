@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get in-process beam lots for a beamer machine setup |
 | **Operation** | SELECT |
-| **Tables** | tblBeamingDetail |
 | **Called From** | BeamingDataService.cs:717 → BEAM_GETINPROCESSLOTBYBEAMNO() |
 | **Frequency** | High |
 | **Performance** | Fast |
@@ -54,24 +53,6 @@ None
 | `BEAMMC` | VARCHAR2 | Beaming machine code |
 | `FLAG` | VARCHAR2 | Production status flag |
 | `REMARK` | VARCHAR2 | Production remarks/notes |
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblBeamingDetail` - SELECT - Retrieve in-process beam records
-
-**Transaction**: No (Read-only query)
-
-### Indexes (if relevant)
-
-```sql
--- Recommended composite index
-CREATE INDEX idx_beamingdetail_beamerno_flag ON tblBeamingDetail(BEAMERNO, FLAG);
-```
 
 ---
 
@@ -122,35 +103,17 @@ Retrieves all in-process (not yet doffed) beam rolls for a specific beamer machi
 
 ## Query/Code Location
 
-**Note**: This project does NOT use stored procedures in the database. Queries are hardcoded in C# DataService classes.
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
 
-**File**: `BeamingDataService.cs`
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\BeamingDataService.cs`
 **Method**: `BEAM_GETINPROCESSLOTBYBEAMNO()`
 **Line**: 710-775
 
-**Query Type**: SELECT via DatabaseManager wrapper
-
-```csharp
-// Method signature
-public List<BEAM_GETINPROCESSLOTBYBEAMNO> BEAM_GETINPROCESSLOTBYBEAMNO(string P_BEAMERNO)
-{
-    // Input validation
-    if (string.IsNullOrWhiteSpace(P_BEAMERNO))
-        return results; // Return null if empty
-
-    if (!HasConnection())
-        return results;
-
-    // Parameter setup
-    BEAM_GETINPROCESSLOTBYBEAMNOParameter dbPara = new BEAM_GETINPROCESSLOTBYBEAMNOParameter();
-    dbPara.P_BEAMERNO = P_BEAMERNO;
-
-    // Execute via DatabaseManager
-    dbResults = DatabaseManager.Instance.BEAM_GETINPROCESSLOTBYBEAMNO(dbPara);
-
-    // Returns List<BEAM_GETINPROCESSLOTBYBEAMNO> with in-process beams only
-}
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: BEAM_GETINPROCESSLOTBYBEAMNOParameter
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 

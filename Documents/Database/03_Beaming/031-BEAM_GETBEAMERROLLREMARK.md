@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get remarks/notes for a specific beam lot |
 | **Operation** | SELECT |
-| **Tables** | tblBeamingProcess |
 | **Called From** | BeamingDataService.cs:1085 → BEAM_GETBEAMERROLLREMARK() |
 | **Frequency** | Medium (when viewing beam details) |
 | **Performance** | Fast (single record lookup) |
@@ -35,17 +34,6 @@
 ### Returns (if cursor)
 
 N/A - Returns single string value
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblBeamingProcess` - SELECT - Retrieves REMARK field for beam lot
-
-**Transaction**: No (read-only)
 
 ---
 
@@ -75,40 +63,17 @@ Retrieves notes/remarks recorded for a specific beam lot. Used to display qualit
 
 ## Query/Code Location
 
-**File**: `BeamingDataService.cs`
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
+
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\BeamingDataService.cs`
 **Method**: `BEAM_GETBEAMERROLLREMARK()`
 **Line**: 1085-1115
 
-```csharp
-public string BEAM_GETBEAMERROLLREMARK(string P_BEAMLOT)
-{
-    string result = string.Empty;
-
-    if (string.IsNullOrWhiteSpace(P_BEAMLOT))
-        return result;
-
-    if (!HasConnection())
-        return result;
-
-    BEAM_GETBEAMERROLLREMARKParameter dbPara = new BEAM_GETBEAMERROLLREMARKParameter();
-    dbPara.P_BEAMLOT = P_BEAMLOT;
-
-    BEAM_GETBEAMERROLLREMARKResult dbResult = null;
-
-    try
-    {
-        dbResult = DatabaseManager.Instance.BEAM_GETBEAMERROLLREMARK(dbPara);
-        result = dbResult.R_REMARK;
-    }
-    catch (Exception ex)
-    {
-        ex.Err();
-        result = string.Empty;
-    }
-
-    return result;
-}
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: BEAM_GETBEAMERROLLREMARKParameter
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 

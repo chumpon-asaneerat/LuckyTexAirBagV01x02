@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get beam lots/rolls produced by a specific beamer setup |
 | **Operation** | SELECT |
-| **Tables** | tblBeamingProcess |
 | **Called From** | BeamingDataService.cs:435 → BEAM_GETBEAMLOTBYBEAMERNO() |
 | **Frequency** | High (viewing setup details) |
 | **Performance** | Fast |
@@ -62,17 +61,6 @@ N/A - Returns result set
 
 ---
 
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblBeamingProcess` - SELECT - All beams produced from this setup
-
-**Transaction**: No (read-only)
-
----
-
 ## Business Logic (What it does and why)
 
 Retrieves all beam rolls produced from a specific beamer setup. Shows complete production history and quality parameters for all beams in the setup.
@@ -105,85 +93,17 @@ Retrieves all beam rolls produced from a specific beamer setup. Shows complete p
 
 ## Query/Code Location
 
-**File**: `BeamingDataService.cs`
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
+
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\BeamingDataService.cs`
 **Method**: `BEAM_GETBEAMLOTBYBEAMERNO()`
 **Line**: 435-510
 
-```csharp
-public List<BEAM_GETBEAMLOTBYBEAMERNO> BEAM_GETBEAMLOTBYBEAMERNO(string P_BEAMERNO)
-{
-    List<BEAM_GETBEAMLOTBYBEAMERNO> results = null;
-
-    if (!HasConnection())
-        return results;
-
-    BEAM_GETBEAMLOTBYBEAMERNOParameter dbPara = new BEAM_GETBEAMLOTBYBEAMERNOParameter();
-    dbPara.P_BEAMERNO = P_BEAMERNO;
-
-    List<BEAM_GETBEAMLOTBYBEAMERNOResult> dbResults = null;
-
-    try
-    {
-        dbResults = DatabaseManager.Instance.BEAM_GETBEAMLOTBYBEAMERNO(dbPara);
-        if (null != dbResults)
-        {
-            results = new List<BEAM_GETBEAMLOTBYBEAMERNO>();
-            foreach (BEAM_GETBEAMLOTBYBEAMERNOResult dbResult in dbResults)
-            {
-                BEAM_GETBEAMLOTBYBEAMERNO inst = new BEAM_GETBEAMLOTBYBEAMERNO();
-
-                inst.BEAMERNO = dbResult.BEAMERNO;
-                inst.BEAMLOT = dbResult.BEAMLOT;
-                inst.BEAMNO = dbResult.BEAMNO;
-                inst.STARTDATE = dbResult.STARTDATE;
-                inst.ENDDATE = dbResult.ENDDATE;
-                inst.LENGTH = dbResult.LENGTH;
-                inst.SPEED = dbResult.SPEED;
-                inst.HARDNESS_L = dbResult.HARDNESS_L;
-                inst.HARDNESS_N = dbResult.HARDNESS_N;
-                inst.HARDNESS_R = dbResult.HARDNESS_R;
-                inst.BEAMSTANDTENSION = dbResult.BEAMSTANDTENSION;
-                inst.WINDINGTENSION = dbResult.WINDINGTENSION;
-                inst.INSIDE_WIDTH = dbResult.INSIDE_WIDTH;
-                inst.OUTSIDE_WIDTH = dbResult.OUTSIDE_WIDTH;
-                inst.FULL_WIDTH = dbResult.FULL_WIDTH;
-                inst.STARTBY = dbResult.STARTBY;
-                inst.DOFFBY = dbResult.DOFFBY;
-                inst.FLAG = dbResult.FLAG;
-                inst.BEAMMC = dbResult.BEAMMC;
-                inst.REMARK = dbResult.REMARK;
-
-                // 10 station tensions
-                inst.TENSION_ST1 = dbResult.TENSION_ST1;
-                inst.TENSION_ST2 = dbResult.TENSION_ST2;
-                inst.TENSION_ST3 = dbResult.TENSION_ST3;
-                inst.TENSION_ST4 = dbResult.TENSION_ST4;
-                inst.TENSION_ST5 = dbResult.TENSION_ST5;
-                inst.TENSION_ST6 = dbResult.TENSION_ST6;
-                inst.TENSION_ST7 = dbResult.TENSION_ST7;
-                inst.TENSION_ST8 = dbResult.TENSION_ST8;
-                inst.TENSION_ST9 = dbResult.TENSION_ST9;
-                inst.TENSION_ST10 = dbResult.TENSION_ST10;
-
-                inst.EDITDATE = dbResult.EDITDATE;
-                inst.EDITBY = dbResult.EDITBY;
-                inst.OLDBEAMNO = dbResult.OLDBEAMNO;
-                inst.KEBA = dbResult.KEBA;
-                inst.MISSYARN = dbResult.MISSYARN;
-                inst.OTHER = dbResult.OTHER;
-
-                results.Add(inst);
-            }
-        }
-    }
-    catch (Exception ex)
-    {
-        ex.Err();
-    }
-
-    return results;
-}
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: BEAM_GETBEAMLOTBYBEAMERNOParameter
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 

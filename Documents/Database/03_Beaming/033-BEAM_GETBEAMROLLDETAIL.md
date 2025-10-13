@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get detailed beaming production data by beam roll barcode |
 | **Operation** | SELECT |
-| **Tables** | tblBeamingDetail |
 | **Called From** | BeamingDataService.cs:895 → BEAM_GETBEAMROLLDETAIL() |
 | **Frequency** | High |
 | **Performance** | Fast |
@@ -61,24 +60,6 @@ None
 
 ---
 
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblBeamingDetail` - SELECT - Retrieve beam roll production record
-
-**Transaction**: No (Read-only query)
-
-### Indexes (if relevant)
-
-```sql
--- Recommended index for fast barcode lookup
-CREATE INDEX idx_beamingdetail_beamlot ON tblBeamingDetail(BEAMLOT);
-```
-
----
-
 ## Business Logic (What it does and why)
 
 Retrieves complete production details for a specific beam roll when operator scans a beam barcode.
@@ -118,33 +99,17 @@ Retrieves complete production details for a specific beam roll when operator sca
 
 ## Query/Code Location
 
-**Note**: This project does NOT use stored procedures in the database. Queries are hardcoded in C# DataService classes.
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
 
-**File**: `BeamingDataService.cs`
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\BeamingDataService.cs`
 **Method**: `BEAM_GETBEAMROLLDETAIL()`
 **Line**: 889-961
 
-**Query Type**: SELECT via DatabaseManager wrapper
-
-```csharp
-// Method signature
-public List<BEAM_GETBEAMROLLDETAIL> BEAM_GETBEAMROLLDETAIL(string P_BEAMROLL)
-{
-    // Input validation
-    if (!HasConnection())
-        return results;
-
-    // Parameter setup
-    BEAM_GETBEAMROLLDETAILParameter dbPara = new BEAM_GETBEAMROLLDETAILParameter();
-    dbPara.P_BEAMROLL = P_BEAMROLL;
-
-    // Execute via DatabaseManager
-    dbResults = DatabaseManager.Instance.BEAM_GETBEAMROLLDETAIL(dbPara);
-
-    // Map 30+ fields from result to model object
-    // Returns List<BEAM_GETBEAMROLLDETAIL> with complete beam production data
-}
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: BEAM_GETBEAMROLLDETAILParameter
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 

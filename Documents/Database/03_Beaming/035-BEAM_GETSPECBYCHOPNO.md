@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get beaming specifications by item prepare code |
 | **Operation** | SELECT |
-| **Tables** | tblItemPrepare, tblBeamingSpec |
 | **Called From** | BeamingDataService.cs:150 → BEAM_GETSPECBYCHOPNO() |
 | **Frequency** | High |
 | **Performance** | Fast |
@@ -52,25 +51,6 @@ None
 | `COMBTYPE` | VARCHAR2 | Comb type specification |
 | `COMBPITCH` | NUMBER | Comb pitch measurement |
 | `TOTALBEAM` | NUMBER | Total beams to be produced |
-
----
-
-## Database Operations
-
-### Tables
-
-**Primary Tables**:
-- `tblItemPrepare` - SELECT - Item prepare master data
-- `tblBeamingSpec` - SELECT - Beaming process specifications
-
-**Transaction**: No (Read-only query)
-
-### Indexes (if relevant)
-
-```sql
--- Recommended index for fast lookup
-CREATE INDEX idx_beamingspec_itmprepare ON tblBeamingSpec(ITMPREPARE);
-```
 
 ---
 
@@ -124,33 +104,17 @@ Retrieves complete beaming machine setup specifications when operator selects an
 
 ## Query/Code Location
 
-**Note**: This project does NOT use stored procedures in the database. Queries are hardcoded in C# DataService classes.
+**Note**: This application uses Oracle stored procedures exclusively for all database operations.
 
-**File**: `BeamingDataService.cs`
+### Data Service Layer
+**File**: `LuckyTex.AirBag.Core\Services\DataService\BeamingDataService.cs`
 **Method**: `BEAM_GETSPECBYCHOPNO()`
 **Line**: 144-203
 
-**Query Type**: SELECT via DatabaseManager wrapper
-
-```csharp
-// Method signature
-public List<BEAM_GETSPECBYCHOPNO> BEAM_GETSPECBYCHOPNO(string P_ITMPREPARE)
-{
-    // Connection validation
-    if (!HasConnection())
-        return results;
-
-    // Parameter setup
-    BEAM_GETSPECBYCHOPNOParameter dbPara = new BEAM_GETSPECBYCHOPNOParameter();
-    dbPara.P_ITMPREPARE = P_ITMPREPARE;
-
-    // Execute via DatabaseManager
-    dbResults = DatabaseManager.Instance.BEAM_GETSPECBYCHOPNO(dbPara);
-
-    // Returns List<BEAM_GETSPECBYCHOPNO> with 18 specification fields
-    // Maps all MIN/MAX ranges and target values for operator guidance
-}
-```
+### Database Manager
+**File**: `LuckyTex.AirBag.Core\Services\DataService\DatabaseManager.cs`
+**Method**: BEAM_GETSPECBYCHOPNOParameter
+**Purpose**: Executes Oracle stored procedure and returns result set
 
 ---
 
