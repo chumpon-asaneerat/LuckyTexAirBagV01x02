@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Get beam details for weaving setup |
 | **Operation** | SELECT |
-| **Tables** | tblBeamingDetail, tblBeamingHead, tblDrawing |
 | **Called From** | WeavingDataService.cs:629 → WEAVE_GETBEAMLOTDETAIL() |
 | **Frequency** | High |
 | **Performance** | Fast |
@@ -47,6 +46,41 @@
 ## Business Logic
 
 Retrieves complete beam information including drawing details when operator scans beam to set up loom. Validates beam is ready for weaving.
+
+**Workflow**:
+1. Operator scans beam barcode during loom setup
+2. System retrieves beam details from beaming records
+3. Joins with drawing data to get technical specifications
+4. Returns complete beam information for loom configuration
+5. UI displays beam details for operator verification
+
+**Business Rules**:
+- Beam must exist in beaming system
+- Drawing type determines loom setup requirements
+- Reed and heald specifications must match loom capabilities
+- Beam length affects production planning
+
+---
+
+## Related Procedures
+
+**Upstream**: [033-BEAM_GETBEAMROLLDETAIL.md](../03_Beaming/033-BEAM_GETBEAMROLLDETAIL.md) - Creates beam data
+**Downstream**: [059-WEAVE_INSERTPROCESSSETTING.md](./059-WEAVE_INSERTPROCESSSETTING.md) - Uses beam data for setup
+**Similar**: [048-DRAW_GETBEAMLOTDETAIL.md](../04_Drawing/048-DRAW_GETBEAMLOTDETAIL.md) - Similar lookup in drawing
+
+---
+
+## Query/Code Location
+
+**Note**: This project uses Oracle stored procedures called from C# DataService classes.
+
+**DataService File**: `LuckyTex.AirBag.Core\Services\DataService\WeavingDataService.cs`
+**Method**: `WEAVE_GETBEAMLOTDETAIL()`
+**Lines**: 629-660
+
+**Database Manager File**: `LuckyTex.AirBag.Core\Domains\AirbagSPs.cs`
+**Method**: `WEAVE_GETBEAMLOTDETAIL(WEAVE_GETBEAMLOTDETAILParameter para)`
+**Lines**: (locate in AirbagSPs.cs)
 
 ---
 

@@ -1,4 +1,4 @@
-Check all instruction in @Documents\Dataase and Fix document in @Documents\Dataase\.FIX_TRACKER.md
+Check all instruction in @Documents\Database and Fix document in @Documents\Database\.FIX_TRACKER.md
 
 DO NOT use Batch processing causes it lose progress when session ends. you should:
 - Fix ONE file at a time
