@@ -91,42 +91,7 @@ None
 
 **Database Manager File**: `LuckyTex.AirBag.Core\Domains\AirbagSPs.cs`
 **Method**: `WEAV_DEFECTLIST(WEAV_DEFECTLISTParameter para)`
-**Lines**: 13773-13813
-
-**Stored Procedure Call**:
-```csharp
-// No input parameters - returns all defect codes
-string[] paraNames = new string[] { };
-object[] paraValues = new object[] { };
-
-ExecuteResult<StoredProcedureResult> ret = _manager.ExecuteProcedure(
-    "WEAV_DEFECTLIST",
-    paraNames, paraValues);
-```
-
-**Return Structure** (mapped to C# model):
-```csharp
-public class WEAV_DEFECTLIST
-{
-    public string DEFECTCODE { get; set; }    // Primary key
-    public string DEFECTTYPE { get; set; }    // Category
-    public string DESCRIPTION { get; set; }   // Display text
-    public string YARN { get; set; }          // Yarn position
-    public string DefectCodeName { get; set; } // Computed: CODE + " " + DESCRIPTION
-}
-```
-
-**Usage Example**:
-```csharp
-// Called from UI page initialization
-WeavingDataService service = WeavingDataService.Instance;
-List<WEAV_DEFECTLIST> defectList = service.WEAV_DEFECTLIST();
-
-// Bind to ComboBox for operator selection
-cmbDefectCode.ItemsSource = defectList;
-cmbDefectCode.DisplayMemberPath = "DefectCodeName"; // Shows "D001 Broken End"
-cmbDefectCode.SelectedValuePath = "DEFECTCODE";     // Stores "D001"
-```
+**Lines**: (locate in AirbagSPs.cs)
 
 ---
 

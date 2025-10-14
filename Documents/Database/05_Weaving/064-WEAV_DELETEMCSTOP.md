@@ -39,15 +39,6 @@ Empty result object indicating success/failure status
 
 ---
 
-## Database Operations
-
-The deletion requires a composite key of 5 fields to uniquely identify the stop record:
-- LOOMNO + DOFFNO + BEAMROLL + DEFECT + DATE
-
-This ensures only the specific stop event is deleted, not other stops on the same machine.
-
----
-
 ## Business Logic (What it does and why)
 
 **Purpose**: Removes incorrectly recorded machine stop events from weaving production history.
@@ -109,97 +100,12 @@ This ensures only the specific stop event is deleted, not other stops on the sam
 **Note**: This project uses Oracle stored procedures called from C# DataService classes.
 
 **DataService File**: `LuckyTex.AirBag.Core\Services\DataService\WeavingDataService.cs`
-**Method**: `WEAV_DELETEMCSTOP(string P_LOOMNO, decimal? P_DOFFNO, string P_BEAMROLL, string P_DEFECT, DateTime? P_DATE)`
+**Method**: `WEAV_DELETEMCSTOP()`
 **Lines**: 1919-1949
 
 **Database Manager File**: `LuckyTex.AirBag.Core\Domains\AirbagSPs.cs`
 **Method**: `WEAV_DELETEMCSTOP(WEAV_DELETEMCSTOPParameter para)`
-**Lines**: 13735-13767
-
-**Stored Procedure Call**:
-```csharp
-// All 5 parameters required for composite key identification
-string[] paraNames = new string[]
-{
-    "P_LOOMNO",    // Machine number
-    "P_DOFFNO",    // Roll number
-    "P_BEAMROLL",  // Beam identifier
-    "P_DEFECT",    // Defect code
-    "P_DATE"       // Stop timestamp
-};
-
-object[] paraValues = new object[]
-{
-    para.P_LOOMNO,
-    para.P_DOFFNO,
-    para.P_BEAMROLL,
-    para.P_DEFECT,
-    para.P_DATE
-};
-
-ExecuteResult<StoredProcedureResult> ret = _manager.ExecuteProcedure(
-    "WEAV_DELETEMCSTOP",
-    paraNames, paraValues);
-
-// Success if no exception and result object created
-result = new WEAV_DELETEMCSTOPResult(); // Empty result = success
-```
-
-**Return Handling**:
-```csharp
-// Service layer returns bool
-public bool WEAV_DELETEMCSTOP(...)
-{
-    bool result = false;
-    WEAV_DELETEMCSTOPResult dbResult = null;
-
-    dbResult = DatabaseManager.Instance.WEAV_DELETEMCSTOP(dbPara);
-    result = (null != dbResult); // True if deletion succeeded
-
-    return result;
-}
-```
-
-**Usage Example**:
-```csharp
-// Delete specific machine stop record
-WeavingDataService service = WeavingDataService.Instance;
-
-bool success = service.WEAV_DELETEMCSTOP(
-    P_LOOMNO: "L-001",
-    P_DOFFNO: 12345,
-    P_BEAMROLL: "BM-2024-001",
-    P_DEFECT: "D001",
-    P_DATE: DateTime.Parse("2024-10-13 14:30:00")
-);
-
-if (success)
-{
-    MessageBox.Show("Machine stop record deleted successfully.");
-    RefreshStopList(); // Reload the grid
-    RecalculateOEE();  // Update metrics
-}
-else
-{
-    MessageBox.Show("Failed to delete machine stop record.");
-}
-```
-
-**Assumed SQL Logic** (based on parameters):
-```sql
--- Likely stored procedure implementation
-DELETE FROM tblWeavingMachineStop
-WHERE LOOMNO = P_LOOMNO
-  AND DOFFNO = P_DOFFNO
-  AND BEAMROLL = P_BEAMROLL
-  AND DEFECTCODE = P_DEFECT
-  AND STOPDATE = P_DATE;
-
--- Should include:
--- COMMIT;
--- Audit log entry
--- Error handling if no record found
-```
+**Lines**: (locate in AirbagSPs.cs)
 
 ---
 
