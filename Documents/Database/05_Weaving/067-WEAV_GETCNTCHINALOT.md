@@ -118,139 +118,17 @@ Single OUT parameter value (scalar)
 
 **Note**: This project uses Oracle stored procedures called from C# DataService classes.
 
-### Weaving Module Usage
-
-**DataService File**: `LuckyTex.AirBag.Core\Services\DataService\WeavingDataService.cs`
-**Method**: `WEAV_GETCNTCHINALOT(string P_LOT)`
+**DataService File (Weaving)**: `LuckyTex.AirBag.Core\Services\DataService\WeavingDataService.cs`
+**Method**: `WEAV_GETCNTCHINALOT()`
 **Lines**: 354-380
-**Comment**: `เพิ่มใหม่ WEAV_GETCNTCHINALOT ใช้ในการ Load WIDTHWEAVING` (Thai: "Added for loading width weaving")
 
-### Beaming Module Usage
-
-**DataService File**: `LuckyTex.AirBag.Core\Services\DataService\BeamingDataService.cs`
-**Method**: `WEAV_GETCNTCHINALOT(string P_LOT)`
+**DataService File (Beaming)**: `LuckyTex.AirBag.Core\Services\DataService\BeamingDataService.cs`
+**Method**: `WEAV_GETCNTCHINALOT()`
 **Lines**: 114-140
-**Comment**: `เพิ่มใหม่ WEAV_GETCNTCHINALOT ใช้ในการ Load WEAV` (Thai: "Added for loading weaving")
-
-### Database Manager
 
 **Database Manager File**: `LuckyTex.AirBag.Core\Domains\AirbagSPs.cs`
 **Method**: `WEAV_GETCNTCHINALOT(WEAV_GETCNTCHINALOTParameter para)`
-**Lines**: 13624-13650
-
-**Stored Procedure Call**:
-```csharp
-// Single input parameter - lot number to check
-string[] paraNames = new string[]
-{
-    "P_LOT"
-};
-
-object[] paraValues = new object[]
-{
-    para.P_LOT
-};
-
-ExecuteResult<StoredProcedureResult> ret = _manager.ExecuteProcedure(
-    "WEAV_GETCNTCHINALOT",
-    paraNames, paraValues);
-
-// Returns OUT parameter value
-if (null != ret && !ret.HasException)
-{
-    result = new WEAV_GETCNTCHINALOTResult();
-    if (ret.Result.OutParameters["CNT"] != DBNull.Value)
-        result.CNT = (string)ret.Result.OutParameters["CNT"];
-}
-```
-
-**Return Handling**:
-```csharp
-// Service layer returns string directly
-public string WEAV_GETCNTCHINALOT(string P_LOT)
-{
-    string results = string.Empty;
-
-    WEAV_GETCNTCHINALOTParameter dbPara = new WEAV_GETCNTCHINALOTParameter();
-    dbPara.P_LOT = P_LOT;
-
-    WEAV_GETCNTCHINALOTResult dbResults =
-        DatabaseManager.Instance.WEAV_GETCNTCHINALOT(dbPara);
-
-    if (null != dbResults)
-    {
-        results = dbResults.CNT;  // Return count as string
-    }
-
-    return results;
-}
-```
-
-**Usage Example 1: Validate China Lot**
-```csharp
-// Check if lot is a China lot
-WeavingDataService service = WeavingDataService.Instance;
-string lotNumber = "CN-2024-10-0001";
-
-string count = service.WEAV_GETCNTCHINALOT(lotNumber);
-
-if (!string.IsNullOrEmpty(count) && count != "0")
-{
-    // This is a China lot - apply special processing
-    lblCustomerType.Text = "CHINA";
-    panelChinaLotDetails.Visible = true;
-    LoadChinaCustomerRequirements();
-}
-else
-{
-    // Regular lot - standard processing
-    panelChinaLotDetails.Visible = false;
-}
-```
-
-**Usage Example 2: Generate Next China Lot Number**
-```csharp
-// Generate next sequential China lot number
-public string GenerateNextChinaLotNumber()
-{
-    string datePrefix = "CN-" + DateTime.Now.ToString("yyyy-MM") + "-";
-
-    // Get current count
-    string countStr = service.WEAV_GETCNTCHINALOT(datePrefix);
-
-    int nextNumber = 1;
-    if (!string.IsNullOrEmpty(countStr))
-    {
-        int.TryParse(countStr, out int currentCount);
-        nextNumber = currentCount + 1;
-    }
-
-    // Format as CN-2024-10-0001
-    string newLotNumber = datePrefix + nextNumber.ToString("D4");
-
-    return newLotNumber;
-}
-```
-
-**Usage Example 3: Cross-Module (Beaming)**
-```csharp
-// In Beaming module - check if beam is for China lot
-BeamingDataService beamService = BeamingDataService.Instance;
-string beamLot = "BM-2024-001";
-
-// Get associated weaving lot (assumed logic)
-string weavingLot = GetWeavingLotForBeam(beamLot);
-
-// Check if it's China lot
-string isChinaLot = beamService.WEAV_GETCNTCHINALOT(weavingLot);
-
-if (isChinaLot == "1")
-{
-    // Apply China-specific beaming parameters
-    ApplyChinaQualityStandards();
-    GenerateChinaTraceabilityDocument();
-}
-```
+**Lines**: (locate in AirbagSPs.cs)
 
 ---
 

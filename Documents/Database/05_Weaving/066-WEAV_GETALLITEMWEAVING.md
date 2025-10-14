@@ -110,80 +110,10 @@ None
 **DataService File**: `LuckyTex.AirBag.Core\Services\DataService\WeavingDataService.cs`
 **Method**: `WEAV_GETALLITEMWEAVING()`
 **Lines**: 218-252
-**Comment**: `เพิ่มใหม่ WEAV_GETALLITEMWEAVING ใช้ในการ Load ItemGood` (Thai: "Added for loading good items")
 
 **Database Manager File**: `LuckyTex.AirBag.Core\Domains\AirbagSPs.cs`
 **Method**: `WEAV_GETALLITEMWEAVING(WEAV_GETALLITEMWEAVINGParameter para)`
-**Lines**: 13656-13695
-
-**Stored Procedure Call**:
-```csharp
-// No input parameters - returns all weaving items
-string[] paraNames = new string[] { };
-object[] paraValues = new object[] { };
-
-ExecuteResult<StoredProcedureResult> ret = _manager.ExecuteProcedure(
-    "WEAV_GETALLITEMWEAVING",
-    paraNames, paraValues);
-```
-
-**Return Structure** (mapped to C# model):
-```csharp
-public class WEAV_GETALLITEMWEAVING
-{
-    public string ITM_WEAVING { get; set; }    // Item code
-    public decimal? WIDTHWEAVING { get; set; }  // Fabric width
-}
-```
-
-**Usage Example**:
-```csharp
-// Load item list at page initialization
-WeavingDataService service = WeavingDataService.Instance;
-List<WEAV_GETALLITEMWEAVING> itemList = service.WEAV_GETALLITEMWEAVING();
-
-// Bind to ComboBox for item selection
-cmbItemCode.ItemsSource = itemList;
-cmbItemCode.DisplayMemberPath = "ITM_WEAVING";
-cmbItemCode.SelectedValuePath = "ITM_WEAVING";
-
-// Display width when item selected
-private void cmbItemCode_SelectionChanged(object sender, EventArgs e)
-{
-    if (cmbItemCode.SelectedItem is WEAV_GETALLITEMWEAVING item)
-    {
-        txtWidth.Text = item.WIDTHWEAVING?.ToString() ?? "N/A";
-        // Load additional item specifications...
-    }
-}
-```
-
-**Alternative Usage - Autocomplete**:
-```csharp
-// Use for search/filter with autocomplete
-public void SetupItemSearch()
-{
-    List<WEAV_GETALLITEMWEAVING> allItems = service.WEAV_GETALLITEMWEAVING();
-
-    // Setup autocomplete source
-    txtItemSearch.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-    txtItemSearch.AutoCompleteSource = AutoCompleteSource.CustomSource;
-
-    AutoCompleteStringCollection itemCodes = new AutoCompleteStringCollection();
-    itemCodes.AddRange(allItems.Select(i => i.ITM_WEAVING).ToArray());
-    txtItemSearch.AutoCompleteCustomSource = itemCodes;
-}
-```
-
-**Display with Width**:
-```csharp
-// Create display string with item and width
-foreach (var item in itemList)
-{
-    string display = $"{item.ITM_WEAVING} (Width: {item.WIDTHWEAVING} cm)";
-    cmbItemCode.Items.Add(new { Display = display, Value = item.ITM_WEAVING });
-}
-```
+**Lines**: (locate in AirbagSPs.cs)
 
 ---
 
