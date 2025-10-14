@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Add or update weft yarn pallet for weaving |
 | **Operation** | INSERT/UPDATE |
-| **Tables** | tblWeavingWeftStock |
 | **Called From** | WeavingDataService.cs:1572 → WEAVE_INSERTUPDATEWEFTYARN() |
 | **Frequency** | High |
 | **Performance** | Fast |
@@ -43,7 +42,45 @@
 
 Records weft yarn pallets used in weaving for traceability. Operator scans weft yarn pallet barcode, system records which pallet supplies which fabric roll (doff).
 
-**Purpose**: Track weft yarn consumption and maintain forward/backward traceability from yarn to fabric.
+**Workflow**:
+1. Operator loads weft yarn pallet onto loom shuttle/creel position
+2. Operator scans pallet barcode
+3. System links pallet to current beam lot and doff number
+4. System records pallet position on loom
+5. If pallet already recorded, updates quantity or position
+6. If new pallet, inserts new record
+7. Returns success/error message
+
+**Business Rules**:
+- Weft yarn pallet must exist in inventory
+- Pallet is linked to specific beam lot and doff (fabric roll)
+- Position tracking enables multiple weft yarns per fabric (striped patterns)
+- China lot number (P_CHLOTNO) provides traceability to yarn supplier batch
+- Operator recorded for accountability
+- Enables forward tracing: Yarn Pallet → Fabric Roll → Final Product
+- Enables backward tracing: Fabric Roll → Yarn Pallets used
+
+---
+
+## Related Procedures
+
+**Upstream**: [059-WEAVE_INSERTPROCESSSETTING.md](./059-WEAVE_INSERTPROCESSSETTING.md) - Setup before weft tracking
+**Downstream**: [062-WEAVE_WEAVINGPROCESS.md](./062-WEAVE_WEAVINGPROCESS.md) - Uses weft data in production
+**Similar**: [016-WARP_INSERTSETTINGDETAIL.md](../02_Warping/015-WARP_INSERTSETTINGDETAIL.md) - Warp yarn tracking
+
+---
+
+## Query/Code Location
+
+**Note**: This project uses Oracle stored procedures called from C# DataService classes.
+
+**DataService File**: `LuckyTex.AirBag.Core\Services\DataService\WeavingDataService.cs`
+**Method**: `WEAVE_INSERTUPDATEWEFTYARN()`
+**Lines**: 1572-1610
+
+**Database Manager File**: `LuckyTex.AirBag.Core\Domains\AirbagSPs.cs`
+**Method**: `WEAVE_INSERTUPDATEWEFTYARN(WEAVE_INSERTUPDATEWEFTYARNParameter para)`
+**Lines**: (locate in AirbagSPs.cs)
 
 ---
 

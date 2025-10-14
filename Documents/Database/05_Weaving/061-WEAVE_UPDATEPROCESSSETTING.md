@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Update loom setup parameters |
 | **Operation** | UPDATE |
-| **Tables** | tblWeavingSettingHead |
 | **Called From** | WeavingDataService.cs:1471 → WEAVE_UPDATEPROCESSSETTING() |
 | **Frequency** | Medium |
 | **Performance** | Fast |
@@ -44,6 +43,45 @@
 ## Business Logic
 
 Updates loom setup parameters when operator adjusts machine settings during production (reed change, temple adjustment, etc.).
+
+**Workflow**:
+1. Operator identifies need to change loom parameter (quality issue, specification change)
+2. Operator opens edit setup screen
+3. Operator modifies reed, temple, bar, or product type settings
+4. System validates new parameters
+5. System updates existing setup record in tblWeavingSettingHead
+6. System records operator who made the change
+7. Returns success/error message
+
+**Business Rules**:
+- Can only update setup for active production (beam lot must exist)
+- Changes affect all subsequent fabric production from this setup
+- Operator change is recorded for audit trail
+- Temple and reed changes may affect fabric width and quality
+- Product type changes affect downstream processing and quality standards
+- Cannot change beam lot (must cancel and create new setup instead)
+
+---
+
+## Related Procedures
+
+**Upstream**: [059-WEAVE_INSERTPROCESSSETTING.md](./059-WEAVE_INSERTPROCESSSETTING.md) - Initial setup creation
+**Downstream**: [062-WEAVE_WEAVINGPROCESS.md](./062-WEAVE_WEAVINGPROCESS.md) - Uses updated settings
+**Similar**: [024-WARP_UPDATESETTINGHEAD.md](../02_Warping/024-WARP_UPDATESETTINGHEAD.md) - Similar update pattern
+
+---
+
+## Query/Code Location
+
+**Note**: This project uses Oracle stored procedures called from C# DataService classes.
+
+**DataService File**: `LuckyTex.AirBag.Core\Services\DataService\WeavingDataService.cs`
+**Method**: `WEAVE_UPDATEPROCESSSETTING()`
+**Lines**: 1471-1510
+
+**Database Manager File**: `LuckyTex.AirBag.Core\Domains\AirbagSPs.cs`
+**Method**: `WEAVE_UPDATEPROCESSSETTING(WEAVE_UPDATEPROCESSSETTINGParameter para)`
+**Lines**: (locate in AirbagSPs.cs)
 
 ---
 
