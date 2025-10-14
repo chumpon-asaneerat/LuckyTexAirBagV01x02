@@ -1,10 +1,10 @@
-Check all instruction in @Documents\Database and Fix document in @Documents\Database\.FIX_TRACKER.md
+Check all instruction in @Documents\Database
 
 DO NOT use Batch processing causes it lose progress when session ends. you should:
-- Fix ONE file at a time
+- Generate ONE file at a time
 - Update tracker after EACH file
 - Save progress continuously
-- No need to ask me every time when process to fix file continue fix it.
+- No need to ask me every time when process to generate file continue create it.
 This way if session ends, all completed work is saved. 
 
 So continue properly - one file at a time, updating tracker after each:
