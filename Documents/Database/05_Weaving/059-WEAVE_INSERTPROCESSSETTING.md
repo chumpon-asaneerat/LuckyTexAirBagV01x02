@@ -10,7 +10,6 @@
 |-----------|-------|
 | **Purpose** | Create new loom setup with beam and parameters |
 | **Operation** | INSERT |
-| **Tables** | tblWeavingSettingHead |
 | **Called From** | WeavingDataService.cs:1413 → WEAVE_INSERTPROCESSSETTING() |
 | **Frequency** | Medium |
 | **Performance** | Fast |
@@ -50,7 +49,44 @@
 
 Creates loom setup record when operator loads beam onto loom. Records all loom parameters (reed, temple, bar, etc.) and generates setup ID for tracking.
 
-**Purpose**: Initialize weaving production - creates header record before starting fabric production.
+**Workflow**:
+1. Operator scans beam barcode to start loom setup
+2. Operator selects loom machine number
+3. Operator enters or confirms loom parameters (reed, temple, bar)
+4. System validates beam is available and not already in use
+5. System creates new setup record in tblWeavingSettingHead
+6. System generates unique SETUP_ID for tracking
+7. Returns setup ID to UI for production tracking
+
+**Business Rules**:
+- Beam must exist and be available (not already in production)
+- Loom machine must be available for new setup
+- Reed, temple, and bar numbers are required for quality control
+- Setup ID links all subsequent weaving operations
+- Operator is recorded for accountability
+- Product type determines downstream processing requirements
+
+---
+
+## Related Procedures
+
+**Upstream**: [058-WEAVE_GETBEAMLOTDETAIL.md](./058-WEAVE_GETBEAMLOTDETAIL.md) - Retrieves beam info before setup
+**Downstream**: [062-WEAVE_WEAVINGPROCESS.md](./062-WEAVE_WEAVINGPROCESS.md) - Uses setup for production
+**Similar**: [016-WARP_INSERTSETTINGHEAD.md](../02_Warping/016-WARP_INSERTSETTINGHEAD.md) - Similar setup pattern
+
+---
+
+## Query/Code Location
+
+**Note**: This project uses Oracle stored procedures called from C# DataService classes.
+
+**DataService File**: `LuckyTex.AirBag.Core\Services\DataService\WeavingDataService.cs`
+**Method**: `WEAVE_INSERTPROCESSSETTING()`
+**Lines**: 1413-1450
+
+**Database Manager File**: `LuckyTex.AirBag.Core\Domains\AirbagSPs.cs`
+**Method**: `WEAVE_INSERTPROCESSSETTING(WEAVE_INSERTPROCESSSETTINGParameter para)`
+**Lines**: (locate in AirbagSPs.cs)
 
 ---
 
