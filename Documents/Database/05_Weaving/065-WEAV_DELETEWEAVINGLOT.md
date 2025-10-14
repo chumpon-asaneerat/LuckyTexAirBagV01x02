@@ -37,12 +37,6 @@ Empty result object indicating success/failure status
 
 ---
 
-## Database Operations
-
-This is a cascade deletion operation that removes the weaving lot and all related production data. The procedure accepts three parameters including audit information (remark and operator) to track who deleted the lot and why.
-
----
-
 ## Business Logic (What it does and why)
 
 **Purpose**: Completely removes a weaving production lot and all related data from the system, typically for cancelled or rejected lots that should not appear in production history.
@@ -125,128 +119,14 @@ This is a cascade deletion operation that removes the weaving lot and all relate
 **Note**: This project uses Oracle stored procedures called from C# DataService classes.
 
 **DataService File**: `LuckyTex.AirBag.Core\Services\DataService\WeavingDataService.cs`
+**Method**: `WEAV_DELETEWEAVINGLOT()` (current implementation with audit parameters)
+**Lines**: 1882-1913
 
-**Current Implementation (3 parameters)**:
-- **Method**: `WEAV_DELETEWEAVINGLOT(string P_WEAVINGLOT, string P_REMARK, string P_OPERATOR)`
-- **Lines**: 1882-1913
-- **Note**: This is the active version with audit parameters
-
-**Legacy Implementation (1 parameter)** - ⚠️ Deprecated:
-- **Method**: `WEAV_DELETEWEAVINGLOT(string P_WEAVINGLOT)`
-- **Lines**: 1378-1407
-- **Note**: Old version without audit trail - should not be used
+**Legacy Method** (deprecated): `WEAV_DELETEWEAVINGLOT()` at lines 1378-1407 (without audit trail)
 
 **Database Manager File**: `LuckyTex.AirBag.Core\Domains\AirbagSPs.cs`
 **Method**: `WEAV_DELETEWEAVINGLOT(WEAV_DELETEWEAVINGLOTParameter para)`
-**Lines**: 13701-13729
-
-**Stored Procedure Call**:
-```csharp
-// Current version with audit parameters
-string[] paraNames = new string[]
-{
-    "P_WEAVINGLOT",  // Lot to delete
-    "P_REMARK",      // Deletion reason (audit)
-    "P_OPERATOR"     // User performing deletion (audit)
-};
-
-object[] paraValues = new object[]
-{
-    para.P_WEAVINGLOT,
-    para.P_REMARK,
-    para.P_OPERATOR
-};
-
-ExecuteResult<StoredProcedureResult> ret = _manager.ExecuteProcedure(
-    "WEAV_DELETEWEAVINGLOT",
-    paraNames, paraValues);
-
-// Success if no exception and result object created
-result = new WEAV_DELETEWEAVINGLOTResult(); // Empty result = success
-```
-
-**Return Handling**:
-```csharp
-// Service layer returns bool
-public bool WEAV_DELETEWEAVINGLOT(string P_WEAVINGLOT, string P_REMARK, string P_OPERATOR)
-{
-    bool result = false;
-
-    // Validate required field
-    if (string.IsNullOrWhiteSpace(P_WEAVINGLOT))
-        return result;
-
-    WEAV_DELETEWEAVINGLOTParameter dbPara = new WEAV_DELETEWEAVINGLOTParameter();
-    dbPara.P_WEAVINGLOT = P_WEAVINGLOT;
-    dbPara.P_REMARK = P_REMARK;
-    dbPara.P_OPERATOR = P_OPERATOR;
-
-    WEAV_DELETEWEAVINGLOTResult dbResult =
-        DatabaseManager.Instance.WEAV_DELETEWEAVINGLOT(dbPara);
-
-    result = (null != dbResult); // True if deletion succeeded
-
-    return result;
-}
-```
-
-**Usage Example**:
-```csharp
-// Delete weaving lot with audit information
-WeavingDataService service = WeavingDataService.Instance;
-
-// Get operator info
-string operatorName = CurrentUser.EmployeeCode;
-
-// Show confirmation dialog
-DialogResult confirm = MessageBox.Show(
-    "Are you sure you want to delete lot " + weavingLot + "?\n" +
-    "This will delete all related data and cannot be undone!",
-    "Confirm Deletion",
-    MessageBoxButtons.YesNo,
-    MessageBoxIcon.Warning
-);
-
-if (confirm == DialogResult.Yes)
-{
-    // Get deletion reason from user
-    string remark = PromptForDeletionReason();
-
-    if (!string.IsNullOrEmpty(remark))
-    {
-        bool success = service.WEAV_DELETEWEAVINGLOT(
-            P_WEAVINGLOT: "WV-2024-001",
-            P_REMARK: remark,
-            P_OPERATOR: operatorName
-        );
-
-        if (success)
-        {
-            MessageBox.Show("Weaving lot deleted successfully.");
-            RefreshProductionList();
-            RecalculateOEE(); // Recalculate metrics
-        }
-        else
-        {
-            MessageBox.Show("Failed to delete weaving lot. It may be used in downstream processes.");
-        }
-    }
-}
-```
-
-**Recommended UI Flow**:
-```csharp
-// Validation before allowing deletion
-private bool CanDeleteWeavingLot(string weavingLot)
-{
-    // Check if lot exists and is deletable
-    // 1. Verify lot status is IN_PROCESS (not COMPLETED/SHIPPED)
-    // 2. Check no downstream processes (finishing, inspection, packing)
-    // 3. Verify user has supervisor permission
-
-    return isInProcess && !hasDownstream && hasSupervisorPermission;
-}
-```
+**Lines**: (locate in AirbagSPs.cs)
 
 ---
 
