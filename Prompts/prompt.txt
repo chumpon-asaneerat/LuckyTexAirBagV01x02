@@ -10,7 +10,7 @@ The last session
    please check is that complete my requested.
 
 3. From what i see in @Documents\.DOCUMENTATION_UPDATE_PLAN_MULTISESSION.md 
-   i dont think over than 1 hour the session will surely reach limit so adjust it more smaller to 
+   i think over than 1 hour the session will surely reach limit so adjust it more smaller to 
    fit within 1 hour per session because we may need to chat/interrupt while you make update processes
 
 4. i think the @Prompts\prompt_update.txt may need to update and if it too messy let compact it 
