@@ -33,7 +33,40 @@ None - returns result set via cursor
 
 ### Returns
 
-Returns list of cutting/printing records matching search criteria (40+ columns including all cutting parameters).
+Returns list of cutting/printing records matching search criteria with **46 columns** (same structure as CUT_GETMCSUSPENDDATA):
+
+**Core Information (8 columns)**:
+- `ITEMLOT`, `STARTDATE`, `ENDDATE`, `OPERATORID`, `MCNO`, `PRODUCTTYPEID`, `STATUS`, `REMARK`
+
+**Barcode Measurements (8 columns)**:
+- `WIDTHBARCODE1/2/3/4` - Barcode widths (mm)
+- `DISTANTBARCODE1/2/3/4` - Barcode distances (mm)
+
+**Cut Line Measurements (3 columns)**:
+- `DISTANTLINE1/2/3` - Distance between cut lines (mm)
+
+**Fabric Quality (2 columns)**:
+- `DENSITYWARP`, `DENSITYWEFT` - Thread densities
+
+**Machine Parameters (2 columns)**:
+- `SPEED`, `TENSION` - Machine settings
+
+**Width Measurements (3 columns)**:
+- `BEFORE_WIDTH`, `AFTER_WIDTH`, `AFTER_WIDTH_END`
+
+**Roll Positions (16 columns)**:
+- `BEGINROLL_LINE1/2/3/4`, `ENDROLL_LINE1/2/3/4`
+- `BEGINROLL2_LINE1/2/3/4`, `ENDROLL2_LINE1/2/3/4`
+
+**Edge Measurements (2 columns)**:
+- `SELVAGE_LEFT`, `SELVAGE_RIGHT`
+
+**Suspension/Status Information (5 columns)**:
+- `SUSPENDDATE`, `SUSPENDBY`, `SUSPENDSTARTDATE`
+- `CLEARDATE`, `CLEARBY`, `CLEARREMARK`
+
+**Additional Details (2 columns)**:
+- `LENGTHPRINT`, `LENGTHDETAIL`
 
 ---
 
@@ -61,17 +94,10 @@ Returns list of cutting/printing records matching search criteria (40+ columns i
 - **By Both**: Find operations on date and machine combination
 - Used for production reports, quality audits, issue investigation
 
-**Data Returned** (40+ columns):
-- Item lot, dates, operators
-- All barcode measurements (width, distance)
-- Cut line specifications
-- Density measurements
-- Speed and tension settings
-- Width measurements (before/after)
-- Roll positions for all cutting lines
-- Selvage measurements
-- Suspension status and remarks
-- Length details
+**Data Returned** (46 columns - complete cutting records):
+- See Returns section above for full column details
+- Includes all measurements, machine parameters, and status information
+- Used for comprehensive operation review and reporting
 
 ---
 

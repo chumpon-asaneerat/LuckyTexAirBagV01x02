@@ -32,12 +32,36 @@ None - returns result set via cursor
 
 ### Returns
 
-Returns complete cutting operation record for report generation (40+ columns):
-- Item lot, dates, all barcode measurements
-- Cut line distances, densities, speeds
-- Width measurements, roll positions
-- Selvage, tension, length details
-- All parameters recorded during cutting operation
+Returns complete cutting operation record for report generation with **46 columns** (same structure as CUT_GETMCSUSPENDDATA):
+
+**Core Information (8 columns)**:
+- `ITEMLOT`, `STARTDATE`, `ENDDATE`, `OPERATORID`, `MCNO`, `PRODUCTTYPEID`, `STATUS`, `REMARK`
+
+**Barcode Measurements (8 columns)**:
+- `WIDTHBARCODE1/2/3/4` - Barcode widths (mm)
+- `DISTANTBARCODE1/2/3/4` - Barcode distances (mm)
+
+**Cut Line Measurements (3 columns)**:
+- `DISTANTLINE1/2/3` - Distance between cut lines (mm)
+
+**Fabric Quality (2 columns)**:
+- `DENSITYWARP`, `DENSITYWEFT` - Thread densities
+
+**Machine Parameters (2 columns)**:
+- `SPEED`, `TENSION` - Machine settings
+
+**Width Measurements (3 columns)**:
+- `BEFORE_WIDTH`, `AFTER_WIDTH`, `AFTER_WIDTH_END`
+
+**Roll Positions (16 columns)**:
+- `BEGINROLL_LINE1/2/3/4`, `ENDROLL_LINE1/2/3/4`
+- `BEGINROLL2_LINE1/2/3/4`, `ENDROLL2_LINE1/2/3/4`
+
+**Edge Measurements (2 columns)**:
+- `SELVAGE_LEFT`, `SELVAGE_RIGHT`
+
+**Additional Details (2 columns)**:
+- `LENGTHPRINT`, `LENGTHDETAIL`
 
 ---
 
