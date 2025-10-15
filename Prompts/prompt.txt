@@ -1,9 +1,17 @@
+Note from Last session in @Documents\Database (check all instructions)
+
+Then Check generated documents 148-151 in last session you not include exact columns on 
+Inputs/Outputs/Returns (do not use 1/2/3/4...) so fix it.
+
+
+For New document generation
 Check all instructions in @Documents\Database
 
 Strict with all instructions and TEMPLATE_INDIVIDUAL_PROCEDURE.md do not violate it you alrady broke my instruction more than 10 sections
 i waste time to correct it DO NOT done it again.
 
 DO NOT use Batch processing causes it lose progress when session ends. you should:
+- Check all Inputs/Outputs/Results it should show exact columns (do not use 1/2/3/4...)
 - Generate ONE file at a time
 - Update tracker after EACH file
 - Save progress continuously
