@@ -359,6 +359,11 @@ namespace DataControl.ClassData
                 RepPackingLabel(ConmonReportService.Instance.INSLOT);
                 Title = "PackingLabel";
             }
+            else if (repName == "PackingLabelCM08")
+            {
+                RepPackingLabelCM08(ConmonReportService.Instance.INSLOT);
+                Title = "PackingLabelCM08";
+            }
             else if (repName == "GreyRollDaily")
             {
                 RepGreyRollDaily(ConmonReportService.Instance.WEAVINGDATE, ConmonReportService.Instance.CHINA);
@@ -8184,7 +8189,8 @@ namespace DataControl.ClassData
                             inst.BATCHNO = "S" + lot.BATCHNO;
                             inst.BARCODEBACTHNO = "S" + lot.BATCHNO;
 
-                            inst.StrQuantity = "Q" + inst.QUANTITY.Value.ToString("#,##0.0");
+                            if (inst.QUANTITY != null)
+                                inst.StrQuantity = "Q" + inst.QUANTITY.Value.ToString("#,##0.0");
 
                             //เพิ่มใหม่ 24/08/60
                             inst.INSPECTIONLOT = "H" + lot.INSPECTIONLOT;
@@ -8197,7 +8203,8 @@ namespace DataControl.ClassData
                             inst.BATCHNO = lot.BATCHNO;
                             inst.BARCODEBACTHNO = lot.BARCODEBACTHNO;
 
-                            inst.StrQuantity = inst.QUANTITY.Value.ToString("#,##0.0");
+                            if (inst.QUANTITY != null)
+                                inst.StrQuantity = inst.QUANTITY.Value.ToString("#,##0.0");
 
                             //เพิ่มใหม่ 24/08/60
                             inst.INSPECTIONLOT = lot.INSPECTIONLOT;
@@ -8237,6 +8244,91 @@ namespace DataControl.ClassData
                             //    this._reportViewer.LocalReport.ReportPath = path + @"\Report\RepPackingLabel.rdlc";
                             //else
                             //    this._reportViewer.LocalReport.ReportPath = path + @"\Report\RepPackingLabel2.rdlc";
+
+                            this._reportViewer.LocalReport.EnableExternalImages = true;
+
+                            this._reportViewer.RefreshReport();
+
+                            SetSize("Postcard", false);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString(), "Error Load Data", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        #endregion
+
+
+        #region RepPackingLabelCM08
+        private void RepPackingLabelCM08(string INSLOT)
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(INSLOT))
+                {
+                    string path = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+
+                    List<PACK_PRINTLABEL> lots =
+                           PackingDataService.Instance.PACK_PRINTLABEL(INSLOT);
+                    if (null != lots && lots.Count > 0 && null != lots[0])
+                    {
+                        //int? countDescription = 0;
+
+                        PACK_PRINTLABEL lot = lots[0];
+
+                        List<DataControl.ClassData.PackingClassData.ListPACK_PRINTLABEL> results = new List<DataControl.ClassData.PackingClassData.ListPACK_PRINTLABEL>();
+
+                        DataControl.ClassData.PackingClassData.ListPACK_PRINTLABEL inst = new DataControl.ClassData.PackingClassData.ListPACK_PRINTLABEL();
+
+                        if (lot.QUANTITY != null)
+                            inst.QUANTITY = MathEx.TruncateDecimal(lot.QUANTITY.Value, 1);
+                        else
+                            inst.QUANTITY = 0;
+
+                        inst.GROSSWEIGHT = lot.GROSSWEIGHT;
+                        inst.NETWEIGHT = lot.NETWEIGHT;
+                        inst.GRADE = lot.GRADE;
+                        inst.ITEMCODE = lot.ITEMCODE;
+
+                        // เพิ่ม 24/06/25
+                        inst.GROSSLENGTH = lot.GROSSLENGTH;
+
+                        if (lot.CUSTOMERID == "08")
+                        {
+                            inst.CUSTOMERPARTNO = "P" + lot.CUSTOMERPARTNO;
+                            inst.BarcodeCMPARTNO = "P" + lot.CUSTOMERPARTNO;
+
+                            inst.BATCHNO = "S" + lot.BATCHNO;
+                            inst.BARCODEBACTHNO = "S" + lot.BATCHNO;
+
+                            if (inst.QUANTITY != null)
+                                inst.StrQuantity = "Q" + inst.QUANTITY.Value.ToString("#,##0.0");
+
+                            if (inst.GROSSLENGTH != null)
+                                inst.StrGROSSLENGTH = "Q" + inst.GROSSLENGTH.Value.ToString("#,##0.0");
+
+                            inst.INSPECTIONLOT = "H" + lot.INSPECTIONLOT;
+                            inst.FINISHINGPROCESS = lot.FINISHINGPROCESS;
+                        }
+
+                        inst.DESCRIPTION = lot.DESCRIPTION;
+                        inst.SUPPLIERCODE = lot.SUPPLIERCODE;
+                        inst.PDATE = lot.PDATE;
+                        inst.CUSTOMERID = lot.CUSTOMERID;
+
+                        results.Add(inst);
+
+                        if (results.Count > 0)
+                        {
+                            Microsoft.Reporting.WinForms.ReportDataSource rds = new Microsoft.Reporting.WinForms.ReportDataSource("DataSet1", results);
+
+                            rds.Value = results;
+                            this._reportViewer.LocalReport.DataSources.Clear();
+                            this._reportViewer.LocalReport.DataSources.Add(rds);
+                            this._reportViewer.LocalReport.ReportPath = path + @"\Report\RepPackingLabelCM08.rdlc";
 
                             this._reportViewer.LocalReport.EnableExternalImages = true;
 

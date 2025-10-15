@@ -2200,6 +2200,8 @@ namespace LuckyTex.Domains
         public System.String DBARCODE { get; set; }
         public System.String BDate { get; set; }
         public System.String CUSPARTNO2D { get; set; }
+
+        public System.Decimal? GROSSLENGTH { get; set; }
     }
 
     #endregion
@@ -2930,6 +2932,20 @@ namespace LuckyTex.Domains
         public System.String BATCHNO { get; set; }
         public System.String CUSTOMERID { get; set; }
         public System.String PARTNO { get; set; }
+
+        public System.Decimal? MAXFORCE_W4 { get; set; }
+        public System.Decimal? MAXFORCE_W5 { get; set; }
+        public System.Decimal? MAXFORCE_W6 { get; set; }
+        public System.Decimal? MAXFORCE_F4 { get; set; }
+        public System.Decimal? MAXFORCE_F5 { get; set; }
+        public System.Decimal? MAXFORCE_F6 { get; set; }
+        public System.Decimal? ELONGATIONFORCE_W4 { get; set; }
+        public System.Decimal? ELONGATIONFORCE_W5 { get; set; }
+        public System.Decimal? ELONGATIONFORCE_W6 { get; set; }
+        public System.Decimal? ELONGATIONFORCE_F4 { get; set; }
+        public System.Decimal? ELONGATIONFORCE_F5 { get; set; }
+        public System.Decimal? ELONGATIONFORCE_F6 { get; set; }
+        
     }
 
     #endregion
@@ -3090,6 +3106,19 @@ namespace LuckyTex.Domains
         public System.String BATCHNO { get; set; }
         public System.String CUSTOMERID { get; set; }
         public System.String PARTNO { get; set; }
+
+        public System.Decimal? MAXFORCE_W4 { get; set; }
+        public System.Decimal? MAXFORCE_W5 { get; set; }
+        public System.Decimal? MAXFORCE_W6 { get; set; }
+        public System.Decimal? MAXFORCE_F4 { get; set; }
+        public System.Decimal? MAXFORCE_F5 { get; set; }
+        public System.Decimal? MAXFORCE_F6 { get; set; }
+        public System.Decimal? ELONGATIONFORCE_W4 { get; set; }
+        public System.Decimal? ELONGATIONFORCE_W5 { get; set; }
+        public System.Decimal? ELONGATIONFORCE_W6 { get; set; }
+        public System.Decimal? ELONGATIONFORCE_F4 { get; set; }
+        public System.Decimal? ELONGATIONFORCE_F5 { get; set; }
+        public System.Decimal? ELONGATIONFORCE_F6 { get; set; }
     }
 
     #endregion
@@ -3180,6 +3209,33 @@ namespace LuckyTex.Domains
 
     #endregion
 
+    #region LAB_SAVEREPLCFLEXABRASION Parameter
+
+    public class LAB_SAVEREPLCFLEXABRASIONParameter
+    {
+        public System.String P_ITMCODE { get; set; }
+        public System.String P_PRODUCTIONLOT { get; set; }
+        public System.Decimal? P_FLEXABRASION_W1 { get; set; }
+        public System.Decimal? P_FLEXABRASION_W2 { get; set; }
+        public System.Decimal? P_FLEXABRASION_W3 { get; set; }
+        public System.Decimal? P_FLEXABRASION_F1 { get; set; }
+        public System.Decimal? P_FLEXABRASION_F2 { get; set; }
+        public System.Decimal? P_FLEXABRASION_F3 { get; set; }
+        public System.DateTime? P_FLEXABRASIONDATE { get; set; }
+        public System.String P_FLEXABRASIONBY { get; set; }
+    }
+
+    #endregion
+
+    #region LAB_SAVEREPLCFLEXABRASION Result
+
+    public class LAB_SAVEREPLCFLEXABRASIONResult
+    {
+        public System.String P_RETURN { get; set; }
+    }
+
+    #endregion
+
     #region LAB_SAVEREPLCDYNAMICAIR Parameter
 
     public class LAB_SAVEREPLCDYNAMICAIRParameter
@@ -3264,6 +3320,41 @@ namespace LuckyTex.Domains
 
     public class LAB_SAVELABGREIGERESULTResult
     {
+    }
+
+    #endregion
+
+    #region LAB_SAVEFLEXABRASIONPLCDATA Parameter
+
+    public class LAB_SAVEFLEXABRASIONPLCDATAParameter
+    {
+        public System.String P_ITMCODE { get; set; }
+        public System.String P_PRODUCTIONLOT { get; set; }
+        public System.Int32? P_TESTNO { get; set; }
+        public System.Decimal? P_FLEXABRASION_W1 { get; set; }
+        public System.String P_RESULT_W1 { get; set; }
+        public System.Decimal? P_FLEXABRASION_W2 { get; set; }
+        public System.String P_RESULT_W2 { get; set; }
+        public System.Decimal? P_FLEXABRASION_W3 { get; set; }
+        public System.String P_RESULT_W3 { get; set; }
+        public System.Decimal? P_FLEXABRASION_F1 { get; set; }
+        public System.String P_RESULT_F1 { get; set; }
+        public System.Decimal? P_FLEXABRASION_F2 { get; set; }
+        public System.String P_RESULT_F2 { get; set; }
+        public System.Decimal? P_FLEXABRASION_F3 { get; set; }
+        public System.String P_RESULT_F3 { get; set; }
+        public System.DateTime? P_FLEXABRASIONDATE { get; set; }
+        public System.String P_FLEXABRASIONBY { get; set; }
+        public System.String P_RETEST { get; set; }
+    }
+
+    #endregion
+
+    #region LAB_SAVEFLEXABRASIONPLCDATA Result
+
+    public class LAB_SAVEFLEXABRASIONPLCDATAResult
+    {
+        public System.String P_RETURN { get; set; }
     }
 
     #endregion
@@ -4554,6 +4645,34 @@ namespace LuckyTex.Domains
 
     #endregion
 
+    #region LAB_GETFLEXABRASIONDATA Parameter
+
+    public class LAB_GETFLEXABRASIONDATAParameter
+    {
+        public System.String P_ITMCODE { get; set; }
+        public System.String P_PRODUCTIONLOT { get; set; }
+    }
+
+    #endregion
+
+    #region LAB_GETFLEXABRASIONDATA Result
+
+    public class LAB_GETFLEXABRASIONDATAResult
+    {
+        public System.String ITM_CODE { get; set; }
+        public System.String WEAVINGLOT { get; set; }
+        public System.Decimal? FLEXABRASION_W1 { get; set; }
+        public System.Decimal? FLEXABRASION_W2 { get; set; }
+        public System.Decimal? FLEXABRASION_W3 { get; set; }
+        public System.Decimal? FLEXABRASION_F1 { get; set; }
+        public System.Decimal? FLEXABRASION_F2 { get; set; }
+        public System.Decimal? FLEXABRASION_F3 { get; set; }
+        public System.DateTime? FLEXABRASIONDATE { get; set; }
+        public System.String FLEXABRASION_BY { get; set; }
+    }
+
+    #endregion
+
     #region LAB_GETFINISHINGSAMPLING Parameter
 
     public class LAB_GETFINISHINGSAMPLINGParameter
@@ -4698,6 +4817,38 @@ namespace LuckyTex.Domains
         public System.String METHOD { get; set; }
         public System.DateTime? ENTRYDATE { get; set; }
         public System.Decimal? N { get; set; }
+    }
+
+    #endregion
+
+    #region LAB_GETLISTFLEXABRASIONPLC Parameter
+
+    public class LAB_GETLISTFLEXABRASIONPLCParameter
+    {
+        public System.String P_ITMCODE { get; set; }
+        public System.String P_PRODUCTIONLOT { get; set; }
+        public System.String P_RETEST { get; set; }
+    }
+
+    #endregion
+
+    #region LAB_GETLISTFLEXABRASIONPLC Result
+
+    public class LAB_GETLISTFLEXABRASIONPLCResult
+    {
+        public System.Decimal? TESTNO { get; set; }
+        public System.Decimal? FLEXABRASION_W1 { get; set; }
+        public System.String ABRASIONRESULT_W1 { get; set; }
+        public System.Decimal? FLEXABRASION_W2 { get; set; }
+        public System.String ABRASIONRESULT_W2 { get; set; }
+        public System.Decimal? FLEXABRASION_W3 { get; set; }
+        public System.String ABRASIONRESULT_W3 { get; set; }
+        public System.Decimal? FLEXABRASION_F1 { get; set; }
+        public System.String ABRASIONRESULT_F1 { get; set; }
+        public System.Decimal? FLEXABRASION_F2 { get; set; }
+        public System.String ABRASIONRESULT_F2 { get; set; }
+        public System.Decimal? FLEXABRASION_F3 { get; set; }
+        public System.String ABRASIONRESULT_F3 { get; set; }
     }
 
     #endregion
@@ -4881,6 +5032,14 @@ namespace LuckyTex.Domains
         public System.Decimal? DYNAMIC_AIR3 { get; set; }
         public System.DateTime? DYNAMICDATE { get; set; }
         public System.String DYNAMIC_BY { get; set; }
+        public System.Decimal? FLEXABRASION_W1 { get; set; }
+        public System.Decimal? FLEXABRASION_W2 { get; set; }
+        public System.Decimal? FLEXABRASION_W3 { get; set; }
+        public System.Decimal? FLEXABRASION_F1 { get; set; }
+        public System.Decimal? FLEXABRASION_F2 { get; set; }
+        public System.Decimal? FLEXABRASION_F3 { get; set; }
+        public System.String FLEXABRASION_BY { get; set; }
+        public System.DateTime? FLEXABRASIONDATE { get; set; }
     }
 
     #endregion
@@ -11045,6 +11204,7 @@ namespace LuckyTex.Domains
     {
         public System.Decimal? HEADERID { get; set; }
         public System.Decimal? TOTALRECORD { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -11088,6 +11248,7 @@ namespace LuckyTex.Domains
     {
         public System.Decimal? HEADERID { get; set; }
         public System.Decimal? TOTALRECORD { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -11131,6 +11292,7 @@ namespace LuckyTex.Domains
     {
         public System.Decimal? HEADERID { get; set; }
         public System.Decimal? TOTALRECORD { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -11155,6 +11317,7 @@ namespace LuckyTex.Domains
         public System.Decimal? QTY { get; set; }
         public System.String UNIT { get; set; }
         public System.String OPERATION { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -11269,6 +11432,7 @@ namespace LuckyTex.Domains
         public System.Decimal? HEADERID { get; set; }
         public System.String ITEMID { get; set; }
         public System.Decimal? TOTALRECORD { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -11290,6 +11454,7 @@ namespace LuckyTex.Domains
     {
         public System.Decimal? HEADERID { get; set; }
         public System.Decimal? TOTALRECORD { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -11363,6 +11528,7 @@ namespace LuckyTex.Domains
     {
         public System.Decimal? HEADERID { get; set; }
         public System.Decimal? TOTALRECORD { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -11389,6 +11555,7 @@ namespace LuckyTex.Domains
         public System.Decimal? QTY { get; set; }
         public System.String UNIT { get; set; }
         public System.String OPERATION { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -11415,6 +11582,7 @@ namespace LuckyTex.Domains
         public System.Decimal? QTY { get; set; }
         public System.String UNIT { get; set; }
         public System.String OPERATION { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -11506,6 +11674,7 @@ namespace LuckyTex.Domains
     {
         public System.Decimal? HEADERID { get; set; }
         public System.Decimal? TOTALRECORD { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -11550,6 +11719,7 @@ namespace LuckyTex.Domains
     {
         public System.Decimal? HEADERID { get; set; }
         public System.Decimal? TOTALRECORD { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -11596,6 +11766,7 @@ namespace LuckyTex.Domains
     {
         public System.Decimal? HEADERID { get; set; }
         public System.Decimal? TOTALRECORD { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -11622,6 +11793,7 @@ namespace LuckyTex.Domains
         public System.Decimal? QTY { get; set; }
         public System.String UNIT { get; set; }
         public System.String OPERATION { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -11678,6 +11850,7 @@ namespace LuckyTex.Domains
     {
         public System.Decimal? HEADERID { get; set; }
         public System.Decimal? TOTALRECORD { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -11721,6 +11894,7 @@ namespace LuckyTex.Domains
     {
         public System.Decimal? HEADERID { get; set; }
         public System.Decimal? TOTALRECORD { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -11769,6 +11943,7 @@ namespace LuckyTex.Domains
     {
         public System.Decimal? HEADERID { get; set; }
         public System.Decimal? TOTALRECORD { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -11795,6 +11970,7 @@ namespace LuckyTex.Domains
         public System.Decimal? QTY { get; set; }
         public System.String UNIT { get; set; }
         public System.String OPERATION { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -11852,6 +12028,7 @@ namespace LuckyTex.Domains
     {
         public System.Decimal? HEADERID { get; set; }
         public System.Decimal? TOTALRECORD { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -11899,6 +12076,7 @@ namespace LuckyTex.Domains
     {
         public System.Decimal? HEADERID { get; set; }
         public System.Decimal? TOTALRECORD { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -11946,6 +12124,7 @@ namespace LuckyTex.Domains
     {
         public System.Decimal? HEADERID { get; set; }
         public System.Decimal? TOTALRECORD { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -11972,6 +12151,7 @@ namespace LuckyTex.Domains
         public System.Decimal? QTY { get; set; }
         public System.String UNIT { get; set; }
         public System.String OPERATION { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -12025,6 +12205,7 @@ namespace LuckyTex.Domains
     {
         public System.Decimal? HEADERID { get; set; }
         public System.Decimal? TOTALRECORD { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -12068,6 +12249,7 @@ namespace LuckyTex.Domains
     {
         public System.Decimal? HEADERID { get; set; }
         public System.Decimal? TOTALRECORD { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -12111,6 +12293,7 @@ namespace LuckyTex.Domains
     {
         public System.Decimal? HEADERID { get; set; }
         public System.Decimal? TOTALRECORD { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -12135,6 +12318,7 @@ namespace LuckyTex.Domains
         public System.Decimal? QTY { get; set; }
         public System.String UNIT { get; set; }
         public System.String OPERATION { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -12188,6 +12372,7 @@ namespace LuckyTex.Domains
     {
         public System.Decimal? HEADERID { get; set; }
         public System.Decimal? TOTALRECORD { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -12231,6 +12416,7 @@ namespace LuckyTex.Domains
     {
         public System.Decimal? HEADERID { get; set; }
         public System.Decimal? TOTALRECORD { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -12274,6 +12460,7 @@ namespace LuckyTex.Domains
     {
         public System.Decimal? HEADERID { get; set; }
         public System.Decimal? TOTALRECORD { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -12298,6 +12485,7 @@ namespace LuckyTex.Domains
         public System.Decimal? QTY { get; set; }
         public System.String UNIT { get; set; }
         public System.String OPERATION { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -12351,6 +12539,7 @@ namespace LuckyTex.Domains
     {
         public System.Decimal? HEADERID { get; set; }
         public System.Decimal? TOTALRECORD { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -12394,6 +12583,7 @@ namespace LuckyTex.Domains
     {
         public System.Decimal? HEADERID { get; set; }
         public System.Decimal? TOTALRECORD { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -12437,6 +12627,7 @@ namespace LuckyTex.Domains
     {
         public System.Decimal? HEADERID { get; set; }
         public System.Decimal? TOTALRECORD { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -12461,6 +12652,7 @@ namespace LuckyTex.Domains
         public System.Decimal? QTY { get; set; }
         public System.String UNIT { get; set; }
         public System.String OPERATION { get; set; }
+        public System.DateTime? MACHINESTART { get; set; }
     }
 
     #endregion
@@ -16662,6 +16854,9 @@ namespace LuckyTex.Services
                         result.BDate = row.Field<System.String>("BDate");
                         result.CUSPARTNO2D = row.Field<System.String>("CUSPARTNO2D");
 
+                        // เพิ่ม 24/06/25
+                        result.GROSSLENGTH = row.Field<System.Decimal?>("GROSSLENGTH");
+
                         results.Add(result);
                     }
                 }
@@ -17957,6 +18152,19 @@ namespace LuckyTex.Services
                         result.CUSTOMERID = row.Field<System.String>("CUSTOMERID");
                         result.PARTNO = row.Field<System.String>("PARTNO");
 
+                        result.MAXFORCE_W4 = row.Field<System.Decimal?>("MAXFORCE_W4");
+                        result.MAXFORCE_W5 = row.Field<System.Decimal?>("MAXFORCE_W5");
+                        result.MAXFORCE_W6 = row.Field<System.Decimal?>("MAXFORCE_W6");
+                        result.MAXFORCE_F4 = row.Field<System.Decimal?>("MAXFORCE_F4");
+                        result.MAXFORCE_F5 = row.Field<System.Decimal?>("MAXFORCE_F5");
+                        result.MAXFORCE_F6 = row.Field<System.Decimal?>("MAXFORCE_F6");
+                        result.ELONGATIONFORCE_W4 = row.Field<System.Decimal?>("ELONGATIONFORCE_W4");
+                        result.ELONGATIONFORCE_W5 = row.Field<System.Decimal?>("ELONGATIONFORCE_W5");
+                        result.ELONGATIONFORCE_W6 = row.Field<System.Decimal?>("ELONGATIONFORCE_W6");
+                        result.ELONGATIONFORCE_F4 = row.Field<System.Decimal?>("ELONGATIONFORCE_F4");
+                        result.ELONGATIONFORCE_F5 = row.Field<System.Decimal?>("ELONGATIONFORCE_F5");
+                        result.ELONGATIONFORCE_F6 = row.Field<System.Decimal?>("ELONGATIONFORCE_F6");
+
                         results.Add(result);
                     }
                 }
@@ -18151,6 +18359,19 @@ namespace LuckyTex.Services
                         result.CUSTOMERID = row.Field<System.String>("CUSTOMERID");
                         result.PARTNO = row.Field<System.String>("PARTNO");
 
+                        result.MAXFORCE_W4 = row.Field<System.Decimal?>("MAXFORCE_W4");
+                        result.MAXFORCE_W5 = row.Field<System.Decimal?>("MAXFORCE_W5");
+                        result.MAXFORCE_W6 = row.Field<System.Decimal?>("MAXFORCE_W6");
+                        result.MAXFORCE_F4 = row.Field<System.Decimal?>("MAXFORCE_F4");
+                        result.MAXFORCE_F5 = row.Field<System.Decimal?>("MAXFORCE_F5");
+                        result.MAXFORCE_F6 = row.Field<System.Decimal?>("MAXFORCE_F6");
+                        result.ELONGATIONFORCE_W4 = row.Field<System.Decimal?>("ELONGATIONFORCE_W4");
+                        result.ELONGATIONFORCE_W5 = row.Field<System.Decimal?>("ELONGATIONFORCE_W5");
+                        result.ELONGATIONFORCE_W6 = row.Field<System.Decimal?>("ELONGATIONFORCE_W6");
+                        result.ELONGATIONFORCE_F4 = row.Field<System.Decimal?>("ELONGATIONFORCE_F4");
+                        result.ELONGATIONFORCE_F5 = row.Field<System.Decimal?>("ELONGATIONFORCE_F5");
+                        result.ELONGATIONFORCE_F6 = row.Field<System.Decimal?>("ELONGATIONFORCE_F6");
+
                         results.Add(result);
                     }
                 }
@@ -18317,6 +18538,56 @@ namespace LuckyTex.Services
 
         #endregion
 
+        #region LAB_SAVEREPLCFLEXABRASION
+
+        public LAB_SAVEREPLCFLEXABRASIONResult LAB_SAVEREPLCFLEXABRASION(LAB_SAVEREPLCFLEXABRASIONParameter para)
+        {
+            LAB_SAVEREPLCFLEXABRASIONResult result = null;
+            if (!HasConnection())
+                return result;
+
+            string[] paraNames = new string[]
+            {
+                "P_ITMCODE", 
+                "P_PRODUCTIONLOT", 
+                "P_FLEXABRASION_W1", 
+                "P_FLEXABRASION_W2", 
+                "P_FLEXABRASION_W3", 
+                "P_FLEXABRASION_F1", 
+                "P_FLEXABRASION_F2", 
+                "P_FLEXABRASION_F3", 
+                "P_FLEXABRASIONDATE", 
+                "P_FLEXABRASIONBY"
+            };
+            object[] paraValues = new object[]
+            {
+                para.P_ITMCODE, 
+                para.P_PRODUCTIONLOT, 
+                para.P_FLEXABRASION_W1, 
+                para.P_FLEXABRASION_W2, 
+                para.P_FLEXABRASION_W3, 
+                para.P_FLEXABRASION_F1, 
+                para.P_FLEXABRASION_F2, 
+                para.P_FLEXABRASION_F3, 
+                para.P_FLEXABRASIONDATE, 
+                para.P_FLEXABRASIONBY
+            };
+
+            ExecuteResult<StoredProcedureResult> ret = _manager.ExecuteProcedure(
+                "LAB_SAVEREPLCFLEXABRASION",
+                paraNames, paraValues);
+            if (null != ret && !ret.HasException)
+            {
+                result = new LAB_SAVEREPLCFLEXABRASIONResult();
+                if (ret.Result.OutParameters["P_RETURN"] != DBNull.Value)
+                    result.P_RETURN = (System.String)ret.Result.OutParameters["P_RETURN"];
+            }
+
+            return result;
+        }
+
+        #endregion
+
         #region LAB_SAVEREPLCDYNAMICAIR
 
         public LAB_SAVEREPLCDYNAMICAIRResult LAB_SAVEREPLCDYNAMICAIR(LAB_SAVEREPLCDYNAMICAIRParameter para)
@@ -18468,6 +18739,72 @@ namespace LuckyTex.Services
             if (null != ret && !ret.HasException)
             {
                 result = new LAB_SAVELABGREIGERESULTResult();
+            }
+
+            return result;
+        }
+
+        #endregion
+
+        #region LAB_SAVEFLEXABRASIONPLCDATA
+
+        public LAB_SAVEFLEXABRASIONPLCDATAResult LAB_SAVEFLEXABRASIONPLCDATA(LAB_SAVEFLEXABRASIONPLCDATAParameter para)
+        {
+            LAB_SAVEFLEXABRASIONPLCDATAResult result = null;
+            if (!HasConnection())
+                return result;
+
+            string[] paraNames = new string[]
+            {
+                "P_ITMCODE", 
+                "P_PRODUCTIONLOT", 
+                "P_TESTNO", 
+                "P_FLEXABRASION_W1", 
+                "P_RESULT_W1", 
+                "P_FLEXABRASION_W2", 
+                "P_RESULT_W2", 
+                "P_FLEXABRASION_W3", 
+                "P_RESULT_W3", 
+                "P_FLEXABRASION_F1", 
+                "P_RESULT_F1", 
+                "P_FLEXABRASION_F2", 
+                "P_RESULT_F2", 
+                "P_FLEXABRASION_F3", 
+                "P_RESULT_F3", 
+                "P_FLEXABRASIONDATE", 
+                "P_FLEXABRASIONBY", 
+                "P_RETEST"
+            };
+            object[] paraValues = new object[]
+            {
+                para.P_ITMCODE, 
+                para.P_PRODUCTIONLOT, 
+                para.P_TESTNO, 
+                para.P_FLEXABRASION_W1, 
+                para.P_RESULT_W1, 
+                para.P_FLEXABRASION_W2, 
+                para.P_RESULT_W2, 
+                para.P_FLEXABRASION_W3, 
+                para.P_RESULT_W3, 
+                para.P_FLEXABRASION_F1, 
+                para.P_RESULT_F1, 
+                para.P_FLEXABRASION_F2, 
+                para.P_RESULT_F2, 
+                para.P_FLEXABRASION_F3, 
+                para.P_RESULT_F3, 
+                para.P_FLEXABRASIONDATE, 
+                para.P_FLEXABRASIONBY, 
+                para.P_RETEST
+            };
+
+            ExecuteResult<StoredProcedureResult> ret = _manager.ExecuteProcedure(
+                "LAB_SAVEFLEXABRASIONPLCDATA",
+                paraNames, paraValues);
+            if (null != ret && !ret.HasException)
+            {
+                result = new LAB_SAVEFLEXABRASIONPLCDATAResult();
+                if (ret.Result.OutParameters["P_RETURN"] != DBNull.Value)
+                    result.P_RETURN = (System.String)ret.Result.OutParameters["P_RETURN"];
             }
 
             return result;
@@ -20749,6 +21086,63 @@ namespace LuckyTex.Services
 
         #endregion
 
+        #region LAB_GETFLEXABRASIONDATA
+
+        public List<LAB_GETFLEXABRASIONDATAResult> LAB_GETFLEXABRASIONDATA(LAB_GETFLEXABRASIONDATAParameter para)
+        {
+            List<LAB_GETFLEXABRASIONDATAResult> results = new List<LAB_GETFLEXABRASIONDATAResult>();
+            if (!HasConnection())
+                return results;
+
+            string[] paraNames = new string[]
+            {
+                "P_ITMCODE", 
+                "P_PRODUCTIONLOT"
+            };
+            object[] paraValues = new object[]
+            {
+                para.P_ITMCODE, 
+                para.P_PRODUCTIONLOT
+            };
+
+            ExecuteResult<StoredProcedureResult> ret = _manager.ExecuteProcedure(
+                "LAB_GETFLEXABRASIONDATA",
+                paraNames, paraValues);
+            if (null != ret && !ret.HasException)
+            {
+                if (null == ret.Result.Table)
+                {
+                    // check has error code.
+                    //ret.Result.OutParameters[""];
+                }
+                else
+                {
+                    foreach (DataRow row in ret.Result.Table.Rows)
+                    {
+                        LAB_GETFLEXABRASIONDATAResult result =
+                            new LAB_GETFLEXABRASIONDATAResult();
+
+                        result.ITM_CODE = row.Field<System.String>("ITM_CODE");
+                        result.WEAVINGLOT = row.Field<System.String>("WEAVINGLOT");
+                        result.FLEXABRASION_W1 = row.Field<System.Decimal?>("FLEXABRASION_W1");
+                        result.FLEXABRASION_W2 = row.Field<System.Decimal?>("FLEXABRASION_W2");
+                        result.FLEXABRASION_W3 = row.Field<System.Decimal?>("FLEXABRASION_W3");
+                        result.FLEXABRASION_F1 = row.Field<System.Decimal?>("FLEXABRASION_F1");
+                        result.FLEXABRASION_F2 = row.Field<System.Decimal?>("FLEXABRASION_F2");
+                        result.FLEXABRASION_F3 = row.Field<System.Decimal?>("FLEXABRASION_F3");
+                        result.FLEXABRASIONDATE = row.Field<System.DateTime?>("FLEXABRASIONDATE");
+                        result.FLEXABRASION_BY = row.Field<System.String>("FLEXABRASION_BY");
+
+                        results.Add(result);
+                    }
+                }
+            }
+
+            return results;
+        }
+
+        #endregion
+
         #region LAB_GETFINISHINGSAMPLING
 
         public List<LAB_GETFINISHINGSAMPLINGResult> LAB_GETFINISHINGSAMPLING(LAB_GETFINISHINGSAMPLINGParameter para)
@@ -21020,6 +21414,68 @@ namespace LuckyTex.Services
                         result.METHOD = row.Field<System.String>("METHOD");
                         result.ENTRYDATE = row.Field<System.DateTime?>("ENTRYDATE");
                         result.N = row.Field<System.Decimal?>("N");
+
+                        results.Add(result);
+                    }
+                }
+            }
+
+            return results;
+        }
+
+        #endregion
+
+        #region LAB_GETLISTFLEXABRASIONPLC
+
+        public List<LAB_GETLISTFLEXABRASIONPLCResult> LAB_GETLISTFLEXABRASIONPLC(LAB_GETLISTFLEXABRASIONPLCParameter para)
+        {
+            List<LAB_GETLISTFLEXABRASIONPLCResult> results = new List<LAB_GETLISTFLEXABRASIONPLCResult>();
+            if (!HasConnection())
+                return results;
+
+            string[] paraNames = new string[]
+            {
+                "P_ITMCODE", 
+                "P_PRODUCTIONLOT", 
+                "P_RETEST"
+            };
+            object[] paraValues = new object[]
+            {
+                para.P_ITMCODE, 
+                para.P_PRODUCTIONLOT, 
+                para.P_RETEST
+            };
+
+            ExecuteResult<StoredProcedureResult> ret = _manager.ExecuteProcedure(
+                "LAB_GETLISTFLEXABRASIONPLC",
+                paraNames, paraValues);
+            if (null != ret && !ret.HasException)
+            {
+                if (null == ret.Result.Table)
+                {
+                    // check has error code.
+                    //ret.Result.OutParameters[""];
+                }
+                else
+                {
+                    foreach (DataRow row in ret.Result.Table.Rows)
+                    {
+                        LAB_GETLISTFLEXABRASIONPLCResult result =
+                            new LAB_GETLISTFLEXABRASIONPLCResult();
+
+                        result.TESTNO = row.Field<System.Decimal?>("TESTNO");
+                        result.FLEXABRASION_W1 = row.Field<System.Decimal?>("FLEXABRASION_W1");
+                        result.ABRASIONRESULT_W1 = row.Field<System.String>("ABRASIONRESULT_W1");
+                        result.FLEXABRASION_W2 = row.Field<System.Decimal?>("FLEXABRASION_W2");
+                        result.ABRASIONRESULT_W2 = row.Field<System.String>("ABRASIONRESULT_W2");
+                        result.FLEXABRASION_W3 = row.Field<System.Decimal?>("FLEXABRASION_W3");
+                        result.ABRASIONRESULT_W3 = row.Field<System.String>("ABRASIONRESULT_W3");
+                        result.FLEXABRASION_F1 = row.Field<System.Decimal?>("FLEXABRASION_F1");
+                        result.ABRASIONRESULT_F1 = row.Field<System.String>("ABRASIONRESULT_F1");
+                        result.FLEXABRASION_F2 = row.Field<System.Decimal?>("FLEXABRASION_F2");
+                        result.ABRASIONRESULT_F2 = row.Field<System.String>("ABRASIONRESULT_F2");
+                        result.FLEXABRASION_F3 = row.Field<System.Decimal?>("FLEXABRASION_F3");
+                        result.ABRASIONRESULT_F3 = row.Field<System.String>("ABRASIONRESULT_F3");
 
                         results.Add(result);
                     }
@@ -21352,6 +21808,14 @@ namespace LuckyTex.Services
                         result.DYNAMIC_AIR3 = row.Field<System.Decimal?>("DYNAMIC_AIR3");
                         result.DYNAMICDATE = row.Field<System.DateTime?>("DYNAMICDATE");
                         result.DYNAMIC_BY = row.Field<System.String>("DYNAMIC_BY");
+                        result.FLEXABRASION_W1 = row.Field<System.Decimal?>("FLEXABRASION_W1");
+                        result.FLEXABRASION_W2 = row.Field<System.Decimal?>("FLEXABRASION_W2");
+                        result.FLEXABRASION_W3 = row.Field<System.Decimal?>("FLEXABRASION_W3");
+                        result.FLEXABRASION_F1 = row.Field<System.Decimal?>("FLEXABRASION_F1");
+                        result.FLEXABRASION_F2 = row.Field<System.Decimal?>("FLEXABRASION_F2");
+                        result.FLEXABRASION_F3 = row.Field<System.Decimal?>("FLEXABRASION_F3");
+                        result.FLEXABRASION_BY = row.Field<System.String>("FLEXABRASION_BY");
+                        result.FLEXABRASIONDATE = row.Field<System.DateTime?>("FLEXABRASIONDATE");
 
                         results.Add(result);
                     }
@@ -32030,6 +32494,7 @@ namespace LuckyTex.Services
 
                         result.HEADERID = row.Field<System.Decimal?>("HEADERID");
                         result.TOTALRECORD = row.Field<System.Decimal?>("TOTALRECORD");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -32129,6 +32594,7 @@ namespace LuckyTex.Services
 
                         result.HEADERID = row.Field<System.Decimal?>("HEADERID");
                         result.TOTALRECORD = row.Field<System.Decimal?>("TOTALRECORD");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -32228,6 +32694,7 @@ namespace LuckyTex.Services
 
                         result.HEADERID = row.Field<System.Decimal?>("HEADERID");
                         result.TOTALRECORD = row.Field<System.Decimal?>("TOTALRECORD");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -32280,6 +32747,7 @@ namespace LuckyTex.Services
                         result.QTY = row.Field<System.Decimal?>("QTY");
                         result.UNIT = row.Field<System.String>("UNIT");
                         result.OPERATION = row.Field<System.String>("OPERATION");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -32512,6 +32980,7 @@ namespace LuckyTex.Services
                         result.HEADERID = row.Field<System.Decimal?>("HEADERID");
                         result.ITEMID = row.Field<System.String>("ITEMID");
                         result.TOTALRECORD = row.Field<System.Decimal?>("TOTALRECORD");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -32563,6 +33032,7 @@ namespace LuckyTex.Services
 
                         result.HEADERID = row.Field<System.Decimal?>("HEADERID");
                         result.TOTALRECORD = row.Field<System.Decimal?>("TOTALRECORD");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -32726,6 +33196,7 @@ namespace LuckyTex.Services
 
                         result.HEADERID = row.Field<System.Decimal?>("HEADERID");
                         result.TOTALRECORD = row.Field<System.Decimal?>("TOTALRECORD");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -32782,6 +33253,7 @@ namespace LuckyTex.Services
                         result.QTY = row.Field<System.Decimal?>("QTY");
                         result.UNIT = row.Field<System.String>("UNIT");
                         result.OPERATION = row.Field<System.String>("OPERATION");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -32838,6 +33310,7 @@ namespace LuckyTex.Services
                         result.QTY = row.Field<System.Decimal?>("QTY");
                         result.UNIT = row.Field<System.String>("UNIT");
                         result.OPERATION = row.Field<System.String>("OPERATION");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -33017,6 +33490,7 @@ namespace LuckyTex.Services
 
                         result.HEADERID = row.Field<System.Decimal?>("HEADERID");
                         result.TOTALRECORD = row.Field<System.Decimal?>("TOTALRECORD");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -33118,6 +33592,7 @@ namespace LuckyTex.Services
 
                         result.HEADERID = row.Field<System.Decimal?>("HEADERID");
                         result.TOTALRECORD = row.Field<System.Decimal?>("TOTALRECORD");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -33223,6 +33698,7 @@ namespace LuckyTex.Services
 
                         result.HEADERID = row.Field<System.Decimal?>("HEADERID");
                         result.TOTALRECORD = row.Field<System.Decimal?>("TOTALRECORD");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -33279,6 +33755,7 @@ namespace LuckyTex.Services
                         result.QTY = row.Field<System.Decimal?>("QTY");
                         result.UNIT = row.Field<System.String>("UNIT");
                         result.OPERATION = row.Field<System.String>("OPERATION");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -33394,6 +33871,7 @@ namespace LuckyTex.Services
 
                         result.HEADERID = row.Field<System.Decimal?>("HEADERID");
                         result.TOTALRECORD = row.Field<System.Decimal?>("TOTALRECORD");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -33493,6 +33971,7 @@ namespace LuckyTex.Services
 
                         result.HEADERID = row.Field<System.Decimal?>("HEADERID");
                         result.TOTALRECORD = row.Field<System.Decimal?>("TOTALRECORD");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -33602,6 +34081,7 @@ namespace LuckyTex.Services
 
                         result.HEADERID = row.Field<System.Decimal?>("HEADERID");
                         result.TOTALRECORD = row.Field<System.Decimal?>("TOTALRECORD");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -33658,6 +34138,7 @@ namespace LuckyTex.Services
                         result.QTY = row.Field<System.Decimal?>("QTY");
                         result.UNIT = row.Field<System.String>("UNIT");
                         result.OPERATION = row.Field<System.String>("OPERATION");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -33775,6 +34256,7 @@ namespace LuckyTex.Services
 
                         result.HEADERID = row.Field<System.Decimal?>("HEADERID");
                         result.TOTALRECORD = row.Field<System.Decimal?>("TOTALRECORD");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -33882,6 +34364,7 @@ namespace LuckyTex.Services
 
                         result.HEADERID = row.Field<System.Decimal?>("HEADERID");
                         result.TOTALRECORD = row.Field<System.Decimal?>("TOTALRECORD");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -33989,6 +34472,7 @@ namespace LuckyTex.Services
 
                         result.HEADERID = row.Field<System.Decimal?>("HEADERID");
                         result.TOTALRECORD = row.Field<System.Decimal?>("TOTALRECORD");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -34045,6 +34529,7 @@ namespace LuckyTex.Services
                         result.QTY = row.Field<System.Decimal?>("QTY");
                         result.UNIT = row.Field<System.String>("UNIT");
                         result.OPERATION = row.Field<System.String>("OPERATION");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -34154,6 +34639,7 @@ namespace LuckyTex.Services
 
                         result.HEADERID = row.Field<System.Decimal?>("HEADERID");
                         result.TOTALRECORD = row.Field<System.Decimal?>("TOTALRECORD");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -34253,6 +34739,7 @@ namespace LuckyTex.Services
 
                         result.HEADERID = row.Field<System.Decimal?>("HEADERID");
                         result.TOTALRECORD = row.Field<System.Decimal?>("TOTALRECORD");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -34352,6 +34839,7 @@ namespace LuckyTex.Services
 
                         result.HEADERID = row.Field<System.Decimal?>("HEADERID");
                         result.TOTALRECORD = row.Field<System.Decimal?>("TOTALRECORD");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -34404,6 +34892,7 @@ namespace LuckyTex.Services
                         result.QTY = row.Field<System.Decimal?>("QTY");
                         result.UNIT = row.Field<System.String>("UNIT");
                         result.OPERATION = row.Field<System.String>("OPERATION");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -34513,6 +35002,7 @@ namespace LuckyTex.Services
 
                         result.HEADERID = row.Field<System.Decimal?>("HEADERID");
                         result.TOTALRECORD = row.Field<System.Decimal?>("TOTALRECORD");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -34612,6 +35102,7 @@ namespace LuckyTex.Services
 
                         result.HEADERID = row.Field<System.Decimal?>("HEADERID");
                         result.TOTALRECORD = row.Field<System.Decimal?>("TOTALRECORD");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -34711,6 +35202,7 @@ namespace LuckyTex.Services
 
                         result.HEADERID = row.Field<System.Decimal?>("HEADERID");
                         result.TOTALRECORD = row.Field<System.Decimal?>("TOTALRECORD");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -34763,6 +35255,7 @@ namespace LuckyTex.Services
                         result.QTY = row.Field<System.Decimal?>("QTY");
                         result.UNIT = row.Field<System.String>("UNIT");
                         result.OPERATION = row.Field<System.String>("OPERATION");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -34872,6 +35365,7 @@ namespace LuckyTex.Services
 
                         result.HEADERID = row.Field<System.Decimal?>("HEADERID");
                         result.TOTALRECORD = row.Field<System.Decimal?>("TOTALRECORD");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -34971,6 +35465,7 @@ namespace LuckyTex.Services
 
                         result.HEADERID = row.Field<System.Decimal?>("HEADERID");
                         result.TOTALRECORD = row.Field<System.Decimal?>("TOTALRECORD");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -35070,6 +35565,7 @@ namespace LuckyTex.Services
 
                         result.HEADERID = row.Field<System.Decimal?>("HEADERID");
                         result.TOTALRECORD = row.Field<System.Decimal?>("TOTALRECORD");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }
@@ -35122,6 +35618,7 @@ namespace LuckyTex.Services
                         result.QTY = row.Field<System.Decimal?>("QTY");
                         result.UNIT = row.Field<System.String>("UNIT");
                         result.OPERATION = row.Field<System.String>("OPERATION");
+                        result.MACHINESTART = row.Field<System.DateTime?>("MACHINESTART");
 
                         results.Add(result);
                     }

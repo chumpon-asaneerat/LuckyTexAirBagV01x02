@@ -465,30 +465,41 @@ namespace LuckyTex.Pages
         {
             if (!string.IsNullOrEmpty(P_INSPECTIONLOT))
             {
-                if (D365_IN_BPO() == true)
+                D365SelectInfo d365SelectInfo = new D365SelectInfo();
+
+                d365SelectInfo = this.ShowD365SelectBox();
+
+                if (d365SelectInfo != null)
                 {
-                    if (PRODID != null)
+                    string P_action = string.Empty;
+                    decimal? P_resent = null;
+
+                    P_action = d365SelectInfo.Action;
+                    P_resent = d365SelectInfo.Resent;
+
+                    #region D365
+                    if (D365_IN_BPO(P_action, P_resent) == true)
                     {
-                        if (PRODID != 0)
+                        if (PRODID != null)
                         {
                             #region D365_IN_ISH
-                            if (D365_IN_ISH(PRODID) == true)
+                            if (D365_IN_ISH(PRODID, P_action, P_resent) == true)
                             {
                                 if (HEADERID != null)
                                 {
-                                    if (D365_IN_ISL(HEADERID) == true)
+                                    if (D365_IN_ISL(HEADERID, P_action, P_resent) == true)
                                     {
-                                        if (D365_IN_OPH(PRODID) == true)
+                                        if (D365_IN_OPH(PRODID, P_action, P_resent) == true)
                                         {
                                             if (HEADERID != null)
                                             {
-                                                if (D365_IN_OPL(HEADERID) == true)
+                                                if (D365_IN_OPL(HEADERID, P_action, P_resent) == true)
                                                 {
-                                                    if (D365_IN_OUH(PRODID) == true)
+                                                    if (D365_IN_OUH(PRODID, P_action, P_resent) == true)
                                                     {
                                                         if (HEADERID != null)
                                                         {
-                                                            if (D365_IN_OUL(HEADERID) == true)
+                                                            if (D365_IN_OUL(HEADERID, P_action, P_resent) == true)
                                                             {
                                                                 "Send D365 complete".ShowMessageBox();
                                                             }
@@ -513,44 +524,93 @@ namespace LuckyTex.Pages
                                 }
                             }
                             #endregion
+
+                            #region Old
+                            //if (PRODID != 0)
+                            //{
+                            //    #region D365_IN_ISH
+                            //    if (D365_IN_ISH(PRODID, P_action, P_resent) == true)
+                            //    {
+                            //        if (HEADERID != null)
+                            //        {
+                            //            if (D365_IN_ISL(HEADERID, P_action, P_resent) == true)
+                            //            {
+                            //                if (D365_IN_OPH(PRODID, P_action, P_resent) == true)
+                            //                {
+                            //                    if (HEADERID != null)
+                            //                    {
+                            //                        if (D365_IN_OPL(HEADERID, P_action, P_resent) == true)
+                            //                        {
+                            //                            if (D365_IN_OUH(PRODID, P_action, P_resent) == true)
+                            //                            {
+                            //                                if (HEADERID != null)
+                            //                                {
+                            //                                    if (D365_IN_OUL(HEADERID, P_action, P_resent) == true)
+                            //                                    {
+                            //                                        "Send D365 complete".ShowMessageBox();
+                            //                                    }
+                            //                                }
+                            //                                else
+                            //                                {
+                            //                                    "HEADERID is null".Info();
+                            //                                }
+                            //                            }
+                            //                        }
+                            //                    }
+                            //                    else
+                            //                    {
+                            //                        "HEADERID is null".Info();
+                            //                    }
+                            //                }
+                            //            }
+                            //        }
+                            //        else
+                            //        {
+                            //            "HEADERID is null".Info();
+                            //        }
+                            //    }
+                            //    #endregion
+                            //}
+                            //else
+                            //{
+                            //    #region D365_IN_OPH
+                            //    if (D365_IN_OPH(PRODID, P_action, P_resent) == true)
+                            //    {
+                            //        if (HEADERID != null)
+                            //        {
+                            //            if (D365_IN_OPL(HEADERID, P_action, P_resent) == true)
+                            //            {
+                            //                if (D365_IN_OUH(PRODID, P_action, P_resent) == true)
+                            //                {
+                            //                    if (HEADERID != null)
+                            //                    {
+                            //                        if (D365_IN_OUL(HEADERID, P_action, P_resent) == true)
+                            //                        {
+                            //                            "Send D365 complete".ShowMessageBox();
+                            //                        }
+                            //                    }
+                            //                    else
+                            //                    {
+                            //                        "HEADERID is null".Info();
+                            //                    }
+                            //                }
+                            //            }
+                            //        }
+                            //        else
+                            //        {
+                            //            "HEADERID is null".Info();
+                            //        }
+                            //    }
+                            //    #endregion
+                            //}
+                            #endregion
                         }
                         else
                         {
-                            #region D365_IN_OPH
-                            if (D365_IN_OPH(PRODID) == true)
-                            {
-                                if (HEADERID != null)
-                                {
-                                    if (D365_IN_OPL(HEADERID) == true)
-                                    {
-                                        if (D365_IN_OUH(PRODID) == true)
-                                        {
-                                            if (HEADERID != null)
-                                            {
-                                                if (D365_IN_OUL(HEADERID) == true)
-                                                {
-                                                    "Send D365 complete".ShowMessageBox();
-                                                }
-                                            }
-                                            else
-                                            {
-                                                "HEADERID is null".Info();
-                                            }
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    "HEADERID is null".Info();
-                                }
-                            }
-                            #endregion
+                            "PRODID is null".Info();
                         }
                     }
-                    else
-                    {
-                        "PRODID is null".Info();
-                    }
+                    #endregion
                 }
             }
             else
@@ -564,13 +624,15 @@ namespace LuckyTex.Pages
         #region private Methods
 
         #region D365_IN_BPO
-        private bool D365_IN_BPO()
+        private bool D365_IN_BPO(string P_ACTION, decimal? P_RESENT)
         {
             bool chkD365 = true;
 
             try
             {
                 List<ListD365_IN_BPOData> results = new List<ListD365_IN_BPOData>();
+
+                "D365_IN_BPO".Info();
 
                 results = D365DataService.Instance.D365_IN_BPO(P_FINISHINGLOT, P_INSPECTIONLOT,P_StartDate);
 
@@ -579,33 +641,68 @@ namespace LuckyTex.Pages
                     int i = 0;
                     string chkError = string.Empty;
 
+                    string strPRODID = string.Empty;
+                    string strLOTNO = string.Empty;
+                    string strITEMID = string.Empty;
+                    string strLOADINGTYPE = string.Empty;
+   
                     foreach (var row in results)
                     {
                         if (results[i].PRODID != null)
+                        {
                             PRODID = Convert.ToInt64(results[i].PRODID);
+                            strPRODID = "PRODID = " + PRODID.ToString();
+                            strPRODID.Info();
+                        }
                         else
+                        {
                             PRODID = null;
+                            "PRODID = null".Err();
+                        }
 
                         if (!string.IsNullOrEmpty(results[i].LOTNO))
+                        {
                             P_LOTNO = results[i].LOTNO;
+                            strLOTNO = "LOTNO = " + P_LOTNO;
+                            strLOTNO.Info();
+                        }
                         else
+                        {
                             P_LOTNO = string.Empty;
+                            "LOTNO = null".Err();
+                        }
 
                         if (!string.IsNullOrEmpty(results[i].ITEMID))
+                        {
                             P_ITEMID = results[i].ITEMID;
+                            strITEMID = "ITEMID = " + P_ITEMID;
+                            strITEMID.Info();
+                        }
                         else
+                        {
                             P_ITEMID = string.Empty;
+                            "ITEMID = null".Err();
+                        }
 
                         if (!string.IsNullOrEmpty(results[i].LOADINGTYPE))
+                        {
                             P_LOADINGTYPE = results[i].LOADINGTYPE;
+                            strLOADINGTYPE = "LOADINGTYPE = " + P_LOADINGTYPE;
+                            strLOADINGTYPE.Info();
+                        }
                         else
+                        {
                             P_LOADINGTYPE = string.Empty;
+                            "LOADINGTYPE = null".Err();
+                        }
 
                         if (PRODID != null)
                         {
                             if (PRODID != 0)
                             {
-                                chkError = D365DataService.Instance.Insert_ABBPO(PRODID, results[i].LOTNO, results[i].ITEMID, results[i].LOADINGTYPE, 0, "N", results[i].QTY, results[i].UNIT, results[i].OPERATION);
+                                "Insert_ABBPO".Info();
+
+                                chkError = D365DataService.Instance.Insert_ABBPO(PRODID, results[i].LOTNO, results[i].ITEMID, results[i].LOADINGTYPE, P_RESENT, P_ACTION, results[i].QTY, results[i].UNIT, results[i].OPERATION, results[i].MACHINESTART);
 
                                 if (!string.IsNullOrEmpty(chkError))
                                 {
@@ -615,6 +712,14 @@ namespace LuckyTex.Pages
                                     break;
                                 }
                             }
+                            else
+                            {
+                                "PRODID = 0".Err();
+                            }
+                        }
+                        else
+                        {
+                            "PRODID = null".Err();
                         }
 
                         i++;
@@ -638,7 +743,7 @@ namespace LuckyTex.Pages
         #endregion
 
         #region D365_IN_ISH
-        private bool D365_IN_ISH(long? PRODID)
+        private bool D365_IN_ISH(long? PRODID, string P_ACTION, decimal? P_RESENT)
         {
             bool chkD365 = true;
 
@@ -646,23 +751,34 @@ namespace LuckyTex.Pages
             {
                 List<D365_IN_ISHData> results = new List<D365_IN_ISHData>();
 
+                "D365_IN_ISH".Info();
                 results = D365DataService.Instance.D365_IN_ISH(P_FINISHINGLOT, P_INSPECTIONLOT);
 
                 if (results.Count > 0)
                 {
                     int i = 0;
                     string chkError = string.Empty;
+                    string strHEADERID = string.Empty;
 
                     foreach (var row in results)
                     {
                         if (results[i].HEADERID != null)
+                        {
                             HEADERID = Convert.ToInt64(results[i].HEADERID);
+                            strHEADERID = "HEADERID = " + HEADERID.ToString();
+                            strHEADERID.Info();
+                        }
                         else
+                        {
                             HEADERID = null;
+                            "HEADERID = null".Err();
+                        }
 
                         if (HEADERID != null)
                         {
-                            chkError = D365DataService.Instance.Insert_ABISH(HEADERID, PRODID, "N", 0, results[i].TOTALRECORD, P_LOTNO, P_ITEMID, P_LOADINGTYPE);
+                            "Insert_ABISH".Info();
+
+                            chkError = D365DataService.Instance.Insert_ABISH(HEADERID, PRODID, P_ACTION, P_RESENT, results[i].TOTALRECORD, P_LOTNO, P_ITEMID, P_LOADINGTYPE, results[i].MACHINESTART);
 
                             if (!string.IsNullOrEmpty(chkError))
                             {
@@ -694,13 +810,15 @@ namespace LuckyTex.Pages
         #endregion
 
         #region D365_IN_ISL
-        private bool D365_IN_ISL(long? HEADERID)
+        private bool D365_IN_ISL(long? HEADERID, string P_ACTION, decimal? P_RESENT)
         {
             bool chkD365 = true;
 
             try
             {
                 List<ListD365_IN_ISLData> results = new List<ListD365_IN_ISLData>();
+
+                "D365_IN_ISL".Info();
 
                 results = D365DataService.Instance.D365_IN_ISL(P_FINISHINGLOT, P_INSPECTIONLOT, P_StartDate);
 
@@ -709,6 +827,17 @@ namespace LuckyTex.Pages
                     int i = 0;
                     string chkError = string.Empty;
                     string issDate = string.Empty;
+                    string strHEADERID = string.Empty;
+
+                    if (HEADERID != null)
+                    {
+                        strHEADERID = "HEADERID = " + HEADERID.ToString();
+                        strHEADERID.Info();
+                    }
+                    else
+                    {
+                        "HEADERID = null".Err();
+                    }
 
                     foreach (var row in results)
                     {
@@ -717,7 +846,9 @@ namespace LuckyTex.Pages
                         else
                             issDate = string.Empty;
 
-                        chkError = D365DataService.Instance.Insert_ABISL(HEADERID, results[i].LINENO, "N", 0, issDate, results[i].ITEMID, results[i].STYLEID, results[i].QTY, results[i].UNIT, results[i].SERIALID);
+                        "Insert_ABISL".Info();
+
+                        chkError = D365DataService.Instance.Insert_ABISL(HEADERID, results[i].LINENO, P_ACTION, P_RESENT, issDate, results[i].ITEMID, results[i].STYLEID, results[i].QTY, results[i].UNIT, results[i].SERIALID);
 
                         if (!string.IsNullOrEmpty(chkError))
                         {
@@ -748,31 +879,52 @@ namespace LuckyTex.Pages
         #endregion
 
         #region D365_IN_OPH
-        private bool D365_IN_OPH(long? PRODID)
+        private bool D365_IN_OPH(long? PRODID, string P_ACTION, decimal? P_RESENT)
         {
             bool chkD365 = true;
 
             try
             {
                 List<D365_IN_OPHData> results = new List<D365_IN_OPHData>();
-
+                "D365_IN_OPH".Info();
                 results = D365DataService.Instance.D365_IN_OPH(P_INSPECTIONLOT);
 
                 if (results.Count > 0)
                 {
                     int i = 0;
                     string chkError = string.Empty;
+                    string strHEADERID = string.Empty;
+                    string strPRODID = string.Empty;
+
+                    if (PRODID != null)
+                    {
+                        strPRODID = "PRODID = " + PRODID.ToString();
+                        strPRODID.Info();
+                    }
+                    else
+                    {
+                        "PRODID = null".Err();
+                    }
 
                     foreach (var row in results)
                     {
                         if (results[i].HEADERID != null)
+                        {
                             HEADERID = Convert.ToInt64(results[i].HEADERID);
+                            strHEADERID = "HEADERID = " + HEADERID.ToString();
+                            strHEADERID.Info();
+                        }
                         else
+                        {
                             HEADERID = null;
+                            "HEADERID = null".Err();
+                        }
 
                         if (HEADERID != null)
                         {
-                            chkError = D365DataService.Instance.Insert_ABOPH(HEADERID, PRODID, "N", 0, results[i].TOTALRECORD, P_LOTNO, P_ITEMID, P_LOADINGTYPE);
+                            "Insert_ABOPH".Info();
+
+                            chkError = D365DataService.Instance.Insert_ABOPH(HEADERID, PRODID, P_ACTION, P_RESENT, results[i].TOTALRECORD, P_LOTNO, P_ITEMID, P_LOADINGTYPE, results[i].MACHINESTART);
 
                             if (!string.IsNullOrEmpty(chkError))
                             {
@@ -804,7 +956,7 @@ namespace LuckyTex.Pages
         #endregion
 
         #region D365_IN_OPL
-        private bool D365_IN_OPL(long? HEADERID)
+        private bool D365_IN_OPL(long? HEADERID, string P_ACTION, decimal? P_RESENT)
         {
             bool chkD365 = true;
 
@@ -812,7 +964,21 @@ namespace LuckyTex.Pages
             {
                 List<ListD365_IN_OPLData> results = new List<ListD365_IN_OPLData>();
 
+                "D365_IN_OPL".Info();
+
                 results = D365DataService.Instance.D365_IN_OPL(P_INSPECTIONLOT, P_StartDate);
+
+                string strHEADERID = string.Empty;
+
+                if (HEADERID != null)
+                {
+                    strHEADERID = "HEADERID = " + HEADERID.ToString();
+                    strHEADERID.Info();
+                }
+                else
+                {
+                    "HEADERID = null".Err();
+                }
 
                 if (results.Count > 0)
                 {
@@ -821,7 +987,8 @@ namespace LuckyTex.Pages
 
                     foreach (var row in results)
                     {
-                        chkError = D365DataService.Instance.Insert_ABOPL(HEADERID, results[i].LINENO, "N", 0, results[i].PROCQTY, results[i].OPRNO, results[i].OPRID, results[i].MACHINENO, results[i].STARTDATETIME, results[i].ENDDATETIME);
+                        "Insert_ABOPL".Info();
+                        chkError = D365DataService.Instance.Insert_ABOPL(HEADERID, results[i].LINENO, P_ACTION, P_RESENT, results[i].PROCQTY, results[i].OPRNO, results[i].OPRID, results[i].MACHINENO, results[i].STARTDATETIME, results[i].ENDDATETIME);
 
                         if (!string.IsNullOrEmpty(chkError))
                         {
@@ -852,7 +1019,7 @@ namespace LuckyTex.Pages
         #endregion
 
         #region D365_IN_OUH
-        private bool D365_IN_OUH(long? PRODID)
+        private bool D365_IN_OUH(long? PRODID, string P_ACTION, decimal? P_RESENT)
         {
             bool chkD365 = true;
 
@@ -860,23 +1027,35 @@ namespace LuckyTex.Pages
             {
                 List<D365_IN_OUHData> results = new List<D365_IN_OUHData>();
 
+                "D365_IN_OUH".Info();
+
                 results = D365DataService.Instance.D365_IN_OUH(P_INSPECTIONLOT);
 
                 if (results.Count > 0)
                 {
                     int i = 0;
                     string chkError = string.Empty;
+                    string strHEADERID = string.Empty;
 
                     foreach (var row in results)
                     {
                         if (results[i].HEADERID != null)
+                        {
                             HEADERID = Convert.ToInt64(results[i].HEADERID);
+                            strHEADERID = "HEADERID = " + HEADERID.ToString();
+                            strHEADERID.Info();
+                        }
                         else
+                        {
                             HEADERID = null;
+                            "HEADERID = null".Err();
+                        }
 
                         if (HEADERID != null)
                         {
-                            chkError = D365DataService.Instance.Insert_ABOUH(HEADERID, PRODID, "N", 0, results[i].TOTALRECORD, P_LOTNO, P_ITEMID, P_LOADINGTYPE);
+                            "Insert_ABOUH".Info();
+
+                            chkError = D365DataService.Instance.Insert_ABOUH(HEADERID, PRODID, P_ACTION, P_RESENT, results[i].TOTALRECORD, P_LOTNO, P_ITEMID, P_LOADINGTYPE, results[i].MACHINESTART);
 
                             if (!string.IsNullOrEmpty(chkError))
                             {
@@ -908,7 +1087,7 @@ namespace LuckyTex.Pages
         #endregion
 
         #region D365_IN_OUL
-        private bool D365_IN_OUL(long? HEADERID)
+        private bool D365_IN_OUL(long? HEADERID, string P_ACTION, decimal? P_RESENT)
         {
             bool chkD365 = true;
 
@@ -916,7 +1095,20 @@ namespace LuckyTex.Pages
             {
                 List<ListD365_IN_OULData> results = new List<ListD365_IN_OULData>();
 
+                "D365_IN_OUL".Info();
                 results = D365DataService.Instance.D365_IN_OUL(P_FINISHINGLOT, P_INSPECTIONLOT, P_StartDate);
+
+                string strHEADERID = string.Empty;
+
+                if (HEADERID != null)
+                {
+                    strHEADERID = "HEADERID = " + HEADERID.ToString();
+                    strHEADERID.Info();
+                }
+                else
+                {
+                    "HEADERID = null".Err();
+                }
 
                 if (results.Count > 0)
                 {
@@ -937,7 +1129,9 @@ namespace LuckyTex.Pages
                         else
                             finish = 0;
 
-                        chkError = D365DataService.Instance.Insert_ABOUL(HEADERID, results[i].LINENO, "N", 0, outputDate, results[i].ITEMID, results[i].QTY, results[i].UNIT, results[i].GROSSLENGTH, results[i].NETLENGTH
+                        "Insert_ABOUL".Info();
+
+                        chkError = D365DataService.Instance.Insert_ABOUL(HEADERID, results[i].LINENO, P_ACTION, P_RESENT, outputDate, results[i].ITEMID, results[i].QTY, results[i].UNIT, results[i].GROSSLENGTH, results[i].NETLENGTH
                             , results[i].GROSSWEIGHT, results[i].NETWEIGHT, results[i].PALLETNO, results[i].GRADE, results[i].SERIALID, results[i].LOADINGTYPE, finish, results[i].MOVEMENTTRANS, results[i].WAREHOUSE, results[i].LOCATION);
 
 

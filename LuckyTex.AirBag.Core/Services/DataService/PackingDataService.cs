@@ -654,6 +654,9 @@ namespace LuckyTex.Services
                             inst.BarcodeCMPARTNO = dbResult.CUSTOMERPARTNO;
                         }
 
+                        // เพิ่ม 24/06/25
+                        inst.GROSSLENGTH = dbResult.GROSSLENGTH;
+
                         results.Add(inst);
                     }
                 }

@@ -1547,7 +1547,8 @@ namespace LuckyTex.Pages
                 //New 30/08/22
                 chkConfirmstartLength = true;
 
-                if (!string.IsNullOrEmpty(txtItemLotNo.Text) && !string.IsNullOrEmpty(txtInsLotNo.Text))
+                if (!string.IsNullOrEmpty(txtItemLotNo.Text) 
+                    && !string.IsNullOrEmpty(txtInsLotNo.Text))
                 {
                     D365_IN_New();
                 }
@@ -1685,7 +1686,8 @@ namespace LuckyTex.Pages
                                 // เพิ่มส่งค่า netlength
                                 _session.End(counterVal, netLength, confirmResult.Grade,txtLoadingType.Text,"W");
 
-                                if (!string.IsNullOrEmpty(_session.FinishingLotNo) && !string.IsNullOrEmpty(_session.InspecionLotNo))
+                                if (!string.IsNullOrEmpty(_session.FinishingLotNo) 
+                                    && !string.IsNullOrEmpty(_session.InspecionLotNo))
                                 {
                                     D365_IN(); 
                                 }
@@ -1752,6 +1754,12 @@ namespace LuckyTex.Pages
                             // Success Confirm. End current session.
                             // เพิ่มส่งค่า netlength
                             _session.End(counterVal, netLength, confirmResult.Grade,txtLoadingType.Text,"Y");
+
+                            if (!string.IsNullOrEmpty(_session.FinishingLotNo)
+                                  && !string.IsNullOrEmpty(_session.InspecionLotNo))
+                            {
+                                D365_IN();
+                            }
 
                             cmdBack.IsEnabled = true;
 
@@ -2621,12 +2629,34 @@ namespace LuckyTex.Pages
                 P_INSPECTIONLOT = _session.InspecionLotNo;
                 P_StartDate = _session.StartDate;
 
+                string fin = string.Empty;
+                string ins = string.Empty;
+                string proid = string.Empty;
+
+
                 if (!string.IsNullOrEmpty(P_INSPECTIONLOT))
                 {
+                    fin = "Finishing Lot = " + P_FINISHINGLOT;
+                    fin.Info();
+                }
+                else
+                {
+                    "Finishing Lot is null".Info();
+                }
+
+
+                if (!string.IsNullOrEmpty(P_INSPECTIONLOT))
+                {
+                    ins = "Inspection Lot = " + P_INSPECTIONLOT;
+                    ins.Info();
+
                     if (D365_IN_BPO() == true)
                     {
                         if (PRODID != null)
                         {
+                            proid = "PRODID = " + PRODID.ToString();
+                            proid.Info();
+
                             if (PRODID != 0)
                             {
                                 #region D365_IN_ISH
@@ -2729,23 +2759,50 @@ namespace LuckyTex.Pages
                 P_FINISHINGLOT = txtItemLotNo.Text;
                 P_INSPECTIONLOT = txtInsLotNo.Text;
 
+                string fin = string.Empty;
+                string ins = string.Empty;
+                string proid = string.Empty;
+
                 if (!string.IsNullOrEmpty(P_INSPECTIONLOT))
                 {
+                    fin = "Finishing Lot = " + P_FINISHINGLOT;
+                    fin.Info();
+                }
+                else
+                {
+                    "Finishing Lot is null".Info();
+                }
+
+                if (!string.IsNullOrEmpty(P_INSPECTIONLOT))
+                {
+                    ins = "Inspection Lot = " + P_INSPECTIONLOT;
+                    ins.Info();
+
                     if (D365_IN_BPO() == true)
                     {
-                        if (D365_IN_OUH(PRODID, true) == true)
+                        if (PRODID != null)
                         {
-                            if (HEADERID != null)
+                            proid = "PRODID = " + PRODID.ToString();
+                            proid.Info();
+
+                            if (D365_IN_OUH(PRODID, true) == true)
                             {
-                                if (D365_IN_OUL(HEADERID, 1,true) == true)
+                                if (HEADERID != null)
                                 {
-                                    "Send D365 complete".Info();
+                                    if (D365_IN_OUL(HEADERID, 1, true) == true)
+                                    {
+                                        "Send D365 complete".Info();
+                                    }
+                                }
+                                else
+                                {
+                                    "HEADERID is null".Info();
                                 }
                             }
-                            else
-                            {
-                                "HEADERID is null".Info();
-                            }
+                        }
+                        else
+                        {
+                            "PRODID is null".Info();
                         }
                     }
                 }
@@ -2768,20 +2825,28 @@ namespace LuckyTex.Pages
             try
             {
                 List<ListD365_IN_BPOData> results = new List<ListD365_IN_BPOData>();
-
+                "D365_IN_BPO".Info();
                 results = D365DataService.Instance.D365_IN_BPO(P_FINISHINGLOT, P_INSPECTIONLOT, P_StartDate);
 
                 if (results.Count > 0)
                 {
                     int i = 0;
                     string chkError = string.Empty;
+                    string pid = string.Empty;
 
                     foreach (var row in results)
                     {
                         if (results[i].PRODID != null)
+                        {
                             PRODID = Convert.ToInt64(results[i].PRODID);
+                            pid = "PRODID = " + PRODID.ToString();
+                            pid.Info();
+                        }
                         else
+                        {
                             PRODID = null;
+                            "PRODID is null".Info();
+                        }
 
                         if (!string.IsNullOrEmpty(results[i].LOTNO))
                             P_LOTNO = results[i].LOTNO;
@@ -2802,7 +2867,9 @@ namespace LuckyTex.Pages
                         {
                             if (PRODID != 0)
                             {
-                                chkError = D365DataService.Instance.Insert_ABBPO(PRODID, results[i].LOTNO, results[i].ITEMID, results[i].LOADINGTYPE, 0, "N", results[i].QTY, results[i].UNIT, results[i].OPERATION);
+                                "Insert_ABBPO".Info();
+
+                                chkError = D365DataService.Instance.Insert_ABBPO(PRODID, results[i].LOTNO, results[i].ITEMID, results[i].LOADINGTYPE, 0, "N", results[i].QTY, results[i].UNIT, results[i].OPERATION, results[i].MACHINESTART);
 
                                 if (!string.IsNullOrEmpty(chkError))
                                 {
@@ -2811,6 +2878,10 @@ namespace LuckyTex.Pages
                                     chkD365 = false;
                                     break;
                                 }
+                            }
+                            else
+                            {
+                                "PRODID = 0".Info();
                             }
                         }
 
@@ -2843,12 +2914,14 @@ namespace LuckyTex.Pages
             {
                 List<D365_IN_ISHData> results = new List<D365_IN_ISHData>();
 
+                "D365_IN_ISH".Info();
                 results = D365DataService.Instance.D365_IN_ISH(P_FINISHINGLOT, P_INSPECTIONLOT);
 
                 if (results.Count > 0)
                 {
                     int i = 0;
                     string chkError = string.Empty;
+                    string hid = string.Empty;
 
                     foreach (var row in results)
                     {
@@ -2859,7 +2932,12 @@ namespace LuckyTex.Pages
 
                         if (HEADERID != null)
                         {
-                            chkError = D365DataService.Instance.Insert_ABISH(HEADERID, PRODID, "N", 0, results[i].TOTALRECORD, P_LOTNO, P_ITEMID, P_LOADINGTYPE);
+                            hid = "HEADERID = " + HEADERID.ToString();
+                            hid.Info();
+
+                            "Insert_ABISH".Info();
+
+                            chkError = D365DataService.Instance.Insert_ABISH(HEADERID, PRODID, "N", 0, results[i].TOTALRECORD, P_LOTNO, P_ITEMID, P_LOADINGTYPE, results[i].MACHINESTART);
 
                             if (!string.IsNullOrEmpty(chkError))
                             {
@@ -2868,6 +2946,10 @@ namespace LuckyTex.Pages
                                 chkD365 = false;
                                 break;
                             }
+                        }
+                        else
+                        {
+                            "HEADERID is null".Info();
                         }
 
                         i++;
@@ -2897,8 +2979,21 @@ namespace LuckyTex.Pages
 
             try
             {
+                string hid = string.Empty;
+
+                if (HEADERID != null)
+                {
+                    hid = "HEADERID = " + HEADERID.ToString();
+                    hid.Info();
+                }
+                else
+                {
+                    "HEADERID is null".Info();
+                }
+
                 List<ListD365_IN_ISLData> results = new List<ListD365_IN_ISLData>();
 
+                "D365_IN_ISL".Info();
                 results = D365DataService.Instance.D365_IN_ISL(P_FINISHINGLOT, P_INSPECTIONLOT, P_StartDate);
 
                 if (results.Count > 0)
@@ -2914,6 +3009,7 @@ namespace LuckyTex.Pages
                         else
                             issDate = string.Empty;
 
+                        "Insert_ABISL".Info();
                         chkError = D365DataService.Instance.Insert_ABISL(HEADERID, results[i].LINENO, "N", 0, issDate, results[i].ITEMID, results[i].STYLEID, results[i].QTY, results[i].UNIT, results[i].SERIALID);
 
                         if (!string.IsNullOrEmpty(chkError))
@@ -2953,12 +3049,15 @@ namespace LuckyTex.Pages
             {
                 List<D365_IN_OPHData> results = new List<D365_IN_OPHData>();
 
+                "D365_IN_OPH".Info();
+
                 results = D365DataService.Instance.D365_IN_OPH(P_INSPECTIONLOT);
 
                 if (results.Count > 0)
                 {
                     int i = 0;
                     string chkError = string.Empty;
+                    string hid = string.Empty;
 
                     foreach (var row in results)
                     {
@@ -2969,7 +3068,12 @@ namespace LuckyTex.Pages
 
                         if (HEADERID != null)
                         {
-                            chkError = D365DataService.Instance.Insert_ABOPH(HEADERID, PRODID, "N", 0, results[i].TOTALRECORD, P_LOTNO, P_ITEMID, P_LOADINGTYPE);
+                            hid = "HEADERID = "+HEADERID.ToString();
+                            hid.Info();
+
+                            "Insert_ABOPH".Info();
+
+                            chkError = D365DataService.Instance.Insert_ABOPH(HEADERID, PRODID, "N", 0, results[i].TOTALRECORD, P_LOTNO, P_ITEMID, P_LOADINGTYPE, results[i].MACHINESTART);
 
                             if (!string.IsNullOrEmpty(chkError))
                             {
@@ -2978,6 +3082,10 @@ namespace LuckyTex.Pages
                                 chkD365 = false;
                                 break;
                             }
+                        }
+                        else
+                        {
+                            "HEADERID is null".Info();
                         }
 
                         i++;
@@ -3009,6 +3117,8 @@ namespace LuckyTex.Pages
             {
                 List<ListD365_IN_OPLData> results = new List<ListD365_IN_OPLData>();
 
+                "D365_IN_OPL".Info();
+
                 results = D365DataService.Instance.D365_IN_OPL(P_INSPECTIONLOT, P_StartDate);
 
                 if (results.Count > 0)
@@ -3018,6 +3128,8 @@ namespace LuckyTex.Pages
 
                     foreach (var row in results)
                     {
+                        "Insert_ABOPL".Info();
+
                         chkError = D365DataService.Instance.Insert_ABOPL(HEADERID, results[i].LINENO, "N", 0, results[i].PROCQTY, results[i].OPRNO, results[i].OPRID, results[i].MACHINENO, results[i].STARTDATETIME, results[i].ENDDATETIME);
 
                         if (!string.IsNullOrEmpty(chkError))
@@ -3057,6 +3169,8 @@ namespace LuckyTex.Pages
             {
                 List<D365_IN_OUHData> results = new List<D365_IN_OUHData>();
 
+                "D365_IN_OUH".Info();
+
                 results = D365DataService.Instance.D365_IN_OUH(P_INSPECTIONLOT);
 
                 if (results.Count > 0)
@@ -3074,9 +3188,15 @@ namespace LuckyTex.Pages
                         if (HEADERID != null)
                         {
                             if (chkNew == false)
-                                chkError = D365DataService.Instance.Insert_ABOUH(HEADERID, PRODID, "N", 0, results[i].TOTALRECORD, P_LOTNO, P_ITEMID, P_LOADINGTYPE);
+                            {
+                                "Insert_ABOUH action = N".Info();
+                                chkError = D365DataService.Instance.Insert_ABOUH(HEADERID, PRODID, "N", 0, results[i].TOTALRECORD, P_LOTNO, P_ITEMID, P_LOADINGTYPE, results[i].MACHINESTART);
+                            }
                             else
-                                chkError = D365DataService.Instance.Insert_ABOUH(HEADERID, PRODID, "U", 1, results[i].TOTALRECORD, P_LOTNO, P_ITEMID, P_LOADINGTYPE);
+                            {
+                                "Insert_ABOUH action = U".Info();
+                                chkError = D365DataService.Instance.Insert_ABOUH(HEADERID, PRODID, "U", 1, results[i].TOTALRECORD, P_LOTNO, P_ITEMID, P_LOADINGTYPE, results[i].MACHINESTART);
+                            }
 
                             if (!string.IsNullOrEmpty(chkError))
                             {
@@ -3116,6 +3236,8 @@ namespace LuckyTex.Pages
             {
                 List<ListD365_IN_OUL_AUTOData> results = new List<ListD365_IN_OUL_AUTOData>();
 
+                "D365_IN_OUL_AUTO".Info();
+
                 results = D365DataService.Instance.D365_IN_OUL_AUTO(P_FINISHINGLOT, P_INSPECTIONLOT, P_FINISH);
 
                 if (results.Count > 0)
@@ -3138,12 +3260,19 @@ namespace LuckyTex.Pages
                             finish = 0;
 
                         if (chkNew == false)
+                        {
+                            "Insert_ABOUL action = N".Info();
+
                             chkError = D365DataService.Instance.Insert_ABOUL(HEADERID, results[i].LINENO, "N", 0, outputDate, results[i].ITEMID, results[i].QTY, results[i].UNIT, results[i].GROSSLENGTH, results[i].NETLENGTH
                                 , results[i].GROSSWEIGHT, results[i].NETWEIGHT, results[i].PALLETNO, results[i].GRADE, results[i].SERIALID, results[i].LOADINGTYPE, finish, results[i].MOVEMENTTRANS, results[i].WAREHOUSE, results[i].LOCATION);
+                        }
                         else
+                        {
+                            "Insert_ABOUL action = U".Info();
+
                             chkError = D365DataService.Instance.Insert_ABOUL(HEADERID, results[i].LINENO, "U", 1, outputDate, results[i].ITEMID, results[i].QTY, results[i].UNIT, results[i].GROSSLENGTH, results[i].NETLENGTH
                             , results[i].GROSSWEIGHT, results[i].NETWEIGHT, results[i].PALLETNO, results[i].GRADE, results[i].SERIALID, results[i].LOADINGTYPE, finish, results[i].MOVEMENTTRANS, results[i].WAREHOUSE, results[i].LOCATION);
-
+                        }
 
                         if (!string.IsNullOrEmpty(chkError))
                         {

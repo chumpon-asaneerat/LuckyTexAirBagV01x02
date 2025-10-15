@@ -165,7 +165,7 @@ namespace DataControl.ClassData
             public ListPACK_PRINTLABEL(string _INSPECTIONLOT, string _INSPECTIONLOT09, decimal? _QUANTITY, decimal? _GROSSWEIGHT, decimal? _NETWEIGHT, string _GRADE
                 , string _ITEMCODE, string _DESCRIPTION, string _SUPPLIERCODE, string _SUPPLIERCODE09, string _BARCODEBACTHNO,string _BARCODEBACTHNO09
                 , string _CUSTOMERPARTNO, string _CUSTOMERPARTNO09, string _BATCHNO, string _BATCHNO09, string _PDATE
-                , string _CUSTOMERID, string _BarcodeCMPARTNO, string _StrQuantity, string _StrQuantity09, string _FINISHINGPROCESS)
+                , string _CUSTOMERID, string _BarcodeCMPARTNO, string _StrQuantity, string _StrQuantity09,decimal? _GROSSLENGTH, string _StrGROSSLENGTH, string _FINISHINGPROCESS)
             {
                 #region ListPacking
 
@@ -197,6 +197,9 @@ namespace DataControl.ClassData
 
                 StrQuantity = _StrQuantity;
                 StrQuantity09 = _StrQuantity09;
+
+                GROSSLENGTH = _GROSSLENGTH;
+                StrGROSSLENGTH = _StrGROSSLENGTH;
 
                 //INC เพิ่มเอง
                 FINISHINGPROCESS = _FINISHINGPROCESS;
@@ -235,6 +238,10 @@ namespace DataControl.ClassData
 
             public string StrQuantity { get; set; }
             public string StrQuantity09 { get; set; }
+
+            // เพิ่ม 24/06/25
+            public decimal? GROSSLENGTH { get; set; }
+            public string StrGROSSLENGTH { get; set; }
 
             //INC เพิ่มเอง
             public string FINISHINGPROCESS { get; set; }
@@ -339,6 +346,24 @@ namespace DataControl.ClassData
                     {
                         System.Drawing.Image img = BarcodeGenerator.Encode(
                             BarcodeGenerator.EncodedType, this.StrQuantity,
+                            500, 100);
+
+                        results = NLib.Utils.ImageUtils.GetImage(img);
+                    }
+                    return results;
+                }
+                set { }
+            }
+
+            public byte[] StrGROSSLENGTHImage
+            {
+                get
+                {
+                    byte[] results = null;
+                    if (!string.IsNullOrWhiteSpace(this.StrQuantity))
+                    {
+                        System.Drawing.Image img = BarcodeGenerator.Encode(
+                            BarcodeGenerator.EncodedType, this.StrGROSSLENGTH,
                             500, 100);
 
                         results = NLib.Utils.ImageUtils.GetImage(img);

@@ -191,32 +191,80 @@ namespace LuckyTex.Pages
         {
             if (!string.IsNullOrEmpty(P_BEAMLOT) && !string.IsNullOrEmpty(P_WEAVINGLOT))
             {
-                if (D365_GR_BPO() == true)
+                D365SelectInfo d365SelectInfo = new D365SelectInfo();
+
+                d365SelectInfo = this.ShowD365SelectBox();
+
+                if (d365SelectInfo != null)
                 {
-                    if (PRODID != null)
+                    string P_action = string.Empty;
+                    decimal? P_resent = null;
+
+                    P_action = d365SelectInfo.Action;
+                    P_resent = d365SelectInfo.Resent;
+
+                    #region D365
+
+                    if (D365_GR_BPO(P_action, P_resent) == true)
                     {
-                        if (D365_GR_ISH(PRODID) == true)
+                        if (PRODID != null)
                         {
-                            if (chkISHRow0 == false)
+                            if (D365_GR_ISH(PRODID, P_action, P_resent) == true)
                             {
-                                if (HEADERID != null)
+                                if (chkISHRow0 == false)
                                 {
-                                    if (P_TOTALRECORD != 0)
+                                    if (HEADERID != null)
                                     {
-                                        #region D365_GR_ISL
-                                        if (D365_GR_ISL(HEADERID) == true)
+                                        if (P_TOTALRECORD != 0)
                                         {
-                                            if (D365_GR_OPH(PRODID) == true)
+                                            #region D365_GR_ISL
+                                            if (D365_GR_ISL(HEADERID, P_action, P_resent) == true)
+                                            {
+                                                if (D365_GR_OPH(PRODID, P_action, P_resent) == true)
+                                                {
+                                                    if (HEADERID != null)
+                                                    {
+                                                        if (D365_GR_OPL(HEADERID, P_action, P_resent) == true)
+                                                        {
+                                                            if (D365_GR_OUH(PRODID, P_action, P_resent) == true)
+                                                            {
+                                                                if (HEADERID != null)
+                                                                {
+                                                                    if (D365_GR_OUL(HEADERID, P_action, P_resent) == true)
+                                                                    {
+                                                                        "Send D365 complete".ShowMessageBox();
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    "HEADERID is null".Info();
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        "HEADERID is null".Info();
+                                                    }
+                                                }
+                                            }
+                                            #endregion
+                                        }
+                                        else
+                                        {
+                                            //ข้าม D365_GR_ISL
+                                            #region D365_GR_OPH
+                                            if (D365_GR_OPH(PRODID, P_action, P_resent) == true)
                                             {
                                                 if (HEADERID != null)
                                                 {
-                                                    if (D365_GR_OPL(HEADERID) == true)
+                                                    if (D365_GR_OPL(HEADERID, P_action, P_resent) == true)
                                                     {
-                                                        if (D365_GR_OUH(PRODID) == true)
+                                                        if (D365_GR_OUH(PRODID, P_action, P_resent) == true)
                                                         {
                                                             if (HEADERID != null)
                                                             {
-                                                                if (D365_GR_OUL(HEADERID) == true)
+                                                                if (D365_GR_OUL(HEADERID, P_action, P_resent) == true)
                                                                 {
                                                                     "Send D365 complete".ShowMessageBox();
                                                                 }
@@ -233,72 +281,7 @@ namespace LuckyTex.Pages
                                                     "HEADERID is null".Info();
                                                 }
                                             }
-                                        }
-                                        #endregion
-                                    }
-                                    else
-                                    {
-                                        //ข้าม D365_GR_ISL
-                                        #region D365_GR_OPH
-                                        if (D365_GR_OPH(PRODID) == true)
-                                        {
-                                            if (HEADERID != null)
-                                            {
-                                                if (D365_GR_OPL(HEADERID) == true)
-                                                {
-                                                    if (D365_GR_OUH(PRODID) == true)
-                                                    {
-                                                        if (HEADERID != null)
-                                                        {
-                                                            if (D365_GR_OUL(HEADERID) == true)
-                                                            {
-                                                                "Send D365 complete".ShowMessageBox();
-                                                            }
-                                                        }
-                                                        else
-                                                        {
-                                                            "HEADERID is null".Info();
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                            else
-                                            {
-                                                "HEADERID is null".Info();
-                                            }
-                                        }
-                                        #endregion
-                                    }
-                                }
-                                else
-                                {
-                                    "HEADERID is null".Info();
-                                }
-                            }
-                            else
-                            {
-                                //ข้าม D365_GR_ISL
-                                #region D365_GR_OPH
-                                if (D365_GR_OPH(PRODID) == true)
-                                {
-                                    if (HEADERID != null)
-                                    {
-                                        if (D365_GR_OPL(HEADERID) == true)
-                                        {
-                                            if (D365_GR_OUH(PRODID) == true)
-                                            {
-                                                if (HEADERID != null)
-                                                {
-                                                    if (D365_GR_OUL(HEADERID) == true)
-                                                    {
-                                                        "Send D365 complete".ShowMessageBox();
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    "HEADERID is null".Info();
-                                                }
-                                            }
+                                            #endregion
                                         }
                                     }
                                     else
@@ -306,14 +289,48 @@ namespace LuckyTex.Pages
                                         "HEADERID is null".Info();
                                     }
                                 }
-                                #endregion
+                                else
+                                {
+                                    //ข้าม D365_GR_ISL
+                                    #region D365_GR_OPH
+                                    if (D365_GR_OPH(PRODID, P_action, P_resent) == true)
+                                    {
+                                        if (HEADERID != null)
+                                        {
+                                            if (D365_GR_OPL(HEADERID, P_action, P_resent) == true)
+                                            {
+                                                if (D365_GR_OUH(PRODID, P_action, P_resent) == true)
+                                                {
+                                                    if (HEADERID != null)
+                                                    {
+                                                        if (D365_GR_OUL(HEADERID, P_action, P_resent) == true)
+                                                        {
+                                                            "Send D365 complete".ShowMessageBox();
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        "HEADERID is null".Info();
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            "HEADERID is null".Info();
+                                        }
+                                    }
+                                    #endregion
+                                }
                             }
                         }
+                        else
+                        {
+                            "PRODID is null".Info();
+                        }
                     }
-                    else
-                    {
-                        "PRODID is null".Info();
-                    }
+
+                    #endregion
                 }
             }
             else
@@ -793,7 +810,7 @@ namespace LuckyTex.Pages
         #endregion
 
         #region D365_GR_BPO
-        private bool D365_GR_BPO()
+        private bool D365_GR_BPO(string P_ACTION, decimal? P_RESENT)
         {
             bool chkD365 = true;
 
@@ -803,52 +820,103 @@ namespace LuckyTex.Pages
 
                 results = D365DataService.Instance.D365_GR_BPO(P_BEAMLOT, P_LOOMNO, P_DOFFNO);
 
-                if (results.Count > 0)
+                if (results != null)
                 {
-                    int i = 0;
-                    string chkError = string.Empty;
-
-                    foreach (var row in results)
+                    if (results.Count > 0)
                     {
-                        if (results[i].PRODID != null)
-                            PRODID = Convert.ToInt64(results[i].PRODID);
-                        else
-                            PRODID = null;
+                        int i = 0;
+                        string chkError = string.Empty;
 
-                        if (!string.IsNullOrEmpty(results[i].LOTNO))
-                            P_LOTNO = results[i].LOTNO;
-                        else
-                            P_LOTNO = string.Empty;
+                        string temp = string.Empty;
+                        string temp2 = string.Empty;
+                        string temp3 = string.Empty;
+                        string temp4 = string.Empty;
+                        string temp5 = string.Empty;
 
-                        if (!string.IsNullOrEmpty(results[i].ITEMID))
-                            P_ITEMID = results[i].ITEMID;
-                        else
-                            P_ITEMID = string.Empty;
-
-                        if (!string.IsNullOrEmpty(results[i].LOADINGTYPE))
-                            P_LOADINGTYPE = results[i].LOADINGTYPE;
-                        else
-                            P_LOADINGTYPE = string.Empty;
-
-                        if (PRODID != null && P_DOFFNO == 1)
+                        foreach (var row in results)
                         {
-                            chkError = D365DataService.Instance.Insert_ABBPO(PRODID, results[i].LOTNO, results[i].ITEMID, results[i].LOADINGTYPE, 0, "N", results[i].QTY, results[i].UNIT, results[i].OPERATION);
+                            if (results[i].PRODID != null)
+                                PRODID = Convert.ToInt64(results[i].PRODID);
+                            else
+                                PRODID = null;
 
-                            if (!string.IsNullOrEmpty(chkError))
+                            if (!string.IsNullOrEmpty(results[i].LOTNO))
+                                P_LOTNO = results[i].LOTNO;
+                            else
+                                P_LOTNO = string.Empty;
+
+                            if (!string.IsNullOrEmpty(results[i].ITEMID))
+                                P_ITEMID = results[i].ITEMID;
+                            else
+                                P_ITEMID = string.Empty;
+
+                            if (!string.IsNullOrEmpty(results[i].LOADINGTYPE))
+                                P_LOADINGTYPE = results[i].LOADINGTYPE;
+                            else
+                                P_LOADINGTYPE = string.Empty;
+
+
+                            if (PRODID != null)
+                                temp = "PRODID = " + PRODID.ToString();
+                            else
+                                temp = "PRODID = null";
+
+                            if (!string.IsNullOrEmpty(P_LOTNO))
+                                temp2 = "LOTNO = " + P_LOTNO;
+                            else
+                                temp2 = "LOTNO = null";
+
+                            if (!string.IsNullOrEmpty(P_ITEMID))
+                                temp3 = "ITEMID = " + P_ITEMID;
+                            else
+                                temp3 = "ITEMID = null";
+
+                            if (!string.IsNullOrEmpty(P_LOADINGTYPE))
+                                temp4 = "LOADINGTYPE = " + P_LOADINGTYPE;
+                            else
+                                temp4 = "LOADINGTYPE = null";
+
+                            if (P_DOFFNO != null)
+                                temp5 = "DOFFNO = " + P_DOFFNO.ToString();
+                            else
+                                temp5 = "DOFFNO = null";
+
+                            temp.Info();
+                            temp2.Info();
+                            temp3.Info();
+                            temp4.Info();
+                            temp5.Info();
+
+                            if (PRODID != null && P_DOFFNO == 1)
                             {
-                                chkError.Err();
-                                chkError.ShowMessageBox();
-                                chkD365 = false;
-                                break;
-                            }
-                        }
+                                "Insert_ABBPO".Info();
 
-                        i++;
+                                chkError = D365DataService.Instance.Insert_ABBPO(PRODID, results[i].LOTNO, results[i].ITEMID, results[i].LOADINGTYPE, P_RESENT, P_ACTION, results[i].QTY, results[i].UNIT, results[i].OPERATION, results[i].MACHINESTART);
+
+                                if (!string.IsNullOrEmpty(chkError))
+                                {
+                                    chkError.Err();
+                                    chkError.ShowMessageBox();
+                                    chkD365 = false;
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                "PRODID = null Or DOFFNO != 1 can't Insert_ABBPO".Err();
+                            }
+
+                            i++;
+                        }
+                    }
+                    else
+                    {
+                        "D365_GR_BPO Row = 0".Info();
                     }
                 }
                 else
                 {
-                    "D365_GR_BPO Row = 0".Info();
+                    "D365_GR_BPO return null".Err();
                 }
 
                 return chkD365;
@@ -864,7 +932,7 @@ namespace LuckyTex.Pages
         #endregion
 
         #region D365_GR_ISH
-        private bool D365_GR_ISH(long? PRODID)
+        private bool D365_GR_ISH(long? PRODID, string P_ACTION, decimal? P_RESENT)
         {
             bool chkD365 = true;
 
@@ -895,7 +963,7 @@ namespace LuckyTex.Pages
                        
                         if (HEADERID != null)
                         {
-                            chkError = D365DataService.Instance.Insert_ABISH(HEADERID, PRODID, "N", 0, results[i].TOTALRECORD, P_LOTNO, P_ITEMID, P_LOADINGTYPE);
+                            chkError = D365DataService.Instance.Insert_ABISH(HEADERID, PRODID, P_ACTION, P_RESENT, results[i].TOTALRECORD, P_LOTNO, P_ITEMID, P_LOADINGTYPE, results[i].MACHINESTART);
 
                             if (!string.IsNullOrEmpty(chkError))
                             {
@@ -928,7 +996,7 @@ namespace LuckyTex.Pages
         #endregion
 
         #region D365_GR_ISL
-        private bool D365_GR_ISL(long? HEADERID)
+        private bool D365_GR_ISL(long? HEADERID, string P_ACTION, decimal? P_RESENT)
         {
             bool chkD365 = true;
 
@@ -951,7 +1019,7 @@ namespace LuckyTex.Pages
                         else
                             issDate = string.Empty;
 
-                        chkError = D365DataService.Instance.Insert_ABISL(HEADERID, results[i].LINENO, "N", 0, issDate, results[i].ITEMID, results[i].STYLEID, results[i].QTY, results[i].UNIT, results[i].SERIALID);
+                        chkError = D365DataService.Instance.Insert_ABISL(HEADERID, results[i].LINENO, P_ACTION, P_RESENT, issDate, results[i].ITEMID, results[i].STYLEID, results[i].QTY, results[i].UNIT, results[i].SERIALID);
 
                         if (!string.IsNullOrEmpty(chkError))
                         {
@@ -982,7 +1050,7 @@ namespace LuckyTex.Pages
         #endregion
 
         #region D365_GR_OPH
-        private bool D365_GR_OPH(long? PRODID)
+        private bool D365_GR_OPH(long? PRODID, string P_ACTION, decimal? P_RESENT)
         {
             bool chkD365 = true;
 
@@ -1006,7 +1074,7 @@ namespace LuckyTex.Pages
 
                         if (HEADERID != null)
                         {
-                            chkError = D365DataService.Instance.Insert_ABOPH(HEADERID, PRODID, "N", 0, results[i].TOTALRECORD, P_LOTNO, P_ITEMID, P_LOADINGTYPE);
+                            chkError = D365DataService.Instance.Insert_ABOPH(HEADERID, PRODID, P_ACTION, P_RESENT, results[i].TOTALRECORD, P_LOTNO, P_ITEMID, P_LOADINGTYPE, results[i].MACHINESTART);
 
                             if (!string.IsNullOrEmpty(chkError))
                             {
@@ -1038,7 +1106,7 @@ namespace LuckyTex.Pages
         #endregion
 
         #region D365_GR_OPL
-        private bool D365_GR_OPL(long? HEADERID)
+        private bool D365_GR_OPL(long? HEADERID, string P_ACTION, decimal? P_RESENT)
         {
             bool chkD365 = true;
 
@@ -1055,7 +1123,7 @@ namespace LuckyTex.Pages
 
                     foreach (var row in results)
                     {
-                        chkError = D365DataService.Instance.Insert_ABOPL(HEADERID, results[i].LINENO, "N", 0, results[i].PROCQTY, results[i].OPRNO, results[i].OPRID, results[i].MACHINENO, results[i].STARTDATETIME, results[i].ENDDATETIME);
+                        chkError = D365DataService.Instance.Insert_ABOPL(HEADERID, results[i].LINENO, P_ACTION, P_RESENT, results[i].PROCQTY, results[i].OPRNO, results[i].OPRID, results[i].MACHINENO, results[i].STARTDATETIME, results[i].ENDDATETIME);
 
                         if (!string.IsNullOrEmpty(chkError))
                         {
@@ -1086,7 +1154,7 @@ namespace LuckyTex.Pages
         #endregion
 
         #region D365_GR_OUH
-        private bool D365_GR_OUH(long? PRODID)
+        private bool D365_GR_OUH(long? PRODID, string P_ACTION, decimal? P_RESENT)
         {
             bool chkD365 = true;
 
@@ -1110,7 +1178,7 @@ namespace LuckyTex.Pages
 
                         if (HEADERID != null)
                         {
-                            chkError = D365DataService.Instance.Insert_ABOUH(HEADERID, PRODID, "N", 0, results[i].TOTALRECORD, P_LOTNO, P_ITEMID, P_LOADINGTYPE);
+                            chkError = D365DataService.Instance.Insert_ABOUH(HEADERID, PRODID, P_ACTION, P_RESENT, results[i].TOTALRECORD, P_LOTNO, P_ITEMID, P_LOADINGTYPE, results[i].MACHINESTART);
 
                             if (!string.IsNullOrEmpty(chkError))
                             {
@@ -1142,7 +1210,7 @@ namespace LuckyTex.Pages
         #endregion
 
         #region D365_GR_OUL
-        private bool D365_GR_OUL(long? HEADERID)
+        private bool D365_GR_OUL(long? HEADERID, string P_ACTION, decimal? P_RESENT)
         {
             bool chkD365 = true;
 
@@ -1171,7 +1239,7 @@ namespace LuckyTex.Pages
                         else
                             finish = 0;
 
-                        chkError = D365DataService.Instance.Insert_ABOUL(HEADERID, results[i].LINENO, "N", 0, outputDate, results[i].ITEMID, results[i].QTY, results[i].UNIT, results[i].GROSSLENGTH, results[i].NETLENGTH
+                        chkError = D365DataService.Instance.Insert_ABOUL(HEADERID, results[i].LINENO, P_ACTION, P_RESENT, outputDate, results[i].ITEMID, results[i].QTY, results[i].UNIT, results[i].GROSSLENGTH, results[i].NETLENGTH
                             , results[i].GROSSWEIGHT, results[i].NETWEIGHT, results[i].PALLETNO, results[i].GRADE, results[i].SERIALID, results[i].LOADINGTYPE, finish, results[i].MOVEMENTTRANS, results[i].WAREHOUSE, results[i].LOCATION);
 
 

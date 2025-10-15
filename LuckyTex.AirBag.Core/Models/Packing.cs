@@ -197,6 +197,9 @@ namespace LuckyTex.Models
 
         public System.String BDate { get; set; }
         public System.String CUSPARTNO2D { get; set; }
+
+        // เพิ่ม 24/06/25
+        public System.Decimal? GROSSLENGTH { get; set; }
     }
 
     #endregion

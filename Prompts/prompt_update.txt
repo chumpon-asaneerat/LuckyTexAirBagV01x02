@@ -1,0 +1,612 @@
+# Documentation Update Task - Code Changes June 24, 2025
+
+## CONTEXT
+Code update received on June 24, 2025 affects line number references across ALL documentation.
+User requested FULL UPDATE of all affected documentation files.
+
+## TASK OVERVIEW
+Update 89 documentation files affected by code changes in AirbagSPs.cs and related files.
+
+---
+
+## STEP 1: READ THESE DOCUMENTS FIRST (CRITICAL)
+
+**MUST READ in this order:**
+
+1. `Documents/CODE_UPDATE_SUMMARY_2025-06-24.md`
+   - What changed in the code
+   - New features added (GROSSLENGTH, CM08 label, LAB tests)
+   - Database impact
+
+2. `Documents/.COMPLETE_DOCUMENTATION_IMPACT_ANALYSIS.md`
+   - Complete list of 89 affected files
+   - Priority levels (Critical/High/Medium/Low)
+   - Time estimates and approach
+
+3. `Documents/.DOCUMENTATION_UPDATE_TRACKER.md`
+   - Original tracking document
+   - Update strategies
+   - Script specifications
+
+---
+
+## STEP 2: AUTOMATED LINE REFERENCE UPDATES
+
+### Phase 2.1: Create Update Script
+
+Create `update_line_refs.py` with this logic:
+
+```python
+import re
+import glob
+import os
+
+# Line shift mapping from git diff analysis
+SHIFTS = [
+    (2203, 2),    # After line 2202, +2 lines inserted
+    (2935, 14),   # After line 2932, +14 lines (cumulative: +16)
+    (3109, 13),   # After line 3092, +13 lines (cumulative: +29)
+    (3212, 27),   # After line 3182, +27 lines (cumulative: +56)
+    (3327, 35),   # After line 3270, +35 lines (cumulative: +91)
+]
+
+def calculate_shift(line_num):
+    """Calculate cumulative shift for a line number."""
+    shift = 0
+    for threshold, amount in SHIFTS:
+        if line_num >= threshold:
+            shift += amount
+    return shift
+
+def update_file(file_path):
+    """Update all line references in a file."""
+    with open(file_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+
+    original_content = content
+
+    # Pattern 1: "Lines**: 7047-7113"
+    def replace_lines_double_star(match):
+        start = int(match.group(1))
+        end = int(match.group(2))
+        new_start = start + calculate_shift(start)
+        new_end = end + calculate_shift(end)
+        return f'Lines**: {new_start}-{new_end}'
+
+    content = re.sub(r'Lines\*\*: (\d+)-(\d+)', replace_lines_double_star, content)
+
+    # Pattern 2: "Lines: 7047-7113" or "Line: 7047"
+    def replace_lines_simple(match):
+        start = int(match.group(1))
+        new_start = start + calculate_shift(start)
+        if match.group(2):  # Range
+            end = int(match.group(2))
+            new_end = end + calculate_shift(end)
+            return f'Lines: {new_start}-{new_end}'
+        else:  # Single line
+            return f'Line: {new_start}'
+
+    content = re.sub(r'Lines?: (\d+)(?:-(\d+))?', replace_lines_simple, content)
+
+    # Only write if changed
+    if content != original_content:
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.write(content)
+        return True
+    return False
+
+# Execute updates
+updated_files = []
+for pattern in [
+    'Documents/Database/**/*.md',
+    'Documents/LAB/**/*.md',
+    'Documents/Processes/**/*.md'
+]:
+    for file_path in glob.glob(pattern, recursive=True):
+        if file_path.endswith('.md') and 'README' not in file_path:
+            if update_file(file_path):
+                updated_files.append(file_path)
+
+print(f"Updated {len(updated_files)} files")
+for f in updated_files:
+    print(f"  - {f}")
+```
+
+### Phase 2.2: Run Script
+
+```bash
+python update_line_refs.py
+```
+
+Expected: ~80-90 files updated with corrected line references.
+
+### Phase 2.3: Verify Updates
+
+Spot-check 10 random files:
+1. Open updated file
+2. Find line reference (e.g., "Lines**: 7138-7204")
+3. Open `LuckyTex.AirBag.Core/Domains/AirbagSPs.cs` at that line
+4. Verify it's the correct class/procedure name
+5. If wrong ’ check shift calculation
+
+---
+
+## STEP 3: UPDATE DATABASE TODO TRACKER
+
+**File**: `Documents/Database/.DATABASE_STORED_PROCEDURES_TODO.md`
+
+**Action**: Add 2 new LAB procedures
+
+Find the LAB section (around line 305-331) and add:
+
+```markdown
+#### Lab Testing & Analysis (29 procedures)
+
+- [ ] LAB_INSERTUPDATETENSILE - Tensile test data entry
+- [ ] LAB_INSERTUPDATETEAR - Tear strength test data entry
+...existing procedures...
+- [ ] LAB_GETDYNAMICAIRDATA - Retrieve dynamic air test data
+- [ ] LAB_RETESTRECORD_INSERTUPDATE - Manage retest records
+- [ ] LAB_SAVEREPLCFLEXABRASION - Save flex abrasion test data (NEW)
+- [ ] LAB_SAVEFLEXABRASIONPLCDATA - Save flex abrasion with PLC integration (NEW)
+```
+
+Update summary statistics:
+- Change: `Total Unique Stored Procedures: 296` ’ `298`
+- Change: `Lab System (Lab.Transfer.Data): 27` ’ `29`
+- Update completion progress as applicable
+
+---
+
+## STEP 4: UPDATE PACKING DOCUMENTATION (CRITICAL)
+
+### File 1: `Documents/Processes/13_Packing/040-PROCESS_ORDER_PACKING.md`
+
+**Add new section after data model**:
+
+```markdown
+### New Field: GROSSLENGTH (Added 2025-06-24)
+
+**Purpose**: Track total fabric length including waste material
+
+**Data Type**: `DECIMAL(18,2)` (meters)
+
+**Business Logic**:
+- GROSSLENGTH = Total length before trimming/cutting
+- NET_LENGTH = Usable length after trimming
+- Waste = GROSSLENGTH - NET_LENGTH
+- Used for waste tracking and cost analysis
+
+**Database**:
+- Table: `tblPackingPallet` (or related)
+- Column: `GROSSLENGTH`
+- Nullable: Yes (optional field)
+
+**Code References**:
+- Model: `LuckyTex.AirBag.Core/Models/Packing.cs:200`
+- Service: `LuckyTex.AirBag.Core/Services/DataService/PackingDataService.cs:657`
+- Stored Procedure Result: `AirbagSPs.cs:2203` (GROSSLENGTH property)
+```
+
+**Add new section for CM08 label**:
+
+```markdown
+### Customer-Specific Label: CM08 (Added 2025-06-24)
+
+**Purpose**: Specialized packing label format for Customer ID "08"
+
+**Implementation**:
+- Conditional logic based on customer ID
+- If `cmID == "08"` ’ Use `RepPackingLabelCM08.rdlc`
+- Otherwise ’ Use standard label template
+
+**Report Template**:
+- File: `LuckyTex.AirBag.Pages/Report/RepPackingLabelCM08.rdlc`
+- Size: 57KB
+- Created: June 24, 2025
+
+**Code References**:
+- Logic: `PackingLabelPage.xaml.cs:113-119` (conditional branch)
+- Method: `PreviewCM08(string INSLOT)` at line ~117+
+- Reprint: `RePrintLabelPage.xaml.cs` (similar logic)
+
+**Workflow**:
+1. User clicks "Print Label" on packing page
+2. System checks customer ID from packing data
+3. If Customer = "08" ’ Call PreviewCM08()
+4. Else if Customer has 2D barcode ’ Call Preview2D()
+5. Else ’ Call Preview() (standard label)
+```
+
+### File 2: `Documents/Processes/UI_Logic_Analysis/13_Packing/041-UI_LOGIC_PACKING_LABEL.md`
+
+**Update header section**:
+- Change: `Lines of Code | 389` ’ `Lines of Code | 414`
+
+**Add to Control Logic section**:
+
+```markdown
+### Customer-Specific Label Selection Logic
+
+**Implementation**: `PackingLabelPage.xaml.cs:113-140`
+
+**Decision Flow**:
+```mermaid
+flowchart TD
+    A[User Clicks Print Label] --> B{Check Customer ID}
+    B -->|cmID == '08'| C[PreviewCM08 Method]
+    B -->|Has 2D Barcode| D[Preview2D Method]
+    B -->|Standard| E[Preview Method]
+
+    C --> F[Load RepPackingLabelCM08.rdlc]
+    D --> G[Load RepPackingLabel2D.rdlc]
+    E --> H[Load RepPackingLabel.rdlc]
+
+    F --> I[Open RepMasterForm Dialog]
+    G --> I
+    H --> I
+
+    I --> J[Display Label Preview]
+    J --> K{User Action}
+    K -->|Print| L[Send to Printer]
+    K -->|Cancel| M[Close Dialog]
+```
+
+**New Method Documentation**:
+
+#### PreviewCM08() Method
+
+**Purpose**: Generate label preview for Customer CM08 using specialized template
+
+**Signature**: `private void PreviewCM08(string INSLOT)`
+
+**Parameters**:
+- `INSLOT`: Inspection lot number for packing operation
+
+**Implementation**:
+```
+Line 117+: PreviewCM08 method
+  1. Set report name in ConmonReportService
+  2. Set INSLOT parameter
+  3. Open RepMasterForm dialog
+  4. Handle exceptions with user-friendly message
+```
+
+**Error Handling**:
+- Try-catch block wraps entire method
+- MessageBox displays error if report fails to load
+- Message: "Please Try again later"
+- Icon: Error (red X)
+```
+
+---
+
+## STEP 5: CREATE NEW LAB SYSTEM DOCUMENTATION
+
+### File 1: Create `Documents/LAB/12_Flex_Abrasion/012-PROCESS_FLEX_ABRASION_TESTING.md`
+
+**Content Structure**:
+1. Process Overview
+2. Test Equipment
+3. Test Procedure (Warp W1-W3, Fill F1-F3)
+4. Pass/Fail Criteria
+5. PLC Integration (LAB_SAVEFLEXABRASIONPLCDATA)
+6. Manual Entry (LAB_SAVEREPLCFLEXABRASION)
+7. Retest Workflow
+8. Database Schema
+9. Code References
+
+**Key Points to Document**:
+- 6 test points total (3 warp + 3 fill directions)
+- Measures cycles to failure under repeated bending
+- PLC captures test results automatically
+- Pass/fail comparison against spec limits
+- Retest flag for failed samples
+
+**Stored Procedures**:
+- LAB_SAVEREPLCFLEXABRASION (manual entry)
+  - Parameters: Item, Lot, 6 test values, date, operator
+  - Lines: `AirbagSPs.cs:3212-3238`
+
+- LAB_SAVEFLEXABRASIONPLCDATA (PLC integration)
+  - Parameters: Item, Lot, TestNo, 6 values + 6 results (PASS/FAIL), retest flag
+  - Lines: `AirbagSPs.cs:3327-3361`
+
+### File 2: Update `Documents/LAB/03_Lab_Data_Entry/003-PROCESS_MANUAL_TEST_ENTRY.md`
+
+**Add section**: Enhanced Tensile Testing (6-Point Method)
+
+**Document new fields**:
+- MAXFORCE_W4, W5, W6 (warp positions 4-6)
+- MAXFORCE_F4, F5, F6 (fill positions 4-6)
+- ELONGATIONFORCE_W4-W6 (warp elongation 4-6)
+- ELONGATIONFORCE_F4-F6 (fill elongation 4-6)
+
+**Update workflow**:
+- Old: 3 test specimens per direction
+- New: 6 test specimens per direction
+- Better statistical accuracy
+- More comprehensive quality assessment
+
+**Code References**:
+- Fields added at lines: 2935-2946, 3109-3121 in AirbagSPs.cs
+
+### File 3: Update `Documents/LAB/07_PLC_Get_Data/007-PROCESS_LAB_EQUIPMENT_INTEGRATION.md`
+
+**Add new section**: Flex Abrasion Equipment Integration
+
+**Document**:
+- Equipment type and manufacturer
+- PLC communication protocol
+- Data collection workflow
+- Test cycle counting
+- Pass/fail determination logic
+- Error handling for PLC connection failures
+
+---
+
+## STEP 6: UPDATE MODERNIZATION DOCUMENTS
+
+### File 1: `Documents/MODERNIZATION_ANALYSIS.md`
+
+**Update Module Table** (line 22):
+Change:
+```
+| M13 | Packing | 12 | Packing operations | PackingDataService.cs |
+```
+
+To:
+```
+| M13 | Packing | 12 | Packing operations, CM08 labels, GROSSLENGTH tracking | PackingDataService.cs |
+```
+
+**Add to Pattern Analysis section**:
+
+```markdown
+### Recent Enhancements (June 2025)
+
+**Customer-Specific Features**:
+- Example: Customer CM08 specialized packing labels
+- Pattern: Conditional logic based on customer ID
+- Implementation: Separate RDLC templates per customer
+- Prevalence: Low (customer-specific features isolated)
+
+**Data Model Extensions**:
+- Example: GROSSLENGTH field added to Packing module
+- Pattern: Optional fields for waste/analytics tracking
+- Impact: Minimal (backward compatible, nullable fields)
+
+**LAB Testing Expansion**:
+- New test method: Flex abrasion testing (6 test points)
+- Enhanced tensile testing: 3-point ’ 6-point testing
+- PLC integration: Automated result capture with pass/fail
+```
+
+### File 2: `Documents/MODERNIZATION_UI_NAVIGATION.md`
+
+**Add to Packing Module Navigation**:
+
+```markdown
+#### Packing Label Printing (Updated 2025-06)
+
+**Path**: M13 Packing ’ Packing Label Page
+
+**Navigation Flow**:
+1. Main Dashboard ’ M13 Packing Module
+2. Packing Module Menu ’ Packing Label Page
+3. Select/Scan Inspection Lot
+4. Click "Print Label" button
+5. System determines label template:
+   - Customer ID = "08" ’ CM08 specialized label
+   - Has 2D barcode ’ 2D barcode label
+   - Default ’ Standard label
+6. Label preview opens in RepMasterForm dialog
+7. User prints or cancels
+
+**Code**: `PackingLabelPage.xaml.cs:113-140`
+```
+
+### File 3: `Documents/MODERNIZATION_SESSION_TRACKER.md`
+
+**Add session entry**:
+
+```markdown
+## Session: 2025-10-15 (Afternoon) - Code Update Analysis & Documentation Update
+
+**Focus**: Analyze code changes from June 24, 2025 and update all affected documentation
+
+**Completed**:
+-  Analyzed 12 modified source files + 3 new reports
+-  Created CODE_UPDATE_SUMMARY_2025-06-24.md (comprehensive change analysis)
+-  Created .COMPLETE_DOCUMENTATION_IMPACT_ANALYSIS.md (89 affected files identified)
+-  Automated line reference update script created and tested
+-  Updated 103 database procedure docs (line references corrected)
+-  Added 2 new LAB procedures to TODO tracker
+-  Updated Packing documentation (GROSSLENGTH + CM08 label)
+-  Created new LAB flex abrasion documentation
+-  Updated LAB tensile testing docs (3-point ’ 6-point)
+-  Updated MODERNIZATION analysis documents
+
+**Key Changes Documented**:
+- GROSSLENGTH field in Packing module
+- CM08 customer-specific packing label
+- LAB flex abrasion testing (2 new stored procedures)
+- LAB tensile testing expansion (6-point method, 12 new fields)
+
+**Time Invested**: ~12 hours
+
+**Next Session Tasks**:
+- Continue database procedure documentation (procedure 104+)
+- Complete remaining dryer operations (8 procedures)
+- Continue through remaining modules
+```
+
+---
+
+## STEP 7: UPDATE CATALOG FILES
+
+### File: `Documents/Processes/UI_Logic_Analysis/ACTUAL_IMPLEMENTATIONS_CATALOG.md`
+
+**Find Packing section** and update:
+
+```markdown
+## Module 13 - Packing (12 files)
+
+| File | Purpose | LOC | Process Doc | Status |
+|------|---------|-----|-------------|--------|
+| PackingLabelPage.xaml.cs | Print packing labels (CM08 + standard) | 414 | 041-UI_LOGIC_PACKING_LABEL.md |  Updated 2025-06 |
+...
+```
+
+**Add to Notes**:
+```markdown
+**Recent Updates (2025-06)**:
+- PackingLabelPage: Added CM08 customer-specific label support (+25 LOC)
+- New report: RepPackingLabelCM08.rdlc for Customer ID "08"
+- GROSSLENGTH field added to packing data model
+```
+
+---
+
+## STEP 8: FINAL VERIFICATION
+
+**Verification Checklist**:
+
+### A. Database Procedure Docs (103 files)
+- [ ] Run script on all files
+- [ ] Spot-check 10 random files for correct line numbers
+- [ ] Verify Finishing module procedures (087-103) all have +91 shift
+- [ ] Verify Warping procedures (001-026) have 0 to +2 shift
+
+### B. LAB System Docs
+- [ ] 2 new procedures added to TODO tracker
+- [ ] Flex abrasion documentation created
+- [ ] Tensile testing docs updated with 6-point method
+- [ ] Line references updated (+91 shift)
+
+### C. Packing Docs
+- [ ] GROSSLENGTH field documented in process doc
+- [ ] CM08 label workflow documented
+- [ ] UI Logic Analysis updated (389 ’ 414 LOC)
+- [ ] PreviewCM08() method documented
+
+### D. MODERNIZATION Docs
+- [ ] Module table updated
+- [ ] Navigation paths updated
+- [ ] Session tracker updated
+- [ ] Pattern analysis includes new enhancements
+
+### E. Catalog Files
+- [ ] ACTUAL_IMPLEMENTATIONS_CATALOG.md updated
+- [ ] LOC counts corrected
+
+---
+
+## FILES TO UPDATE (Complete List)
+
+### CRITICAL (Must Update) - 23 files
+
+**Database Procedures - Finishing**:
+1. Documents/Database/06_Finishing/087-FINISHING_CHECKITEMWEAVING.md
+2. Documents/Database/06_Finishing/088-FINISHING_COATINGDATABYLOT.md
+3. Documents/Database/06_Finishing/089-FINISHING_COATINGPLCDATA.md
+4. Documents/Database/06_Finishing/090-FINISHING_GETCOATINGCONDITION.md
+5. Documents/Database/06_Finishing/091-FINISHING_GETCOATINGDATA.md
+6. Documents/Database/06_Finishing/092-FINISHING_GETCOATINGREPORT.md
+7. Documents/Database/06_Finishing/093-FINISHING_INSERTCOATING.md
+8. Documents/Database/06_Finishing/094-FINISHING_UPDATECOATING.md
+9. Documents/Database/06_Finishing/095-FINISHING_UPDATECOATINGDATA.md
+10. Documents/Database/06_Finishing/096-FINISHING_GETSCOURINGCONDITION.md
+11. Documents/Database/06_Finishing/097-FINISHING_GETSCOURINGDATA.md
+12. Documents/Database/06_Finishing/098-FINISHING_GETSCOURINGREPORT.md
+13. Documents/Database/06_Finishing/099-FINISHING_INSERTSCOURING.md
+14. Documents/Database/06_Finishing/100-FINISHING_SCOURINGDATABYLOT.md
+15. Documents/Database/06_Finishing/101-FINISHING_SCOURINGPLCDATA.md
+16. Documents/Database/06_Finishing/102-FINISHING_UPDATESCOURING.md
+17. Documents/Database/06_Finishing/103-FINISHING_UPDATESCOURINGDATA.md
+
+**Database Reference**:
+18. Documents/Database/.DATABASE_STORED_PROCEDURES_TODO.md
+
+**LAB System**:
+19. Documents/LAB/01_Lab_Test/001-PROCESS_LAB_TEST_OPERATIONS.md
+20. Documents/LAB/03_Lab_Data_Entry/003-PROCESS_MANUAL_TEST_ENTRY.md
+21. Documents/LAB/07_PLC_Get_Data/007-PROCESS_LAB_EQUIPMENT_INTEGRATION.md
+
+**Packing**:
+22. Documents/Processes/13_Packing/040-PROCESS_ORDER_PACKING.md
+23. Documents/Processes/UI_Logic_Analysis/13_Packing/041-UI_LOGIC_PACKING_LABEL.md
+
+### HIGH PRIORITY - Run Script + Manual Review
+
+**All remaining Database Procedure Docs** (83 files):
+- Documents/Database/02_Warping/*.md (26 files) - verify minimal changes
+- Documents/Database/03_Beaming/*.md (20 files) - update line refs
+- Documents/Database/04_Drawing/*.md (7 files) - update line refs
+- Documents/Database/05_Weaving/*.md (30 files) - update line refs (+91)
+
+### MEDIUM PRIORITY - Review and Update
+
+**MODERNIZATION Docs** (3 files):
+- Documents/MODERNIZATION_ANALYSIS.md
+- Documents/MODERNIZATION_UI_NAVIGATION.md
+- Documents/MODERNIZATION_SESSION_TRACKER.md
+
+**Catalogs** (1 file):
+- Documents/Processes/UI_Logic_Analysis/ACTUAL_IMPLEMENTATIONS_CATALOG.md
+
+**Process Workflows** (~10 files):
+- Any docs referencing Weaving/Inspection if code changes are significant
+
+---
+
+## SUCCESS CRITERIA
+
+**Task is complete when**:
+1.  All 103 database procedure docs have corrected line references
+2.  2 new LAB procedures added to TODO tracker (296 ’ 298)
+3.  Packing documentation includes GROSSLENGTH and CM08 label
+4.  LAB flex abrasion documentation created
+5.  LAB tensile testing updated for 6-point method
+6.  MODERNIZATION docs reflect new features
+7.  Catalog files updated with correct LOC counts
+8.  All verifications passed
+
+---
+
+## TIME ESTIMATE
+
+- Script creation and testing: 30 minutes
+- Automated updates: 15 minutes
+- Database docs verification: 30 minutes
+- LAB new content creation: 3 hours
+- Packing docs update: 2 hours
+- MODERNIZATION docs: 45 minutes
+- Catalogs and verification: 30 minutes
+- **Total: ~7-8 hours**
+
+---
+
+## IMPORTANT NOTES
+
+1. **Line shifts are cumulative**:
+   - Lines 1-2202: 0 shift
+   - Lines 2203-2934: +2
+   - Lines 2935-3108: +16
+   - Lines 3109-3211: +29
+   - Lines 3212-3326: +56
+   - Lines 3327+: +91
+
+2. **Don't delete old code**: All changes are additions, no deletions
+
+3. **Verify critical files manually**: Finishing module docs especially important (just created today)
+
+4. **Mark incomplete work**: If you run out of time, mark remaining files with "  UPDATE PENDING"
+
+---
+
+## AFTER COMPLETION
+
+1. Update this prompt file with completion status
+2. Commit all changes with message: "Update documentation for June 24 code changes - line refs, LAB tests, CM08 label"
+3. Ready to continue with procedure 104 (Dryer operations)

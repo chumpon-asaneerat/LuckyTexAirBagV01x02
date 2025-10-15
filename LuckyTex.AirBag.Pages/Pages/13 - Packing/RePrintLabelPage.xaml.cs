@@ -141,6 +141,10 @@ namespace LuckyTex.Pages
                             {
                                 Preview2D(INSLOT);
                             }
+                            else if (cmID == "08")
+                            {
+                                PreviewCM08(INSLOT);
+                            }
                             else
                             {
                                 Preview(INSLOT);
@@ -395,6 +399,27 @@ namespace LuckyTex.Pages
             {
                 // ConmonReportService
                 ConmonReportService.Instance.ReportName = "PackingLabel2D";
+                ConmonReportService.Instance.INSLOT = INSLOT;
+
+                var newWindow = new RepMasterForm();
+                newWindow.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString(), "Please Try again later", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        #endregion
+
+        #region PreviewCM08
+
+        private void PreviewCM08(string INSLOT)
+        {
+            try
+            {
+                // ConmonReportService
+                ConmonReportService.Instance.ReportName = "PackingLabelCM08";
                 ConmonReportService.Instance.INSLOT = INSLOT;
 
                 var newWindow = new RepMasterForm();

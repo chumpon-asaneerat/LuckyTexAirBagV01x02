@@ -1,0 +1,14 @@
+Check all instructions in @Documents\Database
+
+Strict with all instructions and TEMPLATE_INDIVIDUAL_PROCEDURE.md do not violate it you alrady broke my instruction more than 10 sections
+i waste time to correct it DO NOT done it again.
+
+DO NOT use Batch processing causes it lose progress when session ends. you should:
+- Generate ONE file at a time
+- Update tracker after EACH file
+- Save progress continuously
+- No need to ask me every time when process to generate file continue create it.
+This way if session ends, all completed work is saved. 
+
+So continue properly do one file at a time then updating tracker after complete each file generated
+
