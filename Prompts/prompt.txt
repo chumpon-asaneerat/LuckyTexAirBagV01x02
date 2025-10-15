@@ -10,4 +10,5 @@ DO NOT use Batch processing causes it lose progress when session ends. you shoul
 - No need to ask me every time when process to generate file continue create it.
 This way if session ends, all completed work is saved. 
 
-So continue properly - one file at a time, updating tracker after each:
+So continue properly do one file at a time then updating tracker after complete each file generated
+
