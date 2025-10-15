@@ -1,19 +1,14 @@
-The last session 
-1. We update new code to Main projects and let you check then the files you create in last session contains 
-   - @Documents\CODE_UPDATE_SUMMARY_2025-06-24.md
-   - @Documents\.DOCUMENTATION_UPDATE_TRACKER.md
-   - @Documents\.COMPLETE_DOCUMENTATION_IMPACT_ANALYSIS.md
+Check all instructions in @Documents\Database
 
-2. i ask you to create @Prompts\prompt_update.txt and 
-   i ask 'Due to enomous amount of file i afraid that we cannot completed in one session. With your estimate that we need more than an hour to do full tasks. how we split work to do in multiple session?'
-   after that you generate @Documents\.DOCUMENTATION_UPDATE_PLAN_MULTISESSION.md and the session is reach limit so 
-   please check is that complete my requested.
+Strict with all instructions and TEMPLATE_INDIVIDUAL_PROCEDURE.md do not violate it you alrady broke my instruction more than 10 sections
+i waste time to correct it DO NOT done it again.
 
-3. From what i see in @Documents\.DOCUMENTATION_UPDATE_PLAN_MULTISESSION.md 
-   i think over than 1 hour the session will surely reach limit so adjust it more smaller to 
-   fit within 1 hour per session because we may need to chat/interrupt while you make update processes
+DO NOT use Batch processing causes it lose progress when session ends. you should:
+- Generate ONE file at a time
+- Update tracker after EACH file
+- Save progress continuously
+- No need to ask me every time when process to generate file continue create it.
+This way if session ends, all completed work is saved. 
 
-4. i think the @Prompts\prompt_update.txt may need to update and if it too messy let compact it 
-   for you to work properly without make mistake.
-
+So continue properly do one file at a time then updating tracker after complete each file generated
 
