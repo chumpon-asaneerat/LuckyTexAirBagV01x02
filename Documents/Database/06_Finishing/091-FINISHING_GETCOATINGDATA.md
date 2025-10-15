@@ -169,35 +169,6 @@ Returns comprehensive coating lot data including process parameters and PLC valu
 **Method**: `FINISHING_GETCOATINGDATA(FINISHING_GETCOATINGDATAParameter para)`
 **Lines**: 28XXX (estimated)
 
-**Called From (XAML Pages)**:
-- OldCoating1FinishingPage.xaml.cs:1243 (LoadFinishing_GetCoating method)
-- OldCoating2FinishingPage.xaml.cs
-- OldCoating3FinishingPage.xaml.cs
-- OldCoating12StepFinishingPage.xaml.cs
-
-**Usage Pattern**:
-```csharp
-// Load in-progress lots for machine selection
-private void LoadFinishing_GetCoating(string mcno, string flag)
-{
-    // Get all in-progress lots on this machine
-    List<FINISHING_GETCOATINGDATA> items =
-        _session.GetFINISHING_GETCOATINGCONDITIONDATA(mcno, "START");
-
-    if (items != null && items.Count > 0)
-    {
-        // Populate lot selection list or resume last lot
-        // Load all process parameters from selected lot
-        txtCustomer.Text = items[0].FINISHINGCUSTOMER;
-        txtItemCode.Text = items[0].ITM_CODE;
-        txtWeavingLot.Text = items[0].WEAVINGLOT;
-        // ... load 50+ fields
-    }
-}
-```
-
-**Note**: Method name `FINISHING_GETCOATINGCONDITIONList` is slightly misleading - it actually calls `FINISHING_GETCOATINGDATA` procedure, not GETCOATINGCONDITION. This appears to be a naming inconsistency in the codebase.
-
 ---
 
 **File**: 91/296 | **Progress**: 30.7%

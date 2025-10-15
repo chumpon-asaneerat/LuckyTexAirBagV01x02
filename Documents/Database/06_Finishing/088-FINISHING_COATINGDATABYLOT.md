@@ -156,30 +156,6 @@ None - Returns cursor
 **Method**: `FINISHING_COATINGDATABYLOT(FINISHING_COATINGDATABYLOTParameter para)`
 **Lines**: 28289-28417
 
-**Called From (XAML Pages)**:
-- Coating1FinishingPage.xaml.cs:1547 (txtLot_LostFocus event)
-- Coating12StepFinishingPage.xaml.cs (2-step coating process)
-- Coating2FinishingPage.xaml.cs (secondary coating)
-
-**Usage Pattern**:
-```csharp
-// In txtLot_LostFocus event handler
-private void FINISHING_COATINGDATABYLOT(string P_MCNO, string P_WEAVINGLOT)
-{
-    List<FINISHING_COATINGDATABYLOT> items =
-        _session.GetFINISHING_COATINGDATABYLOT(P_MCNO, P_WEAVINGLOT);
-
-    if (items != null && items.Count > 0)
-    {
-        // Populate all UI fields with existing data
-        txtCustomer.Text = items[0].FINISHINGCUSTOMER;
-        txtItemCode.Text = items[0].ITM_CODE;
-        txtLength1.Text = items[0].LENGTH1?.ToString();
-        // ... (populate 50+ fields with saved PLC/machine data)
-    }
-}
-```
-
 ---
 
 **File**: 88/296 | **Progress**: 29.7%

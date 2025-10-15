@@ -150,36 +150,6 @@ None - Returns cursor
 **Method**: `FINISHING_COATINGPLCDATA(FINISHING_COATINGPLCDATAParameter para)`
 **Lines**: 28418-28546 (estimated)
 
-**Called From (XAML Pages)**:
-- Coating1FinishingPage.xaml.cs:1785
-- Coating12StepFinishingPage.xaml.cs
-
-**Usage Pattern**:
-```csharp
-// Load PLC specification ranges after loading lot data
-private void FINISHING_COATINGPLCDATA(string P_MCNO, string P_WEAVINGLOT)
-{
-    List<FINISHING_COATINGPLCDATA> items =
-        _session.GetFINISHING_COATINGPLCDATA(P_MCNO, P_WEAVINGLOT);
-
-    if (items != null && items.Count > 0)
-    {
-        // Display start time
-        txtStartTime.Text = items[0].STARTDATE.Value.ToString("dd/MM/yy HH:mm");
-
-        // Load temperature zone specs for monitoring
-        // UI shows: Actual PLC Value | Target | Min-Max Range
-        // Example: 170°C | 170°C | 165-175°C
-
-        // For each temperature zone (1-10):
-        // - Show target value (TEMP1)
-        // - Show acceptable range (TEMP1_MIN to TEMP1_MAX)
-        // - Compare with actual PLC reading
-        // - Display warning if out of range
-    }
-}
-```
-
 ---
 
 **File**: 89/296 | **Progress**: 30.1%

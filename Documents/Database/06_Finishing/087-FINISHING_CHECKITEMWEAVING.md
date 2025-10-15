@@ -121,35 +121,6 @@ None - Returns cursor
 **Method**: `FINISHING_CHECKITEMWEAVING(FINISHING_CHECKITEMWEAVINGParameter para)`
 **Lines**: 28449-28513
 
-**Called From (XAML Pages)**: 28 finishing preparation pages including:
-- Coating1PreparingPage.xaml.cs:438
-- Coating2PreparingPage.xaml.cs
-- Coating3PreparingPage.xaml.cs
-- Scouring1PreparingPage.xaml.cs
-- Scouring2PreparingPage.xaml.cs
-- ScouringDryerPreparingPage.xaml.cs
-- And 22 other coating/scouring/dryer preparation pages
-
-**Usage Pattern**:
-```csharp
-// In ScanWeavingLot method (typical usage)
-List<FINISHING_CHECKITEMWEAVINGData> items =
-    _session.GetFINISHING_CHECKITEMWEAVING(itm_code, itm_weaving);
-
-if (items != null && items.Count > 0)
-{
-    // Valid combination - allow production to proceed
-    cmdStart.Focus();
-}
-else
-{
-    // Invalid combination - show error and clear inputs
-    "This Item Weaving does not map with selected item Good".ShowMessageBox(false);
-    txtItemWeaving.Text = "";
-    txtLot.Text = "";
-}
-```
-
 ---
 
 **File**: 87/296 | **Progress**: 29.4%

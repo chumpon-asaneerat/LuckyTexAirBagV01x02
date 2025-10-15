@@ -161,25 +161,6 @@ None - Returns cursor
 **Method**: `FINISHING_GETCOATINGCONDITION(FINISHING_GETCOATINGCONDITIONParameter para)`
 **Lines**: 28XXX (estimated)
 
-**Called From (XAML Pages)**:
-- Report.xaml.cs:2835, 3294, 3736, 4477 (multiple report types)
-- RepMasterForm.xaml.cs (report generation)
-
-**Usage Pattern**:
-```csharp
-// In report generation for coating process sheet
-List<FINISHING_GETCOATINGCONDITIONData> lots2 =
-    CoatingDataService.Instance.GetFINISHING_GETCOATINGCONDITIONDataList(itm_code, ScouringNo);
-
-if (lots2 != null && lots2.Count > 0)
-{
-    // Build coating condition section of report
-    // Show all target values and tolerances
-    // Display as: "Parameter | Target | Tolerance | Range"
-    // Example: "Saturator Temp | 85°C | ±3°C | 82-88°C"
-}
-```
-
 ---
 
 **File**: 90/296 | **Progress**: 30.4%
