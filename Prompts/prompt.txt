@@ -1,5 +1,7 @@
 Check all instruction in @Documents\Database
 
+Strict with all instructions do not violate it.
+
 DO NOT use Batch processing causes it lose progress when session ends. you should:
 - Generate ONE file at a time
 - Update tracker after EACH file
