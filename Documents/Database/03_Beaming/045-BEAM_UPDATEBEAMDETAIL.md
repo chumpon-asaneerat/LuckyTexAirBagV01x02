@@ -34,20 +34,20 @@
 | `P_STANDTENSION` | NUMBER | ⬜ | Beam stand tension |
 | `P_WINDTENSION` | NUMBER | ⬜ | Winding tension |
 | `P_INSIDE` | NUMBER | ⬜ | Inside beam width (mm) |
-| `P_OUTSIDE` | Decimal? | ⬜ | Outside beam width (mm) |
-| `P_FULL` | Decimal? | ⬜ | Full beam width (mm) |
-| `P_DOFFBY` | String | ⬜ | Operator who doffed |
-| `P_TENSION_ST1` | Decimal? | ⬜ | Station 1 tension measurement |
-| `P_TENSION_ST2` | Decimal? | ⬜ | Station 2 tension measurement |
-| `P_TENSION_ST3` | Decimal? | ⬜ | Station 3 tension measurement |
-| `P_TENSION_ST4` | Decimal? | ⬜ | Station 4 tension measurement |
-| `P_TENSION_ST5` | Decimal? | ⬜ | Station 5 tension measurement |
-| `P_TENSION_ST6` | Decimal? | ⬜ | Station 6 tension measurement |
-| `P_TENSION_ST7` | Decimal? | ⬜ | Station 7 tension measurement |
-| `P_TENSION_ST8` | Decimal? | ⬜ | Station 8 tension measurement |
-| `P_TENSION_ST9` | Decimal? | ⬜ | Station 9 tension measurement |
-| `P_TENSION_ST10` | Decimal? | ⬜ | Station 10 tension measurement |
-| `P_OPERATOR` | String | ⬜ | Operator making the update |
+| `P_OUTSIDE` | NUMBER | ⬜ | Outside beam width (mm) |
+| `P_FULL` | NUMBER | ⬜ | Full beam width (mm) |
+| `P_DOFFBY` | VARCHAR2(50) | ⬜ | Operator who doffed |
+| `P_TENSION_ST1` | NUMBER | ⬜ | Station 1 tension measurement |
+| `P_TENSION_ST2` | NUMBER | ⬜ | Station 2 tension measurement |
+| `P_TENSION_ST3` | NUMBER | ⬜ | Station 3 tension measurement |
+| `P_TENSION_ST4` | NUMBER | ⬜ | Station 4 tension measurement |
+| `P_TENSION_ST5` | NUMBER | ⬜ | Station 5 tension measurement |
+| `P_TENSION_ST6` | NUMBER | ⬜ | Station 6 tension measurement |
+| `P_TENSION_ST7` | NUMBER | ⬜ | Station 7 tension measurement |
+| `P_TENSION_ST8` | NUMBER | ⬜ | Station 8 tension measurement |
+| `P_TENSION_ST9` | NUMBER | ⬜ | Station 9 tension measurement |
+| `P_TENSION_ST10` | NUMBER | ⬜ | Station 10 tension measurement |
+| `P_OPERATOR` | VARCHAR2(50) | ⬜ | Operator making the update |
 
 ### Input (IN) - Overload 2 (Partial Update without Doff)
 

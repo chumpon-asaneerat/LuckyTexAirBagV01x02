@@ -36,9 +36,36 @@ None - Returns cursor
 | Column | Type | Description |
 |--------|------|-------------|
 | `STARTDATE` | DATE | Condition setup timestamp |
-| `TEMP1-10_MIN` | NUMBER | Temperature zone 1-10 minimum limit (°C) |
-| `TEMP1-10_MAX` | NUMBER | Temperature zone 1-10 maximum limit (°C) |
-| `TEMP1-10` | NUMBER | Temperature zone 1-10 actual/target value (°C) |
+| `TEMP1_MIN` | NUMBER | Temperature zone 1 minimum limit (°C) |
+| `TEMP1_MAX` | NUMBER | Temperature zone 1 maximum limit (°C) |
+| `TEMP1` | NUMBER | Temperature zone 1 target value (°C) |
+| `TEMP2_MIN` | NUMBER | Temperature zone 2 minimum limit (°C) |
+| `TEMP2_MAX` | NUMBER | Temperature zone 2 maximum limit (°C) |
+| `TEMP2` | NUMBER | Temperature zone 2 target value (°C) |
+| `TEMP3_MIN` | NUMBER | Temperature zone 3 minimum limit (°C) |
+| `TEMP3_MAX` | NUMBER | Temperature zone 3 maximum limit (°C) |
+| `TEMP3` | NUMBER | Temperature zone 3 target value (°C) |
+| `TEMP4_MIN` | NUMBER | Temperature zone 4 minimum limit (°C) |
+| `TEMP4_MAX` | NUMBER | Temperature zone 4 maximum limit (°C) |
+| `TEMP4` | NUMBER | Temperature zone 4 target value (°C) |
+| `TEMP5_MIN` | NUMBER | Temperature zone 5 minimum limit (°C) |
+| `TEMP5_MAX` | NUMBER | Temperature zone 5 maximum limit (°C) |
+| `TEMP5` | NUMBER | Temperature zone 5 target value (°C) |
+| `TEMP6_MIN` | NUMBER | Temperature zone 6 minimum limit (°C) |
+| `TEMP6_MAX` | NUMBER | Temperature zone 6 maximum limit (°C) |
+| `TEMP6` | NUMBER | Temperature zone 6 target value (°C) |
+| `TEMP7_MIN` | NUMBER | Temperature zone 7 minimum limit (°C) |
+| `TEMP7_MAX` | NUMBER | Temperature zone 7 maximum limit (°C) |
+| `TEMP7` | NUMBER | Temperature zone 7 target value (°C) |
+| `TEMP8_MIN` | NUMBER | Temperature zone 8 minimum limit (°C) |
+| `TEMP8_MAX` | NUMBER | Temperature zone 8 maximum limit (°C) |
+| `TEMP8` | NUMBER | Temperature zone 8 target value (°C) |
+| `TEMP9_MIN` | NUMBER | Temperature zone 9 minimum limit (°C) |
+| `TEMP9_MAX` | NUMBER | Temperature zone 9 maximum limit (°C) |
+| `TEMP9` | NUMBER | Temperature zone 9 target value (°C) |
+| `TEMP10_MIN` | NUMBER | Temperature zone 10 minimum limit (°C) |
+| `TEMP10_MAX` | NUMBER | Temperature zone 10 maximum limit (°C) |
+| `TEMP10` | NUMBER | Temperature zone 10 target value (°C) |
 | `SPEED_MIN` | NUMBER | Machine speed minimum limit (m/min) |
 | `SPEED_MAX` | NUMBER | Machine speed maximum limit (m/min) |
 | `SPEED` | NUMBER | Machine speed actual/target value (m/min) |

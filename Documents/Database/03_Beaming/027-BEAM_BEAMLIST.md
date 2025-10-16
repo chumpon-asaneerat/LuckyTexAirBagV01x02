@@ -57,16 +57,16 @@ N/A - Returns result set
 | `BEAMMC` | VARCHAR2(50) | Beaming machine number |
 | `FLAG` | VARCHAR2(10) | Process flag (C=Complete, T=Transferred) |
 | `REMARK` | VARCHAR2(500) | Production notes/remarks |
-| `TENSION_ST1` | Decimal? | Station 1 tension measurement |
-| `TENSION_ST2` | Decimal? | Station 2 tension measurement |
-| `TENSION_ST3` | Decimal? | Station 3 tension measurement |
-| `TENSION_ST4` | Decimal? | Station 4 tension measurement |
-| `TENSION_ST5` | Decimal? | Station 5 tension measurement |
-| `TENSION_ST6` | Decimal? | Station 6 tension measurement |
-| `TENSION_ST7` | Decimal? | Station 7 tension measurement |
-| `TENSION_ST8` | Decimal? | Station 8 tension measurement |
-| `TENSION_ST9` | Decimal? | Station 9 tension measurement |
-| `TENSION_ST10` | Decimal? | Station 10 tension measurement |
+| `TENSION_ST1` | NUMBER | Station 1 tension measurement |
+| `TENSION_ST2` | NUMBER | Station 2 tension measurement |
+| `TENSION_ST3` | NUMBER | Station 3 tension measurement |
+| `TENSION_ST4` | NUMBER | Station 4 tension measurement |
+| `TENSION_ST5` | NUMBER | Station 5 tension measurement |
+| `TENSION_ST6` | NUMBER | Station 6 tension measurement |
+| `TENSION_ST7` | NUMBER | Station 7 tension measurement |
+| `TENSION_ST8` | NUMBER | Station 8 tension measurement |
+| `TENSION_ST9` | NUMBER | Station 9 tension measurement |
+| `TENSION_ST10` | NUMBER | Station 10 tension measurement |
 | `EDITBY` | VARCHAR2(50) | Last operator to edit |
 | `OLDBEAMNO` | VARCHAR2(50) | Previous beam number (if changed) |
 | `EDITDATE` | DATE | Last edit timestamp |

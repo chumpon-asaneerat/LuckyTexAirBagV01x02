@@ -24,8 +24,8 @@
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `P_REQUESTNO` | String | ✅ | Request number to cancel |
-| `P_OPERATOR` | String | ✅ | Operator ID performing cancellation |
+| `P_REQUESTNO` | VARCHAR2(50) | ✅ | Request number to cancel |
+| `P_OPERATOR` | VARCHAR2(50) | ✅ | Operator ID performing cancellation |
 
 ### Output (OUT)
 

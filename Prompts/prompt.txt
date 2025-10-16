@@ -5,7 +5,8 @@ Strict with all instructions and TEMPLATE_INDIVIDUAL_PROCEDURE.md do not violate
 i waste time to correct it DO NOT done it again.
 
 DO NOT use Batch processing causes it lose progress when session ends. you should:
-- Check all Inputs/Outputs/Results it should show exact columns (do not use 1/2/3/4...)
+- Check all Inputs/Outputs/Results it should show exact columns (do not use 1/2/3/4... or 
+  grouped notation like  SATURATOR_CHEM_PV/SP, WASHING1_PV/SP, TEMP1-10_PV/SP)
 - Generate ONE file at a time
 - Update tracker after EACH file
 - Save progress continuously

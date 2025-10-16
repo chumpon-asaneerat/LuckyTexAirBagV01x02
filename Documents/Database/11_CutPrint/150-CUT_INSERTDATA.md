@@ -24,50 +24,50 @@
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `P_ITEMLOT` | String | ✅ | Item lot number |
-| `P_STARTDATE` | DateTime? | ⬜ | Operation start date |
-| `P_PRODUCTTYPEID` | String | ✅ | Product type |
-| `P_OPERATORID` | String | ✅ | Operator ID |
-| `P_REMARK` | String | ⬜ | Remarks |
-| `P_MCNO` | String | ✅ | Machine number |
-| `P_WIDTH1` | Decimal? | ⬜ | Barcode 1 width (mm) |
-| `P_WIDTH2` | Decimal? | ⬜ | Barcode 2 width (mm) |
-| `P_WIDTH3` | Decimal? | ⬜ | Barcode 3 width (mm) |
-| `P_WIDTH4` | Decimal? | ⬜ | Barcode 4 width (mm) |
-| `P_DISTANTBAR1` | Decimal? | ⬜ | Barcode 1 distance (mm) |
-| `P_DISTANTBAR2` | Decimal? | ⬜ | Barcode 2 distance (mm) |
-| `P_DISTANTBAR3` | Decimal? | ⬜ | Barcode 3 distance (mm) |
-| `P_DISTANTBAR4` | Decimal? | ⬜ | Barcode 4 distance (mm) |
-| `P_DISTANTLINE1` | Decimal? | ⬜ | Cut line 1 distance (mm) |
-| `P_DISTANTLINE2` | Decimal? | ⬜ | Cut line 2 distance (mm) |
-| `P_DISTANTLINE3` | Decimal? | ⬜ | Cut line 3 distance (mm) |
-| `P_DENWARP` | Decimal? | ⬜ | Warp density (ends/inch) |
-| `P_DENWEFT` | Decimal? | ⬜ | Weft density (picks/inch) |
-| `P_SPEED` | Decimal? | ⬜ | Cutting/printing speed |
-| `P_WIDTHBE` | Decimal? | ⬜ | Width before cutting |
-| `P_WIDTHAF` | Decimal? | ⬜ | Width after cutting |
-| `P_BEGINLINE1` | String | ⬜ | Begin roll number line 1 |
-| `P_BEGINLINE2` | String | ⬜ | Begin roll number line 2 |
-| `P_BEGINLINE3` | String | ⬜ | Begin roll number line 3 |
-| `P_BEGINLINE4` | String | ⬜ | Begin roll number line 4 |
-| `P_ENDLINE1` | String | ⬜ | End roll number line 1 |
-| `P_ENDLINE2` | String | ⬜ | End roll number line 2 |
-| `P_ENDLINE3` | String | ⬜ | End roll number line 3 |
-| `P_ENDLINE4` | String | ⬜ | End roll number line 4 |
-| `P_SELVAGELEFT` | String | ⬜ | Left selvage measurement (excluded for Scouring) |
-| `P_SELVAGERIGHT` | String | ⬜ | Right selvage measurement (excluded for Scouring) |
-| `P_SUSPENSTARTDATE` | DateTime? | ⬜ | Suspend start date (if suspended) |
-| `P_2BEGINLINE1` | String | ⬜ | Second begin roll line 1 |
-| `P_2BEGINLINE2` | String | ⬜ | Second begin roll line 2 |
-| `P_2BEGINLINE3` | String | ⬜ | Second begin roll line 3 |
-| `P_2BEGINLINE4` | String | ⬜ | Second begin roll line 4 |
-| `P_2ENDLINE1` | String | ⬜ | Second end roll line 1 |
-| `P_2ENDLINE2` | String | ⬜ | Second end roll line 2 |
-| `P_2ENDLINE3` | String | ⬜ | Second end roll line 3 |
-| `P_2ENDLINE4` | String | ⬜ | Second end roll line 4 |
-| `P_TENSION` | Decimal? | ⬜ | Tension setting (added 2017-06-28) |
-| `P_LENGTHDETAIL` | String | ⬜ | Length details (added 2017-08-25) |
-| `P_WIDTHAF_END` | Decimal? | ⬜ | Width at end (added 2017-10-04) |
+| `P_ITEMLOT` | VARCHAR2(50) | ✅ | Item lot number |
+| `P_STARTDATE` | DATE | ⬜ | Operation start date |
+| `P_PRODUCTTYPEID` | VARCHAR2(50) | ✅ | Product type |
+| `P_OPERATORID` | VARCHAR2(50) | ✅ | Operator ID |
+| `P_REMARK` | VARCHAR2(500) | ⬜ | Remarks |
+| `P_MCNO` | VARCHAR2(50) | ✅ | Machine number |
+| `P_WIDTH1` | NUMBER | ⬜ | Barcode 1 width (mm) |
+| `P_WIDTH2` | NUMBER | ⬜ | Barcode 2 width (mm) |
+| `P_WIDTH3` | NUMBER | ⬜ | Barcode 3 width (mm) |
+| `P_WIDTH4` | NUMBER | ⬜ | Barcode 4 width (mm) |
+| `P_DISTANTBAR1` | NUMBER | ⬜ | Barcode 1 distance (mm) |
+| `P_DISTANTBAR2` | NUMBER | ⬜ | Barcode 2 distance (mm) |
+| `P_DISTANTBAR3` | NUMBER | ⬜ | Barcode 3 distance (mm) |
+| `P_DISTANTBAR4` | NUMBER | ⬜ | Barcode 4 distance (mm) |
+| `P_DISTANTLINE1` | NUMBER | ⬜ | Cut line 1 distance (mm) |
+| `P_DISTANTLINE2` | NUMBER | ⬜ | Cut line 2 distance (mm) |
+| `P_DISTANTLINE3` | NUMBER | ⬜ | Cut line 3 distance (mm) |
+| `P_DENWARP` | NUMBER | ⬜ | Warp density (ends/inch) |
+| `P_DENWEFT` | NUMBER | ⬜ | Weft density (picks/inch) |
+| `P_SPEED` | NUMBER | ⬜ | Cutting/printing speed |
+| `P_WIDTHBE` | NUMBER | ⬜ | Width before cutting |
+| `P_WIDTHAF` | NUMBER | ⬜ | Width after cutting |
+| `P_BEGINLINE1` | VARCHAR2(50) | ⬜ | Begin roll number line 1 |
+| `P_BEGINLINE2` | VARCHAR2(50) | ⬜ | Begin roll number line 2 |
+| `P_BEGINLINE3` | VARCHAR2(50) | ⬜ | Begin roll number line 3 |
+| `P_BEGINLINE4` | VARCHAR2(50) | ⬜ | Begin roll number line 4 |
+| `P_ENDLINE1` | VARCHAR2(50) | ⬜ | End roll number line 1 |
+| `P_ENDLINE2` | VARCHAR2(50) | ⬜ | End roll number line 2 |
+| `P_ENDLINE3` | VARCHAR2(50) | ⬜ | End roll number line 3 |
+| `P_ENDLINE4` | VARCHAR2(50) | ⬜ | End roll number line 4 |
+| `P_SELVAGELEFT` | VARCHAR2(50) | ⬜ | Left selvage measurement (excluded for Scouring) |
+| `P_SELVAGERIGHT` | VARCHAR2(50) | ⬜ | Right selvage measurement (excluded for Scouring) |
+| `P_SUSPENSTARTDATE` | DATE | ⬜ | Suspend start date (if suspended) |
+| `P_2BEGINLINE1` | VARCHAR2(50) | ⬜ | Second begin roll line 1 |
+| `P_2BEGINLINE2` | VARCHAR2(50) | ⬜ | Second begin roll line 2 |
+| `P_2BEGINLINE3` | VARCHAR2(50) | ⬜ | Second begin roll line 3 |
+| `P_2BEGINLINE4` | VARCHAR2(50) | ⬜ | Second begin roll line 4 |
+| `P_2ENDLINE1` | VARCHAR2(50) | ⬜ | Second end roll line 1 |
+| `P_2ENDLINE2` | VARCHAR2(50) | ⬜ | Second end roll line 2 |
+| `P_2ENDLINE3` | VARCHAR2(50) | ⬜ | Second end roll line 3 |
+| `P_2ENDLINE4` | VARCHAR2(50) | ⬜ | Second end roll line 4 |
+| `P_TENSION` | NUMBER | ⬜ | Tension setting (added 2017-06-28) |
+| `P_LENGTHDETAIL` | VARCHAR2(500) | ⬜ | Length details (added 2017-08-25) |
+| `P_WIDTHAF_END` | NUMBER | ⬜ | Width at end (added 2017-10-04) |
 
 ### Output (OUT)
 
