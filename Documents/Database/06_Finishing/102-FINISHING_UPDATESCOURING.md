@@ -26,12 +26,36 @@
 |-----------|------|----------|-------------|
 | `P_FINISHLOT` | VARCHAR2(50) | ✅ | Finishing lot number to update |
 | `P_FLAG` | VARCHAR2(10) | ✅ | Status flag (START/FINISH) |
-| `P_SATURATOR_PV/SP` | NUMBER | ⚠️ | Chemical saturator PV/SP values (°C) |
-| `P_WASHING1_PV/SP` | NUMBER | ⚠️ | Washing zone 1 PV/SP values (°C) |
-| `P_WASHING2_PV/SP` | NUMBER | ⚠️ | Washing zone 2 PV/SP values (°C) |
-| `P_HOTFLUE_PV/SP` | NUMBER | ⚠️ | Hot flue temperature PV/SP values (°C) |
-| `P_TEMP1-10_PV/SP` | NUMBER | ⚠️ | Temperature zone 1-10 PV/SP values (°C) |
-| `P_SPEED_PV/SP` | NUMBER | ⚠️ | Machine speed PV/SP (m/min) |
+| `P_SATURATOR_PV` | NUMBER | ⚠️ | Chemical saturator process value (°C) |
+| `P_SATURATOR_SP` | NUMBER | ⚠️ | Chemical saturator setpoint (°C) |
+| `P_WASHING1_PV` | NUMBER | ⚠️ | Washing zone 1 process value (°C) |
+| `P_WASHING1_SP` | NUMBER | ⚠️ | Washing zone 1 setpoint (°C) |
+| `P_WASHING2_PV` | NUMBER | ⚠️ | Washing zone 2 process value (°C) |
+| `P_WASHING2_SP` | NUMBER | ⚠️ | Washing zone 2 setpoint (°C) |
+| `P_HOTFLUE_PV` | NUMBER | ⚠️ | Hot flue temperature process value (°C) |
+| `P_HOTFLUE_SP` | NUMBER | ⚠️ | Hot flue temperature setpoint (°C) |
+| `P_TEMP1_PV` | NUMBER | ⚠️ | Temperature zone 1 process value (°C) |
+| `P_TEMP1_SP` | NUMBER | ⚠️ | Temperature zone 1 setpoint (°C) |
+| `P_TEMP2_PV` | NUMBER | ⚠️ | Temperature zone 2 process value (°C) |
+| `P_TEMP2_SP` | NUMBER | ⚠️ | Temperature zone 2 setpoint (°C) |
+| `P_TEMP3_PV` | NUMBER | ⚠️ | Temperature zone 3 process value (°C) |
+| `P_TEMP3_SP` | NUMBER | ⚠️ | Temperature zone 3 setpoint (°C) |
+| `P_TEMP4_PV` | NUMBER | ⚠️ | Temperature zone 4 process value (°C) |
+| `P_TEMP4_SP` | NUMBER | ⚠️ | Temperature zone 4 setpoint (°C) |
+| `P_TEMP5_PV` | NUMBER | ⚠️ | Temperature zone 5 process value (°C) |
+| `P_TEMP5_SP` | NUMBER | ⚠️ | Temperature zone 5 setpoint (°C) |
+| `P_TEMP6_PV` | NUMBER | ⚠️ | Temperature zone 6 process value (°C) |
+| `P_TEMP6_SP` | NUMBER | ⚠️ | Temperature zone 6 setpoint (°C) |
+| `P_TEMP7_PV` | NUMBER | ⚠️ | Temperature zone 7 process value (°C) |
+| `P_TEMP7_SP` | NUMBER | ⚠️ | Temperature zone 7 setpoint (°C) |
+| `P_TEMP8_PV` | NUMBER | ⚠️ | Temperature zone 8 process value (°C) |
+| `P_TEMP8_SP` | NUMBER | ⚠️ | Temperature zone 8 setpoint (°C) |
+| `P_TEMP9_PV` | NUMBER | ⚠️ | Temperature zone 9 process value (°C) |
+| `P_TEMP9_SP` | NUMBER | ⚠️ | Temperature zone 9 setpoint (°C) |
+| `P_TEMP10_PV` | NUMBER | ⚠️ | Temperature zone 10 process value (°C) |
+| `P_TEMP10_SP` | NUMBER | ⚠️ | Temperature zone 10 setpoint (°C) |
+| `P_SPEED_PV` | NUMBER | ⚠️ | Machine speed process value (m/min) |
+| `P_SPEED_SP` | NUMBER | ⚠️ | Machine speed setpoint (m/min) |
 | `P_MAINFRAMEWIDTH` | NUMBER | ⚠️ | Main frame width (mm) |
 | `P_WIDTH_BE` | NUMBER | ⚠️ | Width before scouring (mm) |
 | `P_WIDTH_AF` | NUMBER | ⚠️ | Width after scouring (mm) |
