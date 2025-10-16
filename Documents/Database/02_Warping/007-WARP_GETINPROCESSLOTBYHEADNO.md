@@ -50,6 +50,12 @@ None - Returns result set via cursor
 | `FLAG` | VARCHAR2(10) | Process flag/status |
 | `WARPMC` | VARCHAR2(50) | Warping machine number |
 | `REMARK` | VARCHAR2(200) | Remarks |
+| `TENSION_IT` | NUMBER | IT tension measurement |
+| `TENSION_TAKEUP` | NUMBER | Takeup tension measurement |
+| `MC_COUNT_L` | NUMBER | Machine count large |
+| `MC_COUNT_S` | NUMBER | Machine count small |
+| `EDITDATE` | DATE | Last edit date/time |
+| `EDITBY` | VARCHAR2(50) | Last edited by operator |
 
 ---
 
