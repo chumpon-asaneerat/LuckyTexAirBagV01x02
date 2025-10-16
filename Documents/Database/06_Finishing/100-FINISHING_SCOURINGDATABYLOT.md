@@ -42,25 +42,75 @@ None - Returns cursor
 | `STARTDATE` | DATE | Process start timestamp |
 | `ENDDATE` | DATE | Process end timestamp |
 | `PRODUCTTYPEID` | VARCHAR2(50) | Product type identifier |
-| `LENGTH1-7` | NUMBER | Length measurements at various checkpoints (m) |
+| `LENGTH1` | NUMBER | Length measurement checkpoint 1 (m) |
+| `LENGTH2` | NUMBER | Length measurement checkpoint 2 (m) |
+| `LENGTH3` | NUMBER | Length measurement checkpoint 3 (m) |
+| `LENGTH4` | NUMBER | Length measurement checkpoint 4 (m) |
+| `LENGTH5` | NUMBER | Length measurement checkpoint 5 (m) |
+| `LENGTH6` | NUMBER | Length measurement checkpoint 6 (m) |
+| `LENGTH7` | NUMBER | Length measurement checkpoint 7 (m) |
 | `MCNO` | VARCHAR2(50) | Machine number |
 | `STATUSFLAG` | VARCHAR2(10) | Status flag (START/FINISH/CANCEL) |
-| `SATURATOR_CHEM_PV/SP` | NUMBER | Chemical saturator PV/SP values (°C) |
-| `WASHING1_PV/SP` | NUMBER | Washing zone 1 PV/SP values (°C) |
-| `WASHING2_PV/SP` | NUMBER | Washing zone 2 PV/SP values (°C) |
-| `HOTFLUE_PV/SP` | NUMBER | Hot flue temperature PV/SP values (°C) |
-| `TEMP1-10_PV/SP` | NUMBER | Temperature zone 1-10 PV/SP values (°C) |
-| `TEMP1-8_MIN/MAX` | NUMBER | Temperature zone min/max specification limits (°C) |
-| `SPEED_PV/SP` | NUMBER | Machine speed PV/SP (m/min) |
-| `SPEED_MIN/MAX` | NUMBER | Speed specification limits (m/min) |
+| `SATURATOR_CHEM_PV` | NUMBER | Chemical saturator process value (°C) |
+| `SATURATOR_CHEM_SP` | NUMBER | Chemical saturator setpoint (°C) |
+| `WASHING1_PV` | NUMBER | Washing zone 1 process value (°C) |
+| `WASHING1_SP` | NUMBER | Washing zone 1 setpoint (°C) |
+| `WASHING2_PV` | NUMBER | Washing zone 2 process value (°C) |
+| `WASHING2_SP` | NUMBER | Washing zone 2 setpoint (°C) |
+| `HOTFLUE_PV` | NUMBER | Hot flue temperature process value (°C) |
+| `HOTFLUE_SP` | NUMBER | Hot flue temperature setpoint (°C) |
+| `TEMP1_PV` | NUMBER | Temperature zone 1 process value (°C) |
+| `TEMP1_SP` | NUMBER | Temperature zone 1 setpoint (°C) |
+| `TEMP2_PV` | NUMBER | Temperature zone 2 process value (°C) |
+| `TEMP2_SP` | NUMBER | Temperature zone 2 setpoint (°C) |
+| `TEMP3_PV` | NUMBER | Temperature zone 3 process value (°C) |
+| `TEMP3_SP` | NUMBER | Temperature zone 3 setpoint (°C) |
+| `TEMP4_PV` | NUMBER | Temperature zone 4 process value (°C) |
+| `TEMP4_SP` | NUMBER | Temperature zone 4 setpoint (°C) |
+| `TEMP5_PV` | NUMBER | Temperature zone 5 process value (°C) |
+| `TEMP5_SP` | NUMBER | Temperature zone 5 setpoint (°C) |
+| `TEMP6_PV` | NUMBER | Temperature zone 6 process value (°C) |
+| `TEMP6_SP` | NUMBER | Temperature zone 6 setpoint (°C) |
+| `TEMP7_PV` | NUMBER | Temperature zone 7 process value (°C) |
+| `TEMP7_SP` | NUMBER | Temperature zone 7 setpoint (°C) |
+| `TEMP8_PV` | NUMBER | Temperature zone 8 process value (°C) |
+| `TEMP8_SP` | NUMBER | Temperature zone 8 setpoint (°C) |
+| `TEMP9_PV` | NUMBER | Temperature zone 9 process value (°C) |
+| `TEMP9_SP` | NUMBER | Temperature zone 9 setpoint (°C) |
+| `TEMP10_PV` | NUMBER | Temperature zone 10 process value (°C) |
+| `TEMP10_SP` | NUMBER | Temperature zone 10 setpoint (°C) |
+| `TEMP1_MIN` | NUMBER | Temperature zone 1 minimum specification limit (°C) |
+| `TEMP1_MAX` | NUMBER | Temperature zone 1 maximum specification limit (°C) |
+| `TEMP2_MIN` | NUMBER | Temperature zone 2 minimum specification limit (°C) |
+| `TEMP2_MAX` | NUMBER | Temperature zone 2 maximum specification limit (°C) |
+| `TEMP3_MIN` | NUMBER | Temperature zone 3 minimum specification limit (°C) |
+| `TEMP3_MAX` | NUMBER | Temperature zone 3 maximum specification limit (°C) |
+| `TEMP4_MIN` | NUMBER | Temperature zone 4 minimum specification limit (°C) |
+| `TEMP4_MAX` | NUMBER | Temperature zone 4 maximum specification limit (°C) |
+| `TEMP5_MIN` | NUMBER | Temperature zone 5 minimum specification limit (°C) |
+| `TEMP5_MAX` | NUMBER | Temperature zone 5 maximum specification limit (°C) |
+| `TEMP6_MIN` | NUMBER | Temperature zone 6 minimum specification limit (°C) |
+| `TEMP6_MAX` | NUMBER | Temperature zone 6 maximum specification limit (°C) |
+| `TEMP7_MIN` | NUMBER | Temperature zone 7 minimum specification limit (°C) |
+| `TEMP7_MAX` | NUMBER | Temperature zone 7 maximum specification limit (°C) |
+| `TEMP8_MIN` | NUMBER | Temperature zone 8 minimum specification limit (°C) |
+| `TEMP8_MAX` | NUMBER | Temperature zone 8 maximum specification limit (°C) |
+| `SPEED_PV` | NUMBER | Machine speed process value (m/min) |
+| `SPEED_SP` | NUMBER | Machine speed setpoint (m/min) |
+| `SPEED_MIN` | NUMBER | Speed minimum specification limit (m/min) |
+| `SPEED_MAX` | NUMBER | Speed maximum specification limit (m/min) |
 | `MAINFRAMEWIDTH` | NUMBER | Main frame width (mm) |
 | `WIDTH_BE` | NUMBER | Width before scouring (mm) |
 | `WIDTH_AF` | NUMBER | Width after scouring (mm) |
 | `PIN2PIN` | NUMBER | Pin to pin distance (mm) |
-| `SAT_CHEM_MIN/MAX` | NUMBER | Saturator temperature specification limits (°C) |
-| `WASHING1_MIN/MAX` | NUMBER | Washing 1 temperature specification limits (°C) |
-| `WASHING2_MIN/MAX` | NUMBER | Washing 2 temperature specification limits (°C) |
-| `HOTFLUE_MIN/MAX` | NUMBER | Hot flue temperature specification limits (°C) |
+| `SAT_CHEM_MIN` | NUMBER | Saturator temperature minimum specification limit (°C) |
+| `SAT_CHEM_MAX` | NUMBER | Saturator temperature maximum specification limit (°C) |
+| `WASHING1_MIN` | NUMBER | Washing 1 temperature minimum specification limit (°C) |
+| `WASHING1_MAX` | NUMBER | Washing 1 temperature maximum specification limit (°C) |
+| `WASHING2_MIN` | NUMBER | Washing 2 temperature minimum specification limit (°C) |
+| `WASHING2_MAX` | NUMBER | Washing 2 temperature maximum specification limit (°C) |
+| `HOTFLUE_MIN` | NUMBER | Hot flue temperature minimum specification limit (°C) |
+| `HOTFLUE_MAX` | NUMBER | Hot flue temperature maximum specification limit (°C) |
 | `CONDITIONBY` | VARCHAR2(50) | Condition set by operator |
 | `CONDITIONDATE` | DATE | Condition set date |
 | `FINISHBY` | VARCHAR2(50) | Finished by operator |
