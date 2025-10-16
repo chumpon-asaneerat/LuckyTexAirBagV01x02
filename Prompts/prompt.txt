@@ -1,4 +1,4 @@
-For New document generation
+For Database document generation
 Check all instructions in @Documents\Database
 
 Strict with all instructions and TEMPLATE_INDIVIDUAL_PROCEDURE.md do not violate it you alrady broke my instruction more than 10 sections
