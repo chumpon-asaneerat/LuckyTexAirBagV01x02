@@ -5,13 +5,207 @@ Strict with all instructions and TEMPLATE_INDIVIDUAL_PROCEDURE.md do not violate
 i waste time to correct it DO NOT done it again.
 
 DO NOT use Batch processing causes it lose progress when session ends. you should:
-- Check all Inputs/Outputs/Results it should show exact columns (do not use 1/2/3/4... or 
-  grouped notation like  SATURATOR_CHEM_PV/SP, WASHING1_PV/SP, TEMP1-10_PV/SP)
 - Generate ONE file at a time
 - Update tracker after EACH file
 - Save progress continuously
 - No need to ask me every time when process to generate file continue create it.
-This way if session ends, all completed work is saved. 
+This way if session ends, all completed work is saved.
 
 So continue properly do one file at a time then updating tracker after complete each file generated
+
+---
+
+## CRITICAL: Column Notation Rules (MUST FOLLOW)
+
+### ❌ NEVER USE GROUPED NOTATION
+
+**WRONG - DO NOT DO THIS:**
+```markdown
+| `TENSION_ST1-10` | NUMBER | Station 1-10 tension |
+| `TENSION_ST1` - `TENSION_ST10` | NUMBER | Stations 1 through 10 |
+| `TEMP1-10_PV/SP` | NUMBER | Temperature zones 1-10 PV/SP |
+| `SATURATOR_CHEM_PV/SP` | NUMBER | Saturator chemical PV and SP |
+| `WASHING1_PV/SP` | NUMBER | Washing PV/SP values |
+| `COATINGWEIGHT_L/C/R` | NUMBER | Weight left/center/right |
+| `TEMP_MIN/MAX/value` | NUMBER | Min/max/value |
+| Parameters 1/2/3/4 | Various | Multiple parameters |
+| `WIDTH1-4` | NUMBER | Width 1 to 4 |
+| `HARDNESS_L/N/R` | NUMBER | Hardness left/middle/right |
+```
+
+**CORRECT - ALWAYS DO THIS:**
+```markdown
+| `TENSION_ST1` | NUMBER | Station 1 tension measurement |
+| `TENSION_ST2` | NUMBER | Station 2 tension measurement |
+| `TENSION_ST3` | NUMBER | Station 3 tension measurement |
+...
+| `TENSION_ST10` | NUMBER | Station 10 tension measurement |
+| `TEMP1_PV` | NUMBER | Temperature zone 1 process value (°C) |
+| `TEMP1_SP` | NUMBER | Temperature zone 1 setpoint (°C) |
+| `TEMP2_PV` | NUMBER | Temperature zone 2 process value (°C) |
+| `TEMP2_SP` | NUMBER | Temperature zone 2 setpoint (°C) |
+...
+| `SATURATOR_CHEM_PV` | NUMBER | Chemical saturator process value |
+| `SATURATOR_CHEM_SP` | NUMBER | Chemical saturator setpoint |
+| `COATINGWEIGHT_L` | NUMBER | Coating weight left side (g/m²) |
+| `COATINGWEIGHT_C` | NUMBER | Coating weight center (g/m²) |
+| `COATINGWEIGHT_R` | NUMBER | Coating weight right side (g/m²) |
+```
+
+### Expansion Rules
+
+**Always expand these patterns to individual columns:**
+
+1. **Numbered ranges** (`_1-10`, `ST1-10`, `1-7`):
+   - Expand to: `_1`, `_2`, `_3`, ..., `_10`
+
+2. **PV/SP pairs** (`PARAM_PV/SP`):
+   - Expand to: `PARAM_PV`, `PARAM_SP`
+
+3. **L/C/R triplets** (`WEIGHT_L/C/R`):
+   - Expand to: `WEIGHT_L`, `WEIGHT_C`, `WEIGHT_R`
+
+4. **L/N/R triplets** (`HARDNESS_L/N/R`):
+   - Expand to: `HARDNESS_L`, `HARDNESS_N`, `HARDNESS_R`
+
+5. **MIN/MAX/value triplets** (`TEMP_MIN/MAX/value`):
+   - Expand to: `TEMP_MIN`, `TEMP_MAX`, `TEMP`
+
+6. **Numbered lists** (`1/2/3/4`):
+   - Expand to separate columns with actual names
+
+### Verification Before Saving
+
+Before saving ANY document, verify:
+- [ ] NO slashes in column names (except in descriptions)
+- [ ] NO dashes for ranges (except in descriptions)
+- [ ] NO "through" or "to" language in column names
+- [ ] Each column has its own individual row
+- [ ] All Oracle types used (VARCHAR2, NUMBER, DATE)
+
+---
+
+## CRITICAL: Database Type Rules (MUST FOLLOW)
+
+### ✅ ALWAYS Use Oracle Database Types
+
+**CORRECT Types:**
+- `VARCHAR2(50)` - For IDs, codes, names (short strings)
+- `VARCHAR2(500)` - For remarks, notes, descriptions (long strings)
+- `VARCHAR2(10)` - For flags, status codes (very short strings)
+- `NUMBER` - For all numeric values (integers, decimals, measurements)
+- `DATE` - For all date/time values
+
+**❌ NEVER Use C# Types:**
+- ~~`String`~~ → Use `VARCHAR2(50)` or `VARCHAR2(500)`
+- ~~`Decimal?`~~ → Use `NUMBER`
+- ~~`DateTime?`~~ → Use `DATE`
+- ~~`Int32`~~ → Use `NUMBER`
+- ~~`Boolean`~~ → Use `VARCHAR2(1)` or `NUMBER(1)`
+
+### Type Selection Guide
+
+| Data Category | Oracle Type | Size Guide |
+|---------------|-------------|------------|
+| ID, Code, Barcode | VARCHAR2(50) | Default for identifiers |
+| Operator ID, User | VARCHAR2(50) | Employee codes |
+| Machine Number | VARCHAR2(50) | Equipment codes |
+| Status, Flag | VARCHAR2(10) | Short codes like 'Y/N', 'ACTIVE' |
+| Remarks, Notes | VARCHAR2(500) | Long text fields |
+| Descriptions | VARCHAR2(500) | Detailed text |
+| All numbers | NUMBER | Measurements, counts, amounts |
+| All dates/times | DATE | Timestamps, dates |
+
+---
+
+## Document Generation Workflow
+
+### Step 1: Read Source Code
+Read `LuckyTex.AirBag.Core\Domains\AirbagSPs.cs` to get:
+- Exact parameter names
+- Exact column names
+- C# types (will convert to Oracle)
+- Parameter counts
+
+### Step 2: Identify Grouped Patterns
+If C# class has properties like:
+```csharp
+public Decimal? TENSION_ST1 { get; set; }
+public Decimal? TENSION_ST2 { get; set; }
+...
+public Decimal? TENSION_ST10 { get; set; }
+```
+
+**DO NOT** write: `| TENSION_ST1-10 | NUMBER |`
+**MUST** write each one individually:
+```markdown
+| `TENSION_ST1` | NUMBER | Station 1 tension |
+| `TENSION_ST2` | NUMBER | Station 2 tension |
+...
+```
+
+### Step 3: Convert Types
+For each C# property, convert type:
+- `String` → `VARCHAR2(50)` or `VARCHAR2(500)`
+- `Decimal?` → `NUMBER`
+- `DateTime?` → `DATE`
+
+### Step 4: Write Document
+Follow TEMPLATE_INDIVIDUAL_PROCEDURE.md exactly.
+Expand all grouped patterns.
+Use Oracle types.
+
+### Step 5: Update Tracker
+Update `.DATABASE_STORED_PROCEDURES_TODO.md`:
+- Increment completion count
+- Mark procedure as complete
+- Update percentage
+
+---
+
+## Common Patterns Reference
+
+### Warping Module Patterns
+```markdown
+✅ TENSION_ST1, TENSION_ST2, ..., TENSION_ST10 (10 columns)
+✅ HARDNESS_L, HARDNESS_N, HARDNESS_R (3 columns)
+```
+
+### Finishing Module Patterns
+```markdown
+✅ TEMP1_PV, TEMP1_SP, TEMP2_PV, TEMP2_SP, ..., TEMP10_PV, TEMP10_SP (20 columns)
+✅ LENGTH1, LENGTH2, LENGTH3, ..., LENGTH7 (7 columns)
+✅ SATURATOR_CHEM_PV, SATURATOR_CHEM_SP (2 columns)
+✅ WASHING1_PV, WASHING1_SP (2 columns)
+✅ WASHING2_PV, WASHING2_SP (2 columns)
+✅ HOTFLUE_PV, HOTFLUE_SP (2 columns)
+✅ COATINGWEIGHT_L, COATINGWEIGHT_C, COATINGWEIGHT_R (3 columns)
+```
+
+### Cut & Print Module Patterns
+```markdown
+✅ WIDTHBARCODE1, WIDTHBARCODE2, WIDTHBARCODE3, WIDTHBARCODE4 (4 columns)
+✅ DISTANTBARCODE1, DISTANTBARCODE2, DISTANTBARCODE3, DISTANTBARCODE4 (4 columns)
+✅ DISTANTLINE1, DISTANTLINE2, DISTANTLINE3 (3 columns)
+✅ BEGINROLL_LINE1, BEGINROLL_LINE2, BEGINROLL_LINE3, BEGINROLL_LINE4 (4 columns)
+✅ ENDROLL_LINE1, ENDROLL_LINE2, ENDROLL_LINE3, ENDROLL_LINE4 (4 columns)
+```
+
+---
+
+## Self-Check Before Completing
+
+Before marking any document as complete, verify:
+
+1. ✅ Read source code from AirbagSPs.cs
+2. ✅ All column names match C# properties exactly
+3. ✅ NO grouped notation anywhere (no slashes, no ranges)
+4. ✅ All types are Oracle types (VARCHAR2, NUMBER, DATE)
+5. ✅ Each column on separate row
+6. ✅ Descriptions are clear and specific
+7. ✅ Followed TEMPLATE_INDIVIDUAL_PROCEDURE.md structure
+8. ✅ Updated tracker file with new completion count
+9. ✅ Saved file successfully
+
+If ANY item is NO, fix it before proceeding.
 
