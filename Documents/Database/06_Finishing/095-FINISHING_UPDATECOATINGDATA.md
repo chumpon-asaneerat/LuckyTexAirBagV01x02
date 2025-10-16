@@ -30,20 +30,60 @@
 | `P_SAT_MIN` | NUMBER | ⬜ | Saturator minimum limit |
 | `P_SAT_MAX` | NUMBER | ⬜ | Saturator maximum limit |
 | `P_WASHING1` | NUMBER | ⬜ | Washing 1 actual value |
-| `P_WASHING1_MIN/MAX` | NUMBER | ⬜ | Washing 1 limits |
+| `P_WASHING1_MIN` | NUMBER | ⬜ | Washing 1 minimum limit |
+| `P_WASHING1_MAX` | NUMBER | ⬜ | Washing 1 maximum limit |
 | `P_WASHING2` | NUMBER | ⬜ | Washing 2 actual value |
-| `P_WASHING2_MIN/MAX` | NUMBER | ⬜ | Washing 2 limits |
+| `P_WASHING2_MIN` | NUMBER | ⬜ | Washing 2 minimum limit |
+| `P_WASHING2_MAX` | NUMBER | ⬜ | Washing 2 maximum limit |
 | `P_HOTFLUE` | NUMBER | ⬜ | Hot flue actual value |
-| `P_HOTFLUE_MIN/MAX` | NUMBER | ⬜ | Hot flue limits |
-| `P_TEMP1-10` | NUMBER | ⬜ | Temperature zones 1-10 actual values |
-| `P_TEMP1-10_MIN/MAX` | NUMBER | ⬜ | Temperature zones 1-10 limits |
-| `P_SPEED` | NUMBER | ⬜ | Machine speed actual value |
-| `P_SPEED_MIN/MAX` | NUMBER | ⬜ | Machine speed limits |
+| `P_HOTFLUE_MIN` | NUMBER | ⬜ | Hot flue minimum limit |
+| `P_HOTFLUE_MAX` | NUMBER | ⬜ | Hot flue maximum limit |
+| `P_TEMP1` | NUMBER | ⬜ | Temperature zone 1 actual value (°C) |
+| `P_TEMP1_MIN` | NUMBER | ⬜ | Temperature zone 1 minimum limit (°C) |
+| `P_TEMP1_MAX` | NUMBER | ⬜ | Temperature zone 1 maximum limit (°C) |
+| `P_TEMP2` | NUMBER | ⬜ | Temperature zone 2 actual value (°C) |
+| `P_TEMP2_MIN` | NUMBER | ⬜ | Temperature zone 2 minimum limit (°C) |
+| `P_TEMP2_MAX` | NUMBER | ⬜ | Temperature zone 2 maximum limit (°C) |
+| `P_TEMP3` | NUMBER | ⬜ | Temperature zone 3 actual value (°C) |
+| `P_TEMP3_MIN` | NUMBER | ⬜ | Temperature zone 3 minimum limit (°C) |
+| `P_TEMP3_MAX` | NUMBER | ⬜ | Temperature zone 3 maximum limit (°C) |
+| `P_TEMP4` | NUMBER | ⬜ | Temperature zone 4 actual value (°C) |
+| `P_TEMP4_MIN` | NUMBER | ⬜ | Temperature zone 4 minimum limit (°C) |
+| `P_TEMP4_MAX` | NUMBER | ⬜ | Temperature zone 4 maximum limit (°C) |
+| `P_TEMP5` | NUMBER | ⬜ | Temperature zone 5 actual value (°C) |
+| `P_TEMP5_MIN` | NUMBER | ⬜ | Temperature zone 5 minimum limit (°C) |
+| `P_TEMP5_MAX` | NUMBER | ⬜ | Temperature zone 5 maximum limit (°C) |
+| `P_TEMP6` | NUMBER | ⬜ | Temperature zone 6 actual value (°C) |
+| `P_TEMP6_MIN` | NUMBER | ⬜ | Temperature zone 6 minimum limit (°C) |
+| `P_TEMP6_MAX` | NUMBER | ⬜ | Temperature zone 6 maximum limit (°C) |
+| `P_TEMP7` | NUMBER | ⬜ | Temperature zone 7 actual value (°C) |
+| `P_TEMP7_MIN` | NUMBER | ⬜ | Temperature zone 7 minimum limit (°C) |
+| `P_TEMP7_MAX` | NUMBER | ⬜ | Temperature zone 7 maximum limit (°C) |
+| `P_TEMP8` | NUMBER | ⬜ | Temperature zone 8 actual value (°C) |
+| `P_TEMP8_MIN` | NUMBER | ⬜ | Temperature zone 8 minimum limit (°C) |
+| `P_TEMP8_MAX` | NUMBER | ⬜ | Temperature zone 8 maximum limit (°C) |
+| `P_TEMP9` | NUMBER | ⬜ | Temperature zone 9 actual value (°C) |
+| `P_TEMP9_MIN` | NUMBER | ⬜ | Temperature zone 9 minimum limit (°C) |
+| `P_TEMP9_MAX` | NUMBER | ⬜ | Temperature zone 9 maximum limit (°C) |
+| `P_TEMP10` | NUMBER | ⬜ | Temperature zone 10 actual value (°C) |
+| `P_TEMP10_MIN` | NUMBER | ⬜ | Temperature zone 10 minimum limit (°C) |
+| `P_TEMP10_MAX` | NUMBER | ⬜ | Temperature zone 10 maximum limit (°C) |
+| `P_SPEED` | NUMBER | ⬜ | Machine speed actual value (m/min) |
+| `P_SPEED_MIN` | NUMBER | ⬜ | Machine speed minimum limit (m/min) |
+| `P_SPEED_MAX` | NUMBER | ⬜ | Machine speed maximum limit (m/min) |
 | `P_TENSIONUP` | NUMBER | ⬜ | Tension up actual value |
-| `P_TENSIONUP_MIN/MAX` | NUMBER | ⬜ | Tension up limits |
+| `P_TENSIONUP_MIN` | NUMBER | ⬜ | Tension up minimum limit |
+| `P_TENSIONUP_MAX` | NUMBER | ⬜ | Tension up maximum limit |
 | `P_TENSIONDOWN` | NUMBER | ⬜ | Tension down actual value |
-| `P_TENSIONDOWN_MIN/MAX` | NUMBER | ⬜ | Tension down limits |
-| `P_LENGTH1-7` | NUMBER | ⬜ | Length measurements (m) |
+| `P_TENSIONDOWN_MIN` | NUMBER | ⬜ | Tension down minimum limit |
+| `P_TENSIONDOWN_MAX` | NUMBER | ⬜ | Tension down maximum limit |
+| `P_LENGTH1` | NUMBER | ⬜ | Length measurement checkpoint 1 (m) |
+| `P_LENGTH2` | NUMBER | ⬜ | Length measurement checkpoint 2 (m) |
+| `P_LENGTH3` | NUMBER | ⬜ | Length measurement checkpoint 3 (m) |
+| `P_LENGTH4` | NUMBER | ⬜ | Length measurement checkpoint 4 (m) |
+| `P_LENGTH5` | NUMBER | ⬜ | Length measurement checkpoint 5 (m) |
+| `P_LENGTH6` | NUMBER | ⬜ | Length measurement checkpoint 6 (m) |
+| `P_LENGTH7` | NUMBER | ⬜ | Length measurement checkpoint 7 (m) |
 | `P_ITMCODE` | VARCHAR2(50) | ⬜ | Item code |
 | `P_WEAVINGLOT` | VARCHAR2(50) | ⬜ | Weaving lot |
 | `P_CUSTOMER` | VARCHAR2(50) | ⬜ | Customer |
@@ -62,14 +102,18 @@
 | `P_OVERFEED` | NUMBER | ⬜ | Overfeed |
 | `P_WIDTHCOAT` | NUMBER | ⬜ | Coating width |
 | `P_WIDTHCOATALL` | NUMBER | ⬜ | Total coating width |
-| `P_SILICONEA/B` | VARCHAR2(50) | ⬜ | Silicone types |
-| `P_CWL/C/R` | NUMBER | ⬜ | Coating weights |
+| `P_SILICONEA` | VARCHAR2(50) | ⬜ | Silicone A type/batch |
+| `P_SILICONEB` | VARCHAR2(50) | ⬜ | Silicone B type/batch |
+| `P_CWL` | NUMBER | ⬜ | Coating weight left side (g/m²) |
+| `P_CWC` | NUMBER | ⬜ | Coating weight center (g/m²) |
+| `P_CWR` | NUMBER | ⬜ | Coating weight right side (g/m²) |
 | `P_CONDITIONBY` | VARCHAR2(50) | ⬜ | Condition set by |
 | `P_FINISHBY` | VARCHAR2(50) | ⬜ | Finished by |
 | `P_ENDDATE` | DATE | ⬜ | End date |
 | `P_CONDITONDATE` | DATE | ⬜ | Condition date |
 | `P_REMARK` | VARCHAR2(500) | ⬜ | Remarks |
-| `P_HUMID_BF/AF` | NUMBER | ⬜ | Humidity before/after |
+| `P_HUMID_BF` | NUMBER | ⬜ | Humidity before (%) |
+| `P_HUMID_AF` | NUMBER | ⬜ | Humidity after (%) |
 | `P_GROUP` | VARCHAR2(50) | ⬜ | Operator group |
 
 ### Output (OUT)
