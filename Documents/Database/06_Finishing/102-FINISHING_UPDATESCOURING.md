@@ -64,7 +64,13 @@
 | `P_FINISHBY` | VARCHAR2(50) | ⚠️ | Operator who finished process |
 | `P_ENDDATE` | DATE | ⚠️ | Process end timestamp |
 | `P_CONDITONDATE` | DATE | ⚠️ | Condition set timestamp |
-| `P_LENGTH1-7` | NUMBER | ⚠️ | Length measurements at various checkpoints (m) |
+| `P_LENGTH1` | NUMBER | ⚠️ | Length measurement checkpoint 1 (m) |
+| `P_LENGTH2` | NUMBER | ⚠️ | Length measurement checkpoint 2 (m) |
+| `P_LENGTH3` | NUMBER | ⚠️ | Length measurement checkpoint 3 (m) |
+| `P_LENGTH4` | NUMBER | ⚠️ | Length measurement checkpoint 4 (m) |
+| `P_LENGTH5` | NUMBER | ⚠️ | Length measurement checkpoint 5 (m) |
+| `P_LENGTH6` | NUMBER | ⚠️ | Length measurement checkpoint 6 (m) |
+| `P_LENGTH7` | NUMBER | ⚠️ | Length measurement checkpoint 7 (m) |
 | `P_ITMCODE` | VARCHAR2(50) | ⚠️ | Item code |
 | `P_WEAVINGLOT` | VARCHAR2(50) | ⚠️ | Weaving lot number |
 | `P_CUSTOMER` | VARCHAR2(50) | ⚠️ | Customer code |
