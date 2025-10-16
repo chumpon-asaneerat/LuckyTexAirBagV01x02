@@ -44,15 +44,44 @@ Returns comprehensive coating lot data including process parameters and PLC valu
 | `STARTDATE` | DATE | Process start timestamp |
 | `ENDDATE` | DATE | Process end timestamp |
 | `PRODUCTTYPEID` | VARCHAR2(50) | Product type identifier |
-| `LENGTH1-7` | NUMBER | Length measurements at checkpoints (m) |
+| `LENGTH1` | NUMBER | Length measurement checkpoint 1 (m) |
+| `LENGTH2` | NUMBER | Length measurement checkpoint 2 (m) |
+| `LENGTH3` | NUMBER | Length measurement checkpoint 3 (m) |
+| `LENGTH4` | NUMBER | Length measurement checkpoint 4 (m) |
+| `LENGTH5` | NUMBER | Length measurement checkpoint 5 (m) |
+| `LENGTH6` | NUMBER | Length measurement checkpoint 6 (m) |
+| `LENGTH7` | NUMBER | Length measurement checkpoint 7 (m) |
 | `MCNO` | VARCHAR2(50) | Machine number |
 | `STATUSFLAG` | VARCHAR2(10) | Current status (START/FINISH/CANCEL) |
-| `SATURATOR_CHEM_PV/SP` | NUMBER | Chemical saturator process/setpoint values |
-| `WASHING1_PV/SP` | NUMBER | Washing zone 1 PV/SP values |
-| `WASHING2_PV/SP` | NUMBER | Washing zone 2 PV/SP values |
-| `HOTFLUE_PV/SP` | NUMBER | Hot flue temperature PV/SP values |
+| `SATURATOR_CHEM_PV` | NUMBER | Chemical saturator process value |
+| `SATURATOR_CHEM_SP` | NUMBER | Chemical saturator setpoint |
+| `WASHING1_PV` | NUMBER | Washing zone 1 process value |
+| `WASHING1_SP` | NUMBER | Washing zone 1 setpoint |
+| `WASHING2_PV` | NUMBER | Washing zone 2 process value |
+| `WASHING2_SP` | NUMBER | Washing zone 2 setpoint |
+| `HOTFLUE_PV` | NUMBER | Hot flue temperature process value |
+| `HOTFLUE_SP` | NUMBER | Hot flue temperature setpoint |
 | `BE_COATWIDTH` | NUMBER | Before coating width (mm) |
-| `TEMP1-10_PV/SP` | NUMBER | Temperature zone 1-10 PV/SP values (°C) |
+| `TEMP1_PV` | NUMBER | Temperature zone 1 process value (°C) |
+| `TEMP1_SP` | NUMBER | Temperature zone 1 setpoint (°C) |
+| `TEMP2_PV` | NUMBER | Temperature zone 2 process value (°C) |
+| `TEMP2_SP` | NUMBER | Temperature zone 2 setpoint (°C) |
+| `TEMP3_PV` | NUMBER | Temperature zone 3 process value (°C) |
+| `TEMP3_SP` | NUMBER | Temperature zone 3 setpoint (°C) |
+| `TEMP4_PV` | NUMBER | Temperature zone 4 process value (°C) |
+| `TEMP4_SP` | NUMBER | Temperature zone 4 setpoint (°C) |
+| `TEMP5_PV` | NUMBER | Temperature zone 5 process value (°C) |
+| `TEMP5_SP` | NUMBER | Temperature zone 5 setpoint (°C) |
+| `TEMP6_PV` | NUMBER | Temperature zone 6 process value (°C) |
+| `TEMP6_SP` | NUMBER | Temperature zone 6 setpoint (°C) |
+| `TEMP7_PV` | NUMBER | Temperature zone 7 process value (°C) |
+| `TEMP7_SP` | NUMBER | Temperature zone 7 setpoint (°C) |
+| `TEMP8_PV` | NUMBER | Temperature zone 8 process value (°C) |
+| `TEMP8_SP` | NUMBER | Temperature zone 8 setpoint (°C) |
+| `TEMP9_PV` | NUMBER | Temperature zone 9 process value (°C) |
+| `TEMP9_SP` | NUMBER | Temperature zone 9 setpoint (°C) |
+| `TEMP10_PV` | NUMBER | Temperature zone 10 process value (°C) |
+| `TEMP10_SP` | NUMBER | Temperature zone 10 setpoint (°C) |
 | `FANRPM` | NUMBER | Fan RPM setting |
 | `EXFAN_FRONT_BACK` | NUMBER | Exhaust fan front/back setting |
 | `EXFAN_MIDDLE` | NUMBER | Exhaust fan middle setting |
@@ -66,12 +95,15 @@ Returns comprehensive coating lot data including process parameters and PLC valu
 | `PATHLINE` | NUMBER | Path line setting |
 | `FEEDIN` | NUMBER | Feed-in percentage |
 | `OVERFEED` | NUMBER | Overfeed percentage |
-| `SPEED_PV/SP` | NUMBER | Machine speed PV/SP (m/min) |
+| `SPEED_PV` | NUMBER | Machine speed process value (m/min) |
+| `SPEED_SP` | NUMBER | Machine speed setpoint (m/min) |
 | `WIDTHCOAT` | NUMBER | Coating width (mm) |
 | `WIDTHCOATALL` | NUMBER | Total coating width (mm) |
 | `SILICONE_A` | VARCHAR2(50) | Silicone A type/batch |
 | `SILICONE_B` | VARCHAR2(50) | Silicone B type/batch |
-| `COATINGWEIGTH_L/C/R` | NUMBER | Coating weight Left/Center/Right (g/m²) |
+| `COATINGWEIGTH_L` | NUMBER | Coating weight left side (g/m²) |
+| `COATINGWEIGTH_C` | NUMBER | Coating weight center (g/m²) |
+| `COATINGWEIGTH_R` | NUMBER | Coating weight right side (g/m²) |
 | `CONDITIONBY` | VARCHAR2(50) | Condition set by operator |
 | `CONDITIONDATE` | DATE | Condition set date |
 | `FINISHBY` | VARCHAR2(50) | Finished by operator |
