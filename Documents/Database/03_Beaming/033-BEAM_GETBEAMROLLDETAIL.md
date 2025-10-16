@@ -50,13 +50,22 @@ None
 | `FULL_WIDTH` | NUMBER | Full beam width (mm) |
 | `STARTBY` | VARCHAR2 | Operator who started production |
 | `DOFFBY` | VARCHAR2 | Operator who doffed the beam |
-| `BEAMMC` | VARCHAR2 | Beaming machine code |
-| `FLAG` | VARCHAR2 | Production status flag (P/D) |
-| `REMARK` | VARCHAR2 | Production remarks/notes |
-| `TENSION_ST1` to `TENSION_ST10` | NUMBER | Tension values for 10 beam stands |
-| `EDITBY` | VARCHAR2 | User who last edited the record |
-| `OLDBEAMNO` | VARCHAR2 | Previous beam number (if edited) |
-| `EDITDATE` | DATE | Last edit timestamp |
+| `BEAMMC` | String | Beaming machine code |
+| `FLAG` | String | Production status flag (P/D) |
+| `REMARK` | String | Production remarks/notes |
+| `TENSION_ST1` | Decimal? | Station 1 tension measurement |
+| `TENSION_ST2` | Decimal? | Station 2 tension measurement |
+| `TENSION_ST3` | Decimal? | Station 3 tension measurement |
+| `TENSION_ST4` | Decimal? | Station 4 tension measurement |
+| `TENSION_ST5` | Decimal? | Station 5 tension measurement |
+| `TENSION_ST6` | Decimal? | Station 6 tension measurement |
+| `TENSION_ST7` | Decimal? | Station 7 tension measurement |
+| `TENSION_ST8` | Decimal? | Station 8 tension measurement |
+| `TENSION_ST9` | Decimal? | Station 9 tension measurement |
+| `TENSION_ST10` | Decimal? | Station 10 tension measurement |
+| `EDITBY` | String | User who last edited the record |
+| `OLDBEAMNO` | String | Previous beam number (if edited) |
+| `EDITDATE` | DateTime? | Last edit timestamp |
 
 ---
 

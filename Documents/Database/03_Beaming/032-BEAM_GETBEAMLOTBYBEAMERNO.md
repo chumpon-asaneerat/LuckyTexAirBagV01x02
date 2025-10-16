@@ -36,28 +36,39 @@ N/A - Returns result set
 | `BEAMERNO` | VARCHAR2(50) | Beamer setup number |
 | `BEAMLOT` | VARCHAR2(50) | Beam lot number |
 | `BEAMNO` | VARCHAR2(50) | Beam number |
-| `STARTDATE` | DATE | Start timestamp |
-| `ENDDATE` | DATE | Completion timestamp |
-| `LENGTH` | NUMBER | Beam length (meters) |
-| `SPEED` | NUMBER | Average speed |
-| `HARDNESS_L/N/R` | NUMBER | Hardness 3 points |
-| `BEAMSTANDTENSION` | NUMBER | Stand tension |
-| `WINDINGTENSION` | NUMBER | Winding tension |
-| `INSIDE_WIDTH` | NUMBER | Inside width |
-| `OUTSIDE_WIDTH` | NUMBER | Outside width |
-| `FULL_WIDTH` | NUMBER | Full width |
-| `STARTBY` | VARCHAR2(50) | Start operator |
-| `DOFFBY` | VARCHAR2(50) | Doff operator |
-| `FLAG` | VARCHAR2(10) | Status flag |
-| `BEAMMC` | VARCHAR2(50) | Machine number |
-| `REMARK` | VARCHAR2(500) | Notes |
-| `TENSION_ST1-ST10` | NUMBER | 10 station tensions |
-| `EDITDATE` | DATE | Last edit date |
-| `EDITBY` | VARCHAR2(50) | Last editor |
-| `OLDBEAMNO` | VARCHAR2(50) | Old beam number |
-| `KEBA` | NUMBER | Keba count |
-| `MISSYARN` | NUMBER | Missing yarn count |
-| `OTHER` | VARCHAR2(200) | Other info |
+| `STARTDATE` | DateTime? | Start timestamp |
+| `ENDDATE` | DateTime? | Completion timestamp |
+| `LENGTH` | Decimal? | Beam length (meters) |
+| `SPEED` | Decimal? | Average speed |
+| `BEAMSTANDTENSION` | Decimal? | Stand tension |
+| `WINDINGTENSION` | Decimal? | Winding tension |
+| `HARDNESS_L` | Decimal? | Hardness left side |
+| `HARDNESS_N` | Decimal? | Hardness center |
+| `HARDNESS_R` | Decimal? | Hardness right side |
+| `INSIDE_WIDTH` | Decimal? | Inside width |
+| `OUTSIDE_WIDTH` | Decimal? | Outside width |
+| `FULL_WIDTH` | Decimal? | Full width |
+| `STARTBY` | String | Start operator |
+| `DOFFBY` | String | Doff operator |
+| `BEAMMC` | String | Machine number |
+| `FLAG` | String | Status flag |
+| `REMARK` | String | Notes |
+| `TENSION_ST1` | Decimal? | Station 1 tension measurement |
+| `TENSION_ST2` | Decimal? | Station 2 tension measurement |
+| `TENSION_ST3` | Decimal? | Station 3 tension measurement |
+| `TENSION_ST4` | Decimal? | Station 4 tension measurement |
+| `TENSION_ST5` | Decimal? | Station 5 tension measurement |
+| `TENSION_ST6` | Decimal? | Station 6 tension measurement |
+| `TENSION_ST7` | Decimal? | Station 7 tension measurement |
+| `TENSION_ST8` | Decimal? | Station 8 tension measurement |
+| `TENSION_ST9` | Decimal? | Station 9 tension measurement |
+| `TENSION_ST10` | Decimal? | Station 10 tension measurement |
+| `EDITBY` | String | Last editor |
+| `OLDBEAMNO` | String | Old beam number |
+| `EDITDATE` | DateTime? | Last edit date |
+| `KEBA` | Decimal? | Keba count |
+| `MISSYARN` | Decimal? | Missing yarn count |
+| `OTHER` | Decimal? | Other info |
 
 ---
 
