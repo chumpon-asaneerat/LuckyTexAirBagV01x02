@@ -35,38 +35,60 @@ None - returns result set via cursor
 
 Returns list of cutting/printing records matching search criteria with **46 columns** (same structure as CUT_GETMCSUSPENDDATA):
 
-**Core Information (8 columns)**:
-- `ITEMLOT`, `STARTDATE`, `ENDDATE`, `OPERATORID`, `MCNO`, `PRODUCTTYPEID`, `STATUS`, `REMARK`
-
-**Barcode Measurements (8 columns)**:
-- `WIDTHBARCODE1/2/3/4` - Barcode widths (mm)
-- `DISTANTBARCODE1/2/3/4` - Barcode distances (mm)
-
-**Cut Line Measurements (3 columns)**:
-- `DISTANTLINE1/2/3` - Distance between cut lines (mm)
-
-**Fabric Quality (2 columns)**:
-- `DENSITYWARP`, `DENSITYWEFT` - Thread densities
-
-**Machine Parameters (2 columns)**:
-- `SPEED`, `TENSION` - Machine settings
-
-**Width Measurements (3 columns)**:
-- `BEFORE_WIDTH`, `AFTER_WIDTH`, `AFTER_WIDTH_END`
-
-**Roll Positions (16 columns)**:
-- `BEGINROLL_LINE1/2/3/4`, `ENDROLL_LINE1/2/3/4`
-- `BEGINROLL2_LINE1/2/3/4`, `ENDROLL2_LINE1/2/3/4`
-
-**Edge Measurements (2 columns)**:
-- `SELVAGE_LEFT`, `SELVAGE_RIGHT`
-
-**Suspension/Status Information (5 columns)**:
-- `SUSPENDDATE`, `SUSPENDBY`, `SUSPENDSTARTDATE`
-- `CLEARDATE`, `CLEARBY`, `CLEARREMARK`
-
-**Additional Details (2 columns)**:
-- `LENGTHPRINT`, `LENGTHDETAIL`
+| Column | Type | Description |
+|--------|------|-------------|
+| `ITEMLOT` | String | Item lot number |
+| `STARTDATE` | DateTime? | Operation start date |
+| `ENDDATE` | DateTime? | Operation end date |
+| `WIDTHBARCODE1` | Decimal? | Barcode 1 width (mm) |
+| `WIDTHBARCODE2` | Decimal? | Barcode 2 width (mm) |
+| `WIDTHBARCODE3` | Decimal? | Barcode 3 width (mm) |
+| `WIDTHBARCODE4` | Decimal? | Barcode 4 width (mm) |
+| `DISTANTBARCODE1` | Decimal? | Barcode 1 distance (mm) |
+| `DISTANTBARCODE2` | Decimal? | Barcode 2 distance (mm) |
+| `DISTANTBARCODE3` | Decimal? | Barcode 3 distance (mm) |
+| `DISTANTBARCODE4` | Decimal? | Barcode 4 distance (mm) |
+| `DISTANTLINE1` | Decimal? | Cut line 1 distance (mm) |
+| `DISTANTLINE2` | Decimal? | Cut line 2 distance (mm) |
+| `DISTANTLINE3` | Decimal? | Cut line 3 distance (mm) |
+| `DENSITYWARP` | Decimal? | Warp density (ends/inch) |
+| `DENSITYWEFT` | Decimal? | Weft density (picks/inch) |
+| `SPEED` | Decimal? | Cutting/printing speed |
+| `BEFORE_WIDTH` | Decimal? | Width before cutting |
+| `AFTER_WIDTH` | Decimal? | Width after cutting |
+| `BEGINROLL_LINE1` | String | Begin roll number line 1 |
+| `BEGINROLL_LINE2` | String | Begin roll number line 2 |
+| `BEGINROLL_LINE3` | String | Begin roll number line 3 |
+| `BEGINROLL_LINE4` | String | Begin roll number line 4 |
+| `ENDROLL_LINE1` | String | End roll number line 1 |
+| `ENDROLL_LINE2` | String | End roll number line 2 |
+| `ENDROLL_LINE3` | String | End roll number line 3 |
+| `ENDROLL_LINE4` | String | End roll number line 4 |
+| `OPERATORID` | String | Operator ID |
+| `SELVAGE_LEFT` | String | Left selvage measurement |
+| `SELVAGE_RIGHT` | String | Right selvage measurement |
+| `REMARK` | String | Remarks |
+| `PRODUCTTYPEID` | String | Product type |
+| `MCNO` | String | Machine number |
+| `STATUS` | String | Operation status |
+| `SUSPENDDATE` | DateTime? | Date suspended |
+| `SUSPENDBY` | String | Operator who suspended |
+| `CLEARDATE` | DateTime? | Date cleared |
+| `CLEARREMARK` | String | Clearance remarks |
+| `CLEARBY` | String | Operator who cleared |
+| `LENGTHPRINT` | Decimal? | Length printed |
+| `SUSPENDSTARTDATE` | DateTime? | Original start date when suspended |
+| `BEGINROLL2_LINE1` | String | Second begin roll line 1 |
+| `BEGINROLL2_LINE2` | String | Second begin roll line 2 |
+| `BEGINROLL2_LINE3` | String | Second begin roll line 3 |
+| `BEGINROLL2_LINE4` | String | Second begin roll line 4 |
+| `ENDROLL2_LINE1` | String | Second end roll line 1 |
+| `ENDROLL2_LINE2` | String | Second end roll line 2 |
+| `ENDROLL2_LINE3` | String | Second end roll line 3 |
+| `ENDROLL2_LINE4` | String | Second end roll line 4 |
+| `TENSION` | Decimal? | Tension setting |
+| `LENGTHDETAIL` | String | Detailed length information |
+| `AFTER_WIDTH_END` | Decimal? | Width at end |
 
 ---
 

@@ -20,51 +20,54 @@
 
 ## Parameters
 
-### Input (IN) - 45+ parameters
+### Input (IN)
 
-**Core Information**:
-- `P_ITEMLOT` - Item lot number ✅
-- `P_STARTDATE` - Operation start date
-- `P_PRODUCTTYPEID` - Product type ✅
-- `P_OPERATORID` - Operator ID ✅
-- `P_MCNO` - Machine number ✅
-- `P_REMARK` - Remarks
-
-**Barcode Measurements (4 sets)**:
-- `P_WIDTHBARCODE1/2/3/4` - Barcode widths
-- `P_DISTANTBARCODE1/2/3/4` - Barcode distances
-
-**Cut Line Measurements (3 sets)**:
-- `P_DISTANTLINE1/2/3` - Distance between cut lines
-
-**Fabric Quality**:
-- `P_DENSITYWARP` - Warp density
-- `P_DENSITYWEFT` - Weft density
-
-**Machine Parameters**:
-- `P_SPEED` - Cutting/printing speed
-- `P_TENSION` - Tension setting (added 2017-06-28)
-
-**Width Measurements**:
-- `P_WIDTHBEFORE` - Width before cutting
-- `P_WIDTHAFTER` - Width after cutting
-- `P_WIDTHAFTER_END` - Width at end (added 2017-10-04)
-
-**Roll Position Tracking (8 sets - 2 lines x 4 positions)**:
-- `P_BEGINROLL_LINE1/2/3/4` - Begin roll positions
-- `P_ENDROLL_LINE1/2/3/4` - End roll positions
-- `P_2BEGINROLL_LINE1/2/3/4` - Second begin positions
-- `P_2ENDROLL_LINE1/2/3/4` - Second end positions
-
-**Edge Measurements**:
-- `P_SELVAGELEFT` - Left selvage measurement
-- `P_SELVAGERIGHT` - Right selvage measurement
-- (Only for non-Scouring processes)
-
-**Process Details**:
-- `P_FINISHINGPROCESS` - Finishing process type
-- `P_SUSPENDSTARTDATE` - Suspend date (if suspended)
-- `P_LENGTHDETAIL` - Length details (added 2017-08-25)
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `P_ITEMLOT` | String | ✅ | Item lot number |
+| `P_STARTDATE` | DateTime? | ⬜ | Operation start date |
+| `P_PRODUCTTYPEID` | String | ✅ | Product type |
+| `P_OPERATORID` | String | ✅ | Operator ID |
+| `P_REMARK` | String | ⬜ | Remarks |
+| `P_MCNO` | String | ✅ | Machine number |
+| `P_WIDTH1` | Decimal? | ⬜ | Barcode 1 width (mm) |
+| `P_WIDTH2` | Decimal? | ⬜ | Barcode 2 width (mm) |
+| `P_WIDTH3` | Decimal? | ⬜ | Barcode 3 width (mm) |
+| `P_WIDTH4` | Decimal? | ⬜ | Barcode 4 width (mm) |
+| `P_DISTANTBAR1` | Decimal? | ⬜ | Barcode 1 distance (mm) |
+| `P_DISTANTBAR2` | Decimal? | ⬜ | Barcode 2 distance (mm) |
+| `P_DISTANTBAR3` | Decimal? | ⬜ | Barcode 3 distance (mm) |
+| `P_DISTANTBAR4` | Decimal? | ⬜ | Barcode 4 distance (mm) |
+| `P_DISTANTLINE1` | Decimal? | ⬜ | Cut line 1 distance (mm) |
+| `P_DISTANTLINE2` | Decimal? | ⬜ | Cut line 2 distance (mm) |
+| `P_DISTANTLINE3` | Decimal? | ⬜ | Cut line 3 distance (mm) |
+| `P_DENWARP` | Decimal? | ⬜ | Warp density (ends/inch) |
+| `P_DENWEFT` | Decimal? | ⬜ | Weft density (picks/inch) |
+| `P_SPEED` | Decimal? | ⬜ | Cutting/printing speed |
+| `P_WIDTHBE` | Decimal? | ⬜ | Width before cutting |
+| `P_WIDTHAF` | Decimal? | ⬜ | Width after cutting |
+| `P_BEGINLINE1` | String | ⬜ | Begin roll number line 1 |
+| `P_BEGINLINE2` | String | ⬜ | Begin roll number line 2 |
+| `P_BEGINLINE3` | String | ⬜ | Begin roll number line 3 |
+| `P_BEGINLINE4` | String | ⬜ | Begin roll number line 4 |
+| `P_ENDLINE1` | String | ⬜ | End roll number line 1 |
+| `P_ENDLINE2` | String | ⬜ | End roll number line 2 |
+| `P_ENDLINE3` | String | ⬜ | End roll number line 3 |
+| `P_ENDLINE4` | String | ⬜ | End roll number line 4 |
+| `P_SELVAGELEFT` | String | ⬜ | Left selvage measurement (excluded for Scouring) |
+| `P_SELVAGERIGHT` | String | ⬜ | Right selvage measurement (excluded for Scouring) |
+| `P_SUSPENSTARTDATE` | DateTime? | ⬜ | Suspend start date (if suspended) |
+| `P_2BEGINLINE1` | String | ⬜ | Second begin roll line 1 |
+| `P_2BEGINLINE2` | String | ⬜ | Second begin roll line 2 |
+| `P_2BEGINLINE3` | String | ⬜ | Second begin roll line 3 |
+| `P_2BEGINLINE4` | String | ⬜ | Second begin roll line 4 |
+| `P_2ENDLINE1` | String | ⬜ | Second end roll line 1 |
+| `P_2ENDLINE2` | String | ⬜ | Second end roll line 2 |
+| `P_2ENDLINE3` | String | ⬜ | Second end roll line 3 |
+| `P_2ENDLINE4` | String | ⬜ | Second end roll line 4 |
+| `P_TENSION` | Decimal? | ⬜ | Tension setting (added 2017-06-28) |
+| `P_LENGTHDETAIL` | String | ⬜ | Length details (added 2017-08-25) |
+| `P_WIDTHAF_END` | Decimal? | ⬜ | Width at end (added 2017-10-04) |
 
 ### Output (OUT)
 
