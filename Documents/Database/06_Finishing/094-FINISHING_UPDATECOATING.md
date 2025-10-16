@@ -26,13 +26,43 @@
 |-----------|------|----------|-------------|
 | `P_FINISHLOT` | VARCHAR2(50) | ✅ | Finishing lot number (primary key) |
 | `P_FLAG` | VARCHAR2(10) | ✅ | Status flag (START/FINISH/PAUSE) |
-| `P_SATURATOR_PV/SP` | NUMBER | ⬜ | Saturator values |
-| `P_WASHING1_PV/SP` | NUMBER | ⬜ | Washing zone 1 values |
-| `P_WASHING2_PV/SP` | NUMBER | ⬜ | Washing zone 2 values |
-| `P_HOTFLUE_PV/SP` | NUMBER | ⬜ | Hot flue values |
-| `P_TEMP1-10_PV/SP` | NUMBER | ⬜ | Temperature zones 1-10 values |
-| `P_SPEED_PV/SP` | NUMBER | ⬜ | Machine speed values |
-| `P_LENGTH1-7` | NUMBER | ⬜ | Length measurements at checkpoints (m) |
+| `P_SATURATOR_PV` | NUMBER | ⬜ | Saturator process value |
+| `P_SATURATOR_SP` | NUMBER | ⬜ | Saturator setpoint |
+| `P_WASHING1_PV` | NUMBER | ⬜ | Washing zone 1 process value |
+| `P_WASHING1_SP` | NUMBER | ⬜ | Washing zone 1 setpoint |
+| `P_WASHING2_PV` | NUMBER | ⬜ | Washing zone 2 process value |
+| `P_WASHING2_SP` | NUMBER | ⬜ | Washing zone 2 setpoint |
+| `P_HOTFLUE_PV` | NUMBER | ⬜ | Hot flue process value |
+| `P_HOTFLUE_SP` | NUMBER | ⬜ | Hot flue setpoint |
+| `P_TEMP1_PV` | NUMBER | ⬜ | Temperature zone 1 process value (°C) |
+| `P_TEMP1_SP` | NUMBER | ⬜ | Temperature zone 1 setpoint (°C) |
+| `P_TEMP2_PV` | NUMBER | ⬜ | Temperature zone 2 process value (°C) |
+| `P_TEMP2_SP` | NUMBER | ⬜ | Temperature zone 2 setpoint (°C) |
+| `P_TEMP3_PV` | NUMBER | ⬜ | Temperature zone 3 process value (°C) |
+| `P_TEMP3_SP` | NUMBER | ⬜ | Temperature zone 3 setpoint (°C) |
+| `P_TEMP4_PV` | NUMBER | ⬜ | Temperature zone 4 process value (°C) |
+| `P_TEMP4_SP` | NUMBER | ⬜ | Temperature zone 4 setpoint (°C) |
+| `P_TEMP5_PV` | NUMBER | ⬜ | Temperature zone 5 process value (°C) |
+| `P_TEMP5_SP` | NUMBER | ⬜ | Temperature zone 5 setpoint (°C) |
+| `P_TEMP6_PV` | NUMBER | ⬜ | Temperature zone 6 process value (°C) |
+| `P_TEMP6_SP` | NUMBER | ⬜ | Temperature zone 6 setpoint (°C) |
+| `P_TEMP7_PV` | NUMBER | ⬜ | Temperature zone 7 process value (°C) |
+| `P_TEMP7_SP` | NUMBER | ⬜ | Temperature zone 7 setpoint (°C) |
+| `P_TEMP8_PV` | NUMBER | ⬜ | Temperature zone 8 process value (°C) |
+| `P_TEMP8_SP` | NUMBER | ⬜ | Temperature zone 8 setpoint (°C) |
+| `P_TEMP9_PV` | NUMBER | ⬜ | Temperature zone 9 process value (°C) |
+| `P_TEMP9_SP` | NUMBER | ⬜ | Temperature zone 9 setpoint (°C) |
+| `P_TEMP10_PV` | NUMBER | ⬜ | Temperature zone 10 process value (°C) |
+| `P_TEMP10_SP` | NUMBER | ⬜ | Temperature zone 10 setpoint (°C) |
+| `P_SPEED_PV` | NUMBER | ⬜ | Machine speed process value (m/min) |
+| `P_SPEED_SP` | NUMBER | ⬜ | Machine speed setpoint (m/min) |
+| `P_LENGTH1` | NUMBER | ⬜ | Length measurement checkpoint 1 (m) |
+| `P_LENGTH2` | NUMBER | ⬜ | Length measurement checkpoint 2 (m) |
+| `P_LENGTH3` | NUMBER | ⬜ | Length measurement checkpoint 3 (m) |
+| `P_LENGTH4` | NUMBER | ⬜ | Length measurement checkpoint 4 (m) |
+| `P_LENGTH5` | NUMBER | ⬜ | Length measurement checkpoint 5 (m) |
+| `P_LENGTH6` | NUMBER | ⬜ | Length measurement checkpoint 6 (m) |
+| `P_LENGTH7` | NUMBER | ⬜ | Length measurement checkpoint 7 (m) |
 | `P_ITMCODE` | VARCHAR2(50) | ⬜ | Item code |
 | `P_WEAVINGLOT` | VARCHAR2(50) | ⬜ | Weaving lot number |
 | `P_CUSTOMER` | VARCHAR2(50) | ⬜ | Customer code |
@@ -55,7 +85,9 @@
 | `P_WIDTHCOATALL` | NUMBER | ⬜ | Total coating width |
 | `P_SILICONEA` | VARCHAR2(50) | ⬜ | Silicone A type/batch |
 | `P_SILICONEB` | VARCHAR2(50) | ⬜ | Silicone B type/batch |
-| `P_CWL/C/R` | NUMBER | ⬜ | Coating weight Left/Center/Right |
+| `P_CWL` | NUMBER | ⬜ | Coating weight left side (g/m²) |
+| `P_CWC` | NUMBER | ⬜ | Coating weight center (g/m²) |
+| `P_CWR` | NUMBER | ⬜ | Coating weight right side (g/m²) |
 | `P_CONDITIONBY` | VARCHAR2(50) | ⬜ | Condition set by operator |
 | `P_FINISHBY` | VARCHAR2(50) | ⬜ | Finished by operator |
 | `P_ENDDATE` | DATE | ⬜ | End date/time |
