@@ -27,24 +27,57 @@
 | `P_FINISHLOT` | VARCHAR2(50) | ✅ | Finishing lot number to update |
 | `P_FLAG` | VARCHAR2(10) | ✅ | Status flag (START/FINISH) |
 | `P_SAT` | NUMBER | ⚠️ | Saturator temperature target (°C) |
-| `P_SAT_MIN/MAX` | NUMBER | ⚠️ | Saturator min/max specification limits (°C) |
+| `P_SAT_MIN` | NUMBER | ⚠️ | Saturator minimum specification limit (°C) |
+| `P_SAT_MAX` | NUMBER | ⚠️ | Saturator maximum specification limit (°C) |
 | `P_WASHING1` | NUMBER | ⚠️ | Washing 1 temperature target (°C) |
-| `P_WASHING1_MIN/MAX` | NUMBER | ⚠️ | Washing 1 min/max specification limits (°C) |
+| `P_WASHING1_MIN` | NUMBER | ⚠️ | Washing 1 minimum specification limit (°C) |
+| `P_WASHING1_MAX` | NUMBER | ⚠️ | Washing 1 maximum specification limit (°C) |
 | `P_WASHING2` | NUMBER | ⚠️ | Washing 2 temperature target (°C) |
-| `P_WASHING2_MIN/MAX` | NUMBER | ⚠️ | Washing 2 min/max specification limits (°C) |
+| `P_WASHING2_MIN` | NUMBER | ⚠️ | Washing 2 minimum specification limit (°C) |
+| `P_WASHING2_MAX` | NUMBER | ⚠️ | Washing 2 maximum specification limit (°C) |
 | `P_HOTFLUE` | NUMBER | ⚠️ | Hot flue temperature target (°C) |
-| `P_HOTFLUE_MIN/MAX` | NUMBER | ⚠️ | Hot flue min/max specification limits (°C) |
-| `P_TEMP1-8` | NUMBER | ⚠️ | Temperature zone 1-8 target values (°C) |
-| `P_TEMP1-8_MIN/MAX` | NUMBER | ⚠️ | Temperature zone 1-8 min/max limits (°C) |
+| `P_HOTFLUE_MIN` | NUMBER | ⚠️ | Hot flue minimum specification limit (°C) |
+| `P_HOTFLUE_MAX` | NUMBER | ⚠️ | Hot flue maximum specification limit (°C) |
+| `P_TEMP1` | NUMBER | ⚠️ | Temperature zone 1 target value (°C) |
+| `P_TEMP1_MIN` | NUMBER | ⚠️ | Temperature zone 1 minimum specification limit (°C) |
+| `P_TEMP1_MAX` | NUMBER | ⚠️ | Temperature zone 1 maximum specification limit (°C) |
+| `P_TEMP2` | NUMBER | ⚠️ | Temperature zone 2 target value (°C) |
+| `P_TEMP2_MIN` | NUMBER | ⚠️ | Temperature zone 2 minimum specification limit (°C) |
+| `P_TEMP2_MAX` | NUMBER | ⚠️ | Temperature zone 2 maximum specification limit (°C) |
+| `P_TEMP3` | NUMBER | ⚠️ | Temperature zone 3 target value (°C) |
+| `P_TEMP3_MIN` | NUMBER | ⚠️ | Temperature zone 3 minimum specification limit (°C) |
+| `P_TEMP3_MAX` | NUMBER | ⚠️ | Temperature zone 3 maximum specification limit (°C) |
+| `P_TEMP4` | NUMBER | ⚠️ | Temperature zone 4 target value (°C) |
+| `P_TEMP4_MIN` | NUMBER | ⚠️ | Temperature zone 4 minimum specification limit (°C) |
+| `P_TEMP4_MAX` | NUMBER | ⚠️ | Temperature zone 4 maximum specification limit (°C) |
+| `P_TEMP5` | NUMBER | ⚠️ | Temperature zone 5 target value (°C) |
+| `P_TEMP5_MIN` | NUMBER | ⚠️ | Temperature zone 5 minimum specification limit (°C) |
+| `P_TEMP5_MAX` | NUMBER | ⚠️ | Temperature zone 5 maximum specification limit (°C) |
+| `P_TEMP6` | NUMBER | ⚠️ | Temperature zone 6 target value (°C) |
+| `P_TEMP6_MIN` | NUMBER | ⚠️ | Temperature zone 6 minimum specification limit (°C) |
+| `P_TEMP6_MAX` | NUMBER | ⚠️ | Temperature zone 6 maximum specification limit (°C) |
+| `P_TEMP7` | NUMBER | ⚠️ | Temperature zone 7 target value (°C) |
+| `P_TEMP7_MIN` | NUMBER | ⚠️ | Temperature zone 7 minimum specification limit (°C) |
+| `P_TEMP7_MAX` | NUMBER | ⚠️ | Temperature zone 7 maximum specification limit (°C) |
+| `P_TEMP8` | NUMBER | ⚠️ | Temperature zone 8 target value (°C) |
+| `P_TEMP8_MIN` | NUMBER | ⚠️ | Temperature zone 8 minimum specification limit (°C) |
+| `P_TEMP8_MAX` | NUMBER | ⚠️ | Temperature zone 8 maximum specification limit (°C) |
 | `P_SPEED` | NUMBER | ⚠️ | Machine speed target (m/min) |
-| `P_SPEED_MIN/MAX` | NUMBER | ⚠️ | Speed min/max specification limits (m/min) |
+| `P_SPEED_MIN` | NUMBER | ⚠️ | Speed minimum specification limit (m/min) |
+| `P_SPEED_MAX` | NUMBER | ⚠️ | Speed maximum specification limit (m/min) |
 | `P_MAINFRAMEWIDTH` | NUMBER | ⚠️ | Main frame width (mm) |
 | `P_WIDTH_BE` | NUMBER | ⚠️ | Width before scouring (mm) |
 | `P_WIDTH_AF` | NUMBER | ⚠️ | Width after scouring (mm) |
 | `P_PIN2PIN` | NUMBER | ⚠️ | Pin to pin distance (mm) |
 | `P_FINISHBY` | VARCHAR2(50) | ⚠️ | Operator who finished process |
 | `P_ENDDATE` | DATE | ⚠️ | Process end timestamp |
-| `P_LENGTH1-7` | NUMBER | ⚠️ | Length measurements at various checkpoints (m) |
+| `P_LENGTH1` | NUMBER | ⚠️ | Length measurement checkpoint 1 (m) |
+| `P_LENGTH2` | NUMBER | ⚠️ | Length measurement checkpoint 2 (m) |
+| `P_LENGTH3` | NUMBER | ⚠️ | Length measurement checkpoint 3 (m) |
+| `P_LENGTH4` | NUMBER | ⚠️ | Length measurement checkpoint 4 (m) |
+| `P_LENGTH5` | NUMBER | ⚠️ | Length measurement checkpoint 5 (m) |
+| `P_LENGTH6` | NUMBER | ⚠️ | Length measurement checkpoint 6 (m) |
+| `P_LENGTH7` | NUMBER | ⚠️ | Length measurement checkpoint 7 (m) |
 | `P_ITMCODE` | VARCHAR2(50) | ⚠️ | Item code |
 | `P_WEAVINGLOT` | VARCHAR2(50) | ✅ | Weaving lot number (validated) |
 | `P_CUSTOMER` | VARCHAR2(50) | ⚠️ | Customer code |
