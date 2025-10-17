@@ -92,8 +92,6 @@ This procedure is specifically for finished fabric (mass production):
 - **Sample Status Dashboard**: Monitor test results and shipment approval
 - **Quality Review Page**: Supervisor approval workflow
 
-### Typical Workflow in UI
-
 ---
 
 ## Database Schema

@@ -94,8 +94,6 @@ This procedure is specifically for greige (raw woven) fabric testing:
 - **Greige Sample Status Page**: Monitor test results and approval status
 - **Retest Management Page**: Handle failed samples requiring retesting
 
-### Typical Workflow in UI
-
 ---
 
 ## Database Schema

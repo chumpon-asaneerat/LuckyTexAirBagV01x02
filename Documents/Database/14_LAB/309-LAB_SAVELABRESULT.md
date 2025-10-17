@@ -81,8 +81,6 @@ This procedure provides a simplified interface for recording test results:
 - **Incoming Material Inspection**: Quick accept/reject interface
 - **Mobile Inspection App**: Simplified interface for handheld devices
 
-### Typical Workflow in UI
-
 ---
 
 ## Database Schema

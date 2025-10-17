@@ -118,7 +118,6 @@ None (returns cursor)
 - **FLOPPY_L/R**: Fabric hand/feel specifications
 - **HARDNESS_L/C/R**: Coating hardness at left/center/right positions
 
-**Typical Usage Pattern**:
 ```csharp
 // After customer selection
 string selectedCustomer = "TOYOTA";
