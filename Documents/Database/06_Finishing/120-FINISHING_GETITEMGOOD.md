@@ -118,36 +118,6 @@ None (returns cursor)
 - **FLOPPY_L/R**: Fabric hand/feel specifications
 - **HARDNESS_L/C/R**: Coating hardness at left/center/right positions
 
-```csharp
-// After customer selection
-string selectedCustomer = "TOYOTA";
-
-// Get items for customer
-List<FINISHING_GETITEMGOODData> items =
-    DataService.Instance.GetFINISHING_GETITEMGOODDataList(selectedCustomer);
-
-// Populate item dropdown
-cmbItem.ItemsSource = items;
-cmbItem.DisplayMemberPath = "ITM_CODE";
-
-// When item selected, show specifications
-FINISHING_GETITEMGOODData selectedItem = cmbItem.SelectedItem;
-txtPartNo.Text = selectedItem.PARTNO;
-txtWidthPin.Text = selectedItem.WIDTH_PIN;
-txtWidthCoat.Text = selectedItem.WIDTH_COAT;
-// ... etc
-```
-
-**Data Example**:
-```
-Customer: TOYOTA
-------------------------------------------------------------
-ITM_CODE      | PARTNO      | WIDTH_PIN | WIDTH_COAT | DENSITY_W
-AB-45-PA66    | TOY-1234    | 156       | 160        | 55
-AB-50-PA66    | TOY-5678    | 160       | 164        | 58
-AB-60-PA66    | TOY-9012    | 170       | 174        | 52
-```
-
 ---
 
 ## Related Procedures

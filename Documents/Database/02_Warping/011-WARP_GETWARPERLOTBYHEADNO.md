@@ -72,14 +72,6 @@ None - Returns result set via cursor
 
 **Transaction**: No (read-only operation)
 
-### Indexes (if relevant)
-
-```sql
--- Expected indexes
-CREATE INDEX idx_warpingprocess_headno ON tblWarpingProcess(WARPHEADNO);
-CREATE INDEX idx_warpingprocess_lot ON tblWarpingProcess(WARPERLOT);
-```
-
 ---
 
 ## Business Logic (What it does and why)
@@ -126,66 +118,6 @@ Retrieves complete production history for specific warping head/creel setup. Sho
 **File**: `WarpingDataService.cs`
 **Method**: `WARP_GETWARPERLOTBYHEADNO()`
 **Line**: 534-596
-
-**Query Type**: Stored Procedure Call (Oracle)
-
-```csharp
-public List<WARP_GETWARPERLOTBYHEADNO> WARP_GETWARPERLOTBYHEADNO(string P_WARPHEADNO)
-{
-    List<WARP_GETWARPERLOTBYHEADNO> results = null;
-
-    if (!HasConnection())
-        return results;
-
-    WARP_GETWARPERLOTBYHEADNOParameter dbPara = new WARP_GETWARPERLOTBYHEADNOParameter();
-    dbPara.P_WARPHEADNO = P_WARPHEADNO;
-
-    try
-    {
-        dbResults = DatabaseManager.Instance.WARP_GETWARPERLOTBYHEADNO(dbPara);
-        if (null != dbResults)
-        {
-            results = new List<WARP_GETWARPERLOTBYHEADNO>();
-            foreach (var dbResult in dbResults)
-            {
-                // Map 26 columns - comprehensive production data
-                inst.WARPHEADNO = dbResult.WARPHEADNO;
-                inst.WARPERLOT = dbResult.WARPERLOT;
-                inst.BEAMNO = dbResult.BEAMNO;
-                inst.SIDE = dbResult.SIDE;
-                inst.STARTDATE = dbResult.STARTDATE;
-                inst.ENDDATE = dbResult.ENDDATE;
-                inst.LENGTH = dbResult.LENGTH;
-                inst.SPEED = dbResult.SPEED;
-                inst.HARDNESS_L = dbResult.HARDNESS_L;
-                inst.HARDNESS_N = dbResult.HARDNESS_N;
-                inst.HARDNESS_R = dbResult.HARDNESS_R;
-                inst.TENSION = dbResult.TENSION;
-                inst.STARTBY = dbResult.STARTBY;
-                inst.DOFFBY = dbResult.DOFFBY;
-                inst.FLAG = dbResult.FLAG;
-                inst.WARPMC = dbResult.WARPMC;
-                inst.REMARK = dbResult.REMARK;
-                inst.TENSION_IT = dbResult.TENSION_IT;
-                inst.TENSION_TAKEUP = dbResult.TENSION_TAKEUP;
-                inst.MC_COUNT_L = dbResult.MC_COUNT_L;
-                inst.MC_COUNT_S = dbResult.MC_COUNT_S;
-                inst.EDITDATE = dbResult.EDITDATE;
-                inst.EDITBY = dbResult.EDITBY;
-                inst.KEBA = dbResult.KEBA; // Defect count
-                inst.TIGHTEND = dbResult.TIGHTEND; // Defect count
-                inst.MISSYARN = dbResult.MISSYARN; // Defect count
-                inst.OTHER = dbResult.OTHER; // Defect count
-
-                results.Add(inst);
-            }
-        }
-    }
-    catch (Exception ex) { ex.Err(); }
-
-    return results;
-}
-```
 
 ---
 
