@@ -76,7 +76,6 @@ When lab receives finishing sample, they need to trace back to source:
 - All get coated together → one finishing lot
 - Lab needs to know all source lots for quality traceability
 
-**Typical Usage**:
 **Process Type Significance**:
 - **COATING**: After silicone coating applied
 - **SCOURING**: After washing/scouring process

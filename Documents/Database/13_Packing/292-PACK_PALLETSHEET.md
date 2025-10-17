@@ -113,7 +113,6 @@ Retrieves complete packing pallet information formatted for packing list report/
 **Method**: `PACK_PALLETSHEET(PACK_PALLETSHEETParameter para)`
 **Lines**: 2211-2238
 
-**Return Structure**:
 **Typical Query Join**:
 ```sql
 SELECT ph.PALLETNO, pd.INSPECTIONLOT, pd.ITEMCODE, pd.GRADE,

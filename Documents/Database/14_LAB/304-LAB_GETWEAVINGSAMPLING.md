@@ -91,7 +91,6 @@ Retrieves greige fabric (unfinished weaving) sample details for laboratory testi
 - Difference indicates tension imbalance
 - Critical for airbag fabric quality (must be uniform)
 
-**Typical Usage**:
 **Greige Test Workflow**:
 1. **Weaving**: Fabric woven on loom
 2. **Sample Cut**: Quality team cuts sample at specific position

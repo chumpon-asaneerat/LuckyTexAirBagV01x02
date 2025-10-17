@@ -99,7 +99,6 @@ Greige fabric must be conditioned before testing:
 - **TESTED**: Test complete, awaiting approval
 - **APPROVED/REJECTED**: Final disposition
 
-**Typical Usage**:
 **Lab Workload Dashboard**:
 **Quality Investigation**:
 **Approval Workflow**:

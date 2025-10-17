@@ -68,7 +68,6 @@ Checks if a finished fabric sample from a specific weaving lot has already been 
 - **Customer Compliance**: Meet customer specifications
 - **Sample Management**: One sample per weaving lot
 
-**Typical Usage**:
 **Related Workflow**:
 1. Finishing process completes (coating, scouring, drying)
 2. Quality team takes sample from finishing lot

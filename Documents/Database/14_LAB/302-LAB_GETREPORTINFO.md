@@ -101,7 +101,6 @@ WEIGHT = "280 ± 10 g/m² (ISO 3801)"
 STATIC_AIR = "≤ 5 L/dm²/min at 20 kPa (ISO 9237)"
 ```
 
-**Typical Usage**:
 **Report Components**:
 1. **Header**: Report ID, Revision, Name, Date
 2. **Material Info**: Yarn type, item code

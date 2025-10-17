@@ -60,7 +60,6 @@ Checks if a greige fabric sample from a specific beam roll and loom has already 
 - **Quality Control**: Early quality assessment
 - **Sample Tracking**: Ensures one sample per beam roll/loom combination
 
-**Typical Usage**:
 **Related Workflow**:
 1. Weaving process creates greige fabric on loom
 2. Quality team takes sample from beam roll

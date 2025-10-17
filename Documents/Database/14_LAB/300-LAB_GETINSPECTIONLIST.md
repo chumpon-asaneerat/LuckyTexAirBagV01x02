@@ -122,21 +122,6 @@ ISLAB = 'N' → No lab testing needed (can ship immediately)
 **Method**: `LAB_GETINSPECTIONLIST(LAB_GETINSPECTIONLISTParameter para)`
 **Lines**: 4617-4644
 
-**Return Structure** (15 columns):
-**Typical Query**:
-```sql
-SELECT i.INSPECTIONLOT, i.ITEMCODE, i.NETLENGTH, i.GROSSWEIGHT,
-       i.NETWEIGHT, i.GRADE, i.CUSTOMERTYPE, i.ISLAB,
-       i.INSPECTIONDATE, i.FLAG, i.LOADINGTYPE, i.STOCK,
-       i.GROSSLENGTH, p.PALLETNO, p.ORDERNO
-FROM tblInspection i
-LEFT JOIN tblPackingPalletDetail p ON i.INSPECTIONLOT = p.INSPECTIONLOT
-WHERE i.ISLAB = 'Y'
-  AND (:P_INSLOT IS NULL OR i.INSPECTIONLOT = :P_INSLOT)
-  AND (:P_DATE IS NULL OR TRUNC(i.INSPECTIONDATE) = TO_DATE(:P_DATE, 'YYYY-MM-DD'))
-ORDER BY i.INSPECTIONDATE DESC
-```
-
 ---
 
 **File**: 300/296 | **Progress**: 101.4%

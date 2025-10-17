@@ -88,7 +88,6 @@ Retrieves detailed information about a finishing sample that has been received i
 - RETESTFLAG = 'N': This is original sample
 - PROCESS: Finishing process type (COATING, SCOURING, DRYER)
 
-**Typical Usage**:
 **Testing Workflow**:
 1. **Receive Sample**: Lab receives finished fabric sample
 2. **Check if Received**: LAB_CHECKRECEIVESAMPLING
