@@ -124,19 +124,6 @@ Searches yarn/material stock with flexible filtering by item code, receiving dat
 **Method**: `G3_SEARCHYARNSTOCK(G3_SEARCHYARNSTOCKParameter para)`
 **Lines**: 6687-6729
 
-**Implementation Details**:
-```csharp
-// Flexible filtering:
-dbPara.P_RECDATE = _date;      // Optional date filter
-dbPara.P_ITMYARN = _ITMYARN;   // Optional item code filter
-dbPara.P_YARNTYPE = _YARNTYPE; // Optional type filter
-
-// Enhanced result mapping:
-inst.SelectData = false;        // Add checkbox support
-inst.RowNo = i++;              // Add row numbering
-inst.KGPERCH = dbResult.KGPERCH; // Include unit conversion
-```
-
 ---
 
 **File**: 284/296 | **Progress**: 95.9%

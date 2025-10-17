@@ -67,54 +67,10 @@ Updates packing pallet header with verification information and status. Used to 
 **Common Update Scenarios**:
 
 1. **Supervisor Verification** (after packing complete):
-   ```csharp
-   PACK_UPDATEPACKINGPALLET(
-       palletNo,
-       supervisorId,       // P_OPERATOR
-       DateTime.Now,       // P_CHECKDATE
-       null,              // P_LAB (not checked yet)
-       null,              // P_AS400 (not transferred yet)
-       "Verified OK",     // P_REMARK
-       "CHECKED"          // P_FLAG
-   );
-   ```
-
-2. **Lab Test Completion**:
-   ```csharp
-   PACK_UPDATEPACKINGPALLET(
-       palletNo,
-       null,              // Don't change operator
-       null,              // Don't change check date
-       "Y",               // P_LAB (lab tests complete)
-       null,              // P_AS400 (not transferred yet)
-       null,              // No new remarks
-       null               // Don't change flag
-   );
-   ```
-
-3. **ERP Synchronization**:
-   ```csharp
-   PACK_UPDATEPACKINGPALLET(
-       palletNo,
-       null, null, null,
-       "Y",               // P_AS400 (transferred to ERP)
-       null, null
-   );
-   ```
-
-4. **Mark as Shipped**:
-   ```csharp
-   PACK_UPDATEPACKINGPALLET(
-       palletNo,
-       operatorId,
-       DateTime.Now,
-       null, null,
-       "Shipped on truck TR-1234",
-       "SHIPPED"          // P_FLAG
-   );
-   ```
-
-**Status Flag Transitions**:
+   2. **Lab Test Completion**:
+   3. **ERP Synchronization**:
+   4. **Mark as Shipped**:
+   **Status Flag Transitions**:
 ```
 NEW → CHECKED → SHIPPED
  ↓        ↓        ↓
@@ -122,15 +78,6 @@ NEW → CHECKED → SHIPPED
 ```
 
 **Shipping Readiness Check**:
-```csharp
-// Pallet ready to ship when:
-- FLAG = 'CHECKED'
-- COMPLETELAB = 'Y'
-- TRANSFERAS400 = 'Y'
-- CHECKBY is not null
-- CHECKINGDATE is not null
-```
-
 **Workflow Integration**:
 1. PACK_INSERTPACKINGPALLET → Creates pallet (FLAG = 'NEW')
 2. PACK_INSPACKINGPALLETDETAIL → Add lots (multiple calls)
@@ -163,19 +110,6 @@ NEW → CHECKED → SHIPPED
 **Lines**: 2065-2082
 
 **Implementation Note**:
-```csharp
-// Only updates non-null parameters
-UPDATE tblPackingPallet
-SET CHECKBY = COALESCE(:P_OPERATOR, CHECKBY),
-    CHECKINGDATE = COALESCE(:P_CHECKDATE, CHECKINGDATE),
-    COMPLETELAB = COALESCE(:P_LAB, COMPLETELAB),
-    TRANSFERAS400 = COALESCE(:P_AS400, TRANSFERAS400),
-    REMARK = COALESCE(:P_REMARK, REMARK),
-    FLAG = COALESCE(:P_FLAG, FLAG),
-    UPDATEDATE = SYSDATE
-WHERE PALLETNO = :P_PALLET
-```
-
 **Validation Rules**:
 - Cannot update SHIPPED pallet to NEW
 - Cannot update CANCELLED pallet

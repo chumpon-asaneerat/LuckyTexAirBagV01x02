@@ -86,13 +86,6 @@ Records initial yarn/material pallet receiving into warehouse system. When a del
 
 **Implementation Issue**: All parameter assignments are commented out (lines 96-109). Method only validates connection and calls stored procedure with empty parameters.
 
-```csharp
-// Current implementation (all parameters commented):
-G3_INSERTYARNParameter dbPara = new G3_INSERTYARNParameter();
-// All assignments commented out
-dbResult = DatabaseManager.Instance.G3_INSERTYARN(dbPara);
-```
-
 ---
 
 **File**: 281/296 | **Progress**: 94.9%

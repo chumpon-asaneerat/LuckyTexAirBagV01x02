@@ -107,25 +107,6 @@ Edits packing pallet details by replacing an inspection lot or updating packing 
 **Lines**: 2323-2347
 
 **Implementation**:
-```csharp
-public bool PACK_EDITPACKINGPALLETDETAIL(
-    string P_PALLETNO, decimal? P_ORDERNO,
-    string P_INSLOT_OLD, string P_INSLOT_NEW,
-    string P_ITMCODE, string P_GRADE,
-    decimal? P_NETLENGTH, decimal? P_GROSSLENGTH,
-    decimal? P_NETWEIGHT, decimal? P_GROSSWEIGHT,
-    string P_CUSTYPE, DateTime? P_INSPECTDATE,
-    string P_LOADTYPE)
-{
-    if (string.IsNullOrWhiteSpace(P_PALLETNO)) return false;
-    if (string.IsNullOrWhiteSpace(P_INSLOT_OLD)) return false;
-    if (string.IsNullOrWhiteSpace(P_INSLOT_NEW)) return false;
-
-    // Map all parameters and call stored procedure
-    // Updates pallet detail with new lot and measurements
-}
-```
-
 ---
 
 **File**: 288/296 | **Progress**: 97.3%

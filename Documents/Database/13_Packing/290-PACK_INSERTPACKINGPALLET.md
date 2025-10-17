@@ -72,19 +72,6 @@ Creates a new empty packing pallet and generates a unique pallet number. This is
 4. **PACK_UPDATEPACKINGPALLET** → Finalizes pallet for shipping
 
 **Return Value**:
-```csharp
-string palletNo = PACK_INSERTPACKINGPALLET(operatorId);
-if (!string.IsNullOrEmpty(palletNo))
-{
-    // Pallet created successfully
-    // Use palletNo for adding lots: PACK_INSPACKINGPALLETDETAIL(palletNo, ...)
-}
-else
-{
-    // Creation failed
-}
-```
-
 ---
 
 ## Related Procedures
@@ -108,32 +95,6 @@ else
 **Lines**: 2272-2285
 
 **Implementation**:
-```csharp
-public string PACK_INSERTPACKINGPALLET(string OPERATOR)
-{
-    if (string.IsNullOrWhiteSpace(OPERATOR))
-        return string.Empty;
-
-    if (!HasConnection())
-        return string.Empty;
-
-    PACK_INSERTPACKINGPALLETParameter dbPara = new PACK_INSERTPACKINGPALLETParameter();
-    dbPara.P_OPERATOR = OPERATOR;
-
-    PACK_INSERTPACKINGPALLETResult dbResult = null;
-    try
-    {
-        dbResult = DatabaseManager.Instance.PACK_INSERTPACKINGPALLET(dbPara);
-        return dbResult.R_PALLETNO;  // Returns generated pallet number
-    }
-    catch (Exception ex)
-    {
-        ex.Err();
-        return string.Empty;  // Empty = creation failed
-    }
-}
-```
-
 **Database Side** (Oracle stored procedure):
 ```sql
 -- Typical implementation:

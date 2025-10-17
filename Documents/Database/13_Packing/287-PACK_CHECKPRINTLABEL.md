@@ -61,19 +61,6 @@ Checks if a packing label has already been printed for an inspection lot. Preven
 - Audit trail: Track when labels were generated
 
 **Return Value Logic**:
-```csharp
-DateTime? printDate = PACK_CHECKPRINTLABEL(inspectionLot);
-if (printDate.HasValue)
-{
-    // Label already printed on printDate.Value
-    // Prevent duplicate or ask for reprint confirmation
-}
-else
-{
-    // Label not printed yet - OK to print
-}
-```
-
 ---
 
 ## Related Procedures
@@ -97,29 +84,6 @@ else
 **Lines**: 2352-2365
 
 **Implementation**:
-```csharp
-public DateTime? PACK_CHECKPRINTLABEL(string P_INSLOT)
-{
-    DateTime? result = null;
-
-    if (string.IsNullOrWhiteSpace(P_INSLOT)) return result;
-    if (!HasConnection()) return result;
-
-    PACK_CHECKPRINTLABELParameter dbPara = new PACK_CHECKPRINTLABELParameter();
-    dbPara.P_INSLOT = P_INSLOT;
-
-    PACK_CHECKPRINTLABELResult dbResult = null;
-    dbResult = DatabaseManager.Instance.PACK_CHECKPRINTLABEL(dbPara);
-
-    if (null != dbResult)
-    {
-        result = dbResult.PRINTDATE;
-    }
-
-    return result;  // NULL = not printed, DateTime = printed on this date
-}
-```
-
 ---
 
 **File**: 287/296 | **Progress**: 97.0%

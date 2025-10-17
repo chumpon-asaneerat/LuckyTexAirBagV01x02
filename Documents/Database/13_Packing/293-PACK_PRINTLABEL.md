@@ -127,41 +127,6 @@ WHERE INSPECTIONLOT = :P_INSLOT;
 **Lines**: 2173-2205
 
 **Return Structure** (18 columns):
-```csharp
-public class PACK_PRINTLABELResult
-{
-    // Basic identification
-    public string INSPECTIONLOT { get; set; }
-    public string ITEMCODE { get; set; }
-    public string DESCRIPTION { get; set; }
-
-    // Measurements
-    public decimal? QUANTITY { get; set; }        // Net length
-    public decimal? GROSSLENGTH { get; set; }
-    public decimal? NETWEIGHT { get; set; }
-    public decimal? GROSSWEIGHT { get; set; }
-
-    // Quality & Process
-    public string GRADE { get; set; }
-    public string FINISHINGPROCESS { get; set; }
-
-    // Customer information
-    public string CUSTOMERID { get; set; }
-    public string CUSTOMERPARTNO { get; set; }
-    public string CUSPARTNO2D { get; set; }
-
-    // Batch & Traceability
-    public string BATCHNO { get; set; }
-    public string PDATE { get; set; }
-    public string BDate { get; set; }
-    public string SUPPLIERCODE { get; set; }
-
-    // Barcode data
-    public string BARCODEBACTHNO { get; set; }    // 1D barcode
-    public string DBARCODE { get; set; }          // 2D barcode
-}
-```
-
 ---
 
 **File**: 293/296 | **Progress**: 99.0%

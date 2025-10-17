@@ -102,18 +102,6 @@ CANCELLED  (from any state)
 - Both must be 'Y' before shipping in some workflows
 
 **Common Queries**:
-```csharp
-// Find pallets ready to ship
-var pallets = PACK_SEARCHPALLETLIST(null, null, "CHECKED")
-    .Where(p => p.COMPLETELAB == "Y" && p.TRANSFERAS400 == "Y");
-
-// Find today's pallets
-var todayPallets = PACK_SEARCHPALLETLIST(null, DateTime.Today.ToString("yyyy-MM-dd"), null);
-
-// Find specific pallet
-var pallet = PACK_SEARCHPALLETLIST("PK-251017-0001", null, null).FirstOrDefault();
-```
-
 ---
 
 ## Related Procedures
@@ -137,26 +125,6 @@ var pallet = PACK_SEARCHPALLETLIST("PK-251017-0001", null, null).FirstOrDefault(
 **Lines**: 2088-2110
 
 **Return Structure**:
-```csharp
-public class PACK_SEARCHPALLETLISTResult
-{
-    // Identification
-    public string PALLETNO { get; set; }
-    public string FLAG { get; set; }
-
-    // Operators & Dates
-    public string PACKINGBY { get; set; }
-    public DateTime? PACKINGDATE { get; set; }
-    public string CHECKBY { get; set; }
-    public DateTime? CHECKINGDATE { get; set; }
-
-    // Status indicators
-    public string COMPLETELAB { get; set; }      // Lab tests complete
-    public string TRANSFERAS400 { get; set; }    // ERP synchronized
-    public string REMARK { get; set; }           // Notes
-}
-```
-
 **Typical Query**:
 ```sql
 SELECT PALLETNO, PACKINGDATE, PACKINGBY,

@@ -112,22 +112,6 @@ Updates existing yarn pallet information and QC inspection results. Similar to G
 **Lines**: 6652-6681
 
 **Code Status**:
-```csharp
-// Line 325-428: Entire region commented out
-#region เพิ่ม G3_UPDATEYARN
-
-// Method header commented:
-//public bool G3_UPDATEYARN(string palletNo, string lotorderNo, ...)
-
-// All implementation commented:
-//    G3_UPDATEYARNParameter dbPara = new G3_UPDATEYARNParameter();
-//    dbPara.P_PATTETNO = palletNo;
-//    ...
-//    dbResult = DatabaseManager.Instance.G3_UPDATEYARN(dbPara);
-
-#endregion
-```
-
 **Recommendation**: Consider removing stored procedure definition if permanently deprecated, or document migration path from pallet number to trace number based updates.
 
 ---

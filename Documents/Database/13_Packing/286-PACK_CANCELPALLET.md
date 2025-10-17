@@ -62,11 +62,6 @@ Cancels a packing pallet and removes it from shipping queue. Used when pallet ne
 - Quality issue found after packing
 
 **Validation**:
-```csharp
-// Required validation in C#:
-if (string.IsNullOrWhiteSpace(P_PALLETNO)) return false;
-```
-
 ---
 
 ## Related Procedures
@@ -90,18 +85,6 @@ if (string.IsNullOrWhiteSpace(P_PALLETNO)) return false;
 **Lines**: 2370-2382
 
 **Implementation**:
-```csharp
-// Validation and execution:
-if (string.IsNullOrWhiteSpace(P_PALLETNO)) return false;
-if (!HasConnection()) return false;
-
-PACK_CANCELPALLETParameter dbPara = new PACK_CANCELPALLETParameter();
-dbPara.P_PALLETNO = P_PALLETNO;
-
-dbResult = DatabaseManager.Instance.PACK_CANCELPALLET(dbPara);
-result = (null != dbResult);
-```
-
 ---
 
 **File**: 286/296 | **Progress**: 96.6%

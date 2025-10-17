@@ -122,15 +122,6 @@ Searches for completed inspection lots that are available for packing. Provides 
 - Used to decide packing priority and customer suitability
 
 **Packing Decision Criteria**:
-```csharp
-// Filter results based on:
-- ISPACKED = 'N' → Available for packing
-- GRADE → Match customer requirements
-- LOADINGTYPE → Match shipping method
-- CUSTOMERTYPE → Match target customer
-- DF_POINT → Acceptable defect level
-```
-
 ---
 
 ## Related Procedures
@@ -154,17 +145,6 @@ Searches for completed inspection lots that are available for packing. Provides 
 **Lines**: 2116-2167
 
 **Return Structure** (37 columns - comprehensive inspection data):
-```csharp
-// Returns extensive data for packing decisions:
-- Basic identification (lot, item, dates)
-- Measurements (length, weight - net/gross)
-- Quality (grade, defects, test records)
-- Status (packed, suspended, retested)
-- Traceability (operators, machines, process)
-- Customer requirements (type, loading)
-- Defect details (code, amount, points, images)
-```
-
 **Typical Query Logic**:
 ```sql
 SELECT i.*, d.DF_CODE, d.DF_AMOUNT, d.DF_POINT

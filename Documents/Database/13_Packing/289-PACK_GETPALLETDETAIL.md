@@ -83,19 +83,6 @@ Retrieves all details of a packing pallet including all inspection lots packed i
 - Check pallet composition
 
 **Data Mapping**:
-```csharp
-public List<PACK_GETPALLETDETAIL> PACK_GETPALLETDETAIL(string PalletNo)
-{
-    // Returns list of all lots in pallet
-    // Each lot includes:
-    // - Inspection lot reference
-    // - Item code and specifications
-    // - Net/Gross length and weight
-    // - Customer and loading type
-    // - Order sequence
-}
-```
-
 ---
 
 ## Related Procedures
@@ -119,38 +106,6 @@ public List<PACK_GETPALLETDETAIL> PACK_GETPALLETDETAIL(string PalletNo)
 **Lines**: 2290-2317
 
 **Implementation**:
-```csharp
-public List<PACK_GETPALLETDETAIL> PACK_GETPALLETDETAIL(string PalletNo)
-{
-    List<PACK_GETPALLETDETAIL> results = null;
-
-    if (string.IsNullOrWhiteSpace(PalletNo)) return results;
-    if (!HasConnection()) return results;
-
-    PACK_GETPALLETDETAILParameter dbPara = new PACK_GETPALLETDETAILParameter();
-    dbPara.P_PALLET = PalletNo;
-
-    List<PACK_GETPALLETDETAILResult> dbResults = null;
-    dbResults = DatabaseManager.Instance.PACK_GETPALLETDETAIL(dbPara);
-
-    if (null != dbResults && dbResults.Count > 0)
-    {
-        results = new List<PACK_GETPALLETDETAIL>();
-        foreach (PACK_GETPALLETDETAILResult dbResult in dbResults)
-        {
-            // Map all 16 columns to result object
-            inst.PALLETNO = dbResult.PALLETNO;
-            inst.INSPECTIONLOT = dbResult.INSPECTIONLOT;
-            inst.ITEMCODE = dbResult.ITEMCODE;
-            // ... (all 16 fields)
-            results.Add(inst);
-        }
-    }
-
-    return results;  // Returns list of all lots in pallet
-}
-```
-
 ---
 
 **File**: 289/296 | **Progress**: 97.6%

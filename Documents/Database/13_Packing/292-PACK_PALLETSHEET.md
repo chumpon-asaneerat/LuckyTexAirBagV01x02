@@ -114,37 +114,6 @@ Retrieves complete packing pallet information formatted for packing list report/
 **Lines**: 2211-2238
 
 **Return Structure**:
-```csharp
-public class PACK_PALLETSHEETResult
-{
-    // Pallet identification
-    public string PALLETNO { get; set; }
-    public string ITEMCODE { get; set; }
-    public string CUSTOMERTYPE { get; set; }
-
-    // Lot details
-    public string INSPECTIONLOT { get; set; }
-    public string GRADE { get; set; }
-    public decimal? ORDERNO { get; set; }
-
-    // Measurements
-    public decimal? GROSSWEIGHT { get; set; }
-    public decimal? NETLENGTH { get; set; }
-    public decimal? NETWEIGHT { get; set; }
-
-    // Accountability
-    public string PACKINGBY { get; set; }
-    public DateTime? PACKINGDATE { get; set; }
-    public string CHECKBY { get; set; }
-    public DateTime? CHECKINGDATE { get; set; }
-
-    // Shipping & Traceability
-    public string LOADINGTYPE { get; set; }
-    public string ITM_WEAVING { get; set; }
-    public string YARNCODE { get; set; }
-}
-```
-
 **Typical Query Join**:
 ```sql
 SELECT ph.PALLETNO, pd.INSPECTIONLOT, pd.ITEMCODE, pd.GRADE,

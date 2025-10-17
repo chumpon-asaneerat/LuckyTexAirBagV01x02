@@ -76,19 +76,6 @@ Adds an inspection lot to a packing pallet. Called multiple times to build up pa
 - Grade can vary (A/B/C grades can mix if allowed)
 
 **Typical Usage Pattern**:
-```csharp
-// Step 1: Create pallet
-string palletNo = PACK_INSERTPACKINGPALLET(operatorId);
-
-// Step 2: Add multiple lots to pallet
-PACK_INSPACKINGPALLETDETAIL(palletNo, 1, "INS001", ...); // First lot
-PACK_INSPACKINGPALLETDETAIL(palletNo, 2, "INS002", ...); // Second lot
-PACK_INSPACKINGPALLETDETAIL(palletNo, 3, "INS003", ...); // Third lot
-
-// Step 3: Finalize pallet
-PACK_UPDATEPACKINGPALLET(palletNo, ...);
-```
-
 **Data Integrity**:
 - Inspection lot marked as packed (ISPACKED = 'Y')
 - Stock status updated (not available for other pallets)

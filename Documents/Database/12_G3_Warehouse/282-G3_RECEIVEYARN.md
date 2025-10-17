@@ -106,14 +106,6 @@ Performs quality control (QC) inspection on received yarn/material pallets and u
 **Lines**: 6781-6810
 
 **Validation Logic**:
-```csharp
-// Required validations before calling procedure:
-if (string.IsNullOrWhiteSpace(P_TRACENO)) return false;
-if (string.IsNullOrWhiteSpace(P_LOTNO)) return false;
-if (string.IsNullOrWhiteSpace(P_VERIFY)) return false;
-if (string.IsNullOrWhiteSpace(P_OPERATORID)) return false;
-```
-
 ---
 
 **File**: 282/296 | **Progress**: 95.3%
