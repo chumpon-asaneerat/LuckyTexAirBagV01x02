@@ -90,7 +90,6 @@ Checks if a greige fabric sample from a specific beam roll and loom has already 
 **Method**: `LAB_CHECKRECEIVEGREIGESAMPLING(LAB_CHECKRECEIVEGREIGESAMPLINGParameter para)`
 **Lines**: 4727-4740
 
-**Implementation**:
 ---
 
 **File**: 297/296 | **Progress**: 100.3%

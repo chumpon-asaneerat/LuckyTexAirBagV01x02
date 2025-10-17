@@ -227,15 +227,6 @@ Not all 100+ columns are populated for every test:
 - Missing values (NULL) indicate test not performed or not applicable
 
 ---
-
-## Usage Example
-
-### C# Method Call
-
-### Common Usage Patterns
-
----
-
 ## Related Procedures
 
 | Procedure Name | Relationship | Description |
@@ -254,8 +245,6 @@ Not all 100+ columns are populated for every test:
 - **Lab Approval Dashboard**: Main approval workflow interface
 - **Test Review Page**: Detailed review of all test measurements
 - **Quality Audit Page**: Historical approval review
-
-### Typical Display
 
 ---
 

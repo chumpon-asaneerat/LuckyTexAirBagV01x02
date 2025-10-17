@@ -74,15 +74,6 @@ This procedure is specifically for greige (raw woven) fabric testing:
 - **Mass Production**: Uses WEAVINGLOT + FINISHINGLOT identifier (see LAB_SAVELABMASSPRORESULT)
 
 ---
-
-## Usage Example
-
-### C# Method Call
-
-### Common Usage Patterns
-
----
-
 ## Related Procedures
 
 | Procedure Name | Relationship | Description |

@@ -106,7 +106,6 @@ Edits packing pallet details by replacing an inspection lot or updating packing 
 **Method**: `PACK_EDITPACKINGPALLETDETAIL(PACK_EDITPACKINGPALLETDETAILParameter para)`
 **Lines**: 2323-2347
 
-**Implementation**:
 ---
 
 **File**: 288/296 | **Progress**: 97.3%

@@ -62,15 +62,6 @@ This procedure provides a simplified interface for recording test results:
 4. **Legacy System**: May be older interface before detailed test procedures were implemented
 
 ---
-
-## Usage Example
-
-### C# Method Call
-
-### Common Usage Patterns
-
----
-
 ## Related Procedures
 
 | Procedure Name | Relationship | Description |

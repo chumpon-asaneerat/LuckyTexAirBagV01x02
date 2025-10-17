@@ -105,7 +105,6 @@ Retrieves all details of a packing pallet including all inspection lots packed i
 **Method**: `PACK_GETPALLETDETAIL(PACK_GETPALLETDETAILParameter para)`
 **Lines**: 2290-2317
 
-**Implementation**:
 ---
 
 **File**: 289/296 | **Progress**: 97.6%

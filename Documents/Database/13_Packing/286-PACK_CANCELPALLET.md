@@ -84,7 +84,6 @@ Cancels a packing pallet and removes it from shipping queue. Used when pallet ne
 **Method**: `PACK_CANCELPALLET(PACK_CANCELPALLETParameter para)`
 **Lines**: 2370-2382
 
-**Implementation**:
 ---
 
 **File**: 286/296 | **Progress**: 96.6%

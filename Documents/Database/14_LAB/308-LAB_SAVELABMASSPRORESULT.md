@@ -72,15 +72,6 @@ This procedure is specifically for finished fabric (mass production):
 - **Greige**: Raw woven fabric - Uses BEAMERROLL + LOOM + ITMWEAVE (see LAB_SAVELABGREIGERESULT)
 
 ---
-
-## Usage Example
-
-### C# Method Call
-
-### Common Usage Patterns
-
----
-
 ## Related Procedures
 
 | Procedure Name | Relationship | Description |

@@ -94,8 +94,6 @@ Creates a new empty packing pallet and generates a unique pallet number. This is
 **Method**: `PACK_INSERTPACKINGPALLET(PACK_INSERTPACKINGPALLETParameter para)`
 **Lines**: 2272-2285
 
-**Implementation**:
-**Database Side** (Oracle stored procedure):
 ---
 
 **File**: 290/296 | **Progress**: 98.0%

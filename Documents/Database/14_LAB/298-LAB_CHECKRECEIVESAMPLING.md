@@ -104,7 +104,6 @@ Checks if a finished fabric sample from a specific weaving lot has already been 
 **Method**: `LAB_CHECKRECEIVESAMPLING(LAB_CHECKRECEIVESAMPLINGParameter para)`
 **Lines**: 4708-4721
 
-**Implementation**:
 ---
 
 **File**: 298/296 | **Progress**: 100.7%

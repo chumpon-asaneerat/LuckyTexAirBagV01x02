@@ -83,7 +83,6 @@ Checks if a packing label has already been printed for an inspection lot. Preven
 **Method**: `PACK_CHECKPRINTLABEL(PACK_CHECKPRINTLABELParameter para)`
 **Lines**: 2352-2365
 
-**Implementation**:
 ---
 
 **File**: 287/296 | **Progress**: 97.0%

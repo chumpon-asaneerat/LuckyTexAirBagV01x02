@@ -89,15 +89,6 @@ After testing completes:
 5. Sample disposition determined based on approval
 
 ---
-
-## Usage Example
-
-### C# Method Call
-
-### Common Usage Patterns
-
----
-
 ## Related Procedures
 
 | Procedure Name | Relationship | Description |
@@ -117,8 +108,6 @@ After testing completes:
 - **Mass Production Sample Status Page**: Main dashboard for lab technicians
 - **Sample Tracking Page**: Monitor samples through workflow stages
 - **Approval Queue Page**: Quality supervisor review interface
-
-### Typical Display
 
 ---
 
