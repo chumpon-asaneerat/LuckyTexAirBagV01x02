@@ -233,37 +233,7 @@ Retrieves complete test specification master data for a product item code. This 
 - TOR = Tolerance
 
 **Test Result Validation**:
-```csharp
-var spec = LAB_GETITEMTESTSPECIFICATION(itemCode);
-decimal testResult = 125.5; // Actual tensile test result
-
-// Check if within specification
-decimal target = spec.MAXFORCE_W;       // e.g., 120
-string tolerance = spec.MAXFORCE_W_TOR; // e.g., "±5"
-
-decimal minValue = target - ParseTolerance(tolerance); // 115
-decimal maxValue = target + ParseTolerance(tolerance); // 125
-
-if (testResult >= minValue && testResult <= maxValue)
-{
-    result.Status = "PASS";
-}
-else
-{
-    result.Status = "FAIL";
-}
-```
-
 **Control Chart Monitoring**:
-```csharp
-// Plot result on SPC chart
-if (testResult < spec.MAXFORCE_W_LCL || testResult > spec.MAXFORCE_W_UCL)
-{
-    // Result outside control limits - investigate process
-    AlertQualityManager("Tensile force out of control");
-}
-```
-
 **Test Coverage**:
 This specification covers ALL automotive airbag fabric tests:
 1. **Physical**: Width, thickness, weight, thread count

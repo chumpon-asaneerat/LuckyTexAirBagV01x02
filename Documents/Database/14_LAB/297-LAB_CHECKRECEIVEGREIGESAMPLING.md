@@ -61,20 +61,6 @@ Checks if a greige fabric sample from a specific beam roll and loom has already 
 - **Sample Tracking**: Ensures one sample per beam roll/loom combination
 
 **Typical Usage**:
-```csharp
-string result = LAB_CHECKRECEIVEGREIGESAMPLING(beamRollNo, loomNo);
-if (result == "Y")
-{
-    // Sample already received - prevent duplicate
-    MessageBox.Show("Sample already exists in lab");
-}
-else
-{
-    // Sample not received - OK to receive
-    ReceiveGreigeSample(beamRollNo, loomNo);
-}
-```
-
 **Related Workflow**:
 1. Weaving process creates greige fabric on loom
 2. Quality team takes sample from beam roll
@@ -106,19 +92,6 @@ else
 **Lines**: 4727-4740
 
 **Implementation**:
-```csharp
-public class LAB_CHECKRECEIVEGREIGESAMPLINGParameter
-{
-    public string P_BEAMERROLL { get; set; }
-    public string P_LOOMNO { get; set; }
-}
-
-public class LAB_CHECKRECEIVEGREIGESAMPLINGResult
-{
-    public string RESULT { get; set; }  // 'Y' or 'N'
-}
-```
-
 **Typical Query Logic**:
 ```sql
 SELECT CASE

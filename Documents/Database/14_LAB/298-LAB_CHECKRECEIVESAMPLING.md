@@ -69,20 +69,6 @@ Checks if a finished fabric sample from a specific weaving lot has already been 
 - **Sample Management**: One sample per weaving lot
 
 **Typical Usage**:
-```csharp
-string result = LAB_CHECKRECEIVESAMPLING(weavingLot, itemCode);
-if (result == "Y")
-{
-    // Sample already received - prevent duplicate
-    MessageBox.Show("Sample already exists in lab for this lot");
-}
-else
-{
-    // Sample not received - OK to receive
-    ReceiveFinishingSample(weavingLot, itemCode);
-}
-```
-
 **Related Workflow**:
 1. Finishing process completes (coating, scouring, drying)
 2. Quality team takes sample from finishing lot
@@ -120,19 +106,6 @@ else
 **Lines**: 4708-4721
 
 **Implementation**:
-```csharp
-public class LAB_CHECKRECEIVESAMPLINGParameter
-{
-    public string P_WEAVLOT { get; set; }
-    public string P_ITEMCODE { get; set; }
-}
-
-public class LAB_CHECKRECEIVESAMPLINGResult
-{
-    public string RESULT { get; set; }  // 'Y' or 'N'
-}
-```
-
 **Typical Query Logic**:
 ```sql
 SELECT CASE

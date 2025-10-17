@@ -96,38 +96,9 @@ ISLAB = 'N' → No lab testing needed (can ship immediately)
 **Usage Scenarios**:
 
 **Lab Workload View**:
-```csharp
-// Get all lots requiring lab testing
-var labList = LAB_GETINSPECTIONLIST(null, null);
-Console.WriteLine($"Total lots pending lab test: {labList.Count}");
-```
-
 **Specific Lot Lookup**:
-```csharp
-// Find specific inspection lot
-var lot = LAB_GETINSPECTIONLIST("INS-2025-001", null).FirstOrDefault();
-if (lot != null && lot.ISLAB == "Y")
-{
-    // Schedule lab testing for this lot
-}
-```
-
 **Daily Lab Schedule**:
-```csharp
-// Get lots inspected today requiring lab test
-var today = DateTime.Today.ToString("yyyy-MM-dd");
-var todayLabList = LAB_GETINSPECTIONLIST(null, today);
-// Schedule testing for today's lots
-```
-
 **Customer-Specific Testing**:
-```csharp
-// Filter by customer type requiring lab
-var customerLabLots = LAB_GETINSPECTIONLIST(null, null)
-    .Where(l => l.CUSTOMERTYPE == "PREMIUM" && l.ISLAB == "Y");
-// High-priority customers get tested first
-```
-
 ---
 
 ## Related Procedures
@@ -152,27 +123,6 @@ var customerLabLots = LAB_GETINSPECTIONLIST(null, null)
 **Lines**: 4617-4644
 
 **Return Structure** (15 columns):
-```csharp
-public class LAB_GETINSPECTIONLISTResult
-{
-    public string PALLETNO { get; set; }
-    public string INSPECTIONLOT { get; set; }
-    public string ITEMCODE { get; set; }
-    public decimal? NETLENGTH { get; set; }
-    public decimal? GROSSWEIGHT { get; set; }
-    public decimal? NETWEIGHT { get; set; }
-    public string GRADE { get; set; }
-    public string CUSTOMERTYPE { get; set; }
-    public string ISLAB { get; set; }           // Key field
-    public DateTime? INSPECTIONDATE { get; set; }
-    public string FLAG { get; set; }
-    public string LOADINGTYPE { get; set; }
-    public string STOCK { get; set; }
-    public decimal? GROSSLENGTH { get; set; }
-    public decimal? ORDERNO { get; set; }
-}
-```
-
 **Typical Query**:
 ```sql
 SELECT i.INSPECTIONLOT, i.ITEMCODE, i.NETLENGTH, i.GROSSWEIGHT,

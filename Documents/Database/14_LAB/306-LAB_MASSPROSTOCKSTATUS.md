@@ -94,61 +94,7 @@ After testing completes:
 
 ### C# Method Call
 
-```csharp
-// From LABDataService.cs (lines 530-546)
-public List<LAB_MASSPROSTOCKSTATUS> LAB_MASSPROSTOCKSTATUS(
-    string P_WEAVELOT,
-    string P_RECEIVEDATE)
-{
-    List<LAB_MASSPROSTOCKSTATUS> results = null;
-
-    if (!HasConnection())
-        return results;
-
-    LAB_MASSPROSTOCKSTATUSParameter dbPara = new LAB_MASSPROSTOCKSTATUSParameter();
-    dbPara.P_WEAVELOT = P_WEAVELOT;
-    dbPara.P_RECEIVEDATE = P_RECEIVEDATE;
-
-    List<LAB_MASSPROSTOCKSTATUSResult> dbResults = null;
-
-    try
-    {
-        dbResults = DatabaseManager.Instance.LAB_MASSPROSTOCKSTATUS(dbPara);
-        if (null != dbResults)
-        {
-            results = new List<LAB_MASSPROSTOCKSTATUS>();
-            foreach (LAB_MASSPROSTOCKSTATUSResult dbResult in dbResults)
-            {
-                // Map to business entity...
-            }
-        }
-    }
-    catch (Exception ex)
-    {
-        // Error handling...
-    }
-
-    return results;
-}
-```
-
 ### Common Usage Patterns
-
-```csharp
-// Get all samples for a specific weaving lot
-var samples = labService.LAB_MASSPROSTOCKSTATUS("WL-20231015-001", null);
-
-// Get all samples received on specific date
-var todaySamples = labService.LAB_MASSPROSTOCKSTATUS(null, "2023-10-15");
-
-// Get all pending samples (no filters)
-var allSamples = labService.LAB_MASSPROSTOCKSTATUS(null, null);
-
-// Get samples for lot received within date range
-var rangedSamples = labService.LAB_MASSPROSTOCKSTATUS(
-    "WL-20231015",
-    "2023-10-01 TO 2023-10-31");
-```
 
 ---
 

@@ -100,81 +100,9 @@ Greige fabric must be conditioned before testing:
 - **APPROVED/REJECTED**: Final disposition
 
 **Typical Usage**:
-```csharp
-// Get all samples received today
-var today = DateTime.Today.ToString("yyyy-MM-dd");
-var todaySamples = LAB_GREIGESTOCKSTATUS(null, null, today);
-
-foreach (var sample in todaySamples)
-{
-    // Check conditioning time
-    if (sample.CONDITIONINGTIME < 24)
-    {
-        Console.WriteLine($"Sample {sample.BEAMERROLL} - Still conditioning " +
-            $"({24 - sample.CONDITIONINGTIME}hrs remaining)");
-    }
-    else if (sample.STATUS == "RECEIVED")
-    {
-        Console.WriteLine($"Sample {sample.BEAMERROLL} - Ready for testing");
-    }
-    else if (sample.STATUS == "TESTED" && sample.APPROVESTATUS == "PENDING")
-    {
-        Console.WriteLine($"Sample {sample.BEAMERROLL} - Awaiting approval");
-    }
-}
-```
-
 **Lab Workload Dashboard**:
-```csharp
-// Get pending samples
-var allSamples = LAB_GREIGESTOCKSTATUS(null, null, null);
-
-var conditioning = allSamples.Where(s => s.STATUS == "RECEIVED" && s.CONDITIONINGTIME < 24).Count();
-var readyToTest = allSamples.Where(s => s.STATUS == "RECEIVED" && s.CONDITIONINGTIME >= 24).Count();
-var testing = allSamples.Where(s => s.STATUS == "TESTING").Count();
-var pendingApproval = allSamples.Where(s => s.STATUS == "TESTED" && s.APPROVESTATUS == "PENDING").Count();
-
-Console.WriteLine($"Conditioning: {conditioning}");
-Console.WriteLine($"Ready to test: {readyToTest}");
-Console.WriteLine($"In testing: {testing}");
-Console.WriteLine($"Pending approval: {pendingApproval}");
-```
-
 **Quality Investigation**:
-```csharp
-// Find specific beam roll with failed tests
-var failedSamples = LAB_GREIGESTOCKSTATUS("BEAM-2025-001", null, null);
-var sample = failedSamples.FirstOrDefault();
-
-if (sample != null && sample.TESTRESULT == "FAIL")
-{
-    Console.WriteLine($"Beam Roll: {sample.BEAMERROLL}");
-    Console.WriteLine($"Loom: {sample.LOOMNO}");
-    Console.WriteLine($"Test Date: {sample.TESTDATE}");
-    Console.WriteLine($"Test By: {sample.TESTBY}");
-    Console.WriteLine($"Result: {sample.TESTRESULT}");
-    Console.WriteLine($"Remarks: {sample.REMARK}");
-    Console.WriteLine($"Approval: {sample.APPROVESTATUS} by {sample.APPROVEBY}");
-
-    // Investigate weaving quality for this loom
-    InvestigateLoomQuality(sample.LOOMNO);
-}
-```
-
 **Approval Workflow**:
-```csharp
-// Samples awaiting supervisor approval
-var pendingSamples = LAB_GREIGESTOCKSTATUS(null, null, null)
-    .Where(s => s.STATUS == "TESTED" && s.APPROVESTATUS == "PENDING");
-
-foreach (var sample in pendingSamples)
-{
-    // Load for supervisor review
-    ShowApprovalScreen(sample.BEAMERROLL, sample.LOOMNO,
-        sample.TESTRESULT, sample.REMARK);
-}
-```
-
 ---
 
 ## Related Procedures
@@ -199,35 +127,6 @@ foreach (var sample in pendingSamples)
 **Lines**: 3991-4020
 
 **Return Structure** (16 columns):
-```csharp
-public class LAB_GREIGESTOCKSTATUSResult
-{
-    // Sample identification
-    public string BEAMERROLL { get; set; }
-    public string LOOMNO { get; set; }
-    public string ITM_WEAVING { get; set; }
-
-    // Receive tracking
-    public DateTime? RECEIVEDATE { get; set; }
-    public DateTime? SENDDATE { get; set; }
-    public string RECEIVEBY { get; set; }
-    public string STATUS { get; set; }
-
-    // Conditioning & testing
-    public decimal? CONDITIONINGTIME { get; set; }  // Hours
-    public DateTime? TESTDATE { get; set; }
-    public decimal? TESTNO { get; set; }
-    public string TESTBY { get; set; }
-    public string TESTRESULT { get; set; }          // PASS/FAIL
-    public string REMARK { get; set; }
-
-    // Approval
-    public string APPROVESTATUS { get; set; }       // APPROVED/REJECTED/PENDING
-    public string APPROVEBY { get; set; }
-    public DateTime? APPROVEDATE { get; set; }
-}
-```
-
 **Typical Query Logic**:
 ```sql
 SELECT g.BEAMERROLL, g.LOOMNO, g.ITM_WEAVING,

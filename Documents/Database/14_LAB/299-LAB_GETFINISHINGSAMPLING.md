@@ -89,26 +89,6 @@ Retrieves detailed information about a finishing sample that has been received i
 - PROCESS: Finishing process type (COATING, SCOURING, DRYER)
 
 **Typical Usage**:
-```csharp
-var sample = LAB_GETFINISHINGSAMPLING(weavingLot, itemCode);
-if (sample != null)
-{
-    // Load sample into testing screen
-    txtWeavingLot.Text = sample.WEAVINGLOT;
-    txtFinishingLot.Text = sample.FINISHINGLOT;
-    txtSampleWidth.Text = sample.SAMPLING_WIDTH.ToString();
-    txtSampleLength.Text = sample.SAMPLING_LENGTH.ToString();
-
-    if (sample.RETESTFLAG == "Y")
-    {
-        lblRetestIndicator.Visible = true;
-    }
-
-    // Proceed with test entry
-    EnableTestInputs();
-}
-```
-
 **Testing Workflow**:
 1. **Receive Sample**: Lab receives finished fabric sample
 2. **Check if Received**: LAB_CHECKRECEIVESAMPLING
@@ -145,31 +125,6 @@ if (sample != null)
 **Lines**: 4678-4702
 
 **Return Structure** (12 columns):
-```csharp
-public class LAB_GETFINISHINGSAMPLINGResult
-{
-    // Lot traceability
-    public string WEAVINGLOT { get; set; }
-    public string FINISHINGLOT { get; set; }
-    public string ITM_CODE { get; set; }
-
-    // Sample metadata
-    public DateTime? CREATEDATE { get; set; }
-    public string CREATEBY { get; set; }
-    public string PRODUCTID { get; set; }
-
-    // Physical dimensions
-    public decimal? SAMPLING_WIDTH { get; set; }
-    public decimal? SAMPLING_LENGTH { get; set; }
-
-    // Process and classification
-    public string PROCESS { get; set; }
-    public string FABRICTYPE { get; set; }
-    public string RETESTFLAG { get; set; }
-    public string REMARK { get; set; }
-}
-```
-
 ---
 
 **File**: 299/296 | **Progress**: 101.0%

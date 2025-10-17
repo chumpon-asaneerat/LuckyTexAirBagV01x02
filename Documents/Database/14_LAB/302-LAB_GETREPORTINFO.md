@@ -102,31 +102,6 @@ STATIC_AIR = "≤ 5 L/dm²/min at 20 kPa (ISO 9237)"
 ```
 
 **Typical Usage**:
-```csharp
-var reportInfo = LAB_GETREPORTINFO(itemCode, customerId);
-
-if (reportInfo != null)
-{
-    // Use template to format test report
-    report.ReportID = reportInfo.REPORT_ID;
-    report.Revision = reportInfo.REVESION;
-    report.ReportName = reportInfo.REPORT_NAME;
-
-    // Fill in specification sections
-    report.YarnSection = reportInfo.YARNTYPE;
-    report.WeightSpec = reportInfo.WEIGHT;
-    report.TensileSpec = reportInfo.MAXFORCE;
-    report.AirPermSpec = reportInfo.STATIC_AIR;
-    // ... etc for all test properties
-
-    // Add test results
-    report.TestResults = actualTestData;
-
-    // Generate PDF
-    GeneratePDFReport(report);
-}
-```
-
 **Report Components**:
 1. **Header**: Report ID, Revision, Name, Date
 2. **Material Info**: Yarn type, item code
@@ -164,48 +139,6 @@ if (reportInfo != null)
 **Lines**: 4198-4237
 
 **Return Structure** (27 columns):
-```csharp
-public class LAB_GETREPORTINFOResult
-{
-    // Report identification
-    public string ITM_CODE { get; set; }
-    public string REPORT_ID { get; set; }
-    public string REVESION { get; set; }  // Note: Misspelling in code
-    public string CUSTOMERID { get; set; }
-    public string REPORT_NAME { get; set; }
-    public DateTime? EFFECTIVE_DATE { get; set; }
-
-    // Material specification (text format)
-    public string YARNTYPE { get; set; }
-    public string WEIGHT { get; set; }
-    public string COATWEIGHT { get; set; }
-    public string NUMTHREADS { get; set; }
-    public string USABLE_WIDTH { get; set; }
-    public string THICKNESS { get; set; }
-
-    // Mechanical test specifications (text format)
-    public string MAXFORCE { get; set; }
-    public string ELONGATIONFORCE { get; set; }
-    public string TEAR { get; set; }
-    public string STIFFNESS { get; set; }
-    public string BENDING { get; set; }
-    public string FLEX_SCOTT { get; set; }
-
-    // Functional test specifications (text format)
-    public string STATIC_AIR { get; set; }
-    public string DYNAMIC_AIR { get; set; }
-    public string EXPONENT { get; set; }
-
-    // Other specifications (text format)
-    public string FLAMMABILITY { get; set; }
-    public string EDGECOMB { get; set; }
-    public string FLEXABRASION { get; set; }
-    public string DIMENSCHANGE { get; set; }
-    public string BOW { get; set; }
-    public string SKEW { get; set; }
-}
-```
-
 **Key Difference from LAB_GETITEMTESTSPECIFICATION**:
 - GETITEMTESTSPECIFICATION: Returns **numeric** values for testing/validation
 - GETREPORTINFO: Returns **formatted text** for report presentation

@@ -67,65 +67,7 @@ This procedure provides a simplified interface for recording test results:
 
 ### C# Method Call
 
-```csharp
-// From AirbagSPs.cs (lines 18643-18671)
-public LAB_SAVELABRESULTResult LAB_SAVELABRESULT(LAB_SAVELABRESULTParameter para)
-{
-    LAB_SAVELABRESULTResult result = null;
-    if (!HasConnection())
-        return result;
-
-    string[] paraNames = new string[]
-    {
-        "P_INSLOT",
-        "P_RESULT"
-    };
-    object[] paraValues = new object[]
-    {
-        para.P_INSLOT,
-        para.P_RESULT
-    };
-
-    ExecuteResult<StoredProcedureResult> ret = _manager.ExecuteProcedure(
-        "LAB_SAVELABRESULT",
-        paraNames, paraValues);
-    if (null != ret && !ret.HasException)
-    {
-        result = new LAB_SAVELABRESULTResult();
-    }
-
-    return result;
-}
-```
-
 ### Common Usage Patterns
-
-```csharp
-// Save inspection result for an inspection lot
-var param = new LAB_SAVELABRESULTParameter
-{
-    P_INSLOT = "INS-20231015-001",
-    P_RESULT = "PASS"
-};
-var result = DatabaseManager.Instance.LAB_SAVELABRESULT(param);
-bool success = (result != null);
-
-// Save failed inspection
-var param = new LAB_SAVELABRESULTParameter
-{
-    P_INSLOT = "INS-20231015-002",
-    P_RESULT = "FAIL"
-};
-var result = DatabaseManager.Instance.LAB_SAVELABRESULT(param);
-
-// Save numeric result
-var param = new LAB_SAVELABRESULTParameter
-{
-    P_INSLOT = "SAMPLE-12345",
-    P_RESULT = "95.5"  // Could be percentage or measurement
-};
-var result = DatabaseManager.Instance.LAB_SAVELABRESULT(param);
-```
 
 ---
 

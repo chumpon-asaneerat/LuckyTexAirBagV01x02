@@ -77,43 +77,12 @@ When lab receives finishing sample, they need to trace back to source:
 - Lab needs to know all source lots for quality traceability
 
 **Typical Usage**:
-```csharp
-var weavingLots = LAB_GETWEAVINGLOTLIST(finishingLot, itemCode, "COATING");
-
-if (weavingLots != null && weavingLots.Count > 0)
-{
-    // Display source weaving lots in lab sample screen
-    lblSourceLots.Text = string.Join(", ", weavingLots.Select(w => w.WEAVINGLOT));
-
-    // Example: "WV-001, WV-002, WV-003"
-
-    // If test fails, can trace back to specific weaving lots
-    if (testResult == "FAIL")
-    {
-        foreach (var lot in weavingLots)
-        {
-            // Check which weaving lot had quality issues
-            InvestigateWeavingLot(lot.WEAVINGLOT);
-        }
-    }
-}
-```
-
 **Process Type Significance**:
 - **COATING**: After silicone coating applied
 - **SCOURING**: After washing/scouring process
 - **DRYER**: After drying process
 
 Different processes may have different weaving lot tracking:
-```csharp
-// Same finishing lot, different process steps
-var coatingLots = LAB_GETWEAVINGLOTLIST("FN-001", "X12345", "COATING");
-var scouringLots = LAB_GETWEAVINGLOTLIST("FN-001", "X12345", "SCOURING");
-var dryerLots = LAB_GETWEAVINGLOTLIST("FN-001", "X12345", "DRYER");
-
-// May return same or different weaving lots depending on process flow
-```
-
 **Quality Investigation Use Case**:
 1. Lab test on finishing lot fails
 2. Get source weaving lots (this procedure)
@@ -158,20 +127,6 @@ ORDER BY w.WEAVINGLOT
 **Lines**: 4060-4075
 
 **Return Structure** (Simple - single column):
-```csharp
-public class LAB_GETWEAVINGLOTLISTParameter
-{
-    public string P_FINISHINGLOT { get; set; }
-    public string P_ITEMCODE { get; set; }
-    public string P_PROCESS { get; set; }
-}
-
-public class LAB_GETWEAVINGLOTLISTResult
-{
-    public string WEAVINGLOT { get; set; }  // Only returns weaving lot number
-}
-```
-
 **Implementation Notes**:
 - Returns list of weaving lot numbers only (no other details)
 - Simple traceability lookup

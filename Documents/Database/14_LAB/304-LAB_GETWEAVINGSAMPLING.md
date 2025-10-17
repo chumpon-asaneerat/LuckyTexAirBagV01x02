@@ -92,41 +92,6 @@ Retrieves greige fabric (unfinished weaving) sample details for laboratory testi
 - Critical for airbag fabric quality (must be uniform)
 
 **Typical Usage**:
-```csharp
-var sample = LAB_GETWEAVINGSAMPLING(beamRoll, loomNo);
-
-if (sample != null)
-{
-    // Load sample into greige test screen
-    txtBeamRoll.Text = sample.BEAMERROLL;
-    txtLoomNo.Text = sample.LOOMNO;
-    txtItemCode.Text = sample.ITM_WEAVING;
-    txtBarNo.Text = sample.BARNO;
-
-    // Display spiral measurements
-    txtSpiralLeft.Text = sample.SPIRAL_L.ToString();
-    txtSpiralRight.Text = sample.SPIRAL_R.ToString();
-
-    // Check spiral balance
-    decimal spiralDiff = Math.Abs(sample.SPIRAL_L.Value - sample.SPIRAL_R.Value);
-    if (spiralDiff > 5) // Tolerance check
-    {
-        lblWarning.Text = "WARNING: Spiral imbalance detected!";
-        lblWarning.ForeColor = Color.Red;
-    }
-
-    // Show sampling positions
-    txtStartPosition.Text = $"{sample.STSAMPLING}m from start";
-    if (sample.RECUTSAMPLING.HasValue)
-    {
-        txtRecutPosition.Text = $"{sample.RECUTSAMPLING}m from start";
-    }
-
-    // Proceed with greige test entry
-    EnableGreigeTestInputs();
-}
-```
-
 **Greige Test Workflow**:
 1. **Weaving**: Fabric woven on loom
 2. **Sample Cut**: Quality team cuts sample at specific position
@@ -170,35 +135,6 @@ if (sample != null)
 **Lines**: 4026-4052
 
 **Return Structure** (14 columns):
-```csharp
-public class LAB_GETWEAVINGSAMPLINGResult
-{
-    // Weaving identification
-    public string BEAMERROLL { get; set; }
-    public string LOOMNO { get; set; }
-    public string ITM_WEAVING { get; set; }
-    public DateTime? SETTINGDATE { get; set; }
-    public string BARNO { get; set; }
-
-    // Spiral measurements (tension)
-    public decimal? SPIRAL_L { get; set; }
-    public decimal? SPIRAL_R { get; set; }
-
-    // Sampling positions
-    public decimal? STSAMPLING { get; set; }      // Start position
-    public decimal? RECUTSAMPLING { get; set; }   // Recut position
-
-    // Operator tracking
-    public string STSAMPLINGBY { get; set; }
-    public string RECUTBY { get; set; }
-    public DateTime? STDATE { get; set; }
-    public DateTime? RECUTDATE { get; set; }
-
-    // Notes
-    public string REMARK { get; set; }
-}
-```
-
 **Greige vs Finishing Sample Comparison**:
 | Aspect | Greige Sample | Finishing Sample |
 |--------|---------------|------------------|
