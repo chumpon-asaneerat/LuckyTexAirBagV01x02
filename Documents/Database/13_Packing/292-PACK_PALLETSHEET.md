@@ -113,20 +113,6 @@ Retrieves complete packing pallet information formatted for packing list report/
 **Method**: `PACK_PALLETSHEET(PACK_PALLETSHEETParameter para)`
 **Lines**: 2211-2238
 
-**Typical Query Join**:
-```sql
-SELECT ph.PALLETNO, pd.INSPECTIONLOT, pd.ITEMCODE, pd.GRADE,
-       pd.NETLENGTH, pd.NETWEIGHT, pd.GROSSWEIGHT, pd.ORDERNO,
-       ph.PACKINGBY, ph.PACKINGDATE, ph.CHECKBY, ph.CHECKINGDATE,
-       pd.LOADINGTYPE, pd.CUSTOMERTYPE,
-       i.ITM_WEAVING, i.YARNCODE
-FROM tblPackingPallet ph
-JOIN tblPackingPalletDetail pd ON ph.PALLETNO = pd.PALLETNO
-LEFT JOIN tblInspection i ON pd.INSPECTIONLOT = i.INSPECTIONLOT
-WHERE ph.PALLETNO = :P_PALLET
-ORDER BY pd.ORDERNO
-```
-
 ---
 
 **File**: 292/296 | **Progress**: 98.6%

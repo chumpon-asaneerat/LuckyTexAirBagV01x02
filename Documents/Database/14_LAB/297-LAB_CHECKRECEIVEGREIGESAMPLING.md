@@ -91,17 +91,6 @@ Checks if a greige fabric sample from a specific beam roll and loom has already 
 **Lines**: 4727-4740
 
 **Implementation**:
-**Typical Query Logic**:
-```sql
-SELECT CASE
-    WHEN COUNT(*) > 0 THEN 'Y'
-    ELSE 'N'
-END AS RESULT
-FROM tblLabGreigeSampling
-WHERE BEAMERROLL = :P_BEAMERROLL
-  AND LOOMNO = :P_LOOMNO
-```
-
 ---
 
 **File**: 297/296 | **Progress**: 100.3%

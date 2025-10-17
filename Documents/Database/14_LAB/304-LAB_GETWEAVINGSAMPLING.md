@@ -133,7 +133,6 @@ Retrieves greige fabric (unfinished weaving) sample details for laboratory testi
 **Method**: `LAB_GETWEAVINGSAMPLING(LAB_GETWEAVINGSAMPLINGParameter para)`
 **Lines**: 4026-4052
 
-**Return Structure** (14 columns):
 **Greige vs Finishing Sample Comparison**:
 | Aspect | Greige Sample | Finishing Sample |
 |--------|---------------|------------------|

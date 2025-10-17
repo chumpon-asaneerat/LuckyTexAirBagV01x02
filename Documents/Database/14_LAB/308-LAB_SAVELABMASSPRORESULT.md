@@ -103,17 +103,6 @@ This procedure is specifically for finished fabric (mass production):
 
 ### Typical Workflow in UI
 
-```
-1. Technician completes all customer-specified tests
-2. Test data validated against customer specifications
-3. Supervisor reviews all test results and trend charts
-4. Supervisor makes final approval decision
-5. UI calls LAB_SAVELABMASSPRORESULT with PASS/FAIL/PENDING
-6. If PASS: Sample approved for packing and shipment
-7. If FAIL: UI prompts for disposition (rework/scrap/downgrade)
-8. Production status updated in real-time across system
-```
-
 ---
 
 ## Database Schema
@@ -129,16 +118,6 @@ This procedure is specifically for finished fabric (mass production):
 - May trigger updates in `INSPECTION_STATUS` or `PACKING_APPROVAL` tables
 
 ### Typical UPDATE Statement
-```sql
-UPDATE LAB_MASSPRO_TEST_RESULT
-SET TESTRESULT = P_TESTRESULT,
-    APPROVEDATE = SYSDATE,
-    UPDATEDATE = SYSDATE
-WHERE WEAVINGLOT = P_WEAVELOT
-  AND ITM_CODE = P_ITMCODE
-  AND FINISHINGLOT = P_FINISHINGLOT;
-```
-
 ---
 
 ## Notes

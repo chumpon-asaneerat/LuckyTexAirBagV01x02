@@ -57,11 +57,6 @@ Retrieves list of weaving (greige) lots that were used to create a specific fini
 - Used for complete material traceability in lab testing
 
 **Traceability Chain**:
-```
-Yarn → Warping → Beaming → Weaving → Finishing → Inspection → Packing
-                            (Greige)   (Coated)
-```
-
 **Lab Testing Context**:
 
 When lab receives finishing sample, they need to trace back to source:
@@ -91,17 +86,6 @@ Different processes may have different weaving lot tracking:
 6. Take corrective action at correct process stage
 
 **Data Relationship**:
-```sql
--- Typical query logic:
-SELECT DISTINCT w.WEAVINGLOT
-FROM tblFinishing f
-JOIN tblWeaving w ON f.WEAVINGLOT = w.WEAVINGLOT
-WHERE f.FINISHINGLOT = :P_FINISHINGLOT
-  AND f.ITM_CODE = :P_ITEMCODE
-  AND f.PROCESS = :P_PROCESS
-ORDER BY w.WEAVINGLOT
-```
-
 ---
 
 ## Related Procedures
@@ -125,7 +109,6 @@ ORDER BY w.WEAVINGLOT
 **Method**: `LAB_GETWEAVINGLOTLIST(LAB_GETWEAVINGLOTLISTParameter para)`
 **Lines**: 4060-4075
 
-**Return Structure** (Simple - single column):
 **Implementation Notes**:
 - Returns list of weaving lot numbers only (no other details)
 - Simple traceability lookup

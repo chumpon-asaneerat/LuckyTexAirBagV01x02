@@ -77,11 +77,6 @@ Retrieves list of inspection lots that require laboratory testing (ISLAB = 'Y').
 - Some customers require lab test reports with every shipment
 
 **ISLAB Flag Logic**:
-```
-ISLAB = 'Y' → Lab testing required before shipping
-ISLAB = 'N' → No lab testing needed (can ship immediately)
-```
-
 **Lab Testing Workflow**:
 1. **Inspection Complete**: Lot passes visual inspection
 2. **Check ISLAB**: If customer requires lab testing → ISLAB = 'Y'

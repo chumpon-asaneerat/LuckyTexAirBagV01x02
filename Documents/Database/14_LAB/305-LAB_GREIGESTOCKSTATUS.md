@@ -79,13 +79,6 @@ Retrieves greige sample inventory status including receive status, test results,
 - APPROVESTATUS indicates final disposition
 
 **Sample Status Workflow**:
-```
-RECEIVED → TESTING → TESTED → APPROVED/REJECTED
-   ↓         ↓         ↓           ↓
-Receive   Start     Complete   Supervisor
-Sample    Test      Test       Decision
-```
-
 **Conditioning Time Requirement**:
 Greige fabric must be conditioned before testing:
 - Standard: 24 hours at controlled temperature/humidity
@@ -124,23 +117,6 @@ Greige fabric must be conditioned before testing:
 **Database Manager File**: `LuckyTex.AirBag.Core\Domains\AirbagSPs.cs`
 **Method**: `LAB_GREIGESTOCKSTATUS(LAB_GREIGESTOCKSTATUSParameter para)`
 **Lines**: 3991-4020
-
-**Return Structure** (16 columns):
-**Typical Query Logic**:
-```sql
-SELECT g.BEAMERROLL, g.LOOMNO, g.ITM_WEAVING,
-       g.RECEIVEDATE, g.RECEIVEBY, g.STATUS,
-       g.CONDITIONINGTIME, g.SENDDATE,
-       t.TESTDATE, t.TESTRESULT, t.TESTBY, t.TESTNO,
-       t.REMARK, t.APPROVESTATUS, t.APPROVEBY, t.APPROVEDATE
-FROM tblLabGreigeStock g
-LEFT JOIN tblLabGreigeTest t ON g.BEAMERROLL = t.BEAMERROLL
-                             AND g.LOOMNO = t.LOOMNO
-WHERE (:P_BEAMERROLL IS NULL OR g.BEAMERROLL = :P_BEAMERROLL)
-  AND (:P_LOOMNO IS NULL OR g.LOOMNO = :P_LOOMNO)
-  AND (:P_RECEIVEDATE IS NULL OR TRUNC(g.RECEIVEDATE) = TO_DATE(:P_RECEIVEDATE, 'YYYY-MM-DD'))
-ORDER BY g.RECEIVEDATE DESC, g.BEAMERROLL
-```
 
 ---
 

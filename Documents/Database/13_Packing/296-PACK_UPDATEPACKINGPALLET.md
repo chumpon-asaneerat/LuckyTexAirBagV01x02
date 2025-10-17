@@ -71,12 +71,6 @@ Updates packing pallet header with verification information and status. Used to 
    3. **ERP Synchronization**:
    4. **Mark as Shipped**:
    **Status Flag Transitions**:
-```
-NEW → CHECKED → SHIPPED
- ↓        ↓        ↓
-(any state) → CANCELLED
-```
-
 **Shipping Readiness Check**:
 **Workflow Integration**:
 1. PACK_INSERTPACKINGPALLET → Creates pallet (FLAG = 'NEW')

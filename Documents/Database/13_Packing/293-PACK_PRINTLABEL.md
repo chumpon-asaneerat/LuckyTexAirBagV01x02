@@ -96,13 +96,6 @@ Retrieves all necessary information to print a packing label for an inspection l
 
 **Print Event Recording**:
 After printing, procedure updates label history:
-```sql
-UPDATE tblPackingLabel
-SET PRINTDATE = SYSDATE,
-    PRINTCOUNT = NVL(PRINTCOUNT, 0) + 1
-WHERE INSPECTIONLOT = :P_INSLOT;
-```
-
 ---
 
 ## Related Procedures
@@ -126,7 +119,6 @@ WHERE INSPECTIONLOT = :P_INSLOT;
 **Method**: `PACK_PRINTLABEL(PACK_PRINTLABELParameter para)`
 **Lines**: 2173-2205
 
-**Return Structure** (18 columns):
 ---
 
 **File**: 293/296 | **Progress**: 99.0%

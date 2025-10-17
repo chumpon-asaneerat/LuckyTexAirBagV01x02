@@ -95,12 +95,6 @@ Different customers require different report formats:
 
 **Specification Text Format**:
 Values stored as formatted strings (not just numbers):
-```
-MAXFORCE = "120 ± 5 N/mm (ASTM D5034)"
-WEIGHT = "280 ± 10 g/m² (ISO 3801)"
-STATIC_AIR = "≤ 5 L/dm²/min at 20 kPa (ISO 9237)"
-```
-
 **Report Components**:
 1. **Header**: Report ID, Revision, Name, Date
 2. **Material Info**: Yarn type, item code
@@ -137,7 +131,6 @@ STATIC_AIR = "≤ 5 L/dm²/min at 20 kPa (ISO 9237)"
 **Method**: `LAB_GETREPORTINFO(LAB_GETREPORTINFOParameter para)`
 **Lines**: 4198-4237
 
-**Return Structure** (27 columns):
 **Key Difference from LAB_GETITEMTESTSPECIFICATION**:
 - GETITEMTESTSPECIFICATION: Returns **numeric** values for testing/validation
 - GETREPORTINFO: Returns **formatted text** for report presentation

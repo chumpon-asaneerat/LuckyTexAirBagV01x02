@@ -105,18 +105,6 @@ Checks if a finished fabric sample from a specific weaving lot has already been 
 **Lines**: 4708-4721
 
 **Implementation**:
-**Typical Query Logic**:
-```sql
-SELECT CASE
-    WHEN COUNT(*) > 0 THEN 'Y'
-    ELSE 'N'
-END AS RESULT
-FROM tblLabMassProSampling
-WHERE WEAVINGLOT = :P_WEAVLOT
-  AND ITM_CODE = :P_ITEMCODE
-  AND SAMPLETYPE = 'FINISHING'  -- Mass production sample
-```
-
 ---
 
 **File**: 298/296 | **Progress**: 100.7%

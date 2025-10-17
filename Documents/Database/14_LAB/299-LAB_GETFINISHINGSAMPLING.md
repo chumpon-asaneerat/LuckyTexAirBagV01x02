@@ -123,7 +123,6 @@ Retrieves detailed information about a finishing sample that has been received i
 **Method**: `LAB_GETFINISHINGSAMPLING(LAB_GETFINISHINGSAMPLINGParameter para)`
 **Lines**: 4678-4702
 
-**Return Structure** (12 columns):
 ---
 
 **File**: 299/296 | **Progress**: 101.0%

@@ -257,17 +257,6 @@ Not all 100+ columns are populated for every test:
 
 ### Typical Display
 
-```
-Lab Test Approval Queue
------------------------
-Item Code    Weaving Lot    Finishing Lot   Entry Date    Status     Action
-AB-1234-PAB  WL-20231015-01 FL-20231020-001 2023-10-20    PENDING    [Review]
-AB-1234-DAB  WL-20231015-02 FL-20231020-002 2023-10-20    APPROVED   [View]
-AB-1234-SAB  WL-20231015-03 FL-20231020-003 2023-10-21    PENDING    [Review]
-
-[Review] button → Opens detailed test data view with all 100+ measurements
-```
-
 ---
 
 ## Notes

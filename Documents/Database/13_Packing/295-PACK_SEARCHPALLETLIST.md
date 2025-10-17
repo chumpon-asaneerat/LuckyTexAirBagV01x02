@@ -90,12 +90,6 @@ Searches packing pallet headers with flexible filtering. Used to find pallets fo
 - **CANCELLED**: Cancelled/deleted
 
 **Workflow Integration**:
-```
-NEW → CHECKED → SHIPPED
- ↓        ↓
-CANCELLED  (from any state)
-```
-
 **Lab and AS400 Flags**:
 - **COMPLETELAB = 'Y'**: All lots in pallet have lab test results
 - **TRANSFERAS400 = 'Y'**: Pallet data sent to ERP system

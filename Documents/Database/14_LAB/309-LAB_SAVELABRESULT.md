@@ -92,15 +92,6 @@ This procedure provides a simplified interface for recording test results:
 
 ### Typical Workflow in UI
 
-```
-1. Inspector scans or enters inspection lot barcode
-2. Inspector performs visual or simple test
-3. Inspector selects PASS or FAIL
-4. UI calls LAB_SAVELABRESULT with lot ID and result
-5. Result recorded immediately in database
-6. Inspector moves to next inspection item
-```
-
 ---
 
 ## Database Schema
@@ -114,19 +105,6 @@ This procedure provides a simplified interface for recording test results:
 - May link to various source tables depending on inspection type
 
 ### Typical UPDATE or INSERT Statement
-```sql
--- Update existing inspection result
-UPDATE LAB_INSPECTION_RESULT
-SET RESULT = P_RESULT,
-    UPDATEDATE = SYSDATE
-WHERE INSLOT = P_INSLOT;
-
--- Or insert new result if not exists
-INSERT INTO LAB_INSPECTION_RESULT
-(INSLOT, RESULT, CREATEDATE)
-VALUES (P_INSLOT, P_RESULT, SYSDATE);
-```
-
 ---
 
 ## Notes

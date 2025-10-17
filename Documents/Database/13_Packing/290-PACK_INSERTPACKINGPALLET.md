@@ -96,30 +96,6 @@ Creates a new empty packing pallet and generates a unique pallet number. This is
 
 **Implementation**:
 **Database Side** (Oracle stored procedure):
-```sql
--- Typical implementation:
-CREATE OR REPLACE PROCEDURE PACK_INSERTPACKINGPALLET(
-    P_OPERATOR IN VARCHAR2,
-    R_PALLETNO OUT VARCHAR2
-)
-IS
-BEGIN
-    -- Generate unique pallet number
-    SELECT 'PK-' || TO_CHAR(SYSDATE,'YYMMDD') || '-' || LPAD(SEQ_PALLET.NEXTVAL,4,'0')
-    INTO R_PALLETNO
-    FROM DUAL;
-
-    -- Insert pallet header
-    INSERT INTO tblPackingPallet (
-        PALLETNO, CREATEBY, CREATEDATE, STATUS
-    ) VALUES (
-        R_PALLETNO, P_OPERATOR, SYSDATE, 'NEW'
-    );
-
-    COMMIT;
-END;
-```
-
 ---
 
 **File**: 290/296 | **Progress**: 98.0%

@@ -105,15 +105,6 @@ This procedure is specifically for greige (raw woven) fabric testing:
 
 ### Typical Workflow in UI
 
-```
-1. Technician completes all required tests
-2. Supervisor reviews test data on approval page
-3. Supervisor clicks "Approve" or "Fail" button
-4. UI calls LAB_SAVELABGREIGERESULT with PASS or FAIL
-5. If FAIL, UI prompts for retest scheduling
-6. Sample status updated in real-time on dashboard
-```
-
 ---
 
 ## Database Schema
@@ -128,16 +119,6 @@ This procedure is specifically for greige (raw woven) fabric testing:
 - May update status in `LAB_GREIGE_STOCK` table
 
 ### Typical UPDATE Statement
-```sql
-UPDATE LAB_GREIGE_TEST_RESULT
-SET TESTRESULT = P_TESTRESULT,
-    UPDATEDATE = SYSDATE
-WHERE BEAMERROLL = P_BEAMERROLL
-  AND LOOMNO = P_LOOM
-  AND ITM_WEAVING = P_ITMWEAVE
-  AND TESTNO = P_TESTNO;
-```
-
 ---
 
 ## Notes

@@ -144,21 +144,6 @@ Searches for completed inspection lots that are available for packing. Provides 
 **Method**: `PACK_SEARCHINSPECTIONDATA(PACK_SEARCHINSPECTIONDATAParameter para)`
 **Lines**: 2116-2167
 
-**Return Structure** (37 columns - comprehensive inspection data):
-**Typical Query Logic**:
-```sql
-SELECT i.*, d.DF_CODE, d.DF_AMOUNT, d.DF_POINT
-FROM tblInspection i
-LEFT JOIN tblInspectionDefect d ON i.INSPECTIONLOT = d.INSPECTIONLOT
-WHERE i.FINISHFLAG = 'Y'
-  AND (i.ISPACKED = 'N' OR i.ISPACKED IS NULL)
-  AND (:P_DATE IS NULL OR TRUNC(i.ENDDATE) = TO_DATE(:P_DATE, 'YYYY-MM-DD'))
-  AND (:P_GRADE IS NULL OR i.GRADE = :P_GRADE)
-  AND (:P_ITMCODE IS NULL OR i.ITEMCODE = :P_ITMCODE)
-  AND (:P_INSLOT IS NULL OR i.INSPECTIONLOT = :P_INSLOT)
-ORDER BY i.ENDDATE DESC
-```
-
 ---
 
 **File**: 294/296 | **Progress**: 99.3%

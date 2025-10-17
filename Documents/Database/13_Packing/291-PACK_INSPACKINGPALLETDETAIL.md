@@ -75,7 +75,6 @@ Adds an inspection lot to a packing pallet. Called multiple times to build up pa
   - Same loading type
 - Grade can vary (A/B/C grades can mix if allowed)
 
-**Typical Usage Pattern**:
 **Data Integrity**:
 - Inspection lot marked as packed (ISPACKED = 'Y')
 - Stock status updated (not available for other pallets)

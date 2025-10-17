@@ -120,15 +120,6 @@ After testing completes:
 
 ### Typical Display
 
-```
-Mass Production Sample Status
-------------------------------
-Weaving Lot    Finishing Lot    Item Code    Receive Date    Status      Test Result    Approve Status
-WL-20231015-01 FL-20231020-001  AB-1234-PAB  2023-10-20 08:00 TESTING    PENDING        PENDING
-WL-20231015-02 FL-20231020-002  AB-1234-PAB  2023-10-20 09:30 TESTED     PASS           PENDING
-WL-20231015-03 FL-20231020-003  AB-1234-DAB  2023-10-20 10:15 RECEIVED   -              -
-```
-
 ---
 
 ## Database Schema
