@@ -1,6 +1,7 @@
-Last session
-I told you to update @Prompts\prompt.txt and create @Documents\Database\.GROUPED_NOTATION_FIX_TRACKER.md and fix problem 
-but when File 091 complete. The session reach limit. So check the tracker file and continue fix it when you fix each file 
-please update tracker to make sure you can continue across multiple session.
+Last session you generate batch document but last file that complete generate is 
+@Documents\Database\14_LAB\310-LAB_SEARCHAPPROVELAB.md then session reach limit
+so you are not update @Documents\Database\.DATABASE_STORED_PROCEDURES_TODO.md file
+please check it.
+
 
 
