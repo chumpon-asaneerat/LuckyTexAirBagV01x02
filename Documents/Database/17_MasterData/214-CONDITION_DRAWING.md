@@ -26,6 +26,10 @@
 |-----------|------|----------|-------------|
 | `P_ITMPREPARE` | VARCHAR2(50) | ✅ | Preparation item code |
 | `P_NOYARN` | NUMBER | ⬜ | Number of yarns |
+| `P_REEDTYPE` | NUMBER | ⬜ | Reed type specification |
+| `P_NODENT` | NUMBER | ⬜ | Number of dents |
+| `P_PITCH` | NUMBER | ⬜ | Reed pitch (dents per cm) |
+| `P_AIRSPACE` | NUMBER | ⬜ | Air space specification |
 | `P_OPERATOR` | VARCHAR2(50) | ✅ | Operator ID saving conditions |
 
 ### Output (OUT)
@@ -38,16 +42,16 @@
 
 ## Business Logic (What it does and why)
 
-Saves standard drawing-in process conditions. Drawing-in is the process of threading warp yarns through heddles and reed before mounting beam on loom. This is typically a manual or semi-automated process that requires knowing how many yarns to thread and the threading pattern.
+Saves standard drawing-in process conditions. Drawing-in is the process of threading warp yarns through heddles and reed before mounting beam on loom. This procedure stores specifications for reed type, dent count, pitch, and yarn threading pattern.
 
 The procedure:
-1. Takes preparation item code and yarn count
+1. Takes preparation item code and reed specifications
 2. Saves or updates condition record
-3. Stores yarn count specification
-4. Used during drawing-in to ensure correct threading
-5. Simpler than warping/beaming (fewer automated parameters)
+3. Stores reed type, number of dents, pitch (dents per cm)
+4. Stores yarn count and air space specifications
+5. Used during drawing-in to ensure correct threading pattern
 
-While simpler than other process conditions, this ensures operators thread the correct number of yarns per heddle/dent.
+These specifications ensure operators use the correct reed and thread yarns properly for fabric construction.
 
 ---
 
