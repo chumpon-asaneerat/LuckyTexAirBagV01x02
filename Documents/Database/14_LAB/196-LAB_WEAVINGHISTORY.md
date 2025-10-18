@@ -34,6 +34,25 @@
 | `ITM_WEAVING` | VARCHAR2(50) | Weaving item code |
 | `LENGTH` | NUMBER | Fabric length produced (meters) |
 | `LOOMNO` | VARCHAR2(20) | Loom machine number |
+| `WEAVINGDATE` | DATE | Weaving production date |
+| `SHIFT` | VARCHAR2(10) | Production shift |
+| `REMARK` | VARCHAR2(500) | Production remarks/notes |
+| `CREATEDATE` | DATE | Record creation date |
+| `WIDTH` | NUMBER | Fabric width (cm) |
+| `PREPAREBY` | VARCHAR2(50) | Operator who prepared loom |
+| `WEAVINGNO` | VARCHAR2(50) | Weaving sequence number |
+| `BEAMLOT` | VARCHAR2(50) | Beam lot number used |
+| `DOFFNO` | NUMBER | Doff sequence number |
+| `DENSITY_WARP` | NUMBER | Warp density (ends/cm) |
+| `TENSION` | NUMBER | Warp tension setting |
+| `STARTDATE` | DATE | Production start date/time |
+| `DOFFBY` | VARCHAR2(50) | Operator who performed doff |
+| `SPEED` | NUMBER | Loom speed (picks/min) |
+| `WASTE` | NUMBER | Waste amount (meters) |
+| `DENSITY_WEFT` | NUMBER | Weft density (picks/cm) |
+| `DELETEFLAG` | VARCHAR2(1) | Deletion flag (Y/N) |
+| `DELETEBY` | VARCHAR2(50) | Operator who deleted record |
+| `DELETEDATE` | DATE | Deletion timestamp |
 
 ---
 

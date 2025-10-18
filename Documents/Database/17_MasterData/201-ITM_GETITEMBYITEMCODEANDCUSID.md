@@ -33,6 +33,30 @@
 |--------|------|-------------|
 | `CUSTOMERID` | VARCHAR2(50) | Customer ID |
 | `ITM_CODE` | VARCHAR2(50) | Item code |
+| `PARTNO` | VARCHAR2(50) | Customer part number |
+| `FABRIC` | VARCHAR2(100) | Fabric type/description |
+| `LENGTH` | NUMBER | Standard length specification |
+| `DENSITY_W` | VARCHAR2(20) | Warp density specification |
+| `DENSITY_F` | VARCHAR2(20) | Weft density specification |
+| `WIDTH_ALL` | VARCHAR2(20) | Total width |
+| `WIDTH_PIN` | VARCHAR2(20) | Width at pin (before coating) |
+| `WIDTH_COAT` | VARCHAR2(20) | Width after coating |
+| `TRIM_L` | VARCHAR2(20) | Left trim specification |
+| `TRIM_R` | VARCHAR2(20) | Right trim specification |
+| `FLOPPY_L` | VARCHAR2(20) | Left edge floppy specification |
+| `FLOPPY_R` | VARCHAR2(20) | Right edge floppy specification |
+| `HARDNESS_L` | VARCHAR2(20) | Left edge hardness specification |
+| `HARDNESS_C` | VARCHAR2(20) | Center hardness specification |
+| `HARDNESS_R` | VARCHAR2(20) | Right edge hardness specification |
+| `UNWINDER` | VARCHAR2(50) | Unwinder setting/type |
+| `WINDER` | VARCHAR2(50) | Winder setting/type |
+| `FINISHINGCUSTOMER` | VARCHAR2(100) | Finishing customer name |
+| `DESCRIPTION` | VARCHAR2(500) | Item description |
+| `SUPPLIERCODE` | VARCHAR2(50) | Supplier code |
+| `WIDTH` | VARCHAR2(20) | Width specification |
+| `WIDTH_SELVAGEL` | VARCHAR2(20) | Left selvage width |
+| `WIDTH_SELVAGER` | VARCHAR2(20) | Right selvage width |
+| `RESETSTARTLENGTH` | NUMBER | Reset start length for inspection |
 
 ---
 

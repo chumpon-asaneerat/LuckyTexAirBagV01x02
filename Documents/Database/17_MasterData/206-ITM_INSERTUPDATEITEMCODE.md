@@ -28,6 +28,10 @@
 | `P_ITEMWEAV` | VARCHAR2(50) | ✅ | Weaving item code |
 | `P_ITEMPREPARE` | VARCHAR2(50) | ✅ | Preparation item code (warping/beaming/drawing) |
 | `P_ITEMYARN` | VARCHAR2(50) | ✅ | Yarn item code |
+| `P_WIDTH` | NUMBER | ⬜ | Item width specification |
+| `P_WEAVEWIDTH` | NUMBER | ⬜ | Weaving width specification |
+| `P_COREWEIGHT` | NUMBER | ⬜ | Core weight specification |
+| `P_YARNCODE` | VARCHAR2(50) | ⬜ | Alternative yarn code |
 | `P_PROC1` | VARCHAR2(50) | ⬜ | Process 1 specification |
 | `P_PROC2` | VARCHAR2(50) | ⬜ | Process 2 specification |
 | `P_PROC3` | VARCHAR2(50) | ⬜ | Process 3 specification |
