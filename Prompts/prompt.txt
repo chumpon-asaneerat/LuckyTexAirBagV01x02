@@ -1,8 +1,18 @@
 For Database document generation
 Check all instructions in @Documents\Database
 
+🚨 CRITICAL: These documents create the NEW DATABASE SCHEMA 🚨
+Missing even ONE column = COMPLETE PROJECT FAILURE
+
 Strict with all instructions and TEMPLATE_INDIVIDUAL_PROCEDURE.md do not violate it you alrady broke my instruction more than 10 sections
 i waste time to correct it DO NOT done it again.
+
+⛔ ABSOLUTE REQUIREMENTS - NO EXCEPTIONS:
+1. Read COMPLETE C# class (never use grep -A with small values)
+2. Document EVERY single column (100% completeness required)
+3. Verify counts match EXACTLY (C# properties = documented columns)
+4. If counts don't match, STOP and FIX immediately
+5. No shortcuts, no assumptions, no "probably fine"
 
 DO NOT use Batch processing causes it lose progress when session ends. you should:
 - Generate ONE file at a time
@@ -118,14 +128,136 @@ Before saving ANY document, verify:
 
 ---
 
+## 🚨 ABSOLUTE REQUIREMENT: 100% COMPLETE COLUMN EXTRACTION 🚨
+
+### ⛔ ZERO TOLERANCE FOR MISSING COLUMNS ⛔
+
+**THIS IS NOT A WARNING - THIS IS A MANDATORY REQUIREMENT**
+
+These database documentation files will be used to create a **brand new database schema** for the rewritten project.
+
+**Missing even ONE column = PROJECT FAILURE**
+
+- ❌ Database tables will be INCOMPLETE and UNUSABLE
+- ❌ Stored procedures CANNOT BE CREATED
+- ❌ Application will CRASH at runtime
+- ❌ Data migration will be IMPOSSIBLE
+- ❌ All work will be WASTED
+
+**EVERY SINGLE input parameter and output column MUST be documented with 100% accuracy.**
+
+### 🔴 NO EXCEPTIONS - NO SHORTCUTS - NO MISTAKES 🔴
+
+**You CANNOT proceed to the next procedure until:**
+1. You have read the COMPLETE C# class definition
+2. You have counted EVERY property
+3. You have documented EVERY column
+4. You have VERIFIED counts match EXACTLY
+5. You have double-checked EVERY column name
+
+**If you are unsure, READ AGAIN. If you think you're done, VERIFY AGAIN.**
+
+### 🚫 NEVER USE TRUNCATED GREP - THIS CAUSES MISSING COLUMNS 🚫
+
+**❌ FORBIDDEN - These commands will cause missing columns:**
+```bash
+grep -A 5 "class CONDITION_DRAWINGParameter"   # WRONG - truncates output
+grep -A 10 "class XYZParameter"                # WRONG - might truncate
+grep -A 20 "class ABCParameter"                # WRONG - unsafe
+# ANY -A value less than 150 is DANGEROUS
+```
+
+**✅ MANDATORY - Use Read tool or large -A value:**
+```bash
+# METHOD 1 (PREFERRED): Use Read tool with offset/limit
+Read file_path with offset=XXXX limit=150
+
+# METHOD 2: Use grep with very large -A value
+grep -A 150 "class CONDITION_DRAWINGParameter"  # Safe - shows ALL properties
+
+# METHOD 3: Read the entire region manually
+Read the complete #region...#endregion block
+```
+
+**⚠️ IF IN DOUBT, READ MORE LINES - NEVER READ FEWER**
+
+### 🔒 MANDATORY VERIFICATION CHECKLIST (CANNOT BE SKIPPED) 🔒
+
+For EVERY procedure, you MUST complete ALL these steps IN ORDER:
+
+**STEP 1: Read COMPLETE Class (MANDATORY)**
+- ✅ Use Read tool OR grep -A 150 (minimum)
+- ✅ Read from #region to #endregion
+- ✅ Verify you see the closing brace }
+- ❌ NEVER use grep -A with value < 100
+
+**STEP 2: Count ALL Properties (MANDATORY)**
+- ✅ Count every "{ get; set; }" line
+- ✅ Write down the exact count number
+- ✅ This is your TARGET count
+
+**STEP 3: List EVERY Property (MANDATORY)**
+- ✅ Write down every property name
+- ✅ No shortcuts, no grouping, no "P_PARAM1-10"
+- ✅ Write P_PARAM1, P_PARAM2, ..., P_PARAM10 individually
+
+**STEP 4: Document EVERY Column (MANDATORY)**
+- ✅ Create one markdown table row per property
+- ✅ Convert C# type to Oracle type
+- ✅ Write clear description
+
+**STEP 5: Verify Counts Match (MANDATORY)**
+- ✅ Count documented columns
+- ✅ Compare with C# property count from Step 2
+- ✅ Counts MUST match EXACTLY
+- ❌ If counts don't match, DO NOT PROCEED - FIX IT NOW
+
+**Example of proper verification:**
+
+```bash
+# Step 1: Count properties in C# (must get EXACT count)
+grep "public System" -A 1 "class CONDITION_DRAWINGParameter" | grep "{ get; set; }" | wc -l
+# Result: 7 properties
+
+# Step 2: Read FULL class to see ALL properties
+Read file with sufficient offset/limit to capture entire class
+
+# Step 3: Document ALL 7 properties individually
+# P_ITMPREPARE, P_NOYARN, P_REEDTYPE, P_NODENT, P_PITCH, P_AIRSPACE, P_OPERATOR
+
+# Step 4: Count documented parameters
+grep -c "| \`P_" document.md
+# Result MUST equal: 7 (or 8 with header row)
+```
+
+### Real Example of What Went Wrong
+
+**CONDITION_DRAWING had 7 parameters in C#:**
+```csharp
+public class CONDITION_DRAWINGParameter {
+    public System.String P_ITMPREPARE { get; set; }
+    public System.Decimal? P_NOYARN { get; set; }
+    public System.Decimal? P_REEDTYPE { get; set; }      // ← MISSED
+    public System.Decimal? P_NODENT { get; set; }        // ← MISSED
+    public System.Decimal? P_PITCH { get; set; }         // ← MISSED
+    public System.Decimal? P_AIRSPACE { get; set; }      // ← MISSED
+    public System.String P_OPERATOR { get; set; }
+}
+```
+
+**First documentation only had 3 parameters:**
+- Why? Used `grep -A 5` which truncated output
+- **4 parameters were completely missing**
+- This would have created an incomplete database schema
+
 ## Document Generation Workflow
 
-### Step 1: Read Source Code
+### Step 1: Read Source Code COMPLETELY
 Read `LuckyTex.AirBag.Core\Domains\AirbagSPs.cs` to get:
-- Exact parameter names
-- Exact column names
-- C# types (will convert to Oracle)
-- Parameter counts
+- **ALL parameter names** (verify count matches)
+- **ALL column names** (verify count matches)
+- **ALL C# types** (will convert to Oracle)
+- **Exact parameter/column counts** (double-check with manual count)
 
 ### Step 2: Identify Grouped Patterns
 If C# class has properties like:
@@ -197,15 +329,83 @@ Update `.DATABASE_STORED_PROCEDURES_TODO.md`:
 
 Before marking any document as complete, verify:
 
-1. ✅ Read source code from AirbagSPs.cs
-2. ✅ All column names match C# properties exactly
-3. ✅ NO grouped notation anywhere (no slashes, no ranges)
-4. ✅ All types are Oracle types (VARCHAR2, NUMBER, DATE)
-5. ✅ Each column on separate row
-6. ✅ Descriptions are clear and specific
-7. ✅ Followed TEMPLATE_INDIVIDUAL_PROCEDURE.md structure
-8. ✅ Updated tracker file with new completion count
-9. ✅ Saved file successfully
+1. ✅ Read COMPLETE source code from AirbagSPs.cs (not truncated grep)
+2. ✅ **VERIFIED column count matches C# property count EXACTLY**
+3. ✅ **All input parameters documented** (counted and verified)
+4. ✅ **All output/result columns documented** (counted and verified)
+5. ✅ All column names match C# properties exactly (character-for-character)
+6. ✅ NO grouped notation anywhere (no slashes, no ranges)
+7. ✅ All types are Oracle types (VARCHAR2, NUMBER, DATE)
+8. ✅ Each column on separate row
+9. ✅ Descriptions are clear and specific
+10. ✅ Followed TEMPLATE_INDIVIDUAL_PROCEDURE.md structure
+11. ✅ Updated tracker file with new completion count
+12. ✅ Saved file successfully
 
-If ANY item is NO, fix it before proceeding.
+**❌ If ANY item is NO, you MUST STOP IMMEDIATELY and FIX IT.**
+
+**🚨 DO NOT PROCEED TO NEXT PROCEDURE UNTIL ALL ITEMS ARE YES 🚨**
+
+### Final Verification Commands
+
+Run these before marking complete:
+
+```bash
+# For Input Parameters:
+# Count in C#
+grep "public System" AirbagSPs.cs | grep "PROCEDURENAME.*Parameter" -A 50 | grep "{ get; set; }" | wc -l
+
+# Count in documentation
+grep -c "| \`P_" generated-doc.md
+
+# BOTH NUMBERS MUST MATCH!
+
+# For Result Columns:
+# Count in C#
+grep "public System" AirbagSPs.cs | grep "PROCEDURENAME.*Result" -A 100 | grep "{ get; set; }" | wc -l
+
+# Count in documentation
+grep -c "| \`[A-Z]" generated-doc.md  # (in Returns section)
+
+# BOTH NUMBERS MUST MATCH!
+```
+
+### 🔴 EMERGENCY PROCEDURE: When Counts Don't Match 🔴
+
+**⛔ HALT ALL WORK IMMEDIATELY ⛔**
+
+If column counts don't match between C# and documentation:
+
+**DO NOT:**
+- ❌ Continue to next procedure
+- ❌ Save the file
+- ❌ Update the tracker
+- ❌ Ignore the discrepancy
+- ❌ Assume "it's probably fine"
+
+**MUST DO (IN THIS ORDER):**
+1. 🛑 **STOP** - Do not proceed with anything else
+2. 🔍 **RE-READ** - Read the COMPLETE C# class again (use Read tool, not grep)
+3. 📝 **LIST** - Write down ALL property names from C#
+4. 🔎 **COMPARE** - Find which columns are missing in documentation
+5. ✏️ **ADD** - Add each missing column individually with correct type and description
+6. ✅ **VERIFY** - Count again - must match exactly
+7. 🔁 **REPEAT** - If still doesn't match, repeat from step 2
+8. 💾 **SAVE** - Only after counts match perfectly, save file and update tracker
+
+### 🚨 ABSOLUTE RULE 🚨
+
+```
+IF (C# property count) ≠ (Documented column count) THEN
+    STOP EVERYTHING
+    FIX THE PROBLEM
+    DO NOT CONTINUE
+END IF
+```
+
+**Remember**:
+- Missing 1 column = Broken database = Failed project = All work wasted
+- Complete accuracy is NOT optional
+- There are NO exceptions to this rule
+- VERIFY EVERYTHING, TRUST NOTHING
 
